@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply from: "${rootProject.rootDir}/config.gradle"
+
+group = 'com.github.lygttpod'
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode build_versions.versionCode
+        versionName build_versions.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api deps.okhttp
+    implementation deps.rxjava2
+    api deps.rx_android
+    implementation deps.retrofit.runtime
+    api deps.retrofit.converter_scalars
+    implementation(deps.converter_fastjson) {
+        exclude module: 'fastjson'
+    }
+    api deps.retrofit.adapter
+    implementation deps.logging_interceptor
+}
