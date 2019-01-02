@@ -43,104 +43,111 @@
             android:textSize="11sp" />
     </LinearLayout>
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/order_round" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp">
 
-    <LinearLayout
-        android:layout_width="283dp"
-        android:layout_height="248dp"
-        android:layout_gravity="center"
-        android:background="@drawable/order_withe_bg"
-        android:orientation="vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp">
-
-        <TextView
+        <ImageView
+            android:id="@+id/head_line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:gravity="center"
-            android:text="@string/pay_price"
-            android:textColor="#ff000000"
-            android:textSize="7sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="￥18.00"
-            android:textColor="#ff000000" />
-
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#ffe5e7f1" />
+            android:layout_height="6dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/order_round" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_width="283dp"
+            android:layout_height="248dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/order_withe_bg"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_weight="1"
-                android:text="商品数量"
+                android:layout_marginTop="36dp"
+                android:gravity="center"
+                android:text="@string/pay_price"
                 android:textColor="#ff000000"
                 android:textSize="7sp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="11dp"
-                android:text="2件"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="￥18.00"
+                android:textColor="#ff000000" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffe5e7f1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_weight="1"
+                    android:text="商品数量"
+                    android:textColor="#ff000000"
+                    android:textSize="7sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="11dp"
+                    android:text="2件"
+                    android:textColor="#ff000000"
+                    android:textSize="7sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ffe5e7f1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:gravity="center"
+                android:text="请选择一种支付方式支付"
                 android:textColor="#ff000000"
                 android:textSize="7sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="67dp"
+                    android:layout_height="67dp"
+                    android:src="@drawable/head_order" />
+
+                <ImageView
+                    android:layout_width="67dp"
+                    android:layout_height="67dp"
+                    android:layout_marginLeft="26dp"
+                    android:src="@drawable/head_order" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:textColor="#ffe5e7f1" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-            android:gravity="center"
-            android:text="请选择一种支付方式"
-            android:textColor="#ff000000"
-            android:textSize="7sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="67dp"
-                android:layout_height="67dp"
-                android:src="@drawable/head_order" />
-
-            <ImageView
-                android:layout_width="67dp"
-                android:layout_height="67dp"
-                android:layout_marginLeft="26dp"
-                android:src="@drawable/head_order" />
-
-        </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="201dp"

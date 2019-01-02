@@ -28,6 +28,6 @@ public class TimeCountUtils extends CountDownTimer {
     public void onFinish() {
         textView.setText("0");
         textView.setClickable(true);
-        textView.setTextColor(Color.parseColor("#F2302F"));
+        textView.setTextColor(Color.parseColor("#999999"));
     }
 }

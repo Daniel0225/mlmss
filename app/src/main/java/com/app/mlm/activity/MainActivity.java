@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
+import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.widget.CoustomTopView;
 
 import butterknife.Bind;
@@ -33,16 +34,16 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.huodong)
     LinearLayout huodong;
 
+    public static void start(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-    }
-
-    public static void start(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
     }
 
     @OnClick({R.id.quhuo, R.id.gouwuche, R.id.huodong})
@@ -53,6 +54,7 @@ public class MainActivity extends BaseActivity {
             case R.id.gouwuche:
                 break;
             case R.id.huodong:
+                startActivities(OrderPayActivity.class);
                 break;
         }
     }
