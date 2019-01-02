@@ -1,11 +1,44 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimatioin</item>
+    </style>
+
+    <!-- Base dialog theme. -->
+    <style name="NoBGDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+
+    <!-- dialog 动画主题 -->
+    <style name="BottomAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <!-- activity 跳转动画 -->
+    <style name="ActivityAnimatioin" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/window_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/window_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/window_in_b</item>
+        <item name="android:activityCloseExitAnimation">@anim/window_out_b</item>
+    </style>
+
+    <!-- 启动页主题 -->
+    <style name="Theme.Start" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
 </resources>

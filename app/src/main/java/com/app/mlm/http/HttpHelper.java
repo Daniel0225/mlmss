@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient;
  * @package : com.app.mlm.http
  * @fileName : HttpHelper
  * @date : 2018/12/29  16:37
- * @describe : TODO
+ * @describe : 初始化网络框架
  */
 public class HttpHelper {
     public static String HOST = "http://www.baidu.com";

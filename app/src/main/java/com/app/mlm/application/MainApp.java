@@ -9,7 +9,7 @@ import com.app.mlm.http.HttpHelper;
  * @package : com.app.mlm.application
  * @fileName : MainApp
  * @date : 2018/12/29  16:25
- * @describe : TODO
+ * @describe : Application
  */
 public class MainApp extends Application {
     private static MainApp appInstance;

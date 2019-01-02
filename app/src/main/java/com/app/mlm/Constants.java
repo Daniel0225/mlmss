@@ -5,7 +5,7 @@ package com.app.mlm;
  * @package : com.app.mlm
  * @fileName : Constants
  * @date : 2018/12/29  16:55
- * @describe : TODO
+ * @describe : 常量
  */
 public class Constants {
 
