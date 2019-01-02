@@ -35,6 +35,8 @@
         <!-- 首页 -->
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ScreenProtectActivity"></activity>
+
+        <activity android:name=".activity.order.OrderPayActivity"></activity>
     </application>
 
 </manifest>

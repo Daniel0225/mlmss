@@ -3,4 +3,8 @@
     <string name="tab_quhuo">取货</string>
     <string name="tab_gouwuche">购物车</string>
     <string name="tab_huodong">活动</string>
+
+    <!--支付订单-->
+    <string name="pay_order">支付订单</string>
+    <string name="pay_price">支付金额</string>
 </resources>
