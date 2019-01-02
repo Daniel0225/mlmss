@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">咪哩猫</string>
+
+    <!--支付订单-->
+    <string name="pay_order">支付订单</string>
+    <string name="pay_price">支付金额</string>
 </resources>
