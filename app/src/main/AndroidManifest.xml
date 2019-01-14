@@ -15,9 +15,9 @@
         android:theme="@style/AppTheme">
 
         <!-- 欢迎页 -->
-        <activity android:name=".activity.StartupActivity"
-            android:theme="@style/Theme.Start"
-            >
+        <activity
+            android:name=".activity.StartupActivity"
+            android:theme="@style/Theme.Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,9 +34,12 @@
         </activity>
         <!-- 首页 -->
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.ScreenProtectActivity"></activity>
-
-        <activity android:name=".activity.order.OrderPayActivity"></activity>
+        <activity android:name=".activity.ScreenProtectActivity" />
+        <activity android:name=".activity.order.OrderPayActivity" />
+        <activity android:name=".bms.activity.BackgroundManangerSystemActivity" />
+        <activity android:name=".bms.activity.ConfigPaymentActivity" />
+        <activity android:name=".bms.activity.ConfigSyncActivity" />
+        <activity android:name=".bms.activity.TemperatureControlActivity"></activity>
     </application>
 
 </manifest>

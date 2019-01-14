@@ -8,106 +8,49 @@
     android:background="@color/mainBackground"
     tools:context=".activity.MainActivity">
 
-    <com.app.mlm.widget.CoustomTopView
-        android:id="@+id/topView"
-        android:background="@color/colorPrimary"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <com.app.mlm.widget.CoustomTopView
+            android:id="@+id/topView"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:id="@+id/rlSearch"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_alignBottom="@id/topView"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_search_layout"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:paddingLeft="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/text_nomorl"
+                android:layout_centerVertical="true"
+                android:text="@string/hint_search"
+                android:gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/search_nor"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        >
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:background="@color/whiteColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <LinearLayout
-            android:id="@+id/quhuo"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/tab_quhuo_press"
-                />
-
-            <TextView
-                android:paddingTop="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="@string/tab_quhuo"
-                android:textColor="@color/text_nomorl"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/gouwuche"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/tab_gouwuche_press"
-                />
-
-            <TextView
-                android:paddingTop="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="@string/tab_gouwuche"
-                android:textColor="@color/text_nomorl"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/huodong"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/tab_huodong_press"
-                />
-
-            <TextView
-                android:paddingTop="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="@string/tab_huodong"
-                android:textColor="@color/text_nomorl"
-                />
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>

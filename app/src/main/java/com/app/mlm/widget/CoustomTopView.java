@@ -2,9 +2,14 @@ package com.app.mlm.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.app.imageloader.GlideImageLoaderStrategy;
+import com.app.mlm.R;
 import com.app.mlm.utils.PhoneUtil;
+import com.bumptech.glide.Glide;
 
 /**
  * @author :  luo.xing
@@ -17,6 +22,7 @@ import com.app.mlm.utils.PhoneUtil;
  */
 public class CoustomTopView extends RelativeLayout {
     private Context mContext;
+    private String mSourceUrl;
     public CoustomTopView(Context context) {
         super(context);
         init(context, null, 0);
@@ -34,6 +40,12 @@ public class CoustomTopView extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr){
         this.mContext = context;
+        removeAllViews();
+        ImageView imageView = new ImageView(context);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        Glide.with(context).load(R.drawable.gif).into(imageView);
+        addView(imageView);
     }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -42,5 +54,14 @@ public class CoustomTopView extends RelativeLayout {
         int height = PhoneUtil.getDisplayHeight(mContext) / 4;
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    public String getmSourceUrl() {
+        return mSourceUrl;
+    }
+
+    public void setmSourceUrl(String mSourceUrl) {
+        this.mSourceUrl = mSourceUrl;
+
     }
 }

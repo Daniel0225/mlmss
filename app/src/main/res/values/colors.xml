@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#2553E1</color>
+    <color name="colorPrimaryDark">#2553E1</color>
+    <color name="colorAccent">#2553E1</color>
 
-    <color name="mainBackground">#E0E0E0</color>
+    <color name="blueLight">#D7DDF9</color>
+    <color name="dialogBgColor">#99000000</color>
+    <color name="mainBackground">#F2F4FD</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="redColor">#F00000</color>
+    <color name="numberButton">#4C5683</color>
 
+    <!--字体颜色 浅色，标准，深色-->
     <color name="text_light">#909090</color>
     <color name="text_nomorl">#666666</color>
     <color name="text_dark">#252525</color>

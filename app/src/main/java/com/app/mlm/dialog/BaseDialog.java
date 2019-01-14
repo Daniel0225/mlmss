@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.app.mlm.R;
 
@@ -31,6 +33,7 @@ public abstract class BaseDialog  extends Dialog {
     private CountDownTimer mTimer;
     private OnCountDownListener mListener;
     private BaseDialog mBaseDialog;
+    private boolean isFullScreen = false;
 
     public BaseDialog(Context context, int layoutResID) {
         super(context, R.style.NoBGDialog);
@@ -43,7 +46,7 @@ public abstract class BaseDialog  extends Dialog {
         this.mLayoutResID = layoutResID;
     }
 
-    public BaseDialog(Context context, int layoutResID, int countDownSec) {
+    public BaseDialog(Context context, int layoutResID, boolean isFullScreen) {
         super(context, R.style.NoBGDialog);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.mContext = context;
@@ -52,7 +55,18 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
         mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
-        this.mCountDownSec = countDownSec;
+        this.isFullScreen = isFullScreen;
+    }
+
+    public BaseDialog(Context context, int layoutResID, int gravity) {
+        super(context, R.style.NoBGDialog);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.mContext = context;
+        mDialogWindow = this.getWindow();
+        mDialogWindow.setGravity(gravity);
+        mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
+        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+        this.mLayoutResID = layoutResID;
     }
 
     public BaseDialog(Context context, int layoutResID, int countDownSec, OnCountDownListener listener) {
@@ -75,6 +89,16 @@ public abstract class BaseDialog  extends Dialog {
         this.setContentView(mRoot);
         mBaseDialog = this;
         ButterKnife.bind(this, mRoot);
+        WindowManager.LayoutParams lp = mDialogWindow.getAttributes();
+        WindowManager windowManager = mDialogWindow.getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        if(isFullScreen){
+            lp.width = display.getWidth();
+            lp.height = display.getHeight();
+        }else {
+            lp.width = display.getWidth() * 2 / 3;
+        }
+        mDialogWindow.setAttributes(lp);
         initView();
         initCountDown();
     }

@@ -63,7 +63,7 @@ public class CountDownManager {
     /**
      *  初始化倒计时
      */
-    public void initCountDownTimer(){
+    public CountDownManager initCountDownTimer(){
         cancelTimer();
         mTimer = new CountDownTimer(mCountDownMills, countDownInterval) {
             @Override
@@ -77,6 +77,7 @@ public class CountDownManager {
                 mTimer = null;
             }
         };
+        return mInstance;
     }
 
     /**
@@ -89,11 +90,19 @@ public class CountDownManager {
     /**
      * 取消倒计时
      */
-    public void cancelTimer(){
+    public CountDownManager cancelTimer(){
         if(mTimer != null){
             mTimer.cancel();
             mTimer = null;
         }
+        return mInstance;
+    }
+
+    public CountDownManager start(){
+        if(mTimer != null){
+            mTimer.start();
+        }
+        return mInstance;
     }
 
     /**

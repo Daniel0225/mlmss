@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <declare-styleable name="TitleBar">
+        <attr name="mTitle" format="string"/>
+        <attr name="bgColor" format="color"/>
+        <attr name="rightIcon" format="reference" />
+        <attr name="leftIcon" format="reference" />
+        <attr name="action" format="string" />
+        <attr name="actionIcon" format="reference" />
+
+    </declare-styleable>
+    
+    <item name="titlebar" type="id"/>
+    
+    <style name="titlebarstyle">
+        <item name="android:id">@id/titlebar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+</resources>

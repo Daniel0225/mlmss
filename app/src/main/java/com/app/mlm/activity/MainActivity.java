@@ -1,14 +1,19 @@
 package com.app.mlm.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
-import com.app.mlm.activity.order.OrderPayActivity;
+import com.app.mlm.dialog.SearchDialog;
+import com.app.mlm.fragment.MainFragment;
 import com.app.mlm.widget.CoustomTopView;
 
 import butterknife.Bind;
@@ -27,12 +32,9 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity {
     @Bind(R.id.topView)
     CoustomTopView topView;
-    @Bind(R.id.quhuo)
-    LinearLayout quhuo;
-    @Bind(R.id.gouwuche)
-    LinearLayout gouwuche;
-    @Bind(R.id.huodong)
-    LinearLayout huodong;
+    public FragmentManager manager = getSupportFragmentManager();
+    @Bind(R.id.rlSearch)
+    RelativeLayout rlSearch;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -44,18 +46,38 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initView();
     }
 
-    @OnClick({R.id.quhuo, R.id.gouwuche, R.id.huodong})
+    private void initView() {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.container, new MainFragment());
+        transaction.commit();
+    }
+
+    @OnClick({R.id.rlSearch})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.quhuo:
-                break;
-            case R.id.gouwuche:
-                break;
-            case R.id.huodong:
-                startActivities(OrderPayActivity.class);
+            case R.id.rlSearch:
+                SearchDialog dialog = new SearchDialog(this);
+                dialog.show();
                 break;
         }
+    }
+
+    public void addFragment(Fragment fragment) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.window_in, R.anim.window_in_b, R.anim.window_out, R.anim.window_out_b);
+        transaction.add(R.id.container, fragment);
+        transaction.addToBackStack(fragment.getClass().getSimpleName());
+        transaction.commit();
+    }
+
+    public void removeFragment() {
+        manager.popBackStack();
+    }
+
+    public void setSearchLayoutVisible(int visibility){
+        this.rlSearch.setVisibility(visibility);
     }
 }

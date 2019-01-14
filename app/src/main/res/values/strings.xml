@@ -3,8 +3,20 @@
     <string name="tab_quhuo">取货</string>
     <string name="tab_gouwuche">购物车</string>
     <string name="tab_huodong">活动</string>
+    <string name="hint_search">输入货道号快速搜索商品</string>
+    <string name="buy_imm">立即购买</string>
+    <string name="add_cart">加入购物车</string>
+    <string name="goto_pay">去支付</string>
+    <string name="title_quhuo">取货</string>
+    <string name="title_chuhuo">出货</string>
+    <string name="scaner_code">请打开微信扫描二维码取货</string>
+    <string name="pay_success">您已支付成功！</string>
+    <string name="chuhuo_msg">正在为您取货，请勿离开，喵~</string>
 
     <!--支付订单-->
     <string name="pay_order">支付订单</string>
     <string name="pay_price">支付金额</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

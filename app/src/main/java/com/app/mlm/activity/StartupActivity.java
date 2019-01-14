@@ -27,6 +27,7 @@ public class StartupActivity extends BaseActivity {
             @Override
             public void run() {
                 MainActivity.start(mContext);
+                finish();
             }
         }, 1000);
     }

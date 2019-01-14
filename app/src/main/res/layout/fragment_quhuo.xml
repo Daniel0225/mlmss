@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainBackground"
+    android:clickable="true"
+    tools:context=".fragment.QuhuoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/whiteColor"
+            >
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="50dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_height="40dp"
+                android:src="@drawable/back"
+                android:paddingLeft="15dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/title_quhuo"
+                android:gravity="center"
+                android:textColor="@color/text_dark"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/tvCountDown"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:text="60s"
+                android:gravity="center"
+                android:textColor="@color/text_nomorl"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/ivCode"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                android:background="@color/text_light"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scaner_code"
+                android:textColor="@color/text_nomorl"
+                android:textSize="12sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/ivCode"
+                android:paddingTop="5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_above="@id/ivCode"
+                android:paddingBottom="15dp"
+                >
+
+                <EditText
+                    android:id="@+id/etQuhuoCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_nomorl"
+                    android:focusable="false"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:background="@drawable/shape_white_lt_lb"
+                    />
+
+                <TextView
+                    android:id="@+id/tvQuhuo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/title_quhuo"
+                    android:background="@drawable/shape_blue_rt_rb"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/inputGridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:listSelector="@color/transparent"
+            android:numColumns="3"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:background="@color/whiteColor"
+            />
+    </LinearLayout>
+</FrameLayout>

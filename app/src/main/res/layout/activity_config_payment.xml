@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".bms.activity.ConfigPaymentActivity">
+
+    <com.app.mlm.widget.titilebar.TitleBar
+        style="@style/titlebarstyle"
+        app:mTitle="支付配置"
+        />
+
+    <ListView
+        android:layout_marginTop="10dp"
+        android:id="@+id/lvPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:dividerHeight="0.5dp"
+        android:divider="@color/transparent"
+        android:background="@color/mainBackground"
+        />
+
+    <TextView
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:text="应用"
+        android:textSize="15sp"
+        android:textColor="@color/whiteColor"
+        android:background="@drawable/shape_blue"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+</LinearLayout>
