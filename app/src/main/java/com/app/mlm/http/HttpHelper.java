@@ -2,6 +2,7 @@ package com.app.mlm.http;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.allen.library.RxHttpUtils;
 import com.allen.library.config.OkHttpConfig;
@@ -21,7 +22,7 @@ import okhttp3.OkHttpClient;
  * @describe : 初始化网络框架
  */
 public class HttpHelper {
-    public static String HOST = "http://www.baidu.com";
+    public static String HOST = "http://47.106.143.212:8080/";
 
     /**
      * 初始化网络请求
@@ -59,7 +60,6 @@ public class HttpHelper {
                 //全局是否打开请求log日志
                 .setDebug(false)
                 .build();
-
         RxHttpUtils
                 .getInstance()
                 .init(application)

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +14,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allen.library.RxHttpUtils;
+import com.allen.library.base.BaseObserver;
 import com.app.mlm.R;
 import com.app.mlm.activity.MainActivity;
 import com.app.mlm.adapter.ColumnGoodsAdapter;
+import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
+import com.app.mlm.http.ApiService;
+import com.app.mlm.http.bean.BaseBean;
 import com.app.mlm.widget.SpacesItemDecoration;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,7 +78,30 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        RxHttpUtils.createApi(ApiService.class)
+            .getHomeGoodsList("0000003")
+            .subscribeOn(Schedulers.io())
+            .subscribe(new BaseObserver<BaseBean>(getActivity()) {
+                @Override
+                public void doOnSubscribe(Disposable d) {
 
+                }
+
+                @Override
+                public void doOnError(String errorMsg) {
+
+                }
+
+                @Override
+                public void doOnNext(BaseBean baseBean) {
+                    List<GoodsInfo> data = (List<GoodsInfo>) baseBean.getData();
+                }
+
+                @Override
+                public void doOnCompleted() {
+
+                }
+            });
     }
 
     @Override
