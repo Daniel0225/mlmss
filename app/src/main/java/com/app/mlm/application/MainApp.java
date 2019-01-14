@@ -1,6 +1,7 @@
 package com.app.mlm.application;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.app.mlm.http.HttpHelper;
 
@@ -13,7 +14,7 @@ import com.app.mlm.http.HttpHelper;
  */
 public class MainApp extends Application {
     private static MainApp appInstance;
-
+    public SharedPreferences mShard;
     public static MainApp getAppInstance() {
         return appInstance;
     }
@@ -21,6 +22,9 @@ public class MainApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        appInstance = this;
+        initServerState();
+        initRxHttp();
     }
 
     /**
@@ -29,4 +33,9 @@ public class MainApp extends Application {
     private void initRxHttp() {
         HttpHelper.initRxHttp(MainApp.getAppInstance());
     }
+
+    private void initServerState() {
+        mShard = getSharedPreferences("mainappmkf", MODE_PRIVATE);
+    }
+
 }
