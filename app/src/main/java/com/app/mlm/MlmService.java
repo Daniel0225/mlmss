@@ -30,7 +30,7 @@ public class MlmService extends Service {
     private static final long HEART_BEAT_RATE = 15 * 1000;//每隔15秒进行一次对长连接的心跳检测
     private static WebSocket mWebSocket;
     Handler handler = new Handler();
-    private String host_ip = "";//可替换为自己的主机名和端口号
+    private String host_ip = "ws://47.106.143.212:8080";//可替换为自己的主机名和端口号
     private Handler mHandler = new Handler();
     private int TIME = 10000;  //每隔1s执行一次.
     private long sendTime = 0L;
@@ -119,8 +119,8 @@ public class MlmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        new InitSocketThread().start();
         return super.onStartCommand(intent, flags, startId);
-        //  getIp();
     }
 
     @Override

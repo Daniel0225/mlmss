@@ -1,16 +1,15 @@
 package com.app.mlm.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
-import com.app.mlm.activity.MainActivity;
+import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.adapter.ShopCartListAdapter;
 import com.app.mlm.bean.GoodsInfo;
 
@@ -75,6 +74,8 @@ public class ShopCartFragment extends BaseFragment {
                 mActivity.removeFragment();
                 break;
             case R.id.tvPay:
+                Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                mActivity.startActivity(intent);
                 break;
         }
     }

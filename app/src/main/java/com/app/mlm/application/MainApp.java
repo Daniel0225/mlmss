@@ -2,6 +2,7 @@ package com.app.mlm.application;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.support.multidex.MultiDex;
 
 import com.app.mlm.http.HttpHelper;
 
@@ -23,6 +24,7 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
         appInstance = this;
+        MultiDex.install(this);
         initServerState();
         initRxHttp();
     }

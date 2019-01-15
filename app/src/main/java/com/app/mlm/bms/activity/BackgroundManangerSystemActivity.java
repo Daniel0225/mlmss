@@ -10,7 +10,6 @@ import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -50,7 +49,8 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
             case R.id.zhifupeizhi: //支付配置
                 startActivity(new Intent(this, ConfigPaymentActivity.class));
                 break;
-            case R.id.huodaopeizhi: //货道测试
+            case R.id.huodaopeizhi: //货道配置
+                startActivity(new Intent(this, CargoAllocationActivity.class));
                 break;
             case R.id.tongbupeizhi: //同步配置
                 startActivity(new Intent(this, ConfigSyncActivity.class));

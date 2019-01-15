@@ -1,6 +1,5 @@
 package com.app.mlm.activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.app.mlm.MlmService;
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
 import com.app.mlm.dialog.SearchDialog;
@@ -30,9 +30,9 @@ import butterknife.OnClick;
  * @email : xing.luo@taojiji.com
  */
 public class MainActivity extends BaseActivity {
+    public FragmentManager manager = getSupportFragmentManager();
     @Bind(R.id.topView)
     CoustomTopView topView;
-    public FragmentManager manager = getSupportFragmentManager();
     @Bind(R.id.rlSearch)
     RelativeLayout rlSearch;
 
@@ -47,6 +47,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        Intent service = new Intent(this, MlmService.class);
+        startService(service);
     }
 
     private void initView() {

@@ -33,6 +33,9 @@
                 <data android:scheme="mlm" />
             </intent-filter>
         </activity>
+        <!-- 后台服务-长连接 -->
+        <service android:name=".MlmService" />
+
         <!-- 首页 -->
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ScreenProtectActivity" />
@@ -41,6 +44,9 @@
         <activity android:name=".bms.activity.ConfigPaymentActivity" />
         <activity android:name=".bms.activity.ConfigSyncActivity" />
         <activity android:name=".bms.activity.TemperatureControlActivity"></activity>
+        <!-- 货道配置 -->
+        <activity android:name=".bms.activity.CargoAllocationActivity"></activity>
+
     </application>
 
 </manifest>
