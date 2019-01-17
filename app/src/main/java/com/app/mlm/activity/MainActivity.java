@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
 
     public void addFragment(Fragment fragment) {
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.window_in, R.anim.window_in_b, R.anim.window_out, R.anim.window_out_b);
+        transaction.setCustomAnimations(R.anim.push_bottom_in, R.anim.push_bottom_in, R.anim.push_bottom_out, R.anim.push_bottom_out);
         transaction.add(R.id.container, fragment);
         transaction.addToBackStack(fragment.getClass().getSimpleName());
         transaction.commit();

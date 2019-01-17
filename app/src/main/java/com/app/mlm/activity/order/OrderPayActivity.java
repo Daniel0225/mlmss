@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mlm.R;
@@ -15,7 +15,7 @@ import com.app.mlm.utils.TimeCountUtils;
  */
 
 public class OrderPayActivity extends AppCompatActivity {
-    ImageView imageView;
+    LinearLayout imageView;
     TimeCountUtils timeCount;
     TextView count_down;
 
@@ -27,7 +27,7 @@ public class OrderPayActivity extends AppCompatActivity {
     }
 
     public void init() {
-        imageView = (ImageView) findViewById(R.id.back);
+        imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
