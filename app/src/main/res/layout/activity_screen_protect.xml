@@ -1,8 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.ScreenProtectActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <com.app.mlm.widget.CoustomTopView
+        android:id="@+id/topView"
+        android:background="@color/colorPrimary"
+        app:ctv_height="75"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/whiteColor"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        >
+        <ImageView
+            android:id="@+id/ivCode"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:background="@color/mainBackground"
+            android:layout_marginRight="15dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/saomaguanzhu"
+            android:layout_alignTop="@id/ivCode"
+            android:layout_toRightOf="@id/ivCode"
+            android:paddingTop="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/text_dark"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/click_bug"
+            android:textColor="@color/whiteColor"
+            android:background="@drawable/shape_blue"
+            android:layout_alignBottom="@id/ivCode"
+            android:layout_toRightOf="@id/ivCode"
+            android:paddingTop="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="5dp"
+            />
+    </RelativeLayout>
+</LinearLayout>

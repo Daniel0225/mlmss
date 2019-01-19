@@ -58,6 +58,18 @@ public abstract class BaseDialog  extends Dialog {
         this.isFullScreen = isFullScreen;
     }
 
+    public BaseDialog(Context context, int layoutResID, boolean isFullScreen, int gravity) {
+        super(context, R.style.NoBGDialog);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.mContext = context;
+        mDialogWindow = this.getWindow();
+        mDialogWindow.setGravity(gravity);
+        mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
+        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+        this.mLayoutResID = layoutResID;
+        this.isFullScreen = isFullScreen;
+    }
+
     public BaseDialog(Context context, int layoutResID, int gravity) {
         super(context, R.style.NoBGDialog);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);

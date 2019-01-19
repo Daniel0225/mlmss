@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.app.mlm.countdown.CountDownManager;
+import com.app.screenprotect.base.BaseDispatchActivity;
 
 /**
  * @author :  luo.xing
@@ -17,7 +18,7 @@ import com.app.mlm.countdown.CountDownManager;
  * @date : 2019/1/2  13:02
  * @describe : Activity基类
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends BaseDispatchActivity {
     protected Context mContext;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

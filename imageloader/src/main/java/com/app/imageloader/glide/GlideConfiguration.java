@@ -44,7 +44,7 @@ import java.io.InputStream;
  * Created by Vea on 2018/9/14
  * ================================================
  */
-@GlideModule(glideName = "GlideJJ")
+@GlideModule(glideName = "GlideApp")
 public class GlideConfiguration extends AppGlideModule {
     public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;//图片缓存文件最大值为100Mb
 

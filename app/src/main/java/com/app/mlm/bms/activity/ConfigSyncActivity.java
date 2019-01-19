@@ -12,6 +12,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 同步配置页
+ */
 public class ConfigSyncActivity extends BaseActivity {
     @Bind(R.id.tvShangpin)
     TextView tvShangpin;

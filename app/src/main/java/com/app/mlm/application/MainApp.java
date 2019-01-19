@@ -2,7 +2,10 @@ package com.app.mlm.application;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 
+import com.app.mlm.greendao.DaoMaster;
+import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
 
 /**
@@ -25,6 +28,7 @@ public class MainApp extends Application {
         appInstance = this;
         initServerState();
         initRxHttp();
+        initGreenDao();
     }
 
     /**
@@ -38,4 +42,18 @@ public class MainApp extends Application {
         mShard = getSharedPreferences("mainappmkf", MODE_PRIVATE);
     }
 
+    /**
+     * 初始化GreenDao,直接在Application中进行初始化操作
+     */
+    private void initGreenDao() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "goodsinfo.db");
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+    }
+
+    private DaoSession daoSession;
+    public DaoSession getDaoSession() {
+        return daoSession;
+    }
 }

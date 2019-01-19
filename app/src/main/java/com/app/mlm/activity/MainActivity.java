@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -42,17 +43,25 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
     }
 
+    @Override
+    public long millisInFuture() {
+        return 1000 * 10;
+    }
+
     private void initView() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, new MainFragment());
         transaction.commit();
+
+        topView.setData(CoustomTopView.TYPE_JPG, "http://att.bbs.duowan.com/forum/201510/15/004345bkeuibigwvupwlxj.gif");
+//        topView.setData(CoustomTopView.TYPE_MP4, "http://120.25.246.21/vrMobile/travelVideo/zhejiang_xuanchuanpian.mp4");
     }
 
     @OnClick({R.id.rlSearch})
@@ -79,5 +88,15 @@ public class MainActivity extends BaseActivity {
 
     public void setSearchLayoutVisible(int visibility){
         this.rlSearch.setVisibility(visibility);
+    }
+
+    @Override
+    public void onTick(long mills) {
+        super.onTick(mills);
+    }
+
+    @Override
+    public void onFinish() {
+        startActivity(new Intent(this, ScreenProtectActivity.class));
     }
 }

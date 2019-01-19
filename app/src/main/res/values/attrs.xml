@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CoustomTopView">
+        <!-- 值为百分比，例如：需要设置高度为四分之一屏幕高度，则值为25 -->
+        <attr name="ctv_height" format="integer" />
+    </declare-styleable>
+</resources>

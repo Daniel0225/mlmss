@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".application.MainApp"
@@ -13,7 +16,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
         <!-- 欢迎页 -->
         <activity
@@ -40,7 +44,9 @@
         <activity android:name=".bms.activity.BackgroundManangerSystemActivity" />
         <activity android:name=".bms.activity.ConfigPaymentActivity" />
         <activity android:name=".bms.activity.ConfigSyncActivity" />
-        <activity android:name=".bms.activity.TemperatureControlActivity"></activity>
+        <activity android:name=".bms.activity.TemperatureControlActivity" />
+        <activity android:name=".bms.activity.ChuhuoTestActivity" />
+        <activity android:name=".bms.activity.ConfigHuodaoActivity"></activity>
     </application>
 
 </manifest>
