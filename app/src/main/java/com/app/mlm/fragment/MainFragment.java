@@ -110,6 +110,19 @@ public class MainFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        recyclerView.scrollToPosition(0);
+        for(int i = 0; i < recyclerView.getChildCount();i ++){
+            if(recyclerView.getChildAt(i) instanceof LinearLayout){
+                if(((LinearLayout)recyclerView.getChildAt(i)).getChildAt(1) instanceof RecyclerView){
+                    ((RecyclerView)((LinearLayout)recyclerView.getChildAt(i)).getChildAt(1)).scrollToPosition(0);
+                }
+            }
+        }
+    }
+
     @OnClick({R.id.quhuo, R.id.gouwuche, R.id.huodong})
     public void onViewClicked(View view) {
         switch (view.getId()) {

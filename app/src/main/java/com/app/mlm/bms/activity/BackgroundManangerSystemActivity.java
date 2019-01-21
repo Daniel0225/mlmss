@@ -10,6 +10,7 @@ import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -43,14 +44,13 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.chuhuoceshi: //出货测试
-                CommonDialog commonDialog = new CommonDialog(this, "标题", "内容", "确定", "取消");
-                commonDialog.show();
+                startActivity(new Intent(this, ChuhuoTestActivity.class));
                 break;
             case R.id.zhifupeizhi: //支付配置
                 startActivity(new Intent(this, ConfigPaymentActivity.class));
                 break;
-            case R.id.huodaopeizhi: //货道配置
-                startActivity(new Intent(this, CargoAllocationActivity.class));
+            case R.id.huodaopeizhi: //货道测试
+                startActivity(new Intent(this, ConfigHuodaoActivity.class));
                 break;
             case R.id.tongbupeizhi: //同步配置
                 startActivity(new Intent(this, ConfigSyncActivity.class));
@@ -63,6 +63,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
                 versionInfoDialog.show();
                 break;
             case R.id.fanhui: //返回
+                finish();
                 break;
             case R.id.state: //状态：正常售卖/系统维护
 

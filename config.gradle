@@ -20,8 +20,9 @@ versions.rxjava2 = "2.1.12"
 versions.rx_android = "2.0.2"
 versions.okhttp = "3.11.0"
 versions.logging_interceptor = "3.8.0"
-versions.videoplayer = "6.2.9"
+versions.videoplayer = "2.9.3"
 versions.circlepb = "1.3.0"
+versions.greendao = "3.2.2"
 ext.versions = versions;
 
 def deps = [:]
@@ -49,7 +50,8 @@ deps.rx_android = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
 deps.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
 deps.logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.logging_interceptor"
 deps.constraint = 'com.android.support.constraint:constraint-layout:1.1.3'
-deps.videoplayer = "cn.jzvd:jiaozivideoplayer:$versions.videoplayer"
+deps.videoplayer = "com.google.android.exoplayer:exoplayer:$versions.videoplayer"
 deps.circlepb = "com.dinuscxj:circleprogressbar:$versions.circlepb"
+deps.greendao = "org.greenrobot:greendao:$versions.greendao"
 
 ext.deps = deps

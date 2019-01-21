@@ -21,7 +21,7 @@ import java.util.List;
  * @author :  luo.xing
  * @version : 1.0.0
  * @package : com.app.mlm.adapter
- * @fileName : RowGoodsAdapter
+ * @fileName : CHRowGoodsAdapter
  * @date : 2019/1/3  20:32
  * @describe : 多列商品Adapter
  * @org : www.taojiji.com

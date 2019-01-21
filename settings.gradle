@@ -1,1 +1,1 @@
-include ':app', ':rxretrofit', ':imageloader'
+include ':app', ':rxretrofit', ':imageloader', ':screenprotect'

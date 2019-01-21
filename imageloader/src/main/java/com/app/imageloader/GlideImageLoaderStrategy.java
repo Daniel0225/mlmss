@@ -21,7 +21,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.app.imageloader.glide.GlideAppliesOptions;
-import com.app.imageloader.glide.GlideJJ;
+import com.app.imageloader.glide.GlideApp;
 import com.app.imageloader.glide.GlideRequest;
 import com.app.imageloader.glide.GlideRequests;
 import com.app.imageloader.utils.PlugImgLoadUtils;
@@ -59,7 +59,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         }
 
         GlideRequests requests;
-        requests = GlideJJ.with(ctx);//如果context是activity则自动使用Activity的生命周期
+        requests = GlideApp.with(ctx);//如果context是activity则自动使用Activity的生命周期
 
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
@@ -133,12 +133,12 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         }
 
         if (config.getImageView() != null) {
-            GlideJJ.get(ctx).getRequestManagerRetriever().get(ctx).clear(config.getImageView());
+            GlideApp.get(ctx).getRequestManagerRetriever().get(ctx).clear(config.getImageView());
         }
 
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
-                GlideJJ.get(ctx).getRequestManagerRetriever().get(ctx).clear(imageView);
+                GlideApp.get(ctx).getRequestManagerRetriever().get(ctx).clear(imageView);
             }
         }
     }

@@ -14,6 +14,7 @@
         <com.app.mlm.widget.CoustomTopView
             android:id="@+id/topView"
             android:background="@color/colorPrimary"
+            app:ctv_height="25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

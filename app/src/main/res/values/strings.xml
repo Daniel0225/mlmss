@@ -12,6 +12,8 @@
     <string name="scaner_code">请打开微信扫描二维码取货</string>
     <string name="pay_success">您已支付成功！</string>
     <string name="chuhuo_msg">正在为您取货，请勿离开，喵~</string>
+    <string name="saomaguanzhu">扫码关注“咪哩猫”微信公众号\n更多优惠等你来！</string>
+    <string name="click_bug">点击购物</string>
 
     <!--支付订单-->
     <string name="pay_order">支付订单</string>

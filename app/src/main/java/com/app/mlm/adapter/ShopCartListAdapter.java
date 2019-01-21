@@ -8,8 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.imageloader.ImageConfigImpl;
+import com.app.imageloader.ImageLoader;
 import com.app.mlm.R;
 import com.app.mlm.bean.GoodsInfo;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +66,12 @@ public class ShopCartListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        ImageLoader.instance().loadImage(mContext,
+            ImageConfigImpl
+                .builder()
+                .url("http://pic1.nipic.com/2008-12-30/200812308231244_2.jpg")
+                .imageView(holder.ivGoodsImg)
+                .build());
         return convertView;
     }
 

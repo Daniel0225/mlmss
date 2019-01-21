@@ -87,4 +87,5 @@ public abstract class BaseActivity extends AppCompatActivity implements ITitleBa
     public boolean showRightIcon(){
         return false;
     }
+
 }
