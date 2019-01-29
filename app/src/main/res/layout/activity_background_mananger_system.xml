@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +8,9 @@
     <LinearLayout
         android:id="@+id/menuLayout"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,13 +20,13 @@
             android:paddingRight="30dp"
             >
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/chuhuoceshi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -37,22 +36,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="出货测试"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/zhifupeizhi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -62,22 +61,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="支付配置"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/huodaopeizhi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -87,22 +86,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="货道配置"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/tongbupeizhi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -112,11 +111,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="同步配置"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -124,19 +123,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:layout_marginTop="20dp"
             >
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/wendukongzhi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -146,22 +145,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="温度控制"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/banbenxinxi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -171,22 +170,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="版本信息"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/fanhui"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -196,21 +195,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text="返回"
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="invisible"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="invisible"
                 >
                 <ImageView
                     android:layout_width="50dp"
@@ -219,11 +218,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:text=""
                     android:textColor="@color/text_nomorl"
                     android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -232,12 +231,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
+        android:layout_below="@+id/menuLayout"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/start_scan"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="开始扫描"
+            android:textColor="@color/withe"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/stop_scan"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="打开密钥"
+            android:textColor="@color/withe"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/menuLayout"
         android:layout_marginBottom="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         >
         <ImageView
             android:layout_width="12dp"
@@ -248,26 +276,26 @@
         <TextView
             android:id="@+id/location"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
             android:text="xxxxxxx01号柜"
             android:textColor="@color/text_nomorl"
             android:textSize="15sp"
-            android:paddingLeft="5dp"
             />
 
         <TextView
             android:id="@+id/state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="正常售卖"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/whiteColor"
             android:background="@drawable/shape_blue"
-            android:textSize="15sp"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:text="正常售卖"
+            android:textColor="@color/whiteColor"
+            android:textSize="15sp"
             />
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.app.mlm.bean.AndroidHeartBeat;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -30,7 +31,8 @@ public class MlmService extends Service {
     private static final long HEART_BEAT_RATE = 15 * 1000;//每隔15秒进行一次对长连接的心跳检测
     private static WebSocket mWebSocket;
     Handler handler = new Handler();
-    private String host_ip = "ws://47.106.143.212:8080";//可替换为自己的主机名和端口号
+    AndroidHeartBeat heart;
+    private String host_ip = "ws://47.106.143.212:65132";//可替换为自己的主机名和端口号
     private Handler mHandler = new Handler();
     private int TIME = 10000;  //每隔1s执行一次.
     private long sendTime = 0L;
@@ -40,7 +42,10 @@ public class MlmService extends Service {
         public void run() {
             if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
                 try {
-                    String json = new Gson().toJson("123");
+                    heart = new AndroidHeartBeat();
+                    heart.setVmCode("0000051");
+                    heart.setBusType("heartbeat");
+                    String json = new Gson().toJson(heart);
                     boolean isSuccess = mWebSocket.send(json);//发送一个空消息给服务器，通过发送消息的成功失败来判断长连接的连接状态
                     Log.e("--心跳包", json);
                     if (!isSuccess) {//长连接已断开

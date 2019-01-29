@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.app.mlm.MlmService;
 import com.app.mlm.R;
+import com.app.mlm.ServiceTest;
 import com.app.mlm.activity.base.BaseActivity;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
@@ -36,6 +35,7 @@ public class MainActivity extends BaseActivity {
     CoustomTopView topView;
     @Bind(R.id.rlSearch)
     RelativeLayout rlSearch;
+    private ServiceTest.Mybind mybind;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -48,8 +48,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
-        Intent service = new Intent(this, MlmService.class);
-        startService(service);
+        //  startService();
+        // bindService();
     }
 
     @Override
@@ -101,4 +101,43 @@ public class MainActivity extends BaseActivity {
     public void onFinish() {
         startActivity(new Intent(this, ScreenProtectActivity.class));
     }
+
+  /*  public void startService(){
+        Intent startService = new Intent(MainActivity.this,ServiceTest.class);
+        startService(startService);
+    }
+*/
+  /*  public void stopService(){
+        Intent stopService = new Intent(MainActivity.this,ServiceTest.class);
+        stopService(stopService);
+    }
+
+    public void bindService(){
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.SnbcBvmService");
+        intent.setPackage("com.app.mlm");
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    public void unbindService(){
+        unbindService(connection);
+    }
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            bvmAidlInterface= BVMAidlInterface.Stub.asInterface(service);
+            try {
+                bvmAidlInterface.BVMOpenScanDev();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };*/
+
 }

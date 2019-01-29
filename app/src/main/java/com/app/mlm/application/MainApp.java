@@ -1,9 +1,12 @@
 package com.app.mlm.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.multidex.MultiDex;
 
+import com.app.mlm.Meassage.MyClient;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
@@ -18,6 +21,9 @@ import com.app.mlm.http.HttpHelper;
 public class MainApp extends Application {
     private static MainApp appInstance;
     public SharedPreferences mShard;
+    MyClient myclient;
+    private DaoSession daoSession;
+
     public static MainApp getAppInstance() {
         return appInstance;
     }
@@ -29,6 +35,16 @@ public class MainApp extends Application {
         initServerState();
         initRxHttp();
         initGreenDao();
+        myclient = new MyClient();
+        myclient.connect();
+       /* Intent service = new Intent(this, BackService.class);
+        startService(service);*/
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     /**
@@ -52,7 +68,6 @@ public class MainApp extends Application {
         daoSession = daoMaster.newSession();
     }
 
-    private DaoSession daoSession;
     public DaoSession getDaoSession() {
         return daoSession;
     }
