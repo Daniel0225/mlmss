@@ -10,6 +10,18 @@ import com.app.mlm.Meassage.MyClient;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.cookie.CookieJarImpl;
+import com.lzy.okgo.cookie.store.SPCookieStore;
+import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+
+import org.litepal.LitePal;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+
+import okhttp3.OkHttpClient;
 
 /**
  * @version : 1.0.0
@@ -39,6 +51,27 @@ public class MainApp extends Application {
         myclient.connect();
        /* Intent service = new Intent(this, BackService.class);
         startService(service);*/
+        initOkGo();
+        // 初始化LitePal数据库
+        LitePal.initialize(this);
+    }
+
+    private void initOkGo() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        //使用sp保持cookie，如果cookie不过期，则一直有效
+        builder.cookieJar(new CookieJarImpl(new SPCookieStore(this)));
+        builder.connectTimeout(10000, TimeUnit.MILLISECONDS);//超时时间10秒
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
+        //log打印级别，决定了log显示的详细程度
+        loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
+        //log颜色级别，决定了log在控制台显示的颜色
+        loggingInterceptor.setColorLevel(Level.INFO);
+        builder.addInterceptor(loggingInterceptor);
+
+        OkGo.getInstance().init(this)
+                .setOkHttpClient(builder.build())
+                .setCacheMode(CacheMode.NO_CACHE)
+                .setRetryCount(0);
     }
 
     @Override

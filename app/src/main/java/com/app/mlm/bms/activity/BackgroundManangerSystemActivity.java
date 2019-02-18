@@ -12,9 +12,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.ServiceTest;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
+import com.app.mlm.utils.PreferencesUtil;
 import com.snbc.bvm.BVMAidlInterface;
 
 import butterknife.Bind;
@@ -54,6 +56,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
         intent.setAction("android.intent.action.SnbcBvmService");
         intent.setPackage("com.snbc.bvm");
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        PreferencesUtil.putString(Constants.VMCODE, "0000051");
     }
 
     @Override

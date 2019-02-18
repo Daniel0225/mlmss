@@ -3,14 +3,19 @@ package com.app.mlm.bms.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.app.mlm.R;
-import com.app.mlm.bms.adapter.CHColumnGoodsAdapter;
+import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.HDColumnGoodsAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
+import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +34,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    List<List<GoodsInfo>> allDataList = new ArrayList<>();
+
     @Override
     protected int provideLayoutResId() {
         return R.layout.activity_config_huodao;
@@ -41,7 +48,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
         recyclerView.addItemDecoration(new SpacesItemDecoration(8,8,0,0));
-        HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, null);
+        allDataList = getData();
+        HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
     }
 
@@ -82,10 +90,43 @@ public class ConfigHuodaoActivity extends BaseActivity {
             .setCommitClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // do someting
+                    getUpJson();
                 }
             });
         dialog.show();
+    }
+
+    private List<List<GoodsInfo>> getData() {
+        List<List<GoodsInfo>> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(getDefaultData());
+        }
+        return list;
+    }
+
+    private List<GoodsInfo> getDefaultData() {
+        List<GoodsInfo> goodsInfoList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            GoodsInfo goodsInfo = new GoodsInfo();
+            goodsInfo.setMdseName("请补货");
+            goodsInfo.setMdseUrl("empty");
+            goodsInfo.setMdsePrice("0");
+            goodsInfoList.add(goodsInfo);
+        }
+        return goodsInfoList;
+    }
+
+    /**
+     * 生成提交服务器的json数据
+     */
+    private String getUpJson() {
+        List<GoodsInfo> list = new ArrayList<>();
+        for (int i = 0; i < allDataList.size(); i++) {
+            list.addAll(allDataList.get(i));
+        }
+        String upJsonString = FastJsonUtil.createJsonString(list);
+        Log.e("Tag", upJsonString);
+        return upJsonString;
     }
 
     @Override

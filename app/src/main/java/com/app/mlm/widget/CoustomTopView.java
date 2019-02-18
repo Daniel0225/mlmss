@@ -6,19 +6,17 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.app.imageloader.GlideImageLoaderStrategy;
 import com.app.imageloader.glide.GlideApp;
 import com.app.mlm.R;
 import com.app.mlm.utils.PhoneUtil;
-import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackPreparer;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -26,9 +24,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.EventLogger;
 
 /**
  * @author :  luo.xing
@@ -111,6 +107,9 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         Uri uri = Uri.parse(mSourceUrl);
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource);
+        player.setPlayWhenReady(true);
+        player.setRepeatMode(Player.REPEAT_MODE_ALL);
+
     }
 
     @Override

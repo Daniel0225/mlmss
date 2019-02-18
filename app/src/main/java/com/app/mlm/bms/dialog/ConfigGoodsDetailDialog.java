@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
-import com.app.mlm.dialog.GoodsDetailDialog;
+import com.app.mlm.http.bean.ProductInfo;
+import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -58,15 +60,31 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
     TextView tvClear;
     @Bind(R.id.tvFillAll)
     TextView tvFillAll;
+    private ProductInfo mProductInfo;
+    private ProductConfigListener productConfigListener;
     private GoodsInfo goodsInfo;
 
     public ConfigGoodsDetailDialog(Context context, GoodsInfo goodsInfo) {
         super(context, R.layout.dialog_config_goods_detail, true, Gravity.CENTER);
+        this.goodsInfo = goodsInfo;
+    }
+
+    public void showMyDialog(ProductConfigListener listener) {
+        this.productConfigListener = listener;
+        show();
     }
 
     @Override
     public void initView() {
-
+        tvGoodsName.setText(goodsInfo.getMdseName());
+        tvKucun.setText("库存：" + goodsInfo.getClcCapacity());
+        if (goodsInfo.getMdseUrl().equals("empty")) {
+            ivGoodsImg.setImageResource(R.drawable.empty);
+        } else {
+            Glide.with(MainApp.getAppInstance()).load(goodsInfo.getMdseUrl()).into(ivGoodsImg);
+        }
+        etPrice.setText(String.valueOf(goodsInfo.getMdsePrice()));
+        etCapcity.setText(String.valueOf(goodsInfo.getClcCapacity()));
     }
 
     @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll})
@@ -76,6 +94,13 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 dismiss();
                 break;
             case R.id.commit:
+                GoodsInfo goodsInfo = new GoodsInfo();
+                goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
+                goodsInfo.setMdseName(mProductInfo.getMdseName());
+                goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString()));
+                goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString()));
+                goodsInfo.setMdsePrice(String.valueOf(mProductInfo.getMdsePrice()));
+                productConfigListener.confirm(goodsInfo);
                 dismiss();
                 break;
             case R.id.tvChangeGoods:
@@ -88,8 +113,28 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         }
     }
 
+    /**
+     * 更换商品之后刷新UI
+     */
+    private void refreshUi() {
+        tvGoodsName.setText(mProductInfo.getMdseName());
+        tvKucun.setText("库存：0");
+        Glide.with(getContext()).load(mProductInfo.getMdseUrl()).into(ivGoodsImg);
+        etPrice.setText(String.valueOf(mProductInfo.getMdsePrice()));
+    }
+
     private void showGoodsListDialog() {
         ChooseGoodsDialog dialog = new ChooseGoodsDialog(mContext);
-        dialog.show();
+        dialog.showDialog(new ChooseGoodsDialog.SelectProductListener() {
+            @Override
+            public void select(ProductInfo productInfo) {
+                mProductInfo = productInfo;
+                refreshUi();
+            }
+        });
+    }
+
+    public interface ProductConfigListener {
+        void confirm(GoodsInfo goodsInfo);
     }
 }

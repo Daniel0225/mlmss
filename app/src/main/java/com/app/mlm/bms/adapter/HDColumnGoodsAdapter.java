@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,18 +49,19 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
 
     @Override
     public void onBindViewHolder(@NonNull RowGoodsViewHolder rowGoodsViewHolder, int i) {
+        Log.e("TAG", i + "");
         LinearLayoutManager ms = new LinearLayoutManager(context);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
-        HDRowGoodsAdapter adapter = new HDRowGoodsAdapter(context, null);
+        HDRowGoodsAdapter adapter = new HDRowGoodsAdapter(context, data.get(i));
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
         rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 2));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));
         rowGoodsViewHolder.tvSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showSortDialog(context, data.get(i));
-                showSortDialog(context, new ArrayList<GoodsInfo>());
+                showSortDialog(context, data.get(i));
+//                showSortDialog(context, new ArrayList<GoodsInfo>());
             }
         });
     }
@@ -71,7 +73,7 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
 
     @Override
     public int getItemCount() {
-        return 15;
+        return data.size();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {
@@ -83,4 +85,6 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
             super(itemView);
         }
     }
+
+
 }

@@ -8,15 +8,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
-import com.app.mlm.bean.GoodsInfo;
+import com.app.mlm.application.MainApp;
+import com.app.mlm.http.bean.ProductInfo;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.MyViewHolder>{
 
-    private List<GoodsInfo> mList;
+    private List<ProductInfo> mList;
     private CustomClickListener listener;
-    public ChooseGoodsAdapter(List<GoodsInfo> mList, CustomClickListener listener) {
+
+    public ChooseGoodsAdapter(List<ProductInfo> mList, CustomClickListener listener) {
         this.mList = mList;
         this.listener = listener;
     }
@@ -30,7 +33,10 @@ public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-//        GoodsInfo item = mList.get(position);
+        ProductInfo item = mList.get(position);
+        holder.tvGoodsName.setText(item.getMdseName());
+        holder.tvGoodsPrice.setText("¥ " + item.getMdsePrice());
+        Glide.with(MainApp.getAppInstance()).load(item.getMdseUrl()).into(holder.ivGoodsImg);
         holder.mRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +47,11 @@ public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.
 
     @Override
     public int getItemCount() {
-        return 30;
+        return mList.size();
+    }
+
+    public interface CustomClickListener {
+        void onClick(int position);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -56,9 +66,5 @@ public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.
             tvGoodsPrice = (TextView)itemView.findViewById(R.id.tvGoodsPrice);
             mRoot = itemView.findViewById(R.id.rvRoot);
         }
-    }
-
-    public interface CustomClickListener{
-        void onClick(int position);
     }
 }

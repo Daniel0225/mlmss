@@ -3,20 +3,19 @@ package com.app.mlm.bms.dialog;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.app.mlm.R;
-import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.ChooseGoodsAdapter;
-import com.app.mlm.bms.adapter.DragSortAdapter;
 import com.app.mlm.dialog.BaseDialog;
+import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.widget.SpacesItemDecoration;
-import com.app.mlm.widget.dragsort.ItemTouchHelperCallback;
 import com.app.mlm.widget.titilebar.ITitleBar;
 import com.app.mlm.widget.titilebar.TitleBar;
+
+import org.litepal.LitePal;
+import org.litepal.crud.callback.FindMultiCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +37,24 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar {
     RecyclerView mRecyclerView;
     @Bind(R.id.titlebar)
     TitleBar titleBar;
-    private List<GoodsInfo> data = new ArrayList<>();
+    private List<ProductInfo> data = new ArrayList<>();
     private ChooseGoodsAdapter adapter;
+    private SelectProductListener selectProductListener;
+    private ChooseGoodsAdapter.CustomClickListener listener = new ChooseGoodsAdapter.CustomClickListener() {
+        @Override
+        public void onClick(int position) {
+            selectProductListener.select(data.get(position));
+            dismiss();
+        }
+    };
 
     public ChooseGoodsDialog(Context context) {
         super(context, R.layout.dialog_choose_goods, true, Gravity.CENTER);
+    }
+
+    public void showDialog(SelectProductListener listener) {
+        this.selectProductListener = listener;
+        show();
     }
 
     @Override
@@ -51,17 +63,16 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar {
         titleBar.setRightViewVisibility(View.GONE);
         mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(2, 2, 2, 2));
-        adapter = new ChooseGoodsAdapter(data, listener);
-        mRecyclerView.setAdapter(adapter);
-    }
+        LitePal.findAllAsync(ProductInfo.class).listen(new FindMultiCallback() {
+            @Override
+            public <T> void onFinish(List<T> t) {
+                data = (List<ProductInfo>) t;
+                adapter = new ChooseGoodsAdapter(data, listener);
+                mRecyclerView.setAdapter(adapter);
+            }
+        });
 
-    private ChooseGoodsAdapter.CustomClickListener listener = new ChooseGoodsAdapter.CustomClickListener() {
-        @Override
-        public void onClick(int position) {
-            Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
-            dismiss();
-        }
-    };
+    }
 
     @Override
     public void onRightClicked() {
@@ -76,5 +87,9 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar {
     @Override
     public void onActionClicked() {
 
+    }
+
+    public interface SelectProductListener {
+        void select(ProductInfo productInfo);
     }
 }

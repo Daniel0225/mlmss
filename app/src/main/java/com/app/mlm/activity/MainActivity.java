@@ -6,15 +6,29 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.ServiceTest;
 import com.app.mlm.activity.base.BaseActivity;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.AdBean;
+import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.CoustomTopView;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
+
+import java.io.File;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,6 +50,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.rlSearch)
     RelativeLayout rlSearch;
     private ServiceTest.Mybind mybind;
+    private List<AdBean> adBeanList;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -50,6 +65,21 @@ public class MainActivity extends BaseActivity {
         initView();
         //  startService();
         // bindService();
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)
+                .params(httpParams)
+                .tag(this)
+                .execute(new JsonCallBack<BaseResponse<List<AdBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<AdBean>>> response) {
+
+                        if (response.body().getCode() == 0) {
+                            adBeanList = response.body().data;
+                            setTopViewValue();
+                        }
+                    }
+                });
     }
 
     @Override
@@ -62,8 +92,42 @@ public class MainActivity extends BaseActivity {
         transaction.replace(R.id.container, new MainFragment());
         transaction.commit();
 
-        topView.setData(CoustomTopView.TYPE_JPG, "http://att.bbs.duowan.com/forum/201510/15/004345bkeuibigwvupwlxj.gif");
-//        topView.setData(CoustomTopView.TYPE_MP4, "http://120.25.246.21/vrMobile/travelVideo/zhejiang_xuanchuanpian.mp4");
+//        topView.setData(CoustomTopView.TYPE_JPG, "http://att.bbs.duowan.com/forum/201510/15/004345bkeuibigwvupwlxj.gif");
+        topView.setData(CoustomTopView.TYPE_MP4, "http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
+    }
+
+    /**
+     * 设置顶部图片
+     */
+    private void setTopViewValue() {
+        for (AdBean adBean : adBeanList) {
+            if (adBean.getSuffix().equals("mp4")) {
+                adBean.setUrl("http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
+                downLoadMedia(adBean.getUrl(), adBean.getFileType() + ".mp4");
+            }
+        }
+    }
+
+    /**
+     * 下载视频
+     *
+     * @param
+     */
+    private void downLoadMedia(String url, String fileName) {
+        String cachePath = getExternalCacheDir().getPath();
+        OkGo.<File>get(url)
+                .tag(this)
+                .execute(new FileCallback(cachePath, fileName) {
+                    @Override
+                    public void onSuccess(Response<File> response) {
+
+                    }
+
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        Log.e("Tag", progress.fraction + "");
+                    }
+                });
     }
 
     @OnClick({R.id.rlSearch})

@@ -1,15 +1,27 @@
 package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.bms.dialog.DoneDialog;
 import com.app.mlm.bms.dialog.SyncProgressDialog;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.ProductInfo;
+import com.app.mlm.utils.PreferencesUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
+
+import org.litepal.LitePal;
+
+import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -49,6 +61,7 @@ public class ConfigSyncActivity extends BaseActivity {
             case R.id.syncShangpin:
                 SyncProgressDialog dialog = new SyncProgressDialog(this);
                 dialog.show();
+                syncProduceInfo();
                 break;
             case R.id.syncHuodao:
                 DoneDialog dialog1 = new DoneDialog(this);
@@ -58,4 +71,36 @@ public class ConfigSyncActivity extends BaseActivity {
                 break;
         }
     }
+
+    /**
+     * 同步商品数据
+     */
+    private void syncProduceInfo() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<ProductInfo>>>get(Constants.GET_PRODUCT_PRICE)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<List<ProductInfo>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
+                        if (response.body().getCode() == 0) {
+                            saveProductInfo(response.body().getData());
+                        }
+                    }
+                });
+    }
+
+    private void saveProductInfo(List<ProductInfo> list) {
+        LitePal.deleteAll(ProductInfo.class);
+        for (ProductInfo product : list) {
+            boolean isSuccess = product.save();
+            Log.e("Tag", "isSuccess " + isSuccess);
+        }
+    }
+
+    /**
+     * 同步货道配置
+     */
+
 }

@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
-import com.app.mlm.bms.activity.ChuhuoTestActivity;
-import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.ConfigGoodsDetailDialog;
-import com.app.mlm.bms.dialog.TestingDialog;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +31,7 @@ import java.util.List;
 public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.RowGoodsViewHolder> {
     private Context context;
     private int count = 10;
+    private int selectPosition;//当前操作的位置
     private List<GoodsInfo> data = new ArrayList<>();
     public HDRowGoodsAdapter(Context context, List<GoodsInfo> data){
         this.context = context;
@@ -54,23 +53,41 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
 
     @Override
     public void onBindViewHolder(@NonNull RowGoodsViewHolder viewHolder, int i) {
+
         if (i == count - 1){
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
         }else {
             viewHolder.rvRoot.setBackgroundResource(R.color.whiteColor);
         }
 
+        GoodsInfo goodsInfo = data.get(i);
+        if (goodsInfo.getMdseUrl().equals("empty")) {
+            viewHolder.ivGoodsImg.setImageResource(R.drawable.empty);
+        } else {
+            Glide.with(MainApp.getAppInstance()).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
+        }
+
+        viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+        viewHolder.tvCount.setText(goodsInfo.getClcCapacity() + " / " + goodsInfo.getClCapacity());
+        viewHolder.tvOrderNum.setText(String.valueOf(i + 1));
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showConfigGoodsDetailDialog(null);
+                selectPosition = i;
+                showConfigGoodsDetailDialog(data.get(selectPosition));
             }
         });
     }
 
     private void showConfigGoodsDetailDialog(GoodsInfo goodsInfo) {
         ConfigGoodsDetailDialog dialog = new ConfigGoodsDetailDialog(context, goodsInfo);
-        dialog.show();
+        dialog.showMyDialog(new ConfigGoodsDetailDialog.ProductConfigListener() {
+            @Override
+            public void confirm(GoodsInfo goodsInfo) {
+                data.set(selectPosition, goodsInfo);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
