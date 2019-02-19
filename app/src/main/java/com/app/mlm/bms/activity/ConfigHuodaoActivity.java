@@ -118,7 +118,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 if (code == 1105) {
                     try {
                         //查询层列数
-                        int[] count = MainApp.bvmAidlInterface.BVMInitResultYUANSHIARRAY(1);
+                        int count = MainApp.bvmAidlInterface.BVMInitResultYUANSHIARRAY(1);
                     } catch (RemoteException e) {
                     }
                 }

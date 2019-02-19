@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.ServiceTest;
 import com.app.mlm.activity.base.BaseActivity;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
@@ -50,7 +49,6 @@ public class MainActivity extends BaseActivity {
     CoustomTopView topView;
     @Bind(R.id.rlSearch)
     RelativeLayout rlSearch;
-    private ServiceTest.Mybind mybind;
     private List<AdBean> adBeanList;
 
     public static void start(Context context) {

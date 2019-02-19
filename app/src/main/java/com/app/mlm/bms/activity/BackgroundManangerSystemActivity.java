@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.ServiceTest;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 import com.app.mlm.utils.PreferencesUtil;
 import com.snbc.bvm.BVMAidlInterface;
@@ -89,11 +88,6 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
                 break;
 
         }
-    }
-
-    public void stopService() {
-        Intent stopService = new Intent(BackgroundManangerSystemActivity.this, ServiceTest.class);
-        stopService(stopService);
     }
 
     public void bindService() {

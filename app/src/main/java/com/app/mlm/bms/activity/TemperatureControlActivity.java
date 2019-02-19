@@ -10,7 +10,6 @@ import com.app.mlm.bms.dialog.SigleChoiceDialog;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -57,7 +56,12 @@ public class TemperatureControlActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
+      /*  try {
+            //获取温度
+            int []code=MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }*/
     }
 
     @Override

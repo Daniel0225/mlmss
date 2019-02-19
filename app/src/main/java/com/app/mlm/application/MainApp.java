@@ -14,6 +14,7 @@ import android.support.multidex.MultiDex;
 
 import com.app.mlm.Constants;
 import com.app.mlm.Meassage.MyClient;
+import com.app.mlm.MlmServiceConfigure;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.greendao.DaoMaster;
@@ -94,8 +95,8 @@ public class MainApp extends Application {
         initGreenDao();
         myclient = new MyClient();
         myclient.connect();
-       /* Intent service = new Intent(this, BackService.class);
-        startService(service);*/
+        Intent service = new Intent(this, MlmServiceConfigure.class);
+        startService(service);
         initOkGo();
         // 初始化LitePal数据库
         LitePal.initialize(this);
