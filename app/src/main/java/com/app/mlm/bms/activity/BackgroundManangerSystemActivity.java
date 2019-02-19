@@ -59,7 +59,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.chuhuoceshi, R.id.zhifupeizhi, R.id.huodaopeizhi, R.id.tongbupeizhi, R.id.wendukongzhi, R.id.banbenxinxi, R.id.fanhui, R.id.state, R.id.start_scan, R.id.stop_scan})
+    @OnClick({R.id.chuhuoceshi, R.id.zhifupeizhi, R.id.huodaopeizhi, R.id.tongbupeizhi, R.id.wendukongzhi, R.id.banbenxinxi, R.id.fanhui, R.id.state})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.chuhuoceshi: //出货测试
