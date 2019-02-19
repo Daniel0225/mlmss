@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.app.mlm.R;
 import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.adapter.ShopCartListAdapter;
+import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 
 import java.util.ArrayList;
@@ -19,11 +21,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShopCartFragment extends BaseFragment {
+public class ShopCartFragment extends BaseFragment implements ShopCartListAdapter.ShopCarHandleListener {
     @Bind(R.id.close)
     ImageView close;
     @Bind(R.id.listView)
@@ -36,7 +39,8 @@ public class ShopCartFragment extends BaseFragment {
     TextView tvPay;
     private List<GoodsInfo> data = new ArrayList<>();
     private ShopCartListAdapter adapter;
-
+    private double totalPrice = 0;
+    private int totalNum = 0;
     public ShopCartFragment() {
     }
 
@@ -47,8 +51,23 @@ public class ShopCartFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        adapter = new ShopCartListAdapter(getActivity(), data);
+        data = MainApp.shopCarList;
+        adapter = new ShopCartListAdapter(getActivity(), data, this);
         listView.setAdapter(adapter);
+
+        refreshShopCarInfo();
+    }
+
+    private void refreshShopCarInfo() {
+        totalNum = 0;
+        totalPrice = 0;
+        for (GoodsInfo goodsInfo : data) {
+            totalNum += goodsInfo.getShopCarNum();
+            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
+        }
+
+        tvPrice.setText("¥ " + totalPrice);
+        tvCount.setText(totalNum + "件商品");
     }
 
     @Override
@@ -75,6 +94,8 @@ public class ShopCartFragment extends BaseFragment {
                 break;
             case R.id.tvPay:
                 Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                intent.putExtra("price", totalPrice);
+                intent.putExtra("num", totalNum);
                 mActivity.startActivity(intent);
                 break;
         }
@@ -90,5 +111,37 @@ public class ShopCartFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         mActivity.setSearchLayoutVisible(View.VISIBLE);
+    }
+
+    @Override
+    public void addOne(int position) {
+        int originNum = data.get(position).getShopCarNum();
+        data.get(position).setShopCarNum(originNum + 1);
+        adapter.notifyDataSetChanged();
+        refreshShopCarInfo();
+        MainApp.shopCarList = data;
+        EventBus.getDefault().post(new AddShopCarEvent());
+    }
+
+    @Override
+    public void reduceOne(int position) {
+        int originNum = data.get(position).getShopCarNum();
+        data.get(position).setShopCarNum(originNum - 1);
+        adapter.notifyDataSetChanged();
+        refreshShopCarInfo();
+        MainApp.shopCarList = data;
+        EventBus.getDefault().post(new AddShopCarEvent());
+    }
+
+    @Override
+    public void deleteOne(int position) {
+        data.remove(position);
+        adapter.notifyDataSetChanged();
+        refreshShopCarInfo();
+        MainApp.shopCarList = data;
+        if (data.size() == 0) {
+            mActivity.removeFragment();
+        }
+        EventBus.getDefault().post(new AddShopCarEvent());
     }
 }

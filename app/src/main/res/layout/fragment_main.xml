@@ -21,21 +21,21 @@
         android:background="@color/mainBackground"/>
 
     <LinearLayout
-        android:background="@color/whiteColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
         android:orientation="horizontal"
         >
         <LinearLayout
             android:id="@+id/quhuo"
-            android:foreground="?attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
-            android:paddingTop="5dp"
+            android:orientation="vertical"
             android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             >
             <ImageView
                 android:layout_width="30dp"
@@ -44,31 +44,31 @@
                 />
 
             <TextView
-                android:paddingTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:paddingTop="2dp"
                 android:text="@string/tab_quhuo"
                 android:textColor="@color/text_nomorl"
+                android:textSize="12sp"
                 />
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/gouwuche"
-            android:foreground="?attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="5dp"
+            android:foreground="?attr/selectableItemBackground"
             android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             >
             <LinearLayout
                 android:id="@+id/llCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:orientation="vertical"
                 >
                 <ImageView
                     android:layout_width="30dp"
@@ -77,54 +77,54 @@
                     />
 
                 <TextView
-                    android:paddingTop="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:paddingTop="2dp"
                     android:text="@string/tab_gouwuche"
                     android:textColor="@color/text_nomorl"
+                    android:textSize="12sp"
                     />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvCartPrice"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:textSize="12sp"
-                android:text="￥128.8"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/shape_blue_line"
-                android:layout_centerHorizontal="true"
                 android:layout_alignBottom="@id/llCart"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/shape_blue_line"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:visibility="gone"
                 />
 
             <TextView
                 android:id="@+id/tvCartCount"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:textSize="12sp"
-                android:text="11"
+                android:layout_alignParentTop="@id/llCart"
+                android:layout_alignRight="@id/llCart"
+                android:background="@drawable/shape_red_circle"
                 android:gravity="center"
                 android:textColor="@color/whiteColor"
-                android:background="@drawable/shape_red_circle"
-                android:layout_alignRight="@id/llCart"
-                android:layout_alignParentTop="@id/llCart"
+                android:textSize="12sp"
+                android:visibility="gone"
                 />
 
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/huodong"
-            android:foreground="?attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
-            android:paddingTop="5dp"
+            android:orientation="vertical"
             android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             >
             <ImageView
                 android:layout_width="30dp"
@@ -133,12 +133,12 @@
                 />
 
             <TextView
-                android:paddingTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:paddingTop="2dp"
                 android:text="@string/tab_huodong"
                 android:textColor="@color/text_nomorl"
+                android:textSize="12sp"
                 />
         </LinearLayout>
     </LinearLayout>

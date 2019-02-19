@@ -15,6 +15,8 @@ import com.allen.library.RxHttpUtils;
 import com.allen.library.base.BaseObserver;
 import com.app.mlm.R;
 import com.app.mlm.adapter.ColumnGoodsAdapter;
+import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
@@ -30,6 +32,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -64,6 +69,7 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         LinearLayoutManager ms = new LinearLayoutManager(getActivity());
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
@@ -130,6 +136,7 @@ public class MainFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -186,5 +193,32 @@ public class MainFragment extends BaseFragment {
             goodsInfoList.add(goodsInfo);
         }
         return goodsInfoList;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void onMainThread(AddShopCarEvent addShopCarEvent) {
+        refreshShopCar();
+    }
+
+    /**
+     * 刷新购物车TAB UI
+     */
+    public void refreshShopCar() {
+        int totalNum = 0;
+        double totalPrice = 0;
+        for (GoodsInfo goodsInfo : MainApp.shopCarList) {
+            totalNum += goodsInfo.getShopCarNum();
+            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
+        }
+
+        if (totalNum > 0) {
+            tvCartCount.setVisibility(View.VISIBLE);
+            tvCartPrice.setVisibility(View.VISIBLE);
+            tvCartCount.setText(String.valueOf(totalNum));
+            tvCartPrice.setText("¥ " + totalPrice);
+        } else {
+            tvCartCount.setVisibility(View.GONE);
+            tvCartPrice.setVisibility(View.GONE);
+        }
     }
 }

@@ -95,6 +95,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 break;
             case R.id.commit:
                 GoodsInfo goodsInfo = new GoodsInfo();
+                goodsInfo.setMdseId(mProductInfo.getMdseId());
                 goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
                 goodsInfo.setMdseName(mProductInfo.getMdseName());
                 goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString()));

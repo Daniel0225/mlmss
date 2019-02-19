@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.app.imageloader.ImageConfigImpl;
-import com.app.imageloader.ImageLoader;
 import com.app.mlm.R;
 import com.app.mlm.bean.GoodsInfo;
 import com.bumptech.glide.Glide;
@@ -34,16 +32,18 @@ public class ShopCartListAdapter extends BaseAdapter {
     private Context mContext;
     private List<GoodsInfo> data = new ArrayList<>();
     private LayoutInflater mInflater;
+    private ShopCarHandleListener shopCarHandleListener;
 
-    public ShopCartListAdapter(Context mContext, List<GoodsInfo> data) {
+    public ShopCartListAdapter(Context mContext, List<GoodsInfo> data, ShopCarHandleListener listener) {
         this.mContext = mContext;
         this.data = data;
         this.mInflater = LayoutInflater.from(mContext);
+        this.shopCarHandleListener = listener;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return data.size();
     }
 
     @Override
@@ -66,13 +66,46 @@ public class ShopCartListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.instance().loadImage(mContext,
-            ImageConfigImpl
-                .builder()
-                .url("http://pic1.nipic.com/2008-12-30/200812308231244_2.jpg")
-                .imageView(holder.ivGoodsImg)
-                .build());
+        GoodsInfo goodsInfo = data.get(position);
+        Glide.with(mContext).load(goodsInfo.getMdseUrl()).into(holder.ivGoodsImg);
+        holder.tvGoodsName.setText(goodsInfo.getMdseName());
+        holder.tvGoodsPrice.setText(goodsInfo.getMdsePrice());
+        holder.tvGoodsNum.setText(String.valueOf(goodsInfo.getShopCarNum()));
+
+        if (goodsInfo.getShopCarNum() > 1) {
+            holder.ivJian.setImageResource(R.drawable.jian_nor);
+            holder.ivJian.setEnabled(true);
+        } else {
+            holder.ivJian.setImageResource(R.drawable.jian);
+            holder.ivJian.setEnabled(false);
+        }
+        holder.ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopCarHandleListener.addOne(position);
+            }
+        });
+        holder.ivJian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopCarHandleListener.reduceOne(position);
+            }
+        });
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopCarHandleListener.deleteOne(position);
+            }
+        });
         return convertView;
+    }
+
+    public interface ShopCarHandleListener {
+        void addOne(int position);
+
+        void reduceOne(int position);
+
+        void deleteOne(int position);
     }
 
     static class ViewHolder {
@@ -82,12 +115,15 @@ public class ShopCartListAdapter extends BaseAdapter {
         TextView tvGoodsName;
         @Bind(R.id.tvGoodsPrice)
         TextView tvGoodsPrice;
+        @Bind(R.id.goods_num)
+        TextView tvGoodsNum;
         @Bind(R.id.ivJian)
         ImageView ivJian;
         @Bind(R.id.ivAdd)
         ImageView ivAdd;
+        @Bind(R.id.iv_delete)
+        ImageView ivDelete;
 
         ViewHolder(View view) {ButterKnife.bind(this, view);}
     }
-
 }

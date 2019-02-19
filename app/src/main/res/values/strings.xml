@@ -6,7 +6,8 @@
     <string name="hint_search">输入货道号快速搜索商品</string>
     <string name="buy_imm">立即购买</string>
     <string name="add_cart">加入购物车</string>
-    <string name="goto_pay">去支付</string>
+    <string name="goto_pay">去结算</string>
+    <string name="use_coupon">使用优惠券</string>
     <string name="title_quhuo">取货</string>
     <string name="title_chuhuo">出货</string>
     <string name="scaner_code">请打开微信扫描二维码取货</string>

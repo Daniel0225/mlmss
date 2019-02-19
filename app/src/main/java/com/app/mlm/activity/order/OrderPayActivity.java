@@ -18,6 +18,10 @@ public class OrderPayActivity extends AppCompatActivity {
     LinearLayout imageView;
     TimeCountUtils timeCount;
     TextView count_down;
+    private TextView totalPriceView;
+    private TextView totalNumView;
+    private double totalPrice;
+    private Integer totalNum;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,8 +31,15 @@ public class OrderPayActivity extends AppCompatActivity {
     }
 
     public void init() {
+        totalNum = getIntent().getIntExtra("num", 0);
+        totalPrice = getIntent().getDoubleExtra("price", 0);
         imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
+        totalPriceView = findViewById(R.id.total_price);
+        totalNumView = findViewById(R.id.total_num);
+
+        totalPriceView.setText("¥ " + totalPrice);
+        totalNumView.setText(totalNum + "件");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

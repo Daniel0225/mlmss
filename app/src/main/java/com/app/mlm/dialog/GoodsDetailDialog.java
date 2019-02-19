@@ -13,11 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
+import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * @author :  luo.xing
@@ -29,6 +33,8 @@ import butterknife.OnClick;
  * @email : xing.luo@taojiji.com
  */
 public class GoodsDetailDialog extends Dialog {
+    protected Context mContext;
+    protected View mRoot;
     @Bind(R.id.ivGoodsImg)
     ImageView ivGoodsImg;
     @Bind(R.id.tvGoodsPrice)
@@ -36,8 +42,6 @@ public class GoodsDetailDialog extends Dialog {
     @Bind(R.id.tvGoodsName)
     TextView tvGoodsName;
     private Window mDialogWindow;
-    protected Context mContext;
-    protected View mRoot;
     private GoodsDetailDialog mInstance;
     private GoodsInfo mGoodsInfo;
 
@@ -68,7 +72,9 @@ public class GoodsDetailDialog extends Dialog {
     }
 
     private void initView() {
-
+        Glide.with(getContext()).load(mGoodsInfo.getMdseUrl()).into(ivGoodsImg);
+        tvGoodsName.setText(mGoodsInfo.getMdseName());
+        tvGoodsPrice.setText("¥" + mGoodsInfo.getMdsePrice());
     }
 
     @OnClick({R.id.tvBuyImm, R.id.tvAddCart})
@@ -78,6 +84,8 @@ public class GoodsDetailDialog extends Dialog {
                 dismiss();
                 break;
             case R.id.tvAddCart:
+                MainApp.addShopCar(mGoodsInfo);
+                EventBus.getDefault().post(new AddShopCarEvent());
                 dismiss();
                 break;
         }

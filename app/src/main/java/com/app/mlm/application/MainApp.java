@@ -14,6 +14,7 @@ import android.support.multidex.MultiDex;
 
 import com.app.mlm.Constants;
 import com.app.mlm.Meassage.MyClient;
+import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
@@ -27,6 +28,8 @@ import com.snbc.bvm.BVMAidlInterface;
 
 import org.litepal.LitePal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -41,6 +44,7 @@ import okhttp3.OkHttpClient;
  */
 public class MainApp extends Application {
     public static BVMAidlInterface bvmAidlInterface;
+    public static List<GoodsInfo> shopCarList = new ArrayList<>();
     private static MainApp appInstance;
     public SharedPreferences mShard;
     public ServiceConnection connection = new ServiceConnection() {
@@ -60,6 +64,25 @@ public class MainApp extends Application {
 
     public static MainApp getAppInstance() {
         return appInstance;
+    }
+
+    /**
+     * 加入购物车 判断购物车里面是否已经有该商品 有的话直接增加数量即可
+     *
+     * @param goodsInfo
+     */
+    public static void addShopCar(GoodsInfo goodsInfo) {
+        boolean isContain = false;
+        for (GoodsInfo goods : shopCarList) {
+            if (goods.getMdseId() == goodsInfo.getMdseId()) {
+                goods.setShopCarNum(goods.getShopCarNum() + 1);
+                isContain = true;
+                break;
+            }
+        }
+        if (!isContain) {
+            shopCarList.add(goodsInfo);
+        }
     }
 
     @Override
@@ -176,5 +199,4 @@ public class MainApp extends Application {
             }
         }
     }
-
 }

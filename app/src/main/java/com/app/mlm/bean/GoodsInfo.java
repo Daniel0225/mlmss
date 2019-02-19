@@ -1,12 +1,10 @@
 package com.app.mlm.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * @author :  luo.xing
@@ -22,11 +20,24 @@ public class GoodsInfo implements Serializable {
     private static final long serialVersionUID = 536871008L;
     @Id(autoincrement = true)
     private Long id;
-    @Generated(hash = 2073534098)
+    private int mdseId;
+    private String mdsePrice;
+    private String mdseName;
+    private String mdseUrl;
+    private String clCode;
+    private int clCapacity;
+    private int clcCapacity;
+    private String gamePrice;
+    private String gameTimeStart;
+    private String gameTimeEnd;
+    private int position;
+    private int shopCarNum = 1;
+
+    @Generated(hash = 1430316046)
     public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseName,
-            String mdseUrl, String clCode, int clCapacity, int clcCapacity,
-            String gamePrice, String gameTimeStart, String gameTimeEnd,
-            int position) {
+                     String mdseUrl, String clCode, int clCapacity, int clcCapacity,
+                     String gamePrice, String gameTimeStart, String gameTimeEnd,
+                     int position, int shopCarNum) {
         this.id = id;
         this.mdseId = mdseId;
         this.mdsePrice = mdsePrice;
@@ -39,27 +50,27 @@ public class GoodsInfo implements Serializable {
         this.gameTimeStart = gameTimeStart;
         this.gameTimeEnd = gameTimeEnd;
         this.position = position;
+        this.shopCarNum = shopCarNum;
     }
     @Generated(hash = 1227172248)
     public GoodsInfo() {
     }
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    private int mdseId;
-    private String mdsePrice;
-    private String mdseName;
-    private String mdseUrl;
-    private String clCode;
-    private int clCapacity;
-    private int clcCapacity;
-    private String gamePrice;
-    private String gameTimeStart;
-    private String gameTimeEnd;
-    private int position;
+
+    public int getShopCarNum() {
+        return shopCarNum;
+    }
+
+    public void setShopCarNum(int shopCarNum) {
+        this.shopCarNum = shopCarNum;
+    }
 
     public int getPosition() {
         return position;

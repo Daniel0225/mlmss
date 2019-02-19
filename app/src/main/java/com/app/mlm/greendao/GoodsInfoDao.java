@@ -43,7 +43,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"GAME_PRICE\" TEXT," + // 8: gamePrice
                 "\"GAME_TIME_START\" TEXT," + // 9: gameTimeStart
                 "\"GAME_TIME_END\" TEXT," + // 10: gameTimeEnd
-                "\"POSITION\" INTEGER NOT NULL );"); // 11: position
+                "\"POSITION\" INTEGER NOT NULL ," + // 11: position
+                "\"SHOP_CAR_NUM\" INTEGER NOT NULL );"); // 12: shopCarNum
     }
 
     /** Drops the underlying database table. */
@@ -99,6 +100,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             stmt.bindString(11, gameTimeEnd);
         }
         stmt.bindLong(12, entity.getPosition());
+        stmt.bindLong(13, entity.getShopCarNum());
     }
 
     @Override
@@ -148,6 +150,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             stmt.bindString(11, gameTimeEnd);
         }
         stmt.bindLong(12, entity.getPosition());
+        stmt.bindLong(13, entity.getShopCarNum());
     }
 
     @Override
@@ -169,7 +172,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // gamePrice
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // gameTimeStart
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // gameTimeEnd
-            cursor.getInt(offset + 11) // position
+                cursor.getInt(offset + 11), // position
+                cursor.getInt(offset + 12) // shopCarNum
         );
         return entity;
     }
@@ -188,6 +192,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setGameTimeStart(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setGameTimeEnd(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setPosition(cursor.getInt(offset + 11));
+        entity.setShopCarNum(cursor.getInt(offset + 12));
      }
 
     @Override
@@ -232,6 +237,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property GameTimeStart = new Property(9, String.class, "gameTimeStart", false, "GAME_TIME_START");
         public final static Property GameTimeEnd = new Property(10, String.class, "gameTimeEnd", false, "GAME_TIME_END");
         public final static Property Position = new Property(11, int.class, "position", false, "POSITION");
+        public final static Property ShopCarNum = new Property(12, int.class, "shopCarNum", false, "SHOP_CAR_NUM");
     }
     
 }
