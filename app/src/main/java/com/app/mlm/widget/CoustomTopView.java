@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.VideoView;
 
 import com.app.imageloader.glide.GlideApp;
 import com.app.mlm.R;
@@ -47,6 +48,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
     private RelativeLayout mRootView;
     private ImageView imageView;
     private PlayerView playerView;
+    private VideoView videoView;
     private int pecentHeight;
     public CoustomTopView(Context context) {
         super(context);
@@ -71,6 +73,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         ta.recycle();
         imageView = mRootView.findViewById(R.id.imageView);
         playerView = mRootView.findViewById(R.id.playView);
+        videoView = mRootView.findViewById(R.id.playView2);
     }
 
     @Override
@@ -87,7 +90,9 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         if(type.equals(TYPE_JPG)){
             initJpgAndGif();
         }else {
-            initVedio();
+//            initVedio();
+            videoView.setVideoPath(url);
+            videoView.start();
         }
    }
 
@@ -101,7 +106,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
     }
 
     private void initVedio() {
-        playerView.setVisibility(View.VISIBLE);
+//        playerView.setVisibility(View.VISIBLE);
         playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(mContext,
             new DefaultRenderersFactory(mContext),
@@ -112,7 +117,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         MediaSource mediaSource = buildMediaSource(uri);
 //        player.prepare(mediaSource);
         prepareExoPlayerFromFileUri(player, uri);
-        player.setPlayWhenReady(true);
+//        player.setPlayWhenReady(true);
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
     }
 

@@ -2,7 +2,6 @@ package com.app.mlm.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -119,9 +118,9 @@ public class MainActivity extends BaseActivity {
 
     private void playLocalFile() {
         String filePath = getExternalCacheDir().getPath() + "/2.mp4";
-        File file = new File(filePath);
-        Uri uri = Uri.fromFile(file);
-        topView.setData(CoustomTopView.TYPE_MP4, uri.toString());
+//        File file = new File(filePath);
+//        Uri uri = Uri.fromFile(file);
+        topView.setData(CoustomTopView.TYPE_MP4, filePath);
     }
 
     /**
