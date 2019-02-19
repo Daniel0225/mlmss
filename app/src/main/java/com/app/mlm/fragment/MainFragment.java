@@ -68,6 +68,7 @@ public class MainFragment extends BaseFragment {
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
         recyclerView.addItemDecoration(new SpacesItemDecoration(8, 8, 0, 0));
+        initList();
         adapter = new ColumnGoodsAdapter(getActivity(), dataList);
         recyclerView.setAdapter(adapter);
     }
@@ -77,19 +78,23 @@ public class MainFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    private void initList() {
         dataList.clear();
         String huodaoString = PreferencesUtil.getString("huodao0");
         if (TextUtils.isEmpty(huodaoString)) {
-            dataList = getData();
+            dataList.addAll(getData());
         } else {
             for (int i = 0; i < 5; i++) {
                 String huodaoStrings = PreferencesUtil.getString("huodao" + i);
                 dataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
         adapter.notifyDataSetChanged();
     }
 
@@ -165,7 +170,7 @@ public class MainFragment extends BaseFragment {
 
     private List<List<GoodsInfo>> getData() {
         List<List<GoodsInfo>> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             list.add(getDefaultData());
         }
         return list;

@@ -56,7 +56,7 @@ public class ColumnGoodsAdapter extends RecyclerView.Adapter<ColumnGoodsAdapter.
 
     @Override
     public int getItemCount() {
-        return 5;
+        return data.size();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {
