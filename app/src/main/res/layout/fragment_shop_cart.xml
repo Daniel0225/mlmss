@@ -28,11 +28,13 @@
         app:cardElevation="0dp"
         >
         <LinearLayout
+            android:id="@+id/no_empty_contain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/mainBackground"
             android:orientation="vertical"
             android:paddingTop="15dp"
+            android:visibility="gone"
             >
             <ListView
                 android:id="@+id/listView"
@@ -118,6 +120,40 @@
                     android:textSize="14sp"
                     />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/empty_contain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mainBackground"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/shop_car_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="50dp"
+                android:text="购物车空空如也~"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/to_pick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="去挑选"
+                android:textColor="@color/whiteColor"
+                android:textSize="14sp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

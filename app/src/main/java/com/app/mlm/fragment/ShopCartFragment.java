@@ -37,6 +37,11 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
     TextView tvCount;
     @Bind(R.id.tvPay)
     TextView tvPay;
+    @Bind(R.id.empty_contain)
+    View emptyContain;
+    @Bind(R.id.no_empty_contain)
+    View noEmptyContain;
+
     private List<GoodsInfo> data = new ArrayList<>();
     private ShopCartListAdapter adapter;
     private double totalPrice = 0;
@@ -55,7 +60,14 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
         adapter = new ShopCartListAdapter(getActivity(), data, this);
         listView.setAdapter(adapter);
 
-        refreshShopCarInfo();
+        if (data.size() == 0) {
+            emptyContain.setVisibility(View.VISIBLE);
+            noEmptyContain.setVisibility(View.GONE);
+        } else {
+            emptyContain.setVisibility(View.GONE);
+            noEmptyContain.setVisibility(View.VISIBLE);
+            refreshShopCarInfo();
+        }
     }
 
     private void refreshShopCarInfo() {
@@ -86,7 +98,7 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.close, R.id.tvPay})
+    @OnClick({R.id.close, R.id.tvPay, R.id.to_pick})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close:
@@ -97,6 +109,9 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
                 intent.putExtra("price", totalPrice);
                 intent.putExtra("num", totalNum);
                 mActivity.startActivity(intent);
+                break;
+            case R.id.to_pick:
+                mActivity.removeFragment();
                 break;
         }
     }

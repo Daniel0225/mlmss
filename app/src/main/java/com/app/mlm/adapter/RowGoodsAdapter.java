@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.GoodsDetailDialog;
+import com.app.mlm.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
             @Override
             public void onClick(View v) {
                 if (data.get(i).getMdseUrl().equals("empty")) {
-                    Toast.makeText(context, "该货道暂无商品", Toast.LENGTH_LONG).show();
+                    ToastUtil.showLongToast("该货道暂无商品");
                     return;
                 }
                 GoodsDetailDialog dialog = new GoodsDetailDialog(context, data.get(i));
@@ -89,11 +89,11 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
             @Override
             public void onClick(View v) {
                 if (data.get(i).getMdseUrl().equals("empty")) {
-                    Toast.makeText(context, "该货道暂无商品", Toast.LENGTH_LONG).show();
+                    ToastUtil.showLongToast("该货道暂无商品");
                     return;
                 }
                 MainApp.addShopCar(data.get(i));
-                Toast.makeText(context, "加入成功", Toast.LENGTH_LONG).show();
+                ToastUtil.showLongToast("加入成功");
                 EventBus.getDefault().post(new AddShopCarEvent());
             }
         });

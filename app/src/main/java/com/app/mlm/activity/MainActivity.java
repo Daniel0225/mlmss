@@ -2,10 +2,12 @@ package com.app.mlm.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -19,6 +21,7 @@ import com.app.mlm.fragment.MainFragment;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
+import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.CoustomTopView;
 import com.lzy.okgo.OkGo;
@@ -76,6 +79,7 @@ public class MainActivity extends BaseActivity {
 
                         if (response.body().getCode() == 0) {
                             adBeanList = response.body().data;
+                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             setTopViewValue();
                         }
                     }
@@ -84,7 +88,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public long millisInFuture() {
-        return 1000 * 10;
+        return 1000 * 30;
     }
 
     private void initView() {
@@ -93,7 +97,7 @@ public class MainActivity extends BaseActivity {
         transaction.commit();
 
 //        topView.setData(CoustomTopView.TYPE_JPG, "http://att.bbs.duowan.com/forum/201510/15/004345bkeuibigwvupwlxj.gif");
-        topView.setData(CoustomTopView.TYPE_MP4, "http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
+//        topView.setData(CoustomTopView.TYPE_MP4, "http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
     }
 
     /**
@@ -103,9 +107,21 @@ public class MainActivity extends BaseActivity {
         for (AdBean adBean : adBeanList) {
             if (adBean.getSuffix().equals("mp4")) {
                 adBean.setUrl("http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
-                downLoadMedia(adBean.getUrl(), adBean.getFileType() + ".mp4");
+                String hasDownLoad = PreferencesUtil.getString(Constants.DOWN_LOAD);
+                if (!TextUtils.isEmpty(hasDownLoad) && hasDownLoad.equals(adBean.getUrl())) {
+                    playLocalFile();
+                } else {
+                    downLoadMedia(adBean.getUrl(), adBean.getFileType() + ".mp4");
+                }
             }
         }
+    }
+
+    private void playLocalFile() {
+        String filePath = getExternalCacheDir().getPath() + "/2.mp4";
+        File file = new File(filePath);
+        Uri uri = Uri.fromFile(file);
+        topView.setData(CoustomTopView.TYPE_MP4, uri.toString());
     }
 
     /**
@@ -120,7 +136,8 @@ public class MainActivity extends BaseActivity {
                 .execute(new FileCallback(cachePath, fileName) {
                     @Override
                     public void onSuccess(Response<File> response) {
-
+                        PreferencesUtil.putString(Constants.DOWN_LOAD, url);
+                        playLocalFile();
                     }
 
                     @Override

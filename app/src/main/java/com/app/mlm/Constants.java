@@ -11,6 +11,8 @@ public class Constants {
 
     public static final String VMCODE = "vmCode";
     public static final String BASE_URL = "http://47.106.143.212:8080/api/";
+    public static final String ADDATA = "ad_data";
+    public static final String DOWN_LOAD = "down_load";
     /**
      * 请求超时时间
      */

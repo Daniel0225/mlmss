@@ -1,6 +1,5 @@
 package com.app.screenprotect.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -62,12 +61,12 @@ public class BaseDispatchActivity extends AppCompatActivity implements CountDown
     }
 
     /**
-     * 设置默认倒计时时间为10s
+     * 设置默认倒计时时间为30s
      *
      * @return
      */
     public long millisInFuture(){
-        return 1000 * 10;
+        return 1000 * 30;
     }
 
     @Override

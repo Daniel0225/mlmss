@@ -2,11 +2,19 @@ package com.app.mlm.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 
-import com.app.imageloader.glide.GlideApp;
+import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.http.bean.AdBean;
+import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.CoustomTopView;
+import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,14 +31,27 @@ import butterknife.ButterKnife;
 public class ScreenProtectActivity extends AppCompatActivity {
     @Bind(R.id.topView)
     CoustomTopView topView;
+    @Bind(R.id.ivCode)
+    ImageView codeView;
+    private List<AdBean> adBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_protect);
         ButterKnife.bind(this);
+        String adString = PreferencesUtil.getString(Constants.ADDATA);
+        if (!TextUtils.isEmpty(adString)) {
+            adBeanList = FastJsonUtil.getObjects(adString, AdBean.class);
+            for (AdBean adBean : adBeanList) {
+                if (adBean.getFileType() == 1) {
+                    topView.setData(CoustomTopView.TYPE_JPG, adBean.getUrl());
+                } else if (adBean.getFileType() == 2) {
+                    Glide.with(this).load(adBean.getUrl()).into(codeView);
+                }
+            }
+        }
 
-        topView.setData(CoustomTopView.TYPE_JPG, "http://b-ssl.duitang.com/uploads/item/201505/13/20150513225953_QJCa8.thumb.700_0.gif");
     }
 
     @Override

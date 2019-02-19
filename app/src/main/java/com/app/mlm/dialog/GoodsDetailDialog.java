@@ -2,6 +2,7 @@ package com.app.mlm.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
@@ -81,6 +83,10 @@ public class GoodsDetailDialog extends Dialog {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvBuyImm:
+                Intent intent = new Intent(getContext(), OrderPayActivity.class);
+                intent.putExtra("price", Double.valueOf(mGoodsInfo.getMdsePrice()));
+                intent.putExtra("num", 1);
+                getContext().startActivity(intent);
                 dismiss();
                 break;
             case R.id.tvAddCart:

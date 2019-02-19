@@ -56,6 +56,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
         initList();
         HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
+        showSyncDialog();
     }
 
     private void initList() {
@@ -144,6 +145,17 @@ public class ConfigHuodaoActivity extends BaseActivity {
                     public void onClick(View v) {
                         getUpJson();
                         finish();
+                    }
+                });
+        dialog.show();
+    }
+
+    private void showSyncDialog() {
+        CommonDialog dialog = new CommonDialog(this, "货道初始化", "请点击初始化按钮，然后等待初始化完成", "初始化", "完成")
+                .setCommitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
                     }
                 });
         dialog.show();
