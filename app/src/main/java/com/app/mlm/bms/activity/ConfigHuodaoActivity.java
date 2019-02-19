@@ -3,6 +3,7 @@ package com.app.mlm.bms.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.HDColumnGoodsAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -48,9 +50,21 @@ public class ConfigHuodaoActivity extends BaseActivity {
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
         recyclerView.addItemDecoration(new SpacesItemDecoration(8,8,0,0));
-        allDataList = getData();
+        initList();
         HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initList() {
+        String huodaoString = PreferencesUtil.getString("huodao0");
+        if (TextUtils.isEmpty(huodaoString)) {
+            allDataList = getData();
+        } else {
+            for (int i = 0; i < 5; i++) {
+                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
+                allDataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
+            }
+        }
     }
 
     @Override
@@ -106,7 +120,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     private List<GoodsInfo> getDefaultData() {
         List<GoodsInfo> goodsInfoList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setMdseName("请补货");
             goodsInfo.setMdseUrl("empty");
@@ -120,9 +134,13 @@ public class ConfigHuodaoActivity extends BaseActivity {
      * 生成提交服务器的json数据
      */
     private String getUpJson() {
+        //保存货道数据
+
         List<GoodsInfo> list = new ArrayList<>();
         for (int i = 0; i < allDataList.size(); i++) {
             list.addAll(allDataList.get(i));
+            String huodaoDataString = FastJsonUtil.createJsonString(allDataList.get(i));
+            PreferencesUtil.putString("huodao" + i, huodaoDataString);
         }
         String upJsonString = FastJsonUtil.createJsonString(list);
         Log.e("Tag", upJsonString);

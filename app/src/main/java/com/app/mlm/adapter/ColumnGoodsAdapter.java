@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
@@ -49,7 +48,7 @@ public class ColumnGoodsAdapter extends RecyclerView.Adapter<ColumnGoodsAdapter.
         LinearLayoutManager ms = new LinearLayoutManager(context);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
-        RowGoodsAdapter adapter = new RowGoodsAdapter(context, null);
+        RowGoodsAdapter adapter = new RowGoodsAdapter(context, data.get(i));
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
         rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 2));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));

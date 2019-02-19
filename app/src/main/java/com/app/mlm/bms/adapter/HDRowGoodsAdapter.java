@@ -30,7 +30,6 @@ import java.util.List;
  */
 public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.RowGoodsViewHolder> {
     private Context context;
-    private int count = 10;
     private int selectPosition;//当前操作的位置
     private List<GoodsInfo> data = new ArrayList<>();
     public HDRowGoodsAdapter(Context context, List<GoodsInfo> data){
@@ -54,7 +53,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
     @Override
     public void onBindViewHolder(@NonNull RowGoodsViewHolder viewHolder, int i) {
 
-        if (i == count - 1){
+        if (i == data.size() - 1) {
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
         }else {
             viewHolder.rvRoot.setBackgroundResource(R.color.whiteColor);
@@ -92,7 +91,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
 
     @Override
     public int getItemCount() {
-        return count;
+        return data.size();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {

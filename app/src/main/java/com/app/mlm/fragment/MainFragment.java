@@ -5,27 +5,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.allen.library.RxHttpUtils;
 import com.allen.library.base.BaseObserver;
 import com.app.mlm.R;
-import com.app.mlm.activity.MainActivity;
 import com.app.mlm.adapter.ColumnGoodsAdapter;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.http.ApiService;
 import com.app.mlm.http.bean.BaseBean;
+import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -53,6 +52,8 @@ public class MainFragment extends BaseFragment {
     @Bind(R.id.huodong)
     LinearLayout huodong;
 
+    List<List<GoodsInfo>> dataList = new ArrayList<>();
+    ColumnGoodsAdapter adapter;
     public MainFragment() {
     }
 
@@ -67,7 +68,7 @@ public class MainFragment extends BaseFragment {
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
         recyclerView.addItemDecoration(new SpacesItemDecoration(8, 8, 0, 0));
-        ColumnGoodsAdapter adapter = new ColumnGoodsAdapter(getActivity(), null);
+        adapter = new ColumnGoodsAdapter(getActivity(), dataList);
         recyclerView.setAdapter(adapter);
     }
 
@@ -77,31 +78,47 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        dataList.clear();
+        String huodaoString = PreferencesUtil.getString("huodao0");
+        if (TextUtils.isEmpty(huodaoString)) {
+            dataList = getData();
+        } else {
+            for (int i = 0; i < 5; i++) {
+                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
+                dataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     protected void initData() {
         RxHttpUtils.createApi(ApiService.class)
-            .getHomeGoodsList("0000003")
-            .subscribeOn(Schedulers.io())
-            .subscribe(new BaseObserver<BaseBean>(getActivity()) {
-                @Override
-                public void doOnSubscribe(Disposable d) {
+                .getHomeGoodsList("0000003")
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseObserver<BaseBean>(getActivity()) {
+                    @Override
+                    public void doOnSubscribe(Disposable d) {
 
-                }
+                    }
 
-                @Override
-                public void doOnError(String errorMsg) {
+                    @Override
+                    public void doOnError(String errorMsg) {
 
-                }
+                    }
 
-                @Override
-                public void doOnNext(BaseBean baseBean) {
-                    List<GoodsInfo> data = (List<GoodsInfo>) baseBean.getData();
-                }
+                    @Override
+                    public void doOnNext(BaseBean baseBean) {
+                        List<GoodsInfo> data = (List<GoodsInfo>) baseBean.getData();
+                    }
 
-                @Override
-                public void doOnCompleted() {
+                    @Override
+                    public void doOnCompleted() {
 
-                }
-            });
+                    }
+                });
     }
 
     @Override
@@ -144,5 +161,25 @@ public class MainFragment extends BaseFragment {
                 commonDialog.show();
                 break;
         }
+    }
+
+    private List<List<GoodsInfo>> getData() {
+        List<List<GoodsInfo>> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(getDefaultData());
+        }
+        return list;
+    }
+
+    private List<GoodsInfo> getDefaultData() {
+        List<GoodsInfo> goodsInfoList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            GoodsInfo goodsInfo = new GoodsInfo();
+            goodsInfo.setMdseName("请补货");
+            goodsInfo.setMdseUrl("empty");
+            goodsInfo.setMdsePrice("0");
+            goodsInfoList.add(goodsInfo);
+        }
+        return goodsInfoList;
     }
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.app.mlm.R;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.GoodsDetailDialog;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,6 @@ import java.util.List;
  */
 public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoodsViewHolder> {
     private Context context;
-    private int count = 10;
     private List<GoodsInfo> data = new ArrayList<>();
     public RowGoodsAdapter(Context context, List<GoodsInfo> data){
         this.context = context;
@@ -53,10 +53,20 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
     public void onBindViewHolder(@NonNull RowGoodsViewHolder viewHolder, int i) {
         if(i == 0){
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_lt_lb);
-        }else if (i == count - 1){
+        } else if (i == data.size() - 1) {
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
         }else {
             viewHolder.rvRoot.setBackgroundResource(R.color.whiteColor);
+        }
+
+        GoodsInfo goodsInfo = data.get(i);
+
+        viewHolder.tvGoodsName.setText(goodsInfo.getMdseName());
+        viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+        if (goodsInfo.getMdseUrl().equals("empty")) {
+            viewHolder.ivGoodsImg.setImageResource(R.drawable.empty);
+        } else {
+            Glide.with(context).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
         }
 
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +87,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
 
     @Override
     public int getItemCount() {
-        return count;
+        return data.size();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {
