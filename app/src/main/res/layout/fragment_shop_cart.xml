@@ -11,11 +11,12 @@
 
     <ImageView
         android:id="@+id/close"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="41px"
+        android:layout_height="41px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
+        android:layout_marginBottom="28px"
+        android:layout_marginTop="31px"
         android:src="@drawable/close_nor"/>
 
     <android.support.v7.widget.CardView
@@ -34,7 +35,7 @@
             android:background="@color/mainBackground"
             android:orientation="vertical"
             android:paddingTop="15dp"
-            android:visibility="gone"
+            android:visibility="visible"
             >
             <ListView
                 android:id="@+id/listView"
@@ -53,7 +54,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="110px"
                 android:background="@color/whiteColor"
                 android:orientation="horizontal"
                 >
@@ -61,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:paddingRight="15dp"
+                    android:paddingRight="23px"
                     >
                     <TextView
                         android:id="@+id/tvPrice"
@@ -71,7 +72,7 @@
                         android:paddingTop="3dp"
                         android:text="￥128.8"
                         android:textColor="@color/redColor"
-                        android:textSize="12sp"
+                        android:textSize="34px"
                         />
 
                     <TextView
@@ -81,8 +82,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/tvPrice"
                         android:text="4件商品"
-                        android:textColor="@color/text_dark"
-                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:textSize="24px"
                         />
 
                     <TextView
@@ -92,68 +93,76 @@
                         android:layout_toLeftOf="@id/tvPrice"
                         android:text="总计："
                         android:textColor="@color/text_dark"
-                        android:textSize="13sp"
+                        android:textSize="34px"
                         android:textStyle="bold"
                         />
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/use_coupon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="240px"
+                    android:layout_height="match_parent"
                     android:background="@color/light_blue"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/use_coupon"
                     android:textColor="@color/whiteColor"
-                    android:textSize="14sp" />
+                    android:textSize="32px" />
 
                 <TextView
                     android:id="@+id/tvPay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="240px"
+                    android:layout_height="match_parent"
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/goto_pay"
                     android:textColor="@color/whiteColor"
-                    android:textSize="14sp"
+                    android:textSize="32px"
                     />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/empty_contain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="1000px"
+            android:layout_height="911px"
             android:background="@color/mainBackground"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            android:visibility="gone">
 
             <ImageView
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="383px"
+                android:layout_height="223px"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="250px"
                 android:src="@drawable/shop_car_empty" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="100dp"
+                android:layout_marginTop="66px"
                 android:text="购物车空空如也~"
-                android:textColor="@color/black" />
+                android:textColor="#333333"
+                android:textSize="34px" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
             <TextView
                 android:id="@+id/to_pick"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="110px"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:padding="10dp"
                 android:text="去挑选"
                 android:textColor="@color/whiteColor"
-                android:textSize="14sp" />
+                android:textSize="38px" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

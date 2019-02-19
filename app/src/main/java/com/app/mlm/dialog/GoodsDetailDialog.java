@@ -86,6 +86,7 @@ public class GoodsDetailDialog extends Dialog {
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
                 intent.putExtra("price", Double.valueOf(mGoodsInfo.getMdsePrice()));
                 intent.putExtra("num", 1);
+                intent.putExtra("productId", String.valueOf(mGoodsInfo.getMdseId()));
                 getContext().startActivity(intent);
                 dismiss();
                 break;

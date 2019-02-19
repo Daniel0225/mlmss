@@ -21,10 +21,12 @@ public class Constants {
     public static final String[] PAYMENT_NAME = {"现金支付","支付宝支付","微信支付","支付码支付","新北洋智付","掌静脉支付"};
     public static final int[] PAYMENT_ICON = {R.drawable.money, R.drawable.alipay, R.drawable.wechat, R.drawable.zhifuma, R.drawable.xinbeiyang, R.drawable.zhangjingmai};
     public static final String AD_URL = BASE_URL + "getAdInfo";//广告接口
-    public static final String GET_PRODUCT_PRICE = BASE_URL + "getProductPrice";//商品同步接口
+    public static final String GET_PRODUCT_PRICE = BASE_URL + "syncMdse";//商品同步接口
     public static final String GET_ALL_TYPE = BASE_URL + "getAllType";//商品类型
-    public static final String SYN_CHANNEL = BASE_URL + "synChannel";//货道信息同步接口
+    public static final String SYN_CHANNEL = BASE_URL + "syncChannel";//货道信息同步接口
     public static final String WXPAY = BASE_URL + "wxpay";//支付
+    public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步接口
+
 
     //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";

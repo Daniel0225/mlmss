@@ -16,106 +16,100 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
             >
             <LinearLayout
                 android:id="@+id/chuhuoceshi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="109px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/chuhuo"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="出货测试"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:textSize="28px"
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/zhifupeizhi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="60px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/zhifu"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="支付配置"
                     android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textSize="28px"
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/huodaopeizhi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="60px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/huodao"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="货道配置"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:textSize="28px"
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/tongbupeizhi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="60px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/tongbu"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="同步配置"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:textSize="28px"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -125,81 +119,76 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
             >
             <LinearLayout
                 android:id="@+id/wendukongzhi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="109px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/wendu"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="温度控制"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:textSize="28px"
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/banbenxinxi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="60px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/banben"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="版本信息"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:textSize="28px"
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/fanhui"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="60px"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
                     android:src="@drawable/fanhui"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="14px"
                     android:text="返回"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:textSize="28px"
                     />
             </LinearLayout>
 
@@ -232,15 +221,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/menuLayout"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="244px"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
         >
         <ImageView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="30px"
+            android:layout_height="40px"
+            android:layout_marginStart="107px"
             android:src="@drawable/dingwei"
             />
 
@@ -249,24 +237,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="5dp"
+            android:paddingLeft="10px"
             android:text="xxxxxxx01号柜"
-            android:textColor="@color/text_nomorl"
-            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textSize="40px"
             />
 
         <TextView
             android:id="@+id/state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="220px"
+            android:layout_height="80px"
+            android:layout_marginEnd="123px"
             android:background="@drawable/shape_blue"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp"
+            android:gravity="center"
             android:text="正常售卖"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp"
+            android:textSize="30px"
             />
     </LinearLayout>
 

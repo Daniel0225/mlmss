@@ -10,14 +10,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.HDColumnGoodsAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,7 +200,22 @@ public class ConfigHuodaoActivity extends BaseActivity {
         }
         String upJsonString = FastJsonUtil.createJsonString(list);
         Log.e("Tag", upJsonString);
+
+        SynChannel(upJsonString);
+
         return upJsonString;
+    }
+
+    private void SynChannel(String upJsonString) {
+
+        OkGo.<BaseResponse>post(Constants.SYN_CHANNEL)
+                .tag(this)
+                .upJson(upJsonString)
+                .execute(new JsonCallBack<BaseResponse>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse> response) {
+                    }
+                });
     }
 
     @Override
