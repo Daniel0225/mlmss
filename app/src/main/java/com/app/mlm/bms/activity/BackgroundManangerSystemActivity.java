@@ -1,7 +1,6 @@
 package com.app.mlm.bms.activity;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -29,10 +28,6 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
     private static BVMAidlInterface bvmAidlInterface;
     @Bind(R.id.location)
     TextView location;
-    @Bind(R.id.start_scan)
-    TextView start_scan;
-    @Bind(R.id.stop_scan)
-    TextView stop_scan;
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -52,31 +47,11 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.SnbcBvmService");
-        intent.setPackage("com.snbc.bvm");
-        bindService(intent, connection, Context.BIND_AUTO_CREATE);
         PreferencesUtil.putString(Constants.VMCODE, "0000051");
     }
 
     @Override
     protected void initListener() {
-     /*   start_scan=(TextView) findViewById(R.id.start_scan);
-        stop_scan=(TextView) findViewById(R.id.stop_scan);
-        start_scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(BackgroundManangerSystemActivity.this,"开始扫描",Toast.LENGTH_SHORT);
-                bindService();
-            }
-        });
-        stop_scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(BackgroundManangerSystemActivity.this,"停止扫描",Toast.LENGTH_SHORT);
-                unbindService();
-            }
-        });*/
     }
 
     @Override
@@ -100,7 +75,6 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
                 startActivity(new Intent(this, ConfigSyncActivity.class));
                 break;
             case R.id.wendukongzhi: //温度配置
-                Toast.makeText(this, "开始扫描", Toast.LENGTH_SHORT);
                 startActivity(new Intent(this, TemperatureControlActivity.class));
                 break;
             case R.id.banbenxinxi: //版本信息
@@ -113,21 +87,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
             case R.id.state: //状态：正常售卖/系统维护
 
                 break;
-            case R.id.start_scan://开始扫描
-                Toast.makeText(this, "开始扫描", Toast.LENGTH_SHORT).show();
-                bindService();
-                break;
-            case R.id.stop_scan://停止扫描
-                try {
-                    int code1 = bvmAidlInterface.BVMSetKey("2lqFW9J9HyFYWol7");
-                    Log.e("密钥返回", code1 + "");
-                    Toast.makeText(this, code1 + "", Toast.LENGTH_SHORT).show();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(this, "关闭扫描", Toast.LENGTH_SHORT).show();
-                //  unbindService();
-                break;
+
         }
     }
 

@@ -1,12 +1,20 @@
 package com.app.mlm.application;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.IBinder;
 import android.support.multidex.MultiDex;
 
+import com.app.mlm.Constants;
 import com.app.mlm.Meassage.MyClient;
+import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
@@ -15,6 +23,7 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.snbc.bvm.BVMAidlInterface;
 
 import org.litepal.LitePal;
 
@@ -31,10 +40,23 @@ import okhttp3.OkHttpClient;
  * @describe : Application
  */
 public class MainApp extends Application {
+    public static BVMAidlInterface bvmAidlInterface;
     private static MainApp appInstance;
     public SharedPreferences mShard;
+    public ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            bvmAidlInterface = BVMAidlInterface.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
     MyClient myclient;
     private DaoSession daoSession;
+    private MyReceiver receiver;
 
     public static MainApp getAppInstance() {
         return appInstance;
@@ -54,6 +76,13 @@ public class MainApp extends Application {
         initOkGo();
         // 初始化LitePal数据库
         LitePal.initialize(this);
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.SnbcBvmService");
+        intent.setPackage("com.snbc.bvm");
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.DOOR_BROADCAST);
+        registerReceiver(receiver, filter);
     }
 
     private void initOkGo() {
@@ -104,4 +133,31 @@ public class MainApp extends Application {
     public DaoSession getDaoSession() {
         return daoSession;
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        unregisterReceiver(receiver);
+    }
+
+    //内部类实现广播接收者
+    private class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case Constants.DOOR_BROADCAST:
+                    int status = Integer.parseInt(intent.getStringExtra("SENSTATE"));
+                    switch (status) {
+                        case 1://柜门开
+                            startActivity(new Intent(MainApp.appInstance, BackgroundManangerSystemActivity.class));
+                            break;
+                        case 2://柜门关
+                            // startActivity(new Intent(MainApp.appInstance, ScreenProtectActivity.class));
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+
 }

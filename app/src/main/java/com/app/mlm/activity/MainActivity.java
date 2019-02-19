@@ -166,42 +166,5 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, ScreenProtectActivity.class));
     }
 
-  /*  public void startService(){
-        Intent startService = new Intent(MainActivity.this,ServiceTest.class);
-        startService(startService);
-    }
-*/
-  /*  public void stopService(){
-        Intent stopService = new Intent(MainActivity.this,ServiceTest.class);
-        stopService(stopService);
-    }
-
-    public void bindService(){
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.SnbcBvmService");
-        intent.setPackage("com.app.mlm");
-        bindService(intent, connection, Context.BIND_AUTO_CREATE);
-    }
-
-    public void unbindService(){
-        unbindService(connection);
-    }
-
-    private ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            bvmAidlInterface= BVMAidlInterface.Stub.asInterface(service);
-            try {
-                bvmAidlInterface.BVMOpenScanDev();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };*/
 
 }

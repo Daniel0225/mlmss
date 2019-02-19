@@ -231,35 +231,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/menuLayout"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/start_scan"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/black"
-            android:gravity="center"
-            android:text="开始扫描"
-            android:textColor="@color/withe"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/stop_scan"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/black"
-            android:gravity="center"
-            android:text="打开密钥"
-            android:textColor="@color/withe"
-            android:textSize="25sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_above="@id/menuLayout"
         android:layout_marginBottom="40dp"
         android:gravity="center_vertical"

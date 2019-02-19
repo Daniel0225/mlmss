@@ -23,4 +23,6 @@ public class Constants {
     public static final String GET_ALL_TYPE = BASE_URL + "getAllType";//商品类型
     public static final String SYN_CHANNEL = BASE_URL + "synChannel";//货道信息同步接口
     public static final String WXPAY = BASE_URL + "wxpay";//支付
+
+    public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";
 }
