@@ -1,14 +1,17 @@
 package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.HDColumnGoodsAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
@@ -100,13 +103,49 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     @Override
     public void onActionClicked() {
-        CommonDialog dialog = new CommonDialog(this, "提示", "货道配置信息发生了变化，是否应用！", "确定", "取消")
-            .setCommitClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getUpJson();
+        CommonDialog dialog = new CommonDialog(this, "提示", "货道配置信息发生了变化，是否应用！", "初始化", "保存");
+        dialog.setCommitClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int code = 0;
+                try {
+                    code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 1, 3);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
-            });
+                Toast.makeText(ConfigHuodaoActivity.this, code, Toast.LENGTH_SHORT).show();
+                if (code == 1105) {
+                    try {
+                        //查询层列数
+                        int[] count = MainApp.bvmAidlInterface.BVMInitResultYUANSHIARRAY(1);
+                    } catch (RemoteException e) {
+                    }
+                }
+                Log.e("返回码", code + "");
+                //
+            }
+        });
+        dialog.setCancelClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getUpJson();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public void onLeftClicked() {
+        CommonDialog dialog = new CommonDialog(this, "提示", "货道配置信息发生了变化，是否应用！", "确定", "取消")
+                .setCommitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getUpJson();
+                        finish();
+                    }
+                });
         dialog.show();
     }
 

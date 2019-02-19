@@ -43,4 +43,9 @@ interface BVMAidlInterface {
      int[] BVMGetColdHeatTemp(int boxid);//当前温度查询
      int BVMPowerHeartBeat(int boxid);//电源通讯检测
 
+
+     int[]BVMInitResultYUANSHIARRAY(int boxID);//层列数查询
+     int BVMSetXYInitBackZero(int boxID,int speed);//回初始化零点
+     int BVMSetXYBackZero(int boxID,int speed);//回原点
+     int GetXyRoad(int boxid,int speed,int positonX,int positionY);//到指定货道位置
 }

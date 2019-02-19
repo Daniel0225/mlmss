@@ -82,6 +82,11 @@ public class MainApp extends Application {
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.DOOR_BROADCAST);
+        filter.addAction(Constants.ERRORSTATERECEIVER_BROADCAST);
+        filter.addAction(Constants.FGWORKRECEIVER_BROADCAST);
+        filter.addAction(Constants.SENZRECEIVER_BROADCAST);
+        filter.addAction(Constants.GOODSSTATERECEIVER_BROADCAST);
+        filter.addAction(Constants.HEARTBEAT_BROADCAST);
         registerReceiver(receiver, filter);
     }
 
@@ -155,6 +160,18 @@ public class MainApp extends Application {
                             // startActivity(new Intent(MainApp.appInstance, ScreenProtectActivity.class));
                             break;
                     }
+                    break;
+                case Constants.ERRORSTATERECEIVER_BROADCAST://故障状态广播
+
+                    break;
+                case Constants.FGWORKRECEIVER_BROADCAST://整机状态广播
+
+                    break;
+                case Constants.SENZRECEIVER_BROADCAST: //闸门门禁广播
+                    break;
+                case Constants.GOODSSTATERECEIVER_BROADCAST://货道状态广播
+                    break;
+                case Constants.HEARTBEAT_BROADCAST://进程状态广播
                     break;
             }
         }

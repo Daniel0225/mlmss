@@ -24,5 +24,19 @@ public class Constants {
     public static final String SYN_CHANNEL = BASE_URL + "synChannel";//货道信息同步接口
     public static final String WXPAY = BASE_URL + "wxpay";//支付
 
+    //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";
+    //故障状态广播
+    public static final String ERRORSTATERECEIVER_BROADCAST = "com.snbc.bvm.action.errorstatereceiver";
+    //整机状态广播
+    public static final String FGWORKRECEIVER_BROADCAST = "com.snbc.bvm.action.fgworkreceiver";
+    //闸门门禁广播
+    public static final String SENZRECEIVER_BROADCAST = "com.snbc.bvm.action.senzreceiver";
+    //货道状态广播
+    public static final String GOODSSTATERECEIVER_BROADCAST = "com.snbc.bvm.action.goodsstatereceiver";
+    //进程状态广播
+    public static final String HEARTBEAT_BROADCAST = "android.intent.action.active.heartbeat";
+
+
+
 }
