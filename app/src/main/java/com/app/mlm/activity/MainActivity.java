@@ -1,13 +1,14 @@
 package com.app.mlm.activity;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -24,9 +25,7 @@ import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.CoustomTopView;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.HttpParams;
-import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 
 import java.io.File;
@@ -129,21 +128,35 @@ public class MainActivity extends BaseActivity {
      * @param
      */
     private void downLoadMedia(String url, String fileName) {
-        String cachePath = getExternalCacheDir().getPath();
-        OkGo.<File>get(url)
-                .tag(this)
-                .execute(new FileCallback(cachePath, fileName) {
-                    @Override
-                    public void onSuccess(Response<File> response) {
-                        PreferencesUtil.putString(Constants.DOWN_LOAD, url);
-                        playLocalFile();
-                    }
+//        String cachePath = getExternalCacheDir().getPath();
+//        OkGo.<File>get(url)
+//                .tag(this)
+//
+//                .execute(new FileCallback(cachePath, fileName) {
+//                    @Override
+//                    public void onSuccess(Response<File> response) {
+//                        PreferencesUtil.putString(Constants.DOWN_LOAD, url);
+//                        playLocalFile();
+//                    }
+//
+//                    @Override
+//                    public void downloadProgress(Progress progress) {
+//                        Log.e("Tag", progress.fraction + "");
+//                    }
+//                });
+        DownloadManager mDownloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
 
-                    @Override
-                    public void downloadProgress(Progress progress) {
-                        Log.e("Tag", progress.fraction + "");
-                    }
-                });
+        Uri resource = Uri.parse(url);
+
+        DownloadManager.Request request = new DownloadManager.Request(resource);
+//下载的本地路径，表示设置下载地址为SD卡的Download文件夹，文件名为mobileqq_android.apk。
+        request.setDestinationInExternalPublicDir("Download", "mobileqq_android.apk");
+        String filePath = getExternalCacheDir().getPath() + "/2.mp4";
+        File file = new File(filePath);
+        Uri uri = Uri.fromFile(file);
+        request.setDestinationUri(uri);
+        PreferencesUtil.putString(Constants.DOWN_LOAD, url);
+        mDownloadManager.enqueue(request);
     }
 
     @OnClick({R.id.rlSearch})
