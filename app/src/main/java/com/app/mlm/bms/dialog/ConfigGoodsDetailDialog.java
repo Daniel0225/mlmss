@@ -85,6 +85,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         }
         etPrice.setText(String.valueOf(goodsInfo.getMdsePrice()));
         etCapcity.setText(String.valueOf(goodsInfo.getClcCapacity()));
+
     }
 
     @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll})

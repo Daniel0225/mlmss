@@ -108,17 +108,17 @@ public class MainActivity extends BaseActivity {
             if (adBean.getSuffix().equals("mp4") || adBean.getSuffix().equals("MP4")) {
 //                adBean.setUrl("http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
                 String hasDownLoad = PreferencesUtil.getString(Constants.DOWN_LOAD);
-                if (!TextUtils.isEmpty(hasDownLoad) && hasDownLoad.equals(adBean.getUrl())) {
-                    playLocalFile();
+                if (!TextUtils.isEmpty(hasDownLoad) && hasDownLoad.equals(adBean.getFileName())) {
+                    playLocalFile(adBean.getFileName());
                 } else {
-                    downLoadMedia(adBean.getUrl(), "mlms.mp4");
+                    downLoadMedia(adBean.getUrl(), adBean.getFileName());
                 }
             }
         }
     }
 
-    private void playLocalFile() {
-        String filePath = getExternalCacheDir().getPath() + "/mlms.mp4";
+    private void playLocalFile(String fileName) {
+        String filePath = getExternalCacheDir().getPath() + "/" + fileName;
         File file = new File(filePath);
         Uri uri = Uri.fromFile(file);
         topView.setData(CoustomTopView.TYPE_MP4, uri.toString());
@@ -137,8 +137,8 @@ public class MainActivity extends BaseActivity {
                 .execute(new FileCallback(cachePath, fileName) {
                     @Override
                     public void onSuccess(Response<File> response) {
-                        PreferencesUtil.putString(Constants.DOWN_LOAD, url);
-                        playLocalFile();
+                        PreferencesUtil.putString(Constants.DOWN_LOAD, fileName);
+                        playLocalFile(fileName);
                     }
 
                     @Override

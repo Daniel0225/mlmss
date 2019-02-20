@@ -13,33 +13,28 @@
         />
 
     <ListView
-        android:layout_marginTop="10dp"
         android:id="@+id/lvPayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:listSelector="@color/transparent"
-        android:scrollbars="none"
-        android:overScrollMode="never"
-        android:dividerHeight="0.5dp"
-        android:divider="@color/transparent"
+        android:layout_marginTop="10px"
         android:background="@color/mainBackground"
+        android:divider="@color/transparent"
+        android:dividerHeight="10px"
+        android:listSelector="@color/transparent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         />
 
     <TextView
-        android:foreground="?attr/selectableItemBackground"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:layout_width="800px"
+        android:layout_height="100px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50px"
+        android:background="@drawable/shape_blue"
         android:gravity="center"
         android:text="应用"
-        android:textSize="15sp"
         android:textColor="@color/whiteColor"
-        android:background="@drawable/shape_blue"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:textSize="36px"
         />
 
 </LinearLayout>

@@ -15,111 +15,93 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_centerInParent="true"
+        android:orientation="horizontal"
         >
         <LinearLayout
             android:id="@+id/syncShangpin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_width="330px"
+            android:layout_height="350px"
+            android:layout_marginLeft="25px"
             android:background="@drawable/shape_item_layout"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:gravity="center_horizontal"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:orientation="vertical"
             >
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="114px"
+                android:layout_height="114px"
+                android:layout_marginTop="72px"
                 android:src="@drawable/sync_shangpin"
                 />
 
             <TextView
                 android:id="@+id/tvShangpin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="277px"
+                android:layout_height="70px"
+                android:layout_marginTop="63px"
+                android:background="@drawable/shape_blue"
+                android:gravity="center"
                 android:text="同步商品信息"
                 android:textColor="@color/whiteColor"
-                android:textSize="12sp"
-                android:background="@drawable/shape_blue"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:textSize="26px"
                 />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/syncHuodao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_width="330px"
+            android:layout_height="350px"
+            android:layout_marginLeft="25px"
             android:background="@drawable/shape_item_layout"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:gravity="center_horizontal"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:orientation="vertical"
             >
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="114px"
+                android:layout_height="114px"
+                android:layout_marginTop="72px"
                 android:src="@drawable/sync_huodao"
                 />
 
             <TextView
                 android:id="@+id/tvHuodao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="277px"
+                android:layout_height="70px"
+                android:layout_marginTop="63px"
+                android:background="@drawable/shape_blue"
+                android:gravity="center"
                 android:text="同步货道配置"
                 android:textColor="@color/whiteColor"
-                android:textSize="12sp"
-                android:background="@drawable/shape_blue"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:textSize="26px"
                 />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/syncHuogui"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_width="330px"
+            android:layout_height="350px"
+            android:layout_marginStart="16px"
             android:background="@drawable/shape_item_layout"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:gravity="center_horizontal"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:orientation="vertical"
             >
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="114px"
+                android:layout_height="114px"
+                android:layout_marginTop="72px"
                 android:src="@drawable/sync_huogui"
                 />
 
             <TextView
                 android:id="@+id/tvHuogui"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="277px"
+                android:layout_height="70px"
+                android:layout_marginTop="63px"
+                android:background="@drawable/shape_blue"
+                android:gravity="center"
                 android:text="同步货柜信息"
                 android:textColor="@color/whiteColor"
-                android:textSize="12sp"
-                android:background="@drawable/shape_blue"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:textSize="26px"
                 />
         </LinearLayout>
     </LinearLayout>

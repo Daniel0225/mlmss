@@ -1,61 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="100px"
         android:background="@drawable/shape_blue_rt_lt"
+        android:orientation="horizontal"
         >
         <TextView
             android:layout_width="0dp"
+            android:layout_height="100px"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="应用名称"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp" />
+            android:textSize="30px" />
 
         <TextView
             android:layout_width="0dp"
+            android:layout_height="100px"
             android:layout_weight="2"
-            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="版本名称"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/shape_white_rb_lb"
+        android:orientation="vertical"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/mainBackground"
+            android:orientation="horizontal"
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="配置系统"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -65,14 +58,12 @@
             <TextView
                 android:id="@+id/peizhixitong"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text=""
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,14 +73,14 @@
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="售卖系统"
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="售卖系统"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -99,32 +90,32 @@
             <TextView
                 android:id="@+id/shoumaixitong"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text=""
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/mainBackground"
+            android:orientation="horizontal"
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="升级程序"
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="升级程序"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -134,14 +125,14 @@
             <TextView
                 android:id="@+id/shengjichengxu"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text=""
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <LinearLayout
@@ -151,14 +142,14 @@
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="监控程序"
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="监控程序"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -168,32 +159,32 @@
             <TextView
                 android:id="@+id/jiankongchengxu"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text=""
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/mainBackground"
+            android:orientation="horizontal"
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="中间层程序"
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="中间层程序"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -203,14 +194,14 @@
             <TextView
                 android:id="@+id/zhongjiancengchengxu"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text=""
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <LinearLayout
@@ -220,14 +211,14 @@
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="测试程序"
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="测试程序"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -237,32 +228,32 @@
             <TextView
                 android:id="@+id/ceshichengxu"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text=""
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/mainBackground"
+            android:orientation="horizontal"
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="盘点程序"
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="盘点程序"
                 android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <View
                 android:layout_width="0.5dp"
@@ -272,28 +263,26 @@
             <TextView
                 android:id="@+id/pandianchengxu"
                 android:layout_width="0dp"
+                android:layout_height="75px"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:paddingTop="12dp"
                 android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text=""
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100px"
             android:layout_gravity="center_horizontal"
-            android:text="确定"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center"
             android:background="@drawable/shape_blue_rb_lb"
+            android:gravity="center"
+            android:text="确定"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp" />
+            android:textSize="30px" />
     </LinearLayout>
 
 </LinearLayout>

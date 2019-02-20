@@ -10,19 +10,24 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.adapter.InputGridAdapter;
 import com.app.mlm.adapter.SearchResultAdapter;
+import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
+import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * @author :  luo.xing
@@ -33,7 +38,7 @@ import butterknife.OnClick;
  * @describe : TODO
  * @email : xing.luo@taojiji.com
  */
-public class SearchDialog extends BaseDialog {
+public class SearchDialog extends BaseDialog implements SearchResultAdapter.SearchResultAddShopCarListener {
     @Bind(R.id.etSearch)
     EditText etSearch;
     @Bind(R.id.ivClear)
@@ -51,15 +56,15 @@ public class SearchDialog extends BaseDialog {
     private List<GoodsInfo> data = new ArrayList<>();
 
     public SearchDialog(Context context) {
-        super(context, R.layout.dialog_search_layout, true);
+        super(context, R.layout.dialog_search_layout, true, 900, 1280);
     }
 
     @Override
     public void initView() {
         inputGridAdapter = new InputGridAdapter(mContext);
         inputGridView.setAdapter(inputGridAdapter);
-
-        searchResultAdapter = new SearchResultAdapter(mContext, data);
+        initList();
+        searchResultAdapter = new SearchResultAdapter(mContext, data, this);
         gridView.setAdapter(searchResultAdapter);
         initListener();
     }
@@ -81,7 +86,11 @@ public class SearchDialog extends BaseDialog {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GoodsDetailDialog dialog = new GoodsDetailDialog(mContext, null);
+                if (data.get(position).getMdseUrl().equals("empty")) {
+                    ToastUtil.showLongToast("该货道暂无商品");
+                    return;
+                }
+                GoodsDetailDialog dialog = new GoodsDetailDialog(mContext, data.get(position));
                 dialog.show();
             }
         });
@@ -132,4 +141,44 @@ public class SearchDialog extends BaseDialog {
         etSearch.setText("");
     }
 
+    /**
+     * 造数据
+     */
+    private void initList() {
+        data.clear();
+        String huodaoString = PreferencesUtil.getString("huodao0");
+        if (TextUtils.isEmpty(huodaoString)) {
+            data.addAll(getDefaultData());
+        } else {
+            for (int i = 0; i < 5; i++) {
+                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
+                List<GoodsInfo> list = FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class);
+                data.addAll(list);
+            }
+        }
+    }
+
+
+    private List<GoodsInfo> getDefaultData() {
+        List<GoodsInfo> goodsInfoList = new ArrayList<>();
+        for (int i = 0; i < 16; i++) {
+            GoodsInfo goodsInfo = new GoodsInfo();
+            goodsInfo.setMdseName("请补货");
+            goodsInfo.setMdseUrl("empty");
+            goodsInfo.setMdsePrice("0");
+            goodsInfoList.add(goodsInfo);
+        }
+        return goodsInfoList;
+    }
+
+    @Override
+    public void addCar(int position) {
+        if (data.get(position).getMdseUrl().equals("empty")) {
+            ToastUtil.showLongToast("该货道暂无商品");
+            return;
+        }
+        MainApp.addShopCar(data.get(position));
+        ToastUtil.showLongToast("加入成功");
+        EventBus.getDefault().post(new AddShopCarEvent());//发送消息到首页 更新购物车TAB角标数据
+    }
 }

@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/shape_number_button"
-    >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200px"
+    android:layout_height="80px"
+    android:background="@drawable/shape_number_button">
 
     <TextView
         android:id="@+id/tvButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:text="1"
         android:textColor="@color/whiteColor"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:textSize="38px"
         />
 
 </RelativeLayout>

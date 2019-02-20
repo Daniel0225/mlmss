@@ -25,10 +25,10 @@ import butterknife.ButterKnife;
  * @email : xing.luo@taojiji.com
  */
 public abstract class BaseDialog  extends Dialog {
-    private int mLayoutResID;
-    private Window mDialogWindow;
     protected Context mContext;
     protected View mRoot;
+    private int mLayoutResID;
+    private Window mDialogWindow;
     private int mCountDownSec = 0;
     private CountDownTimer mTimer;
     private OnCountDownListener mListener;
@@ -47,6 +47,18 @@ public abstract class BaseDialog  extends Dialog {
     }
 
     public BaseDialog(Context context, int layoutResID, boolean isFullScreen) {
+        super(context, R.style.NoBGDialog);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.mContext = context;
+        mDialogWindow = this.getWindow();
+        mDialogWindow.setGravity(Gravity.BOTTOM);
+        mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
+        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+        this.mLayoutResID = layoutResID;
+        this.isFullScreen = isFullScreen;
+    }
+
+    public BaseDialog(Context context, int layoutResID, boolean isFullScreen, int width, int height) {
         super(context, R.style.NoBGDialog);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.mContext = context;
@@ -137,11 +149,11 @@ public abstract class BaseDialog  extends Dialog {
         this.mListener = listener;
     }
 
+    public abstract void initView();
+
     public interface OnCountDownListener{
         void onTick(int seconds);
 
         void onFinish(BaseDialog dialog);
     }
-
-    public abstract void initView();
 }

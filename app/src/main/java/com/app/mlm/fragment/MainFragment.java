@@ -84,6 +84,9 @@ public class MainFragment extends BaseFragment {
 
     }
 
+    /**
+     * 造数据
+     */
     private void initList() {
         dataList.clear();
         String huodaoString = PreferencesUtil.getString("huodao0");

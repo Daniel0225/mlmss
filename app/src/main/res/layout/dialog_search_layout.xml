@@ -1,71 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.app.mlm.widget.CustomRelativelayout
+
+    <RelativeLayout
         android:id="@+id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/gridView"
         >
         <RelativeLayout
             android:id="@+id/rlSearch"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_alignParentBottom="true"
+            android:layout_width="800px"
+            android:layout_height="70px"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_search_layout"
-            android:layout_height="40dp">
+            android:layout_marginBottom="42px"
+            android:layout_marginTop="416px"
+            android:background="@drawable/shape_search_layout">
 
             <EditText
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
-                android:paddingLeft="15dp"
-                android:textSize="15sp"
-                android:textColor="@color/text_nomorl"
                 android:layout_centerVertical="true"
-                android:hint="@string/hint_search"
+                android:background="@null"
                 android:focusable="false"
+                android:hint="@string/hint_search"
+                android:paddingLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="30px"
                 />
 
             <ImageView
                 android:id="@+id/ivClear"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
+                android:layout_width="40px"
+                android:layout_height="40px"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
                 android:src="@drawable/delet_nor"/>
         </RelativeLayout>
-    </com.app.mlm.widget.CustomRelativelayout>
+    </RelativeLayout>
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/inputGridView"
+        android:layout_marginEnd="30px"
+        android:layout_marginStart="30px"
         android:layout_weight="1"
+        android:background="@color/dialogBgColor"
+        android:horizontalSpacing="8px"
         android:listSelector="@color/transparent"
         android:numColumns="4"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
-        android:background="@color/dialogBgColor"
+        android:verticalSpacing="8px"
         />
 
     <GridView
         android:id="@+id/inputGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:paddingBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/dialogBgColor"
+        android:gravity="center"
+        android:horizontalSpacing="6px"
         android:listSelector="@color/transparent"
         android:numColumns="3"
-        android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp"
-        android:background="@color/dialogBgColor"
+        android:paddingBottom="24px"
+        android:paddingEnd="231px"
+        android:paddingStart="237px"
+        android:paddingTop="18px"
+        android:verticalSpacing="6px"
         />
-</LinearLayout>
+</RelativeLayout>
