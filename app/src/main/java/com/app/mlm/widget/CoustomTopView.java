@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.VideoView;
 
 import com.app.imageloader.glide.GlideApp;
 import com.app.mlm.R;
-import com.app.mlm.utils.PhoneUtil;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -48,7 +46,6 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
     private RelativeLayout mRootView;
     private ImageView imageView;
     private PlayerView playerView;
-    private VideoView videoView;
     private int pecentHeight;
     public CoustomTopView(Context context) {
         super(context);
@@ -73,14 +70,14 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         ta.recycle();
         imageView = mRootView.findViewById(R.id.imageView);
         playerView = mRootView.findViewById(R.id.playView);
-        videoView = mRootView.findViewById(R.id.playView2);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
         //设置控件高度为四分之一屏幕高度
-        int height = PhoneUtil.getDisplayHeight(mContext) * pecentHeight / 100;
+//        int height = PhoneUtil.getDisplayHeight(mContext) * pecentHeight / 100;
+        int height = 500;
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -90,9 +87,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         if(type.equals(TYPE_JPG)){
             initJpgAndGif();
         }else {
-//            initVedio();
-            videoView.setVideoPath(url);
-            videoView.start();
+            initVedio();
         }
    }
 
@@ -106,7 +101,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
     }
 
     private void initVedio() {
-//        playerView.setVisibility(View.VISIBLE);
+        playerView.setVisibility(View.VISIBLE);
         playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(mContext,
             new DefaultRenderersFactory(mContext),
@@ -117,7 +112,7 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         MediaSource mediaSource = buildMediaSource(uri);
 //        player.prepare(mediaSource);
         prepareExoPlayerFromFileUri(player, uri);
-//        player.setPlayWhenReady(true);
+        player.setPlayWhenReady(true);
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.DoneDialog;
 import com.app.mlm.bms.dialog.SyncProgressDialog;
 import com.app.mlm.http.BaseResponse;
@@ -64,8 +65,8 @@ public class ConfigSyncActivity extends BaseActivity {
                 syncProduceInfo();
                 break;
             case R.id.syncHuodao:
-                DoneDialog dialog1 = new DoneDialog(this);
-                dialog1.show();
+                syncChannel();
+
                 break;
             case R.id.syncHuogui:
                 break;
@@ -102,5 +103,18 @@ public class ConfigSyncActivity extends BaseActivity {
     /**
      * 同步货道配置
      */
-
+    private void syncChannel() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<GoodsInfo>get(Constants.SYN_TO_CHANNEL)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<GoodsInfo>() {
+                    @Override
+                    public void onSuccess(Response<GoodsInfo> response) {
+                        DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
+                        dialog1.show();
+                    }
+                });
+    }
 }

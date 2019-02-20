@@ -4,48 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/mainBackground"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="500px">
         <com.app.mlm.widget.CoustomTopView
             android:id="@+id/topView"
-            android:background="@color/colorPrimary"
-            app:ctv_height="25"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:ctv_height="25" />
 
         <RelativeLayout
             android:id="@+id/rlSearch"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_alignBottom="@id/topView"
+            android:layout_width="800px"
+            android:layout_height="70px"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_search_layout"
-            android:layout_height="40dp">
+            android:layout_marginBottom="14px"
+            android:background="@drawable/shape_search_layout">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
-                android:paddingLeft="15dp"
-                android:textSize="15sp"
-                android:textColor="@color/text_nomorl"
                 android:layout_centerVertical="true"
-                android:text="@string/hint_search"
+                android:background="@null"
                 android:gravity="center_vertical"
+                android:paddingLeft="45px"
+                android:text="@string/hint_search"
+                android:textColor="#B2B2B2"
+                android:textSize="26px"
                 />
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
+                android:layout_width="30px"
+                android:layout_height="30px"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="47px"
                 android:src="@drawable/search_nor"/>
         </RelativeLayout>
     </RelativeLayout>
