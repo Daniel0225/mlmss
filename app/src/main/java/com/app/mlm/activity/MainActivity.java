@@ -105,20 +105,20 @@ public class MainActivity extends BaseActivity {
      */
     private void setTopViewValue() {
         for (AdBean adBean : adBeanList) {
-            if (adBean.getSuffix().equals("mp4")) {
+            if (adBean.getSuffix().equals("mp4") || adBean.getSuffix().equals("MP4")) {
 //                adBean.setUrl("http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
                 String hasDownLoad = PreferencesUtil.getString(Constants.DOWN_LOAD);
                 if (!TextUtils.isEmpty(hasDownLoad) && hasDownLoad.equals(adBean.getUrl())) {
                     playLocalFile();
                 } else {
-                    downLoadMedia(adBean.getUrl(), adBean.getFileType() + ".mp4");
+                    downLoadMedia(adBean.getUrl(), "mlms.mp4");
                 }
             }
         }
     }
 
     private void playLocalFile() {
-        String filePath = getExternalCacheDir().getPath() + "/2.mp4";
+        String filePath = getExternalCacheDir().getPath() + "/mlms.mp4";
         File file = new File(filePath);
         Uri uri = Uri.fromFile(file);
         topView.setData(CoustomTopView.TYPE_MP4, uri.toString());
