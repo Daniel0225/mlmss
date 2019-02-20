@@ -10,7 +10,10 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.multidex.MultiDex;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.Meassage.MyClient;
@@ -52,6 +55,12 @@ public class MainApp extends Application {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             bvmAidlInterface = BVMAidlInterface.Stub.asInterface(service);
+            try {
+                int code1 = bvmAidlInterface.BVMSetKey("2lqFW9J9HyFYWol7");
+                Log.e("密钥返回", code1 + "");
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -112,6 +121,7 @@ public class MainApp extends Application {
         filter.addAction(Constants.GOODSSTATERECEIVER_BROADCAST);
         filter.addAction(Constants.HEARTBEAT_BROADCAST);
         registerReceiver(receiver, filter);
+
     }
 
     private void initOkGo() {
@@ -178,6 +188,8 @@ public class MainApp extends Application {
                     int status = Integer.parseInt(intent.getStringExtra("SENSTATE"));
                     switch (status) {
                         case 1://柜门开
+                            Log.e("收到开柜广播", "-----");
+                            Toast.makeText(MainApp.appInstance, "收到开机广播", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainApp.appInstance, BackgroundManangerSystemActivity.class));
                             break;
                         case 2://柜门关
