@@ -53,7 +53,7 @@
         <service android:name=".BackService" />
 
         <service
-            android:name=".ServiceTest"
+            android:name=".MlmServiceConfigure"
             android:enabled="true"
             android:exported="true"></service>
     </application>

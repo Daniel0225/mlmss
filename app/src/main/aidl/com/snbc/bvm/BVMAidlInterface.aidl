@@ -44,8 +44,10 @@ interface BVMAidlInterface {
      int BVMPowerHeartBeat(int boxid);//电源通讯检测
 
 
-     int[]BVMInitResultYUANSHIARRAY(int boxID);//层列数查询
+     int BVMInitResultYUANSHIARRAY(int boxID);//层列数查询
      int BVMSetXYInitBackZero(int boxID,int speed);//回初始化零点
      int BVMSetXYBackZero(int boxID,int speed);//回原点
      int GetXyRoad(int boxid,int speed,int positonX,int positionY);//到指定货道位置
+     String BVMGetVersion();//查询中间层版本
+     int[ ] BVMGetMachineConfig(int boxid);//设备配置信息查询,查询设备配置，不同售货机配置可能不同
 }

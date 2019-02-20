@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -57,7 +56,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(8,8,0,0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(8, 8, 0, 0));
         initList();
         HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
@@ -83,7 +82,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        //  String json="";
+        // String code=MainApp.bvmAidlInterface.BVMStartShip();
     }
 
     @OnClick({R.id.cleanAll, R.id.fillAll, R.id.oneKey})
@@ -113,22 +113,17 @@ public class ConfigHuodaoActivity extends BaseActivity {
         dialog.setCommitClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int code = 0;
+                //查询层列数
                 try {
-                    code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 1, 3);
+                    int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+                    for (int i = 0; i < count.length; i++) {
+                        Log.e("count", count[i] + "");//count: 0
+                    }
+                    Log.e("count", "第0个" + count[0] + "第1个" + count[1] + "第2个" + count[2] + "第3个" + count[3]);//count: 0
+
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(ConfigHuodaoActivity.this, code, Toast.LENGTH_SHORT).show();
-                if (code == 1105) {
-                    try {
-                        //查询层列数
-                        int[] count = MainApp.bvmAidlInterface.BVMInitResultYUANSHIARRAY(1);
-                    } catch (RemoteException e) {
-                    }
-                }
-                Log.e("返回码", code + "");
-                //
             }
         });
         dialog.setCancelClickListener(new View.OnClickListener() {
@@ -160,7 +155,23 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        int code = 0;
+                        try {
+                            code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                        Log.e("初始化返回值", code + "");//初始化返回值: 99
+                        if (code == 99) {
+                       /* //查询层列数
+                        int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+                        //int count = MainApp.bvmAidlInterface.BVMInitResultYUANSHIARRAY(1);
+                        Log.e("count", count.length + "长度");//count: 0*/
+                        } else {
+                            //错误码
+                            Log.e("初始化错误码", code + "");
+                        }
+                        Log.e("返回码", code + "");
                     }
                 });
         dialog.show();

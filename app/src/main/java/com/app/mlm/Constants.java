@@ -7,6 +7,7 @@ package com.app.mlm;
  * @date : 2018/12/29  16:55
  * @describe : 常量
  */
+
 public class Constants {
 
     public static final String VMCODE = "vmCode";
