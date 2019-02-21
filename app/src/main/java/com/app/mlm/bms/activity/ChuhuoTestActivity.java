@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.app.mlm.R;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.CHColumnGoodsAdapter;
+import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
@@ -56,14 +57,12 @@ public class ChuhuoTestActivity extends BaseActivity {
      */
     private void initList() {
         list.clear();
-        String huodaoString = PreferencesUtil.getString("huodao0");
+        String huodaoString = PreferencesUtil.getString("huodao");
         if (TextUtils.isEmpty(huodaoString)) {
             list.addAll(getData());
         } else {
-            for (int i = 0; i < 5; i++) {
-                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
-                list.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
-            }
+            HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
+            list.addAll(huodaoBean.getAllDataList());
         }
     }
 

@@ -17,6 +17,7 @@ import com.app.mlm.bms.adapter.HDColumnGoodsAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
@@ -53,6 +54,12 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //模拟数据保存
+        int[] strings = {6, 5, 8, 7, 5, 8};
+        // Collections.reverse(Arrays.asList(strings));
+        //   Log.e("数组", Arrays.toString(strings));
+        PreferencesUtil.putString("layer", Arrays.toString(strings));
+        Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
         fillAll.setSelected(true);
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.VERTICAL);
@@ -62,24 +69,6 @@ public class ConfigHuodaoActivity extends BaseActivity {
         HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
         showSyncDialog();
-        //模拟数据保存
-        int[] strings = {6, 5, 8, 7, 5, 8};
-        // Collections.reverse(Arrays.asList(strings));
-        //   Log.e("数组", Arrays.toString(strings));
-        PreferencesUtil.putString("layer", Arrays.toString(strings));
-        Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
-    }
-
-    private void initList() {
-        String huodaoString = PreferencesUtil.getString("huodao0");
-        if (TextUtils.isEmpty(huodaoString)) {
-            allDataList = getData();
-        } else {
-            for (int i = 0; i < 5; i++) {
-                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
-                allDataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
-            }
-        }
     }
 
     @Override
@@ -186,17 +175,36 @@ public class ConfigHuodaoActivity extends BaseActivity {
         dialog.show();
     }
 
-    private List<List<GoodsInfo>> getData() {
+    /**
+     * 根据机器获取到的 货道数据 生成空数据
+     *
+     * @return
+     */
+    private void initList() {
+        String huodaoString = PreferencesUtil.getString("huodao");
+        if (TextUtils.isEmpty(huodaoString)) {
+            allDataList = getData(getHuoDaoData());
+        } else {
+            HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
+            allDataList = huodaoBean.getAllDataList();
+//            for (int i = 0; i < 5; i++) {
+//                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
+//                allDataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
+//            }
+        }
+    }
+
+    private List<List<GoodsInfo>> getData(String[] layers) {
         List<List<GoodsInfo>> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(getDefaultData());
+        for (int i = layers.length - 1; i >= 0; i--) {
+            list.add(getDefaultData(Integer.valueOf(layers[i])));
         }
         return list;
     }
 
-    private List<GoodsInfo> getDefaultData() {
+    private List<GoodsInfo> getDefaultData(int column) {//传入当前行 有几列
         List<GoodsInfo> goodsInfoList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < column; i++) {
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setMdseName("请补货");
             goodsInfo.setMdseUrl("empty");
@@ -215,12 +223,14 @@ public class ConfigHuodaoActivity extends BaseActivity {
         List<GoodsInfo> list = new ArrayList<>();
         for (int i = 0; i < allDataList.size(); i++) {
             list.addAll(allDataList.get(i));
-            String huodaoDataString = FastJsonUtil.createJsonString(allDataList.get(i));
-            PreferencesUtil.putString("huodao" + i, huodaoDataString);
+//            String huodaoDataString = FastJsonUtil.createJsonString(allDataList.get(i));
+//            PreferencesUtil.putString("huodao" + i, huodaoDataString);
         }
         String upJsonString = FastJsonUtil.createJsonString(list);
         Log.e("Tag", upJsonString);
 
+        HuodaoBean huodaoBean = new HuodaoBean(allDataList);
+        PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
         SynChannel(upJsonString);
 
         return upJsonString;
@@ -236,6 +246,17 @@ public class ConfigHuodaoActivity extends BaseActivity {
                     public void onSuccess(Response<BaseResponse> response) {
                     }
                 });
+    }
+
+    /**
+     * 解析机器层数据
+     */
+    private String[] getHuoDaoData() {
+        String layerData = PreferencesUtil.getString("layer");
+        layerData = layerData.replace("[", "").replace("]", "").replace(" ", "");
+        Log.e("Tag", "layerData " + layerData);
+        String[] layers = layerData.split(",");
+        return layers;
     }
 
     @Override

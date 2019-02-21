@@ -32,7 +32,6 @@ import java.util.List;
  */
 public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.RowGoodsViewHolder> {
     private Context context;
-    private int count = 10;
     private List<GoodsInfo> data = new ArrayList<>();
     public CHRowGoodsAdapter(Context context, List<GoodsInfo> data){
         this.context = context;
@@ -54,7 +53,7 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
     public void onBindViewHolder(@NonNull RowGoodsViewHolder viewHolder, int i) {
         if(i == 0){
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_lt_lb);
-        }else if (i == count - 1){
+        } else if (i == data.size() - 1) {
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
         }else {
             viewHolder.rvRoot.setBackgroundResource(R.color.whiteColor);
@@ -111,7 +110,7 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
 
     @Override
     public int getItemCount() {
-        return count;
+        return data.size();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {

@@ -22,6 +22,7 @@ import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.http.ApiService;
 import com.app.mlm.http.bean.BaseBean;
+import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
@@ -89,14 +90,15 @@ public class MainFragment extends BaseFragment {
      */
     private void initList() {
         dataList.clear();
-        String huodaoString = PreferencesUtil.getString("huodao0");
+        String huodaoString = PreferencesUtil.getString("huodao");
         if (TextUtils.isEmpty(huodaoString)) {
             dataList.addAll(getData());
         } else {
-            for (int i = 0; i < 5; i++) {
-                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
-                dataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
-            }
+            HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
+            dataList.addAll(huodaoBean.getAllDataList());
+//            for (int i = allDataList.size() - 1; i >= 0; i--) {
+//                dataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
+//            }
         }
     }
 
