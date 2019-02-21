@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".bms.activity.TemperatureControlActivity">
 
@@ -16,114 +17,107 @@
     <TextView
         android:id="@+id/tvCurrentMode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_height="120px"
+        android:layout_marginTop="10px"
         android:background="@color/whiteColor"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="70px"
         android:text="当前温度：常温"
-        android:textColor="@color/text_nomorl"
-        android:textSize="15sp" />
+        android:textColor="@color/text_black"
+        android:textSize="30px" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp" />
+        android:layout_width="1000px"
+        android:layout_height="1px" />
 
     <TextView
         android:id="@+id/tvDeviceTemper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120px"
         android:background="@color/whiteColor"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="70px"
         android:text="箱体温度：18度"
-        android:textColor="@color/text_nomorl"
-        android:textSize="15sp" />
+        android:textColor="@color/text_black"
+        android:textSize="30px" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp" />
+        android:layout_width="1000px"
+        android:layout_height="1px" />
 
     <TextView
         android:id="@+id/tvRoomTempr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120px"
         android:background="@color/whiteColor"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="70px"
         android:text="室外温度：18度"
-        android:textColor="@color/text_nomorl"
-        android:textSize="15sp" />
+        android:textColor="@color/text_black"
+        android:textSize="30px" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_height="141px"
+        android:layout_marginTop="18px"
         android:background="@color/whiteColor"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="184px"
             android:layout_height="wrap_content"
+            android:layout_marginStart="70px"
             android:background="@color/whiteColor"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:gravity="center_vertical"
             android:text="请选择模式："
-            android:textColor="@color/text_nomorl"
-            android:textSize="15sp" />
+            android:textColor="@color/text_black"
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/tvChangwen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="210px"
+            android:layout_height="70px"
+            android:layout_marginStart="10px"
             android:background="@drawable/shape_blue"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:gravity="center"
             android:text="常温"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp" />
+            android:textSize="26px" />
 
         <TextView
             android:id="@+id/tvZhileng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_width="210px"
+            android:layout_height="70px"
+            android:layout_marginStart="50px"
             android:background="@drawable/shape_blue_light"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:gravity="center"
             android:text="制冷"
             android:textColor="@color/colorPrimary"
-            android:textSize="15sp" />
+            android:textSize="26px" />
 
         <TextView
             android:id="@+id/tvZhire"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="210px"
+            android:layout_height="70px"
+            android:layout_marginStart="50px"
             android:background="@drawable/shape_blue_light"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:gravity="center"
             android:text="制热"
             android:textColor="@color/colorPrimary"
-            android:textSize="15sp" />
+            android:textSize="26px" />
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/temperatureSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp" />
+            android:layout_width="1000px"
+            android:layout_height="1px" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,71 +125,73 @@
             android:background="@color/whiteColor"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp">
 
             <TextView
                 android:id="@+id/tvSettingName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="70px"
                 android:background="@color/whiteColor"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:text="请选择制冷模式："
-                android:textColor="@color/text_nomorl"
-                android:textSize="15sp" />
+                android:textColor="@color/text_black"
+                android:textSize="30px" />
 
             <TextView
                 android:id="@+id/tvSettingMode1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="210px"
+                android:layout_height="70px"
+                android:layout_marginStart="10px"
                 android:background="@drawable/shape_blue"
+                android:gravity="center"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="弱冷"
                 android:textColor="@color/whiteColor"
-                android:textSize="15sp" />
+                android:textSize="26px" />
 
             <TextView
                 android:id="@+id/tvSettingMode2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_width="210px"
+                android:layout_height="70px"
+                android:layout_marginStart="50px"
                 android:background="@drawable/shape_blue_light"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+                android:gravity="center"
                 android:text="强冷"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textSize="26px" />
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp" />
+            android:layout_width="1000px"
+            android:layout_height="1px" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/whiteColor"
             android:orientation="horizontal"
+            android:paddingBottom="10dp"
             android:paddingLeft="20dp"
-            android:paddingTop="10dp"
             android:paddingRight="20dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="10dp">
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="65px"
                 android:layout_weight="1">
 
                 <com.dinuscxj.progressbar.CircleProgressBar
                     android:id="@+id/cpbProgressLow"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="190px"
+                    android:layout_height="190px"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50px"
+                    app:progress_stroke_width="20px"
                     app:progress_text_color="@color/colorPrimary"
-                    app:progress_text_size="18sp"
+                    app:progress_text_size="44px"
                     />
 
                 <TextView
@@ -204,40 +200,37 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cpbProgressLow"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="35px"
                     android:text="最低温度"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="13sp" />
+                    android:textColor="@color/text_black"
+                    android:textSize="26px" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvDescLow"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="34px"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:padding="5dp"
+                        android:layout_width="48px"
+                        android:layout_height="48px"
                         android:src="@drawable/temperature_jian" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100px"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:gravity="center"
                         android:text="4"
-                        android:textColor="@color/text_nomorl"
-                        android:textSize="14sp"
+                        android:textColor="@color/text_black"
+                        android:textSize="36px"
                         />
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:padding="5dp"
+                        android:layout_width="48px"
+                        android:layout_height="48px"
                         android:src="@drawable/temperature_add"
                         />
                 </LinearLayout>
@@ -246,15 +239,18 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="65px"
                 android:layout_weight="1">
 
                 <com.dinuscxj.progressbar.CircleProgressBar
                     android:id="@+id/cpbProgressHigh"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="190px"
+                    android:layout_height="190px"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50px"
+                    app:progress_stroke_width="20px"
                     app:progress_text_color="@color/colorPrimary"
-                    app:progress_text_size="18sp" />
+                    app:progress_text_size="44px" />
 
                 <TextView
                     android:id="@+id/tvDescHigh"
@@ -262,88 +258,88 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cpbProgressHigh"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="35px"
                     android:text="最高温度"
-                    android:textColor="@color/text_nomorl"
-                    android:textSize="13sp" />
+                    android:textColor="@color/text_black"
+                    android:textSize="26px" />
 
                 <LinearLayout
+                    android:id="@+id/high_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvDescHigh"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="34px"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:padding="5dp"
+                        android:layout_width="48px"
+                        android:layout_height="48px"
                         android:src="@drawable/temperature_jian" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100px"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:gravity="center"
                         android:text="4"
-                        android:textColor="@color/text_nomorl"
-                        android:textSize="14sp"
+                        android:textColor="@color/text_black"
+                        android:textSize="36px"
                         />
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:padding="5dp"
+                        android:id="@+id/low_temp_add"
+                        android:layout_width="48px"
+                        android:layout_height="48px"
                         android:src="@drawable/temperature_add"
                         />
                 </LinearLayout>
+
+
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp" />
+        <View
+            android:layout_width="1000px"
+            android:layout_height="1px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="65px" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llChuhuo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="137px"
         android:background="@color/whiteColor"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120px"
             android:layout_weight="1"
             android:background="@color/whiteColor"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="70px"
             android:text="未达预定温度出货："
-            android:textColor="@color/text_nomorl"
-            android:textSize="15sp" />
+            android:textColor="@color/text_black"
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/tvAllowChuhuo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/whiteColor"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="允许"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:textSize="30px" />
 
         <ImageView
-            android:layout_width="9dp"
-            android:layout_height="9dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="32px"
+            android:layout_height="33px"
+            android:layout_marginEnd="91px"
+            android:layout_marginStart="8px"
             android:src="@drawable/item_arrow" />
     </LinearLayout>
 
