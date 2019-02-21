@@ -24,4 +24,6 @@
     <color name="withe">#ffffff</color>
     <color name="light_blue">#95AFFF</color>
 
+    <color name="shallow_textColor">#7A7A7A</color>
+
 </resources>
