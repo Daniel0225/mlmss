@@ -1,59 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activity.ScreenProtectActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1600px"
+        android:scaleType="fitXY"
+        android:src="@drawable/banner" />
+
+    <ImageView
+        android:id="@+id/erweima"
+        android:layout_width="251px"
+        android:layout_height="274px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30px"
+        android:layout_marginStart="16px"
+        android:src="@drawable/milimao" />
+
+    <ImageView
+        android:layout_width="360px"
+        android:layout_height="136px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70px"
+        android:layout_marginStart="2px"
+        android:layout_toRightOf="@+id/erweima"
+        android:src="@drawable/dianhua" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15px"
+        android:layout_marginStart="42px"
+        android:text="如购买产品失败 5分钟内系统自动退款"
+        android:textColor="#1D2088"
+        android:textSize="22px" />
+
+    <TextView
+        android:layout_width="220px"
+        android:layout_height="80px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="90px"
+        android:layout_marginEnd="20px"
+        android:background="@drawable/shape_blue"
+        android:gravity="center"
+        android:text="@string/click_bug"
+        android:textColor="@color/whiteColor"
+        android:textSize="30px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="25px"
+        android:layout_marginEnd="60px"
+        android:text="点击屏幕进入购买体验" />
 
     <com.app.mlm.widget.CoustomTopView
         android:id="@+id/topView"
-        android:background="@color/colorPrimary"
-        app:ctv_height="75"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        app:ctv_height="75" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/whiteColor"
-        android:paddingRight="20dp"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="gone"
         >
         <ImageView
             android:id="@+id/ivCode"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerVertical="true"
-            android:background="@color/mainBackground"
             android:layout_marginRight="15dp"
+            android:background="@color/mainBackground"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/saomaguanzhu"
             android:layout_alignTop="@id/ivCode"
             android:layout_toRightOf="@id/ivCode"
             android:paddingTop="10dp"
-            android:textSize="15sp"
+            android:text="@string/saomaguanzhu"
             android:textColor="@color/text_dark"
+            android:textSize="15sp"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/click_bug"
-            android:textColor="@color/whiteColor"
-            android:background="@drawable/shape_blue"
             android:layout_alignBottom="@id/ivCode"
             android:layout_toRightOf="@id/ivCode"
-            android:paddingTop="5dp"
+            android:background="@drawable/shape_blue"
+            android:paddingBottom="5dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/click_bug"
+            android:textColor="@color/whiteColor"
             />
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>
