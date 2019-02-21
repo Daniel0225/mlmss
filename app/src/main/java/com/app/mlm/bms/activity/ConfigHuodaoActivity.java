@@ -25,7 +25,6 @@ import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -65,8 +64,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
         showSyncDialog();
         //模拟数据保存
         int[] strings = {6, 5, 8, 7, 5, 8};
-        Collections.reverse(Arrays.asList(strings));
-        Log.e("数组", Arrays.toString(strings));
+        // Collections.reverse(Arrays.asList(strings));
+        //   Log.e("数组", Arrays.toString(strings));
         PreferencesUtil.putString("layer", Arrays.toString(strings));
         Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
     }
@@ -171,8 +170,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         if (code == 99) {
                             try {
                                 int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
-                                Collections.reverse(Arrays.asList(count));
-                                Log.e("数组", Arrays.toString(count));
+                                //  Collections.reverse(Arrays.asList(count));
+                                // Log.e("数组", Arrays.toString(count));
                                 PreferencesUtil.putString("layer", Arrays.toString(count));
                             } catch (RemoteException e) {
                                 e.printStackTrace();
