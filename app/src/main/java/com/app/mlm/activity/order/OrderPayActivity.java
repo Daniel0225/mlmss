@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.WxPayBean;
@@ -38,6 +39,8 @@ public class OrderPayActivity extends AppCompatActivity {
         setContentView(R.layout.order_pay);
         init();
         getPayInfo();
+        CouponDialog couponDialog = new CouponDialog(this);
+        couponDialog.show();
     }
 
     public void init() {
