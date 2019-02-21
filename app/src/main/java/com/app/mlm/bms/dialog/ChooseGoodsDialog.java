@@ -61,7 +61,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar {
     public void initView() {
         titleBar.setTitlebarListener(this);
         titleBar.setRightViewVisibility(View.GONE);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 5));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(4, 4, 4, 4));
         LitePal.findAllAsync(ProductInfo.class).listen(new FindMultiCallback() {
             @Override

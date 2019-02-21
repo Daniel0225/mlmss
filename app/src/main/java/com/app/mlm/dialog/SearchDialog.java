@@ -56,7 +56,7 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
     private List<GoodsInfo> data = new ArrayList<>();
 
     public SearchDialog(Context context) {
-        super(context, R.layout.dialog_search_layout, true, 900, 1280);
+        super(context, R.layout.dialog_search_layout, true);
     }
 
     @Override

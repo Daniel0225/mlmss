@@ -1,7 +1,6 @@
 package com.app.mlm.bms.dialog;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,7 +64,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
     private GoodsInfo goodsInfo;
 
     public ConfigGoodsDetailDialog(Context context, GoodsInfo goodsInfo) {
-        super(context, R.layout.dialog_config_goods_detail, true, Gravity.CENTER);
+        super(context, R.layout.dialog_config_goods_detail, true, 900, 1280);
         this.goodsInfo = goodsInfo;
     }
 

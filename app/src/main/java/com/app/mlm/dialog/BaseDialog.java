@@ -34,6 +34,8 @@ public abstract class BaseDialog  extends Dialog {
     private OnCountDownListener mListener;
     private BaseDialog mBaseDialog;
     private boolean isFullScreen = false;
+    private int fullScreenWidth = 0;
+    private int fullScreenHeight = 0;
 
     public BaseDialog(Context context, int layoutResID) {
         super(context, R.style.NoBGDialog);
@@ -68,6 +70,8 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
         this.isFullScreen = isFullScreen;
+        fullScreenWidth = width;
+        fullScreenHeight = height;
     }
 
     public BaseDialog(Context context, int layoutResID, boolean isFullScreen, int gravity) {
@@ -117,8 +121,8 @@ public abstract class BaseDialog  extends Dialog {
         WindowManager windowManager = mDialogWindow.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         if(isFullScreen){
-            lp.width = display.getWidth();
-            lp.height = display.getHeight();
+            lp.width = fullScreenWidth != 0 ? fullScreenWidth : display.getWidth();
+            lp.height = fullScreenHeight != 0 ? fullScreenHeight : display.getHeight();
         }else {
             lp.width = display.getWidth() * 2 / 3;
         }

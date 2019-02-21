@@ -57,7 +57,7 @@ public class InputGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.number_button_layout, null);
+            convertView = inflater.inflate(R.layout.number_button_layout, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
