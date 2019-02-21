@@ -36,7 +36,7 @@ public class CHColumnGoodsAdapter extends RecyclerView.Adapter<CHColumnGoodsAdap
     @NonNull
     @Override
     public RowGoodsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.goods_row_layout, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.goods_row_layout_bms, viewGroup, false);
         RowGoodsViewHolder viewHolder = new RowGoodsViewHolder(view);
         viewHolder.recyclerView = view.findViewById(R.id.recyclerView);
         viewHolder.tvColumn = view.findViewById(R.id.tvColumn);
@@ -48,15 +48,15 @@ public class CHColumnGoodsAdapter extends RecyclerView.Adapter<CHColumnGoodsAdap
         LinearLayoutManager ms = new LinearLayoutManager(context);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
-        CHRowGoodsAdapter adapter = new CHRowGoodsAdapter(context, null);
+        CHRowGoodsAdapter adapter = new CHRowGoodsAdapter(context, data.get(i));
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
-        rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 2, 2));
+        rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 2));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return data.size();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {

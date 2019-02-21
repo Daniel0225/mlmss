@@ -15,6 +15,7 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.ChuhuoTestActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.TestingDialog;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,12 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
             viewHolder.rvRoot.setBackgroundResource(R.color.whiteColor);
         }
 
+        GoodsInfo goodsInfo = data.get(i);
+        if (goodsInfo.getMdseUrl().equals("empty")) {
+            viewHolder.ivGoodsImg.setImageResource(R.drawable.empty);
+        } else {
+            Glide.with(context).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
+        }
         viewHolder.tvTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="120dp"
-    android:layout_height="110dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rvRoot"
+    android:layout_width="230px"
+    android:layout_height="270px"
     android:background="@color/whiteColor"
+    android:minHeight="270px"
     >
 
     <ImageView
         android:id="@+id/ivGoodsImg"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/chanpin"
+        android:layout_width="120px"
+        android:layout_height="120px"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="41px"
+        android:src="@drawable/chanpin"
         />
 
     <TextView
         android:id="@+id/tvTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试"
-        android:foreground="?attr/selectableItemBackground"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="130px"
+        android:layout_height="54px"
         android:layout_below="@id/ivGoodsImg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="41px"
+        android:layout_marginTop="14px"
         android:background="@drawable/shape_blue_light"
+        android:gravity="center"
+        android:text="测试"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22px"
         />
 </RelativeLayout>
