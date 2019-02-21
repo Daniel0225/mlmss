@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +28,7 @@ import de.greenrobot.event.EventBus;
  */
 public class ShopCartFragment extends BaseFragment implements ShopCartListAdapter.ShopCarHandleListener {
     @Bind(R.id.close)
-    ImageView close;
+    LinearLayout close;
     @Bind(R.id.listView)
     ListView listView;
     @Bind(R.id.tvPrice)

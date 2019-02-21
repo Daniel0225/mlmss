@@ -19,6 +19,7 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
 import com.lzy.okgo.OkGo;
@@ -44,6 +45,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     TextView oneKey;
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
+    Loading loading;
 
     List<List<GoodsInfo>> allDataList = new ArrayList<>();
 
@@ -118,6 +120,10 @@ public class ConfigHuodaoActivity extends BaseActivity {
                     Log.e("count", "第0个" + count[0] + "第1个" + count[1] + "第2个" + count[2] + "第3个" + count[3]);//count: 0
                 } catch (RemoteException e) {
                     e.printStackTrace();
+                }*/
+                loading = Loading.newLoading(ConfigHuodaoActivity.this, "初始化中...");
+               /* if (loading != null) {
+                    loading.dismiss();
                 }*/
             }
         }).setCancelClickListener(new View.OnClickListener() {
