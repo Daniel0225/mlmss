@@ -1,11 +1,9 @@
 package com.app.mlm.application;
 
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,13 +11,10 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.multidex.MultiDex;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.app.mlm.Constants;
 import com.app.mlm.Meassage.MyClient;
 import com.app.mlm.MlmServiceConfigure;
 import com.app.mlm.bean.GoodsInfo;
-import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
@@ -70,7 +65,7 @@ public class MainApp extends Application {
     };
     MyClient myclient;
     private DaoSession daoSession;
-    private MyReceiver receiver;
+    //   private MyReceiver receiver;
 
     public static MainApp getAppInstance() {
         return appInstance;
@@ -113,14 +108,14 @@ public class MainApp extends Application {
         intent.setAction("android.intent.action.SnbcBvmService");
         intent.setPackage("com.snbc.bvm");
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
-        IntentFilter filter = new IntentFilter();
+     /*   IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.DOOR_BROADCAST);
         filter.addAction(Constants.ERRORSTATERECEIVER_BROADCAST);
         filter.addAction(Constants.FGWORKRECEIVER_BROADCAST);
         filter.addAction(Constants.SENZRECEIVER_BROADCAST);
         filter.addAction(Constants.GOODSSTATERECEIVER_BROADCAST);
         filter.addAction(Constants.HEARTBEAT_BROADCAST);
-        registerReceiver(receiver, filter);
+        registerReceiver(receiver, filter);*/
 
     }
 
@@ -176,11 +171,11 @@ public class MainApp extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        unregisterReceiver(receiver);
+        //unregisterReceiver(receiver);
     }
 
     //内部类实现广播接收者
-    private class MyReceiver extends BroadcastReceiver {
+  /*  private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()) {
@@ -211,5 +206,5 @@ public class MainApp extends Application {
                     break;
             }
         }
-    }
+    }*/
 }

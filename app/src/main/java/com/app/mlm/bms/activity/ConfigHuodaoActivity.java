@@ -24,6 +24,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -61,6 +63,12 @@ public class ConfigHuodaoActivity extends BaseActivity {
         HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
         showSyncDialog();
+        //模拟数据保存
+        int[] strings = {6, 5, 8, 7, 5, 8};
+        Collections.reverse(Arrays.asList(strings));
+        Log.e("数组", Arrays.toString(strings));
+        PreferencesUtil.putString("layer", Arrays.toString(strings));
+        Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
     }
 
     private void initList() {
@@ -120,13 +128,11 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         Log.e("count", count[i] + "");//count: 0
                     }
                     Log.e("count", "第0个" + count[0] + "第1个" + count[1] + "第2个" + count[2] + "第3个" + count[3]);//count: 0
-
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
-        });
-        dialog.setCancelClickListener(new View.OnClickListener() {
+        }).setCancelClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getUpJson();
