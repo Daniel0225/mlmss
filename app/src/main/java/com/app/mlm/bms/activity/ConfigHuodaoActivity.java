@@ -122,7 +122,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //查询层列数
-                try {
+           /*     try {
                     int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
                     for (int i = 0; i < count.length; i++) {
                         Log.e("count", count[i] + "");//count: 0
@@ -130,7 +130,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                     Log.e("count", "第0个" + count[0] + "第1个" + count[1] + "第2个" + count[2] + "第3个" + count[3]);//count: 0
                 } catch (RemoteException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         }).setCancelClickListener(new View.OnClickListener() {
             @Override
@@ -169,10 +169,14 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         }
                         Log.e("初始化返回值", code + "");//初始化返回值: 99
                         if (code == 99) {
-                       /* //查询层列数
-                        int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
-                        //int count = MainApp.bvmAidlInterface.BVMInitResultYUANSHIARRAY(1);
-                        Log.e("count", count.length + "长度");//count: 0*/
+                            try {
+                                int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+                                Collections.reverse(Arrays.asList(count));
+                                Log.e("数组", Arrays.toString(count));
+                                PreferencesUtil.putString("layer", Arrays.toString(count));
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             //错误码
                             Log.e("初始化错误码", code + "");
