@@ -96,9 +96,6 @@ public class MainFragment extends BaseFragment {
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             dataList.addAll(huodaoBean.getAllDataList());
-//            for (int i = allDataList.size() - 1; i >= 0; i--) {
-//                dataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
-//            }
         }
     }
 

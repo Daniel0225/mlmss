@@ -18,6 +18,7 @@ import com.app.mlm.adapter.SearchResultAdapter;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
+import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
@@ -146,14 +147,14 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
      */
     private void initList() {
         data.clear();
-        String huodaoString = PreferencesUtil.getString("huodao0");
+        String huodaoString = PreferencesUtil.getString("huodao");
         if (TextUtils.isEmpty(huodaoString)) {
             data.addAll(getDefaultData());
         } else {
-            for (int i = 0; i < 5; i++) {
-                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
-                List<GoodsInfo> list = FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class);
-                data.addAll(list);
+            HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
+            List<List<GoodsInfo>> dataList = huodaoBean.getAllDataList();
+            for (int i = 0; i < dataList.size(); i++) {
+                data.addAll(dataList.get(i));
             }
         }
     }
