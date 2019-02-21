@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public long millisInFuture() {
-        return 1000 * 3;
+        return 1000 * 30;
     }
 
     private void initView() {

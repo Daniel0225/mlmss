@@ -66,7 +66,7 @@ public class BaseDispatchActivity extends AppCompatActivity implements CountDown
      * @return
      */
     public long millisInFuture(){
-        return 1000 * 3;
+        return 1000 * 30;
     }
 
     @Override
