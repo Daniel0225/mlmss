@@ -72,6 +72,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.lzy.net:okgo:3.0.4'
-    compile 'org.litepal.android:core:2.0.0'
+    implementation 'org.litepal.android:java:3.0.0'
     implementation files('libs/eventbus-3.0.0-beta1.jar')
 }

@@ -102,15 +102,16 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         selectGridView.addItemDecoration(new SpacesItemDecoration(8, 8, 5, 5));
 
 
-        LitePal.findAllAsync(ProductInfo.class).listen(new FindMultiCallback() {
+        LitePal.findAllAsync(ProductInfo.class).listen(new FindMultiCallback<ProductInfo>() {
             @Override
-            public <T> void onFinish(List<T> t) {
-                data = (List<ProductInfo>) t;
+            public void onFinish(List<ProductInfo> list) {
+                data = list;
                 originData.addAll(data);
                 adapter = new ChooseGoodsAdapter(data, listener);
                 mRecyclerView.setAdapter(adapter);
             }
         });
+
 
         selectView.setOnClickListener(this);
         brandView.setOnClickListener(this);

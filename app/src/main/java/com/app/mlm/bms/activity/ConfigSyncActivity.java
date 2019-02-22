@@ -1,7 +1,6 @@
 package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +19,8 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import org.litepal.LitePal;
+import org.litepal.crud.async.SaveExecutor;
+import org.litepal.crud.callback.SaveCallback;
 
 import java.util.List;
 
@@ -36,7 +37,6 @@ public class ConfigSyncActivity extends BaseActivity {
     TextView tvHuodao;
     @Bind(R.id.tvHuogui)
     TextView tvHuogui;
-
     SyncProgressDialog dialog;
 
     @Override
@@ -97,12 +97,15 @@ public class ConfigSyncActivity extends BaseActivity {
 
     private void saveProductInfo(List<ProductInfo> list) {
         LitePal.deleteAll(ProductInfo.class);
-        for (ProductInfo product : list) {
-            boolean isSuccess = product.save();
-            Log.e("Tag", "isSuccess " + isSuccess);
-        }
-        dialog.dismiss();
-        ToastUtil.showLongToast("同步完成");
+        StringBuffer stringBuffer = new StringBuffer();
+        SaveExecutor saveExecutor = LitePal.saveAllAsync(list);
+        saveExecutor.listen(new SaveCallback() {
+            @Override
+            public void onFinish(boolean success) {
+                dialog.dismiss();
+                ToastUtil.showLongToast("同步完成");
+            }
+        });
     }
 
     /**

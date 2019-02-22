@@ -94,6 +94,8 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
         appInstance = this;
+        // 初始化LitePal数据库
+        LitePal.initialize(this);
         initServerState();
         initRxHttp();
         initGreenDao();
@@ -102,8 +104,6 @@ public class MainApp extends Application {
         Intent service = new Intent(this, MlmServiceConfigure.class);
         startService(service);
         initOkGo();
-        // 初始化LitePal数据库
-        LitePal.initialize(this);
         Intent intent = new Intent();
         intent.setAction("android.intent.action.SnbcBvmService");
         intent.setPackage("com.snbc.bvm");
