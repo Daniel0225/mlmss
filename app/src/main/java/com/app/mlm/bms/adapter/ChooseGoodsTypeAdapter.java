@@ -1,5 +1,7 @@
 package com.app.mlm.bms.adapter;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +10,22 @@ import android.widget.TextView;
 
 import com.app.mlm.R;
 import com.app.mlm.bean.AllTypeInfo;
+import com.app.mlm.http.bean.GoodsTypeSelectBean;
 
 import java.util.List;
 
 public class ChooseGoodsTypeAdapter extends RecyclerView.Adapter<ChooseGoodsTypeAdapter.MyViewHolder> {
 
+    private Context context;
     private List<AllTypeInfo> mList;
     private CustomClickListener listener;
-    private int type;//0 品牌 1 类型 2 包装
+    private GoodsTypeSelectBean goodsTypeSelectBean;
 
-    public ChooseGoodsTypeAdapter(List<AllTypeInfo> mList, CustomClickListener listener, int type) {
+    public ChooseGoodsTypeAdapter(Context context, List<AllTypeInfo> mList, CustomClickListener listener, GoodsTypeSelectBean goodsTypeSelectBean) {
+        this.context = context;
         this.mList = mList;
         this.listener = listener;
-        this.type = type;
+        this.goodsTypeSelectBean = goodsTypeSelectBean;
     }
 
     @Override
@@ -33,12 +38,27 @@ public class ChooseGoodsTypeAdapter extends RecyclerView.Adapter<ChooseGoodsType
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         AllTypeInfo item = mList.get(position);
-        if (type == 0) {
+        if (goodsTypeSelectBean.getType() == 0) {
             holder.typeName.setText(item.getMerchantType());
-        } else if (type == 1) {
+        } else if (goodsTypeSelectBean.getType() == 1) {
             holder.typeName.setText(item.getBrandName());
         } else {
             holder.typeName.setText(item.getPackName());
+        }
+
+        holder.typeName.setBackground(context.getResources().getDrawable(R.drawable.shape_gray_light10));
+        holder.typeName.setTextColor(Color.BLACK);
+
+        if (goodsTypeSelectBean.getType() == goodsTypeSelectBean.getSelectType()) {
+            if (goodsTypeSelectBean.getSelectPosition() == position) {
+                holder.typeName.setBackground(context.getResources().getDrawable(R.drawable.shape_blue_dark10));
+                holder.typeName.setTextColor(Color.WHITE);
+            }
+        } else {
+            if (position == 0) {
+                holder.typeName.setBackground(context.getResources().getDrawable(R.drawable.shape_blue_dark10));
+                holder.typeName.setTextColor(Color.WHITE);
+            }
         }
 
         holder.mRoot.setOnClickListener(new View.OnClickListener() {

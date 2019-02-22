@@ -114,6 +114,8 @@
             android:id="@+id/select_grid"
             android:layout_width="match_parent"
             android:layout_height="540px"
-            android:background="@color/withe" />
+            android:background="@color/withe"
+            android:paddingEnd="20px"
+            android:paddingStart="20px" />
     </RelativeLayout>
 </RelativeLayout>

@@ -17,6 +17,15 @@ public class AllTypeInfo implements Serializable {
     private String merchantIslog;
     private String packName;
 
+    public AllTypeInfo() {
+    }
+
+    public AllTypeInfo(String defaultString) {
+        this.brandName = defaultString;
+        this.packName = defaultString;
+        this.merchantType = defaultString;
+    }
+
     public Integer getBrandId() {
         return brandId;
     }

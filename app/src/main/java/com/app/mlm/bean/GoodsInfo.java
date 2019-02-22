@@ -22,6 +22,9 @@ public class GoodsInfo implements Serializable {
     private Long id;
     private int mdseId;
     private String mdsePrice;
+    private String mdseBrand;//品牌
+    private String mdsePack;//商品包装类型
+    private String merchantType;//商家类型
     private String mdseName;
     private String mdseUrl;
     private String clCode;
@@ -33,14 +36,18 @@ public class GoodsInfo implements Serializable {
     private int position;
     private int shopCarNum = 1;
 
-    @Generated(hash = 1430316046)
-    public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseName,
-                     String mdseUrl, String clCode, int clCapacity, int clcCapacity,
-                     String gamePrice, String gameTimeStart, String gameTimeEnd,
-                     int position, int shopCarNum) {
+    @Generated(hash = 1397361949)
+    public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand,
+                     String mdsePack, String merchantType, String mdseName, String mdseUrl,
+                     String clCode, int clCapacity, int clcCapacity, String gamePrice,
+                     String gameTimeStart, String gameTimeEnd, int position,
+                     int shopCarNum) {
         this.id = id;
         this.mdseId = mdseId;
         this.mdsePrice = mdsePrice;
+        this.mdseBrand = mdseBrand;
+        this.mdsePack = mdsePack;
+        this.merchantType = merchantType;
         this.mdseName = mdseName;
         this.mdseUrl = mdseUrl;
         this.clCode = clCode;
@@ -160,4 +167,27 @@ public class GoodsInfo implements Serializable {
         this.gameTimeEnd = gameTimeEnd;
     }
 
+    public String getMdseBrand() {
+        return mdseBrand;
+    }
+
+    public void setMdseBrand(String mdseBrand) {
+        this.mdseBrand = mdseBrand;
+    }
+
+    public String getMdsePack() {
+        return mdsePack;
+    }
+
+    public void setMdsePack(String mdsePack) {
+        this.mdsePack = mdsePack;
+    }
+
+    public String getMerchantType() {
+        return merchantType;
+    }
+
+    public void setMerchantType(String merchantType) {
+        this.merchantType = merchantType;
+    }
 }

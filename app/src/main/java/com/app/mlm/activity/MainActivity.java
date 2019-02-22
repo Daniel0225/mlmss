@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity {
         initView();
         //  startService();
         // bindService();
+        PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)
@@ -104,7 +105,7 @@ public class MainActivity extends BaseActivity {
     private void setTopViewValue() {
         for (AdBean adBean : adBeanList) {
             if (adBean.getSuffix().equals("mp4") || adBean.getSuffix().equals("MP4")) {
-//                adBean.setUrl("http://47.106.143.212:8080/ad/fb00a9c4212d410fa9e84d16e196cd4d.MP4");
+                adBean.setUrl("http://47.106.143.212:8080/ad/636be7dd7fd14394ac2b1eb28df27661.MP4?ts=1550810703153%22");
                 String hasDownLoad = PreferencesUtil.getString(Constants.DOWN_LOAD);
                 if (!TextUtils.isEmpty(hasDownLoad) && hasDownLoad.equals(adBean.getFileName())) {
                     playLocalFile(adBean.getFileName());

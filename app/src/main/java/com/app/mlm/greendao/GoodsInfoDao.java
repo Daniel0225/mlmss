@@ -35,16 +35,19 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"MDSE_ID\" INTEGER NOT NULL ," + // 1: mdseId
                 "\"MDSE_PRICE\" TEXT," + // 2: mdsePrice
-                "\"MDSE_NAME\" TEXT," + // 3: mdseName
-                "\"MDSE_URL\" TEXT," + // 4: mdseUrl
-                "\"CL_CODE\" TEXT," + // 5: clCode
-                "\"CL_CAPACITY\" INTEGER NOT NULL ," + // 6: clCapacity
-                "\"CLC_CAPACITY\" INTEGER NOT NULL ," + // 7: clcCapacity
-                "\"GAME_PRICE\" TEXT," + // 8: gamePrice
-                "\"GAME_TIME_START\" TEXT," + // 9: gameTimeStart
-                "\"GAME_TIME_END\" TEXT," + // 10: gameTimeEnd
-                "\"POSITION\" INTEGER NOT NULL ," + // 11: position
-                "\"SHOP_CAR_NUM\" INTEGER NOT NULL );"); // 12: shopCarNum
+                "\"MDSE_BRAND\" TEXT," + // 3: mdseBrand
+                "\"MDSE_PACK\" TEXT," + // 4: mdsePack
+                "\"MERCHANT_TYPE\" TEXT," + // 5: merchantType
+                "\"MDSE_NAME\" TEXT," + // 6: mdseName
+                "\"MDSE_URL\" TEXT," + // 7: mdseUrl
+                "\"CL_CODE\" TEXT," + // 8: clCode
+                "\"CL_CAPACITY\" INTEGER NOT NULL ," + // 9: clCapacity
+                "\"CLC_CAPACITY\" INTEGER NOT NULL ," + // 10: clcCapacity
+                "\"GAME_PRICE\" TEXT," + // 11: gamePrice
+                "\"GAME_TIME_START\" TEXT," + // 12: gameTimeStart
+                "\"GAME_TIME_END\" TEXT," + // 13: gameTimeEnd
+                "\"POSITION\" INTEGER NOT NULL ," + // 14: position
+                "\"SHOP_CAR_NUM\" INTEGER NOT NULL );"); // 15: shopCarNum
     }
 
     /** Drops the underlying database table. */
@@ -68,39 +71,54 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             stmt.bindString(3, mdsePrice);
         }
 
+        String mdseBrand = entity.getMdseBrand();
+        if (mdseBrand != null) {
+            stmt.bindString(4, mdseBrand);
+        }
+
+        String mdsePack = entity.getMdsePack();
+        if (mdsePack != null) {
+            stmt.bindString(5, mdsePack);
+        }
+
+        String merchantType = entity.getMerchantType();
+        if (merchantType != null) {
+            stmt.bindString(6, merchantType);
+        }
+
         String mdseName = entity.getMdseName();
         if (mdseName != null) {
-            stmt.bindString(4, mdseName);
+            stmt.bindString(7, mdseName);
         }
 
         String mdseUrl = entity.getMdseUrl();
         if (mdseUrl != null) {
-            stmt.bindString(5, mdseUrl);
+            stmt.bindString(8, mdseUrl);
         }
 
         String clCode = entity.getClCode();
         if (clCode != null) {
-            stmt.bindString(6, clCode);
+            stmt.bindString(9, clCode);
         }
-        stmt.bindLong(7, entity.getClCapacity());
-        stmt.bindLong(8, entity.getClcCapacity());
+        stmt.bindLong(10, entity.getClCapacity());
+        stmt.bindLong(11, entity.getClcCapacity());
 
         String gamePrice = entity.getGamePrice();
         if (gamePrice != null) {
-            stmt.bindString(9, gamePrice);
+            stmt.bindString(12, gamePrice);
         }
 
         String gameTimeStart = entity.getGameTimeStart();
         if (gameTimeStart != null) {
-            stmt.bindString(10, gameTimeStart);
+            stmt.bindString(13, gameTimeStart);
         }
 
         String gameTimeEnd = entity.getGameTimeEnd();
         if (gameTimeEnd != null) {
-            stmt.bindString(11, gameTimeEnd);
+            stmt.bindString(14, gameTimeEnd);
         }
-        stmt.bindLong(12, entity.getPosition());
-        stmt.bindLong(13, entity.getShopCarNum());
+        stmt.bindLong(15, entity.getPosition());
+        stmt.bindLong(16, entity.getShopCarNum());
     }
 
     @Override
@@ -118,39 +136,54 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             stmt.bindString(3, mdsePrice);
         }
 
+        String mdseBrand = entity.getMdseBrand();
+        if (mdseBrand != null) {
+            stmt.bindString(4, mdseBrand);
+        }
+
+        String mdsePack = entity.getMdsePack();
+        if (mdsePack != null) {
+            stmt.bindString(5, mdsePack);
+        }
+
+        String merchantType = entity.getMerchantType();
+        if (merchantType != null) {
+            stmt.bindString(6, merchantType);
+        }
+
         String mdseName = entity.getMdseName();
         if (mdseName != null) {
-            stmt.bindString(4, mdseName);
+            stmt.bindString(7, mdseName);
         }
 
         String mdseUrl = entity.getMdseUrl();
         if (mdseUrl != null) {
-            stmt.bindString(5, mdseUrl);
+            stmt.bindString(8, mdseUrl);
         }
 
         String clCode = entity.getClCode();
         if (clCode != null) {
-            stmt.bindString(6, clCode);
+            stmt.bindString(9, clCode);
         }
-        stmt.bindLong(7, entity.getClCapacity());
-        stmt.bindLong(8, entity.getClcCapacity());
+        stmt.bindLong(10, entity.getClCapacity());
+        stmt.bindLong(11, entity.getClcCapacity());
 
         String gamePrice = entity.getGamePrice();
         if (gamePrice != null) {
-            stmt.bindString(9, gamePrice);
+            stmt.bindString(12, gamePrice);
         }
 
         String gameTimeStart = entity.getGameTimeStart();
         if (gameTimeStart != null) {
-            stmt.bindString(10, gameTimeStart);
+            stmt.bindString(13, gameTimeStart);
         }
 
         String gameTimeEnd = entity.getGameTimeEnd();
         if (gameTimeEnd != null) {
-            stmt.bindString(11, gameTimeEnd);
+            stmt.bindString(14, gameTimeEnd);
         }
-        stmt.bindLong(12, entity.getPosition());
-        stmt.bindLong(13, entity.getShopCarNum());
+        stmt.bindLong(15, entity.getPosition());
+        stmt.bindLong(16, entity.getShopCarNum());
     }
 
     @Override
@@ -164,16 +197,19 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // mdseId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // mdsePrice
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // mdseName
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // mdseUrl
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // clCode
-            cursor.getInt(offset + 6), // clCapacity
-            cursor.getInt(offset + 7), // clcCapacity
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // gamePrice
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // gameTimeStart
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // gameTimeEnd
-                cursor.getInt(offset + 11), // position
-                cursor.getInt(offset + 12) // shopCarNum
+                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // mdseBrand
+                cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // mdsePack
+                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // merchantType
+                cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // mdseName
+                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // mdseUrl
+                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // clCode
+                cursor.getInt(offset + 9), // clCapacity
+                cursor.getInt(offset + 10), // clcCapacity
+                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // gamePrice
+                cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // gameTimeStart
+                cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // gameTimeEnd
+                cursor.getInt(offset + 14), // position
+                cursor.getInt(offset + 15) // shopCarNum
         );
         return entity;
     }
@@ -183,16 +219,19 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setMdseId(cursor.getInt(offset + 1));
         entity.setMdsePrice(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setMdseName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setMdseUrl(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setClCode(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setClCapacity(cursor.getInt(offset + 6));
-        entity.setClcCapacity(cursor.getInt(offset + 7));
-        entity.setGamePrice(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setGameTimeStart(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setGameTimeEnd(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setPosition(cursor.getInt(offset + 11));
-        entity.setShopCarNum(cursor.getInt(offset + 12));
+        entity.setMdseBrand(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setMdsePack(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setMerchantType(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setMdseName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setMdseUrl(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setClCode(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setClCapacity(cursor.getInt(offset + 9));
+        entity.setClcCapacity(cursor.getInt(offset + 10));
+        entity.setGamePrice(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setGameTimeStart(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setGameTimeEnd(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setPosition(cursor.getInt(offset + 14));
+        entity.setShopCarNum(cursor.getInt(offset + 15));
      }
 
     @Override
@@ -228,16 +267,19 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property MdseId = new Property(1, int.class, "mdseId", false, "MDSE_ID");
         public final static Property MdsePrice = new Property(2, String.class, "mdsePrice", false, "MDSE_PRICE");
-        public final static Property MdseName = new Property(3, String.class, "mdseName", false, "MDSE_NAME");
-        public final static Property MdseUrl = new Property(4, String.class, "mdseUrl", false, "MDSE_URL");
-        public final static Property ClCode = new Property(5, String.class, "clCode", false, "CL_CODE");
-        public final static Property ClCapacity = new Property(6, int.class, "clCapacity", false, "CL_CAPACITY");
-        public final static Property ClcCapacity = new Property(7, int.class, "clcCapacity", false, "CLC_CAPACITY");
-        public final static Property GamePrice = new Property(8, String.class, "gamePrice", false, "GAME_PRICE");
-        public final static Property GameTimeStart = new Property(9, String.class, "gameTimeStart", false, "GAME_TIME_START");
-        public final static Property GameTimeEnd = new Property(10, String.class, "gameTimeEnd", false, "GAME_TIME_END");
-        public final static Property Position = new Property(11, int.class, "position", false, "POSITION");
-        public final static Property ShopCarNum = new Property(12, int.class, "shopCarNum", false, "SHOP_CAR_NUM");
+        public final static Property MdseBrand = new Property(3, String.class, "mdseBrand", false, "MDSE_BRAND");
+        public final static Property MdsePack = new Property(4, String.class, "mdsePack", false, "MDSE_PACK");
+        public final static Property MerchantType = new Property(5, String.class, "merchantType", false, "MERCHANT_TYPE");
+        public final static Property MdseName = new Property(6, String.class, "mdseName", false, "MDSE_NAME");
+        public final static Property MdseUrl = new Property(7, String.class, "mdseUrl", false, "MDSE_URL");
+        public final static Property ClCode = new Property(8, String.class, "clCode", false, "CL_CODE");
+        public final static Property ClCapacity = new Property(9, int.class, "clCapacity", false, "CL_CAPACITY");
+        public final static Property ClcCapacity = new Property(10, int.class, "clcCapacity", false, "CLC_CAPACITY");
+        public final static Property GamePrice = new Property(11, String.class, "gamePrice", false, "GAME_PRICE");
+        public final static Property GameTimeStart = new Property(12, String.class, "gameTimeStart", false, "GAME_TIME_START");
+        public final static Property GameTimeEnd = new Property(13, String.class, "gameTimeEnd", false, "GAME_TIME_END");
+        public final static Property Position = new Property(14, int.class, "position", false, "POSITION");
+        public final static Property ShopCarNum = new Property(15, int.class, "shopCarNum", false, "SHOP_CAR_NUM");
     }
     
 }

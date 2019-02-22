@@ -14,6 +14,7 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
@@ -35,6 +36,8 @@ public class ConfigSyncActivity extends BaseActivity {
     TextView tvHuodao;
     @Bind(R.id.tvHuogui)
     TextView tvHuogui;
+
+    SyncProgressDialog dialog;
 
     @Override
     protected int provideLayoutResId() {
@@ -60,7 +63,7 @@ public class ConfigSyncActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.syncShangpin:
-                SyncProgressDialog dialog = new SyncProgressDialog(this);
+                dialog = new SyncProgressDialog(this);
                 dialog.show();
                 syncProduceInfo();
                 break;
@@ -98,6 +101,8 @@ public class ConfigSyncActivity extends BaseActivity {
             boolean isSuccess = product.save();
             Log.e("Tag", "isSuccess " + isSuccess);
         }
+        dialog.dismiss();
+        ToastUtil.showLongToast("同步完成");
     }
 
     /**

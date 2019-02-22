@@ -1,7 +1,6 @@
 package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.adapter.HDColumnGoodsAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
@@ -155,27 +153,27 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int code = 0;
-                        try {
-                            code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                        Log.e("初始化返回值", code + "");//初始化返回值: 99
-                        if (code == 99) {
-                            try {
-                                int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
-                                //  Collections.reverse(Arrays.asList(count));
-                                // Log.e("数组", Arrays.toString(count));
-                                PreferencesUtil.putString("layer", Arrays.toString(count));
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            //错误码
-                            Log.e("初始化错误码", code + "");
-                        }
-                        Log.e("返回码", code + "");
+//                        int code = 0;
+//                        try {
+//                            code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
+//                        } catch (RemoteException e) {
+//                            e.printStackTrace();
+//                        }
+//                        Log.e("初始化返回值", code + "");//初始化返回值: 99
+//                        if (code == 99) {
+//                            try {
+//                                int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+//                                //  Collections.reverse(Arrays.asList(count));
+//                                // Log.e("数组", Arrays.toString(count));
+//                                PreferencesUtil.putString("layer", Arrays.toString(count));
+//                            } catch (RemoteException e) {
+//                                e.printStackTrace();
+//                            }
+//                        } else {
+//                            //错误码
+//                            Log.e("初始化错误码", code + "");
+//                        }
+//                        Log.e("返回码", code + "");
                     }
                 });
         dialog.show();
