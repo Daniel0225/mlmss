@@ -1,5 +1,6 @@
 package com.app.mlm.activity.order;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,13 @@ public class OrderPayActivity extends AppCompatActivity {
     LinearLayout imageView;
     TimeCountUtils timeCount;
     TextView count_down;
+    CouponDialog couponDialog;//领优惠券的dialog
     private TextView totalPriceView;
     private TextView totalNumView;
     private double totalPrice;
     private Integer totalNum;
     private String productId;
+    private TextView originPriceView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class OrderPayActivity extends AppCompatActivity {
         setContentView(R.layout.order_pay);
         init();
         getPayInfo();
-        CouponDialog couponDialog = new CouponDialog(this);
+        couponDialog = new CouponDialog(this);
         couponDialog.show();
     }
 
@@ -51,13 +54,21 @@ public class OrderPayActivity extends AppCompatActivity {
         count_down = (TextView) findViewById(R.id.count_down);
         totalPriceView = findViewById(R.id.total_price);
         totalNumView = findViewById(R.id.total_num);
+        originPriceView = findViewById(R.id.origin_price);
 
+        originPriceView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         totalPriceView.setText("¥ " + totalPrice);
         totalNumView.setText(totalNum + "件");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        findViewById(R.id.show_coupon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                couponDialog.show();
             }
         });
         startTime();
