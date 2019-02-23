@@ -11,6 +11,7 @@ import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
 import com.app.mlm.http.bean.ProductInfo;
+import com.app.mlm.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
@@ -94,6 +95,10 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 dismiss();
                 break;
             case R.id.commit:
+                if (mProductInfo == null) {
+                    ToastUtil.showLongCenterToast("请选择商品");
+                    return;
+                }
                 GoodsInfo goodsInfo = new GoodsInfo();
                 goodsInfo.setMdseId(mProductInfo.getMdseId());
                 goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());

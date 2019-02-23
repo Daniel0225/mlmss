@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -90,6 +89,19 @@ public class MainActivity extends BaseActivity {
         return 1000 * 30;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("Tag", "MainActivity OnPause");
+        topView.playerPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        topView.playerRestart();
+    }
+
     private void initView() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, new MainFragment());
@@ -104,23 +116,31 @@ public class MainActivity extends BaseActivity {
      */
     private void setTopViewValue() {
         for (AdBean adBean : adBeanList) {
-            if (adBean.getSuffix().equals("mp4") || adBean.getSuffix().equals("MP4")) {
-                adBean.setUrl("http://47.106.143.212:8080/ad/636be7dd7fd14394ac2b1eb28df27661.MP4?ts=1550810703153%22");
-                String hasDownLoad = PreferencesUtil.getString(Constants.DOWN_LOAD);
-                if (!TextUtils.isEmpty(hasDownLoad) && hasDownLoad.equals(adBean.getFileName())) {
-                    playLocalFile(adBean.getFileName());
+            if (adBean.getFileType() == 3) {
+                if (adBean.getSuffix().equals("mp4") || adBean.getSuffix().equals("MP4")) {
+                    if (playLocalFile(adBean.getFileName())) {
+
+                    } else {
+                        downLoadMedia(adBean.getUrl(), adBean.getFileName());
+                    }
                 } else {
-                    downLoadMedia(adBean.getUrl(), adBean.getFileName());
+                    topView.setData(CoustomTopView.TYPE_JPG, adBean.getUrl());
                 }
             }
         }
     }
 
-    private void playLocalFile(String fileName) {
+    private boolean playLocalFile(String fileName) {
         String filePath = getExternalCacheDir().getPath() + "/" + fileName;
         File file = new File(filePath);
-        Uri uri = Uri.fromFile(file);
-        topView.setData(CoustomTopView.TYPE_MP4, uri.toString());
+        if (file.exists()) {
+            Uri uri = Uri.fromFile(file);
+            topView.setData(CoustomTopView.TYPE_MP4, uri.toString());
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**

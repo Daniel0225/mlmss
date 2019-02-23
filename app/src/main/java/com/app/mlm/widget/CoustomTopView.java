@@ -91,6 +91,18 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         }
    }
 
+    public void playerPause() {
+        if (playerView != null && playerView.getPlayer() != null) {
+            playerView.getPlayer().setPlayWhenReady(false);
+        }
+    }
+
+    public void playerRestart() {
+        if (playerView != null && playerView.getPlayer() != null) {
+            playerView.getPlayer().setPlayWhenReady(true);
+        }
+    }
+
     private void initJpgAndGif() {
         imageView.setVisibility(View.VISIBLE);
         GlideApp

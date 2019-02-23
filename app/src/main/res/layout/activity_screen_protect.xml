@@ -7,10 +7,10 @@
     tools:context=".activity.ScreenProtectActivity">
 
     <ImageView
+        android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="1600px"
-        android:scaleType="fitXY"
-        android:src="@drawable/banner" />
+        android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/erweima"

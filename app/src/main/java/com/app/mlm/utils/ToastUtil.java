@@ -1,5 +1,6 @@
 package com.app.mlm.utils;
 
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.app.mlm.application.MainApp;
@@ -31,6 +32,17 @@ public class ToastUtil {
         } else {
             toast.setText(content);
         }
+        toast.show();
+    }
+
+    public static void showLongCenterToast(String content) {
+        if (toast == null) {
+            toast = Toast.makeText(MainApp.getAppInstance(), content, Toast.LENGTH_LONG);
+
+        } else {
+            toast.setText(content);
+        }
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 

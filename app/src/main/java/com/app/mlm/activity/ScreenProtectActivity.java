@@ -33,6 +33,8 @@ public class ScreenProtectActivity extends AppCompatActivity {
     CoustomTopView topView;
     @Bind(R.id.ivCode)
     ImageView codeView;
+    @Bind(R.id.banner)
+    ImageView bannerView;
     private List<AdBean> adBeanList;
 
     @Override
@@ -43,15 +45,15 @@ public class ScreenProtectActivity extends AppCompatActivity {
         String adString = PreferencesUtil.getString(Constants.ADDATA);
         if (!TextUtils.isEmpty(adString)) {
             adBeanList = FastJsonUtil.getObjects(adString, AdBean.class);
-            for (AdBean adBean : adBeanList) {
-                if (adBean.getFileType() == 1) {
-                    topView.setData(CoustomTopView.TYPE_JPG, adBean.getUrl());
-                } else if (adBean.getFileType() == 2) {
-                    Glide.with(this).load(adBean.getUrl()).into(codeView);
-                }
-            }
+//            for (AdBean adBean : adBeanList) {
+//                if (adBean.getFileType() == 1) {
+//                    topView.setData(CoustomTopView.TYPE_JPG, adBean.getUrl());
+//                } else if (adBean.getFileType() == 2) {
+//                    Glide.with(this).load(adBean.getUrl()).into(codeView);
+//                }
+//            }
         }
-
+        Glide.with(this).load(getResources().getDrawable(R.drawable.banner)).into(bannerView);
     }
 
     @Override

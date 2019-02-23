@@ -118,7 +118,7 @@ public class QuhuoFragment extends BaseFragment implements CountDownManager.OnCo
                 mActivity.removeFragment();
                 break;
             case R.id.tvQuhuo:
-
+                mActivity.addFragment(new ChuhuoFragment());
                 break;
         }
     }
