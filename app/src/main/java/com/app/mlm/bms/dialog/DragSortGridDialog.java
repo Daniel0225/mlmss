@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
@@ -42,21 +41,18 @@ public class DragSortGridDialog extends BaseDialog implements CallbackItemTouch 
     TextView commit;
     private List<GoodsInfo> data = new ArrayList<>();
     private DragSortAdapter dragSortAdapter;
+    private DataSortedListener dataSortedListener;
 
-    public DragSortGridDialog(Context context, List<GoodsInfo> goodsInfos) {
-        super(context, R.layout.dialog_drag_sort,true, Gravity.CENTER);
+    public DragSortGridDialog(Context context, List<GoodsInfo> goodsInfos, DataSortedListener dataSortedListener) {
+        super(context, R.layout.dialog_drag_sort, true, Gravity.CENTER, 900, 1140);
         this.data = goodsInfos;
+        this.dataSortedListener = dataSortedListener;
     }
 
     @Override
     public void initView() {
-        for(int i = 0;i < 30; i++){
-            GoodsInfo goodsInfo = new GoodsInfo();
-            goodsInfo.setPosition(i + 1);
-            data.add(goodsInfo);
-        }
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(2, 2, 2, 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(10, 10, 10, 10));
         dragSortAdapter = new DragSortAdapter(data);
         mRecyclerView.setAdapter(dragSortAdapter);
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(this);
@@ -70,8 +66,8 @@ public class DragSortGridDialog extends BaseDialog implements CallbackItemTouch 
         switch (view.getId()) {
             case R.id.cancel:
                 break;
-            case R.id.commit:
-                //doSomething
+            case R.id.commit://点击确定要把调整位置后的数据回传
+                dataSortedListener.sorted(data);
                 break;
         }
     }
@@ -80,5 +76,10 @@ public class DragSortGridDialog extends BaseDialog implements CallbackItemTouch 
     public void itemTouchOnMove(int oldPosition, int newPosition) {
         data.add(newPosition, data.remove(oldPosition));
         dragSortAdapter.notifyItemMoved(oldPosition, newPosition);
+        dragSortAdapter.notifyItemRangeChanged(Math.min(oldPosition, newPosition), Math.abs(oldPosition - newPosition) + 1);
+    }
+
+    public interface DataSortedListener {
+        void sorted(List<GoodsInfo> newData);
     }
 }

@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -30,7 +32,12 @@ public class DragSortAdapter extends RecyclerView.Adapter<DragSortAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GoodsInfo item = mList.get(position);
-        holder.tvGoodsSort.setText(String.valueOf(item.getPosition()));
+        holder.tvGoodsSort.setText(String.valueOf(position));
+        if (item.getMdseUrl().equals("empty")) {
+            holder.ivGoodsImg.setImageResource(R.drawable.empty);
+        } else {
+            Glide.with(MainApp.getAppInstance()).load(item.getMdseUrl()).into(holder.ivGoodsImg);
+        }
     }
 
     @Override

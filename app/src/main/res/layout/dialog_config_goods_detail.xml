@@ -1,399 +1,360 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="900px"
-    android:layout_height="1280px"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/shape_dialog_layout"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:layout_width="810px"
+        android:layout_height="400px"
+        android:layout_marginTop="40px"
+        android:background="@drawable/shape_blue_line">
+
+        <TextView
+            android:id="@+id/tvKucun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32px"
+            android:layout_marginTop="22px"
+            android:text="库存：6"
+            android:textColor="@color/text_black"
+            android:textSize="24px" />
+
+        <TextView
+            android:id="@+id/tvGoodsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="49px"
+            android:layout_marginTop="20px"
+            android:text="麻辣牛肉"
+            android:textColor="@color/text_black"
+            android:textSize="24px" />
+
+        <ImageView
+            android:id="@+id/ivGoodsImg"
+            android:layout_width="250px"
+            android:layout_height="250px"
+            android:layout_below="@id/tvKucun"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7px"
+            android:src="@drawable/chanpin" />
+
+        <TextView
+            android:id="@+id/tvChangeGoods"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_blue_rb_lb"
+            android:gravity="center"
+            android:text="更换商品"
+            android:textColor="@color/whiteColor"
+            android:textSize="28px" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_marginTop="41px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="测距属性："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13px"
+                android:gravity="center"
+                android:text="长"
+                android:textColor="@color/text_black"
+                android:textSize="26px" />
+
+            <EditText
+                android:id="@+id/etLong"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7px"
+                android:gravity="center"
+                android:hint="mm"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_black"
+                android:textSize="30px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64px"
+                android:gravity="center"
+                android:text="宽"
+                android:textColor="@color/text_black"
+                android:textSize="26px" />
+
+            <EditText
+                android:id="@+id/etWidth"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7px"
+                android:gravity="center"
+                android:hint="mm"
+                android:inputType="numberDecimal"
+                android:textSize="30px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64px"
+                android:gravity="center"
+                android:text="高"
+                android:textColor="@color/text_black"
+                android:textSize="26px" />
+
+            <EditText
+                android:id="@+id/etHight"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7px"
+                android:gravity="center"
+                android:hint="mm"
+                android:inputType="numberDecimal"
+                android:textSize="30px" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="商品价格："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+
+        <EditText
+            android:id="@+id/etPrice"
+            android:layout_width="600px"
+            android:layout_height="70px"
+            android:gravity="center"
+            android:hint="单位元"
+            android:inputType="numberDecimal"
+            android:textColor="#D03B02"
+            android:textSize="28px" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="商品容量："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+
+        <EditText
+            android:id="@+id/etCapcity"
+            android:layout_width="600px"
+            android:layout_height="70px"
+            android:gravity="center"
+            android:hint="请输入商品容量"
+            android:inputType="number"
+            android:textColor="#D03B02"
+            android:textSize="28px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="补货数量："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+        <EditText
+            android:id="@+id/etAddCount"
+            android:layout_width="600px"
+            android:layout_height="70px"
+            android:gravity="center"
+            android:hint="请输入补货数量"
+            android:inputType="number"
+            android:textColor="#D03B02"
+            android:textSize="28px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="最低库存："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+        <EditText
+            android:id="@+id/etLessCount"
+            android:layout_width="600px"
+            android:layout_height="70px"
+            android:gravity="center"
+            android:hint="请输入最低库存"
+            android:inputType="number"
+            android:textColor="#D03B02"
+            android:textSize="28px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="产品批次："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+        <EditText
+            android:id="@+id/etSerialNo"
+            android:layout_width="600px"
+            android:layout_height="70px"
+            android:gravity="center"
+            android:hint="请输入产品批次"
+            android:inputType="number"
+            android:textColor="#D03B02"
+            android:textSize="28px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="133px"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="71px"
+            android:text="货道操作："
+            android:textColor="@color/text_black"
+            android:textSize="26px" />
+
+        <TextView
+            android:id="@+id/tvClear"
+            android:layout_width="280px"
+            android:layout_height="70px"
+            android:background="@drawable/shape_blue_light"
+            android:gravity="center"
+            android:text="清空"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26px" />
+
+        <TextView
+            android:id="@+id/tvFillAll"
+            android:layout_width="280px"
+            android:layout_height="70px"
+            android:layout_marginStart="40px"
+            android:background="@drawable/shape_blue"
+            android:gravity="center"
+            android:text="补满"
+            android:textColor="@color/whiteColor"
+            android:textSize="26px" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40px"
+        android:background="@drawable/shape_white_rb_lb"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="100px"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@drawable/shape_blue_lb"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/commit"
+            android:layout_width="0dp"
+            android:layout_height="100px"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@drawable/shape_blue_rb"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/whiteColor"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@color/whiteColor"-->
+    <!--android:scrollbars="none"-->
+    <!--&gt;-->
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:background="@drawable/shape_blue_rt_lt"-->
+    <!---->
+    <!--android:orientation="vertical"-->
     <!--&gt;-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center"-->
-    <!--android:text="配置商品"-->
-    <!--android:paddingTop="12dp"-->
-    <!--android:paddingBottom="12dp"-->
-    <!--android:textColor="@color/whiteColor"-->
-    <!--android:textSize="15sp" />-->
+
     <!--</LinearLayout>-->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/whiteColor"
-        android:scrollbars="none"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            >
-
-            <RelativeLayout
-                android:layout_width="810px"
-                android:layout_height="400px"
-                android:layout_marginTop="40px"
-                android:background="@drawable/shape_blue_line"
-                >
-                <TextView
-                    android:id="@+id/tvKucun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32px"
-                    android:layout_marginTop="22px"
-                    android:text="库存：6"
-                    android:textColor="@color/text_black"
-                    android:textSize="24px"
-                    />
-
-                <TextView
-                    android:id="@+id/tvGoodsName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="49px"
-                    android:layout_marginTop="20px"
-                    android:text="麻辣牛肉"
-                    android:textColor="@color/text_black"
-                    android:textSize="24px"
-                    />
-
-                <ImageView
-                    android:id="@+id/ivGoodsImg"
-                    android:layout_width="250px"
-                    android:layout_height="250px"
-                    android:layout_below="@id/tvKucun"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="7px"
-                    android:src="@drawable/chanpin"
-                    />
-
-                <TextView
-                    android:id="@+id/tvChangeGoods"
-                    android:layout_width="match_parent"
-                    android:layout_height="80px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/shape_blue_rb_lb"
-                    android:gravity="center"
-                    android:text="更换商品"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="28px"
-                    />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60px"
-                android:layout_marginTop="41px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="测距属性："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="13px"
-                        android:gravity="center"
-                        android:text="长"
-                        android:textColor="@color/text_black"
-                        android:textSize="26px"
-                        />
-
-                    <EditText
-                        android:id="@+id/etLong"
-                        android:layout_width="120px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7px"
-                        android:gravity="center"
-                        android:hint="mm"
-                        android:inputType="numberDecimal"
-                        android:textColor="@color/text_black"
-                        android:textSize="30px"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="64px"
-                        android:gravity="center"
-                        android:text="宽"
-                        android:textColor="@color/text_black"
-                        android:textSize="26px"
-                        />
-
-                    <EditText
-                        android:id="@+id/etWidth"
-                        android:layout_width="120px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7px"
-                        android:gravity="center"
-                        android:hint="mm"
-                        android:inputType="numberDecimal"
-                        android:textSize="30px"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="64px"
-                        android:gravity="center"
-                        android:text="高"
-                        android:textColor="@color/text_black"
-                        android:textSize="26px"
-                        />
-
-                    <EditText
-                        android:id="@+id/etHight"
-                        android:layout_width="120px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7px"
-                        android:gravity="center"
-                        android:hint="mm"
-                        android:inputType="numberDecimal"
-                        android:textSize="30px"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginTop="30px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="商品价格："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-
-                    <EditText
-                        android:id="@+id/etPrice"
-                        android:layout_width="600px"
-                        android:layout_height="70px"
-                        android:gravity="center"
-                        android:hint="单位元"
-                        android:inputType="numberDecimal"
-                        android:textColor="#D03B02"
-                        android:textSize="28px"
-                        />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginTop="30px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="商品容量："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-
-                    <EditText
-                        android:id="@+id/etCapcity"
-                        android:layout_width="600px"
-                        android:layout_height="70px"
-                        android:gravity="center"
-                        android:hint="请输入商品容量"
-                        android:inputType="number"
-                        android:textColor="#D03B02"
-                        android:textSize="28px"
-                        />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginTop="30px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="补货数量："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-                    <EditText
-                        android:id="@+id/etAddCount"
-                        android:layout_width="600px"
-                        android:layout_height="70px"
-                        android:gravity="center"
-                        android:hint="请输入补货数量"
-                        android:inputType="number"
-                        android:textColor="#D03B02"
-                        android:textSize="28px"
-                        />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginTop="30px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="最低库存："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-                    <EditText
-                        android:id="@+id/etLessCount"
-                        android:layout_width="600px"
-                        android:layout_height="70px"
-                        android:gravity="center"
-                        android:hint="请输入最低库存"
-                        android:inputType="number"
-                        android:textColor="#D03B02"
-                        android:textSize="28px"
-                        />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginTop="30px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="产品批次："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-                    <EditText
-                        android:id="@+id/etSerialNo"
-                        android:layout_width="600px"
-                        android:layout_height="70px"
-                        android:gravity="center"
-                        android:hint="请输入产品批次"
-                        android:inputType="number"
-                        android:textColor="#D03B02"
-                        android:textSize="28px"
-                        />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginTop="30px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="133px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="71px"
-                    android:text="货道操作："
-                    android:textColor="@color/text_black"
-                    android:textSize="26px"
-                    />
-
-                    <TextView
-                        android:id="@+id/tvClear"
-                        android:layout_width="280px"
-                        android:layout_height="70px"
-                        android:background="@drawable/shape_blue_light"
-                        android:gravity="center"
-                        android:text="清空"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="26px"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvFillAll"
-                        android:layout_width="280px"
-                        android:layout_height="70px"
-                        android:layout_marginStart="40px"
-                        android:background="@drawable/shape_blue"
-                        android:gravity="center"
-                        android:text="补满"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="26px"
-                        />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40px"
-                android:background="@drawable/shape_white_rb_lb"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="100px"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_blue_lb"
-                    android:gravity="center"
-                    android:text="取消"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="30px" />
-
-                <TextView
-                    android:id="@+id/commit"
-                    android:layout_width="0dp"
-                    android:layout_height="100px"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_blue_rb"
-                    android:gravity="center"
-                    android:text="确定"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="30px" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
 </LinearLayout>

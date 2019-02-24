@@ -2,35 +2,41 @@ package com.app.mlm.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.View;
 
 import com.app.mlm.R;
 
-import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
+ * 出货成功Fragment
  * A simple {@link Fragment} subclass.
  */
-public class ChuhuoFragment extends BaseFragment {
-    @Bind(R.id.tvCountDown)
-    TextView tvCountDownView;
+public class ChuhuoSuccessFragment extends BaseFragment {
 
-    public ChuhuoFragment() {
+    public ChuhuoSuccessFragment() {
     }
 
     @Override
     protected int provideLayoutResId() {
-        return R.layout.fragment_chuhuo;
+        return R.layout.fragment_chuhuo_success;
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        initCountDownMananger();
+
     }
 
     @Override
     protected void initListener() {
 
+    }
+
+    @OnClick(R.id.tvCancel)
+    public void onClick(View view) {
+        Log.e("Tag", "chuhuoshibai fragment click");
+        mActivity.addFragment(new LianxikefuFragment());
     }
 
     @Override
@@ -45,11 +51,7 @@ public class ChuhuoFragment extends BaseFragment {
 
     @Override
     public void onTick(int seconds) {
-        tvCountDownView.setText(seconds + "S");
-        if (seconds == 55) {
-//            mActivity.addFragment(new ChuhuoFailedFragment());
-            mActivity.addFragment(new ChuhuoSuccessFragment());
-        }
+
     }
 
     @Override

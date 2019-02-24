@@ -2,14 +2,19 @@ package com.app.mlm.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
 
 import com.app.mlm.R;
+
+import butterknife.OnClick;
 
 /**
  * 出货失败Fragment
  * A simple {@link Fragment} subclass.
  */
 public class ChuhuoFailedFragment extends BaseFragment {
+
     public ChuhuoFailedFragment() {
     }
 
@@ -26,6 +31,12 @@ public class ChuhuoFailedFragment extends BaseFragment {
     @Override
     protected void initListener() {
 
+    }
+
+    @OnClick(R.id.tvCancel)
+    public void onClick(View view) {
+        Log.e("Tag", "chuhuoshibai fragment click");
+        mActivity.addFragment(new LianxikefuFragment());
     }
 
     @Override

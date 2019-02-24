@@ -17,6 +17,7 @@
     <string name="quhuo_msg">取货失败，系统将自动退款！</string>
     <string name="saomaguanzhu">扫码关注“咪哩猫”微信公众号\n更多优惠等你来！</string>
     <string name="click_bug">去 逛 逛</string>
+    <string name="kefu_msg">微信关注“咪哩猫”公众号联系客服</string>
 
     <!--支付订单-->
     <string name="pay_order">支付订单</string>

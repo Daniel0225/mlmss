@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainBackground"
+    tools:context=".fragment.ChuhuoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@color/whiteColor"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="41px"
+                android:layout_height="41px"
+                android:layout_marginStart="38px"
+                android:src="@drawable/back_nor"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="联系客服"
+                android:textColor="@color/text_dark"
+                android:textSize="37px" />
+
+            <TextView
+                android:id="@+id/tvCountDown"
+                android:layout_width="90px"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="60s"
+                android:textColor="@color/black"
+                android:textSize="32px" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_marginStart="285px"
+                android:layout_marginTop="169px"
+                android:src="@mipmap/dianhua" />
+
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="296px"
+                android:layout_marginTop="169px"
+                android:src="@mipmap/zixun" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="200px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="160px"
+                android:background="#2553E1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="298px"
+                android:layout_marginTop="279px"
+                android:text="客服电话"
+                android:textColor="@color/text_black"
+                android:textSize="18px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="309px"
+                android:layout_marginTop="279px"
+                android:text="服务咨询"
+                android:textColor="@color/text_black"
+                android:textSize="18px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="204px"
+                android:layout_marginTop="314px"
+                android:text="0755-22678991"
+                android:textColor="@color/colorPrimary"
+                android:textSize="34px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="228px"
+                android:layout_marginTop="314px"
+                android:text="18902841422"
+                android:textColor="@color/colorPrimary"
+                android:textSize="34px" />
+
+            <ImageView
+                android:layout_width="300px"
+                android:layout_height="300px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="486px"
+                android:src="@drawable/qr_code" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="808px"
+                android:text="@string/kefu_msg"
+                android:textColor="@color/black"
+                android:textSize="22px" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

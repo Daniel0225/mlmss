@@ -28,9 +28,10 @@ import java.util.List;
  * @org : www.taojiji.com
  * @email : xing.luo@taojiji.com
  */
-public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdapter.RowGoodsViewHolder> {
+public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdapter.RowGoodsViewHolder> implements DragSortGridDialog.DataSortedListener {
     private Context context;
     private List<List<GoodsInfo>> data = new ArrayList<>();
+    private int sortPosition;
     public HDColumnGoodsAdapter(Context context, List<List<GoodsInfo>> data){
         this.context = context;
         this.data = data;
@@ -61,19 +62,25 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
             @Override
             public void onClick(View v) {
                 showSortDialog(context, data.get(i));
-//                showSortDialog(context, new ArrayList<GoodsInfo>());
+                sortPosition = i;
             }
         });
     }
 
     private void showSortDialog(Context context, List<GoodsInfo> goodsInfos) {
-        DragSortGridDialog dialog = new DragSortGridDialog(context, goodsInfos);
+        DragSortGridDialog dialog = new DragSortGridDialog(context, goodsInfos, this);
         dialog.show();
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    @Override
+    public void sorted(List<GoodsInfo> newData) {
+        data.set(sortPosition, newData);
+        notifyDataSetChanged();
     }
 
     public class RowGoodsViewHolder extends RecyclerView.ViewHolder {
