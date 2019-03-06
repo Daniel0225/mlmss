@@ -98,7 +98,7 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.close, R.id.tvPay, R.id.to_pick})
+    @OnClick({R.id.close, R.id.tvPay, R.id.to_pick, R.id.root_view})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close:
@@ -111,6 +111,9 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
                 mActivity.startActivity(intent);
                 break;
             case R.id.to_pick:
+                mActivity.removeFragment();
+                break;
+            case R.id.root_view:
                 mActivity.removeFragment();
                 break;
         }
