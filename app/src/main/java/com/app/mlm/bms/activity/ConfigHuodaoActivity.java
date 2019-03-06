@@ -159,6 +159,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         int code = 0;
                         try {
                             code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
+                            loading = Loading.newLoading(ConfigHuodaoActivity.this, "初始化中...");
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -166,6 +167,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         if (code == 99) {
                             try {
                                 int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+                                loading.dismiss();
                                 //  Collections.reverse(Arrays.asList(count));
                                 // Log.e("数组", Arrays.toString(count));
                                 PreferencesUtil.putString("layer", Arrays.toString(count));
@@ -174,6 +176,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                             }
                         } else {
                             //错误码
+                            loading.dismiss();
                             Log.e("初始化错误码", code + "");
                         }
                         Log.e("返回码", code + "");

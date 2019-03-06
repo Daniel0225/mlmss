@@ -38,9 +38,9 @@ public class TestResultDialog extends BaseDialog {
 
     @Override
     public void initView() {
-//        huodaoName.setText(testResult.getHuodaoName());
-//        state.setText(testResult.getState());
-//        desc.setText(testResult.getDesc());
+        huodaoName.setText(testResult.getHuodaoName());
+        state.setText(testResult.getState());
+        desc.setText(testResult.getDesc());
     }
 
     @OnClick(R.id.button)

@@ -48,7 +48,7 @@ public class CHColumnGoodsAdapter extends RecyclerView.Adapter<CHColumnGoodsAdap
         LinearLayoutManager ms = new LinearLayoutManager(context);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
-        CHRowGoodsAdapter adapter = new CHRowGoodsAdapter(context, data.get(i));
+        CHRowGoodsAdapter adapter = new CHRowGoodsAdapter(context, data.get(i), i);
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
         rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 2));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));
