@@ -44,7 +44,7 @@ public class SearchResultAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 16;
+        return data.size();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SearchResultAdapter extends BaseAdapter {
         }
         GoodsInfo goodsInfo = data.get(position);
         holder.tvGoodsName.setText(goodsInfo.getMdseName());
-        holder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+        holder.tvGoodsPrice.setText(goodsInfo.getMdsePrice());
 
         if (goodsInfo.getMdseUrl().equals("empty")) {
             holder.ivGoodsImg.setImageResource(R.drawable.empty);

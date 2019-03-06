@@ -55,7 +55,7 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(Gravity.BOTTOM);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
         this.isFullScreen = isFullScreen;
     }

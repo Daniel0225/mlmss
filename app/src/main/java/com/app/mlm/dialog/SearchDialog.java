@@ -55,6 +55,7 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
     private InputGridAdapter inputGridAdapter;
     private SearchResultAdapter searchResultAdapter;
     private List<GoodsInfo> data = new ArrayList<>();
+    private List<GoodsInfo> originData = new ArrayList<>();
 
     public SearchDialog(Context context) {
         super(context, R.layout.dialog_search_layout, true);
@@ -109,13 +110,13 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
 
             @Override
             public void afterTextChanged(Editable s) {
-                getData();
+                getData(s.toString());
             }
         });
     }
 
-    private void getData() {
-
+    private void getData(String keyWords) {
+        searchResult(keyWords);
     }
 
     private void deleteLastChar() {
@@ -142,19 +143,29 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
         etSearch.setText("");
     }
 
+    private void searchResult(String clCode) {
+        data.clear();
+        for (int i = 0; i < originData.size(); i++) {
+            GoodsInfo goodsInfo = originData.get(i);
+            if (goodsInfo.getClCode() != null && goodsInfo.getClCode().equals(clCode)) {
+                data.add(goodsInfo);
+            }
+        }
+        searchResultAdapter.notifyDataSetChanged();
+    }
     /**
      * 造数据
      */
     private void initList() {
-        data.clear();
+        originData.clear();
         String huodaoString = PreferencesUtil.getString("huodao");
         if (TextUtils.isEmpty(huodaoString)) {
-            data.addAll(getDefaultData());
+            originData.addAll(getDefaultData());
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             List<List<GoodsInfo>> dataList = huodaoBean.getAllDataList();
             for (int i = 0; i < dataList.size(); i++) {
-                data.addAll(dataList.get(i));
+                originData.addAll(dataList.get(i));
             }
         }
     }

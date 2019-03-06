@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#88000000"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/gridView"
         >
         <RelativeLayout
             android:id="@+id/rlSearch"
@@ -48,10 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/inputGridView"
+        android:layout_below="@+id/rlTop"
         android:layout_marginEnd="30px"
         android:layout_marginStart="30px"
         android:layout_weight="1"
-        android:background="@color/dialogBgColor"
         android:horizontalSpacing="8px"
         android:listSelector="@color/transparent"
         android:numColumns="4"

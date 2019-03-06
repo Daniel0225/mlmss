@@ -117,8 +117,6 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 goodsInfo.setMdseBrand(mProductInfo.getMdseBrand());
                 goodsInfo.setMdsePack(mProductInfo.getMdsePack());
 //                goodsInfo.setMerchantType(mProductInfo.getMer);
-                goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString()));
-                goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString()));
                 goodsInfo.setMdsePrice(String.valueOf(mProductInfo.getMdsePrice()));
                 productConfigListener.confirm(goodsInfo);
                 dismiss();
