@@ -57,6 +57,8 @@ public class MainFragment extends BaseFragment {
     RelativeLayout gouwuche;
     @Bind(R.id.huodong)
     LinearLayout huodong;
+    @Bind(R.id.tv_shop_cart)
+    View shopCarTV;
 
     List<List<GoodsInfo>> dataList = new ArrayList<>();
     ColumnGoodsAdapter adapter;
@@ -214,6 +216,7 @@ public class MainFragment extends BaseFragment {
         }
 
         if (totalNum > 0) {
+            shopCarTV.setVisibility(View.GONE);
             tvCartCount.setVisibility(View.VISIBLE);
             tvCartPrice.setVisibility(View.VISIBLE);
             tvCartCount.setText(String.valueOf(totalNum));
@@ -221,6 +224,7 @@ public class MainFragment extends BaseFragment {
         } else {
             tvCartCount.setVisibility(View.GONE);
             tvCartPrice.setVisibility(View.GONE);
+            shopCarTV.setVisibility(View.VISIBLE);
         }
     }
 }

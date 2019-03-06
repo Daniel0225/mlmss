@@ -74,28 +74,33 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_shop_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="2dp"
                     android:text="@string/tab_gouwuche"
                     android:textColor="#252525"
                     android:textSize="22px"
+                    android:visibility="visible"
                     />
+
+                <TextView
+                    android:id="@+id/tvCartPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34px"
+                    android:layout_alignBottom="@id/llCart"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/shape_blue_line16px"
+                    android:gravity="center"
+                    android:minWidth="88px"
+                    android:paddingLeft="8px"
+                    android:paddingRight="8px"
+                    android:text="1111"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12px"
+                    android:visibility="gone" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvCartPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_alignBottom="@id/llCart"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/shape_blue_line"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
-                android:visibility="gone"
-                />
 
             <TextView
                 android:id="@+id/tvCartCount"

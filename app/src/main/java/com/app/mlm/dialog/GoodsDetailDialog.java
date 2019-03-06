@@ -43,6 +43,8 @@ public class GoodsDetailDialog extends Dialog {
     TextView tvGoodsPrice;
     @Bind(R.id.tvGoodsName)
     TextView tvGoodsName;
+    @Bind(R.id.ivClose)
+    View closeView;
     private Window mDialogWindow;
     private GoodsDetailDialog mInstance;
     private GoodsInfo mGoodsInfo;
@@ -55,7 +57,7 @@ public class GoodsDetailDialog extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(Gravity.CENTER);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class GoodsDetailDialog extends Dialog {
         tvGoodsPrice.setText("¥" + mGoodsInfo.getMdsePrice());
     }
 
-    @OnClick({R.id.tvBuyImm, R.id.tvAddCart})
+    @OnClick({R.id.tvBuyImm, R.id.tvAddCart, R.id.ivClose})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvBuyImm:
@@ -93,6 +95,9 @@ public class GoodsDetailDialog extends Dialog {
             case R.id.tvAddCart:
                 MainApp.addShopCar(mGoodsInfo);
                 EventBus.getDefault().post(new AddShopCarEvent());
+                dismiss();
+                break;
+            case R.id.ivClose:
                 dismiss();
                 break;
         }

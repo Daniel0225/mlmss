@@ -50,6 +50,8 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.tvGoodsName = view.findViewById(R.id.tvGoodsName);
         viewHolder.tvGoodsPrice = view.findViewById(R.id.tvGoodsPrice);
         viewHolder.rvRoot = view.findViewById(R.id.rvRoot);
+        viewHolder.hasGoodsView = view.findViewById(R.id.has_goods);
+        viewHolder.noGoodsView = view.findViewById(R.id.no_goods);
         return viewHolder;
     }
 
@@ -68,9 +70,12 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.tvGoodsName.setText(goodsInfo.getMdseName());
         viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
         if (goodsInfo.getMdseUrl().equals("empty")) {
-            viewHolder.ivGoodsImg.setImageResource(R.drawable.empty);
+            viewHolder.noGoodsView.setVisibility(View.VISIBLE);
+            viewHolder.hasGoodsView.setVisibility(View.GONE);
         } else {
             Glide.with(context).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
+            viewHolder.noGoodsView.setVisibility(View.GONE);
+            viewHolder.hasGoodsView.setVisibility(View.VISIBLE);
         }
 
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +116,8 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         TextView tvGoodsName;
         TextView tvGoodsPrice;
         View rvRoot;
+        View hasGoodsView;
+        View noGoodsView;
 
         public RowGoodsViewHolder(View itemView) {
             super(itemView);
