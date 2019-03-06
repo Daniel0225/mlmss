@@ -11,6 +11,7 @@ import com.app.mlm.bms.dialog.DoneDialog;
 import com.app.mlm.bms.dialog.SyncProgressDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.CounterBean;
 import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
@@ -72,6 +73,7 @@ public class ConfigSyncActivity extends BaseActivity {
 
                 break;
             case R.id.syncHuogui:
+                syncCounter();
                 break;
         }
     }
@@ -125,4 +127,33 @@ public class ConfigSyncActivity extends BaseActivity {
                     }
                 });
     }
+
+    /**
+     * 同步货柜信息
+     */
+    private void syncCounter() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+
+        OkGo.<BaseResponse<List<CounterBean>>>get(Constants.SYNC_COUNTER)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<List<CounterBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<CounterBean>>> response) {
+                        if (response.body().getCode() == 0) {
+                            if (response.body().getData().size() > 0) {
+                                CounterBean counterBean = response.body().getData().get(0);
+                                PreferencesUtil.putString(Constants.COUNTER_NUM, counterBean.getCounterNumber());
+                                PreferencesUtil.putString(Constants.COUNTER_NAME, counterBean.getCounterName());
+                                DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
+                                dialog1.show();
+                            }
+                        }
+
+                    }
+                });
+    }
+
+
 }

@@ -18,6 +18,7 @@ import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.HuodaoBean;
+import com.app.mlm.http.bean.SyncChannelListVo;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PreferencesUtil;
@@ -193,10 +194,6 @@ public class ConfigHuodaoActivity extends BaseActivity {
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             allDataList = huodaoBean.getAllDataList();
-//            for (int i = 0; i < 5; i++) {
-//                String huodaoStrings = PreferencesUtil.getString("huodao" + i);
-//                allDataList.add(FastJsonUtil.getObjects(huodaoStrings, GoodsInfo.class));
-//            }
         }
     }
 
@@ -228,11 +225,14 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
         List<GoodsInfo> list = new ArrayList<>();
         for (int i = 0; i < allDataList.size(); i++) {
-            list.addAll(allDataList.get(i));
-//            String huodaoDataString = FastJsonUtil.createJsonString(allDataList.get(i));
-//            PreferencesUtil.putString("huodao" + i, huodaoDataString);
+            for (int j = 0; j < allDataList.get(i).size(); j++) {
+                if (!allDataList.get(i).get(j).getMdseUrl().equals("empty")) {
+                    list.add(allDataList.get(i).get(j));
+                }
+            }
         }
-        String upJsonString = FastJsonUtil.createJsonString(list);
+        SyncChannelListVo syncChannelListVo = new SyncChannelListVo(list, "0000051");
+        String upJsonString = FastJsonUtil.createJsonString(syncChannelListVo);
         Log.e("Tag", upJsonString);
 
         HuodaoBean huodaoBean = new HuodaoBean(allDataList);

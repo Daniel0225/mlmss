@@ -54,7 +54,7 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
         LinearLayoutManager ms = new LinearLayoutManager(context);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
-        HDRowGoodsAdapter adapter = new HDRowGoodsAdapter(context, data.get(i));
+        HDRowGoodsAdapter adapter = new HDRowGoodsAdapter(context, data.get(i), i + 1);
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
         rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 1));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));

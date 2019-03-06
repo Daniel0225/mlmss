@@ -101,6 +101,16 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     return;
                 }
                 GoodsInfo goodsInfo = new GoodsInfo();
+                goodsInfo.setVmCode("0000051");
+                goodsInfo.setVmId(1);
+                goodsInfo.setCheight(Double.valueOf(etHight.getText().toString().trim()));
+                goodsInfo.setClong(Double.valueOf(etLong.getText().toString().trim()));
+                goodsInfo.setCwidth(Double.valueOf(etWidth.getText().toString().trim()));
+                goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString().trim()));
+                goodsInfo.setRealPrice(Integer.valueOf(etPrice.getText().toString().trim()));
+                goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString().trim()));
+                goodsInfo.setPriductBatch(etSerialNo.getText().toString().trim());
+                goodsInfo.setThreshold(etLessCount.getText().toString().trim());
                 goodsInfo.setMdseId(mProductInfo.getMdseId());
                 goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
                 goodsInfo.setMdseName(mProductInfo.getMdseName());

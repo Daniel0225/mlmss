@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,12 +14,18 @@ import com.app.mlm.R;
 import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.CreateWxOrderReqVo;
+import com.app.mlm.http.bean.CreateWxOrderReqVoList;
 import com.app.mlm.http.bean.WxPayBean;
+import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.TimeCountUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/12/30.
@@ -85,15 +92,23 @@ public class OrderPayActivity extends AppCompatActivity {
     }
 
     private void getPayInfo() {
+
+
+        CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE), "1",
+                "101", 1);
+        List<CreateWxOrderReqVo> list = new ArrayList<>();
+        list.add(createWxOrderReqVo);
         HttpParams httpParams = new HttpParams();
-        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
-        httpParams.put("productId", PreferencesUtil.getString(Constants.VMCODE) + "-1");
-        httpParams.put("hd", 1);
-        httpParams.put("quantity", 1);
+        CreateWxOrderReqVoList createWxOrderReqVoList = new CreateWxOrderReqVoList();
+        createWxOrderReqVoList.setCreateWxOrderReqVoList(list);
+        String jsonString = FastJsonUtil.createJsonString(createWxOrderReqVoList);
+        httpParams.put("createWxOrderReqVoList", jsonString);
+        Log.e("Tag", "params " + jsonString);
 
         OkGo.<BaseResponse<WxPayBean>>post(Constants.WXPAY)
                 .tag(this)
-                .params(httpParams)
+                .upJson(jsonString)
+//                .params(httpParams)
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {

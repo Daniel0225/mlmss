@@ -15,7 +15,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 /** 
  * DAO for table "GOODS_INFO".
 */
-public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
+public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
 
     public static final String TABLENAME = "GOODS_INFO";
 
@@ -32,7 +32,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_INFO\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"ID\" INTEGER," + // 0: id
                 "\"MDSE_ID\" INTEGER NOT NULL ," + // 1: mdseId
                 "\"MDSE_PRICE\" TEXT," + // 2: mdsePrice
                 "\"MDSE_BRAND\" TEXT," + // 3: mdseBrand
@@ -41,13 +41,21 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"MDSE_NAME\" TEXT," + // 6: mdseName
                 "\"MDSE_URL\" TEXT," + // 7: mdseUrl
                 "\"CL_CODE\" TEXT," + // 8: clCode
-                "\"CL_CAPACITY\" INTEGER NOT NULL ," + // 9: clCapacity
-                "\"CLC_CAPACITY\" INTEGER NOT NULL ," + // 10: clcCapacity
-                "\"GAME_PRICE\" TEXT," + // 11: gamePrice
-                "\"GAME_TIME_START\" TEXT," + // 12: gameTimeStart
-                "\"GAME_TIME_END\" TEXT," + // 13: gameTimeEnd
-                "\"POSITION\" INTEGER NOT NULL ," + // 14: position
-                "\"SHOP_CAR_NUM\" INTEGER NOT NULL );"); // 15: shopCarNum
+                "\"SHOP_CAR_NUM\" INTEGER NOT NULL ," + // 9: shopCarNum
+                "\"VM_CODE\" TEXT," + // 10: vmCode
+                "\"VM_ID\" INTEGER," + // 11: vmId
+                "\"CL_ID\" INTEGER," + // 12: clId
+                "\"VM_CLAYERS\" INTEGER," + // 13: vmClayers
+                "\"CLONG\" REAL NOT NULL ," + // 14: clong
+                "\"CWIDTH\" REAL NOT NULL ," + // 15: cwidth
+                "\"CHEIGHT\" REAL NOT NULL ," + // 16: cheight
+                "\"REAL_PRICE\" INTEGER," + // 17: realPrice
+                "\"CL_CAPACITY\" INTEGER," + // 18: clCapacity
+                "\"CLC_CAPACITY\" INTEGER," + // 19: clcCapacity
+                "\"THRESHOLD\" TEXT," + // 20: threshold
+                "\"REPLENISH\" INTEGER," + // 21: Replenish
+                "\"CHANNEL_TYPE\" INTEGER," + // 22: channelType
+                "\"PRIDUCT_BATCH\" TEXT);"); // 23: priductBatch
     }
 
     /** Drops the underlying database table. */
@@ -100,25 +108,65 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (clCode != null) {
             stmt.bindString(9, clCode);
         }
-        stmt.bindLong(10, entity.getClCapacity());
-        stmt.bindLong(11, entity.getClcCapacity());
+        stmt.bindLong(10, entity.getShopCarNum());
 
-        String gamePrice = entity.getGamePrice();
-        if (gamePrice != null) {
-            stmt.bindString(12, gamePrice);
+        String vmCode = entity.getVmCode();
+        if (vmCode != null) {
+            stmt.bindString(11, vmCode);
         }
 
-        String gameTimeStart = entity.getGameTimeStart();
-        if (gameTimeStart != null) {
-            stmt.bindString(13, gameTimeStart);
+        Integer vmId = entity.getVmId();
+        if (vmId != null) {
+            stmt.bindLong(12, vmId);
         }
 
-        String gameTimeEnd = entity.getGameTimeEnd();
-        if (gameTimeEnd != null) {
-            stmt.bindString(14, gameTimeEnd);
+        Integer clId = entity.getClId();
+        if (clId != null) {
+            stmt.bindLong(13, clId);
         }
-        stmt.bindLong(15, entity.getPosition());
-        stmt.bindLong(16, entity.getShopCarNum());
+
+        Integer vmClayers = entity.getVmClayers();
+        if (vmClayers != null) {
+            stmt.bindLong(14, vmClayers);
+        }
+        stmt.bindDouble(15, entity.getClong());
+        stmt.bindDouble(16, entity.getCwidth());
+        stmt.bindDouble(17, entity.getCheight());
+
+        Integer realPrice = entity.getRealPrice();
+        if (realPrice != null) {
+            stmt.bindLong(18, realPrice);
+        }
+
+        Integer clCapacity = entity.getClCapacity();
+        if (clCapacity != null) {
+            stmt.bindLong(19, clCapacity);
+        }
+
+        Integer clcCapacity = entity.getClcCapacity();
+        if (clcCapacity != null) {
+            stmt.bindLong(20, clcCapacity);
+        }
+
+        String threshold = entity.getThreshold();
+        if (threshold != null) {
+            stmt.bindString(21, threshold);
+        }
+
+        Integer Replenish = entity.getReplenish();
+        if (Replenish != null) {
+            stmt.bindLong(22, Replenish);
+        }
+
+        Integer channelType = entity.getChannelType();
+        if (channelType != null) {
+            stmt.bindLong(23, channelType);
+        }
+
+        String priductBatch = entity.getPriductBatch();
+        if (priductBatch != null) {
+            stmt.bindString(24, priductBatch);
+        }
     }
 
     @Override
@@ -165,30 +213,70 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (clCode != null) {
             stmt.bindString(9, clCode);
         }
-        stmt.bindLong(10, entity.getClCapacity());
-        stmt.bindLong(11, entity.getClcCapacity());
+        stmt.bindLong(10, entity.getShopCarNum());
 
-        String gamePrice = entity.getGamePrice();
-        if (gamePrice != null) {
-            stmt.bindString(12, gamePrice);
+        String vmCode = entity.getVmCode();
+        if (vmCode != null) {
+            stmt.bindString(11, vmCode);
         }
 
-        String gameTimeStart = entity.getGameTimeStart();
-        if (gameTimeStart != null) {
-            stmt.bindString(13, gameTimeStart);
+        Integer vmId = entity.getVmId();
+        if (vmId != null) {
+            stmt.bindLong(12, vmId);
         }
 
-        String gameTimeEnd = entity.getGameTimeEnd();
-        if (gameTimeEnd != null) {
-            stmt.bindString(14, gameTimeEnd);
+        Integer clId = entity.getClId();
+        if (clId != null) {
+            stmt.bindLong(13, clId);
         }
-        stmt.bindLong(15, entity.getPosition());
-        stmt.bindLong(16, entity.getShopCarNum());
+
+        Integer vmClayers = entity.getVmClayers();
+        if (vmClayers != null) {
+            stmt.bindLong(14, vmClayers);
+        }
+        stmt.bindDouble(15, entity.getClong());
+        stmt.bindDouble(16, entity.getCwidth());
+        stmt.bindDouble(17, entity.getCheight());
+
+        Integer realPrice = entity.getRealPrice();
+        if (realPrice != null) {
+            stmt.bindLong(18, realPrice);
+        }
+
+        Integer clCapacity = entity.getClCapacity();
+        if (clCapacity != null) {
+            stmt.bindLong(19, clCapacity);
+        }
+
+        Integer clcCapacity = entity.getClcCapacity();
+        if (clcCapacity != null) {
+            stmt.bindLong(20, clcCapacity);
+        }
+
+        String threshold = entity.getThreshold();
+        if (threshold != null) {
+            stmt.bindString(21, threshold);
+        }
+
+        Integer Replenish = entity.getReplenish();
+        if (Replenish != null) {
+            stmt.bindLong(22, Replenish);
+        }
+
+        Integer channelType = entity.getChannelType();
+        if (channelType != null) {
+            stmt.bindLong(23, channelType);
+        }
+
+        String priductBatch = entity.getPriductBatch();
+        if (priductBatch != null) {
+            stmt.bindString(24, priductBatch);
+        }
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }
 
     @Override
@@ -203,13 +291,21 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // mdseName
                 cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // mdseUrl
                 cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // clCode
-                cursor.getInt(offset + 9), // clCapacity
-                cursor.getInt(offset + 10), // clcCapacity
-                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // gamePrice
-                cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // gameTimeStart
-                cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // gameTimeEnd
-                cursor.getInt(offset + 14), // position
-                cursor.getInt(offset + 15) // shopCarNum
+                cursor.getInt(offset + 9), // shopCarNum
+                cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // vmCode
+                cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11), // vmId
+                cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12), // clId
+                cursor.isNull(offset + 13) ? null : cursor.getInt(offset + 13), // vmClayers
+                cursor.getDouble(offset + 14), // clong
+                cursor.getDouble(offset + 15), // cwidth
+                cursor.getDouble(offset + 16), // cheight
+                cursor.isNull(offset + 17) ? null : cursor.getInt(offset + 17), // realPrice
+                cursor.isNull(offset + 18) ? null : cursor.getInt(offset + 18), // clCapacity
+                cursor.isNull(offset + 19) ? null : cursor.getInt(offset + 19), // clcCapacity
+                cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // threshold
+                cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21), // Replenish
+                cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22), // channelType
+                cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23) // priductBatch
         );
         return entity;
     }
@@ -225,33 +321,38 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setMdseName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setMdseUrl(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setClCode(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setClCapacity(cursor.getInt(offset + 9));
-        entity.setClcCapacity(cursor.getInt(offset + 10));
-        entity.setGamePrice(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setGameTimeStart(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setGameTimeEnd(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setPosition(cursor.getInt(offset + 14));
-        entity.setShopCarNum(cursor.getInt(offset + 15));
+        entity.setShopCarNum(cursor.getInt(offset + 9));
+        entity.setVmCode(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setVmId(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
+        entity.setClId(cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12));
+        entity.setVmClayers(cursor.isNull(offset + 13) ? null : cursor.getInt(offset + 13));
+        entity.setClong(cursor.getDouble(offset + 14));
+        entity.setCwidth(cursor.getDouble(offset + 15));
+        entity.setCheight(cursor.getDouble(offset + 16));
+        entity.setRealPrice(cursor.isNull(offset + 17) ? null : cursor.getInt(offset + 17));
+        entity.setClCapacity(cursor.isNull(offset + 18) ? null : cursor.getInt(offset + 18));
+        entity.setClcCapacity(cursor.isNull(offset + 19) ? null : cursor.getInt(offset + 19));
+        entity.setThreshold(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setReplenish(cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21));
+        entity.setChannelType(cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22));
+        entity.setPriductBatch(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
      }
 
     @Override
-    protected final Long updateKeyAfterInsert(GoodsInfo entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final Void updateKeyAfterInsert(GoodsInfo entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     @Override
-    public Long getKey(GoodsInfo entity) {
-        if(entity != null) {
-            return entity.getId();
-        } else {
-            return null;
-        }
+    public Void getKey(GoodsInfo entity) {
+        return null;
     }
 
     @Override
     public boolean hasKey(GoodsInfo entity) {
-        return entity.getId() != null;
+        // TODO
+        return false;
     }
 
     @Override
@@ -264,7 +365,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", false, "ID");
         public final static Property MdseId = new Property(1, int.class, "mdseId", false, "MDSE_ID");
         public final static Property MdsePrice = new Property(2, String.class, "mdsePrice", false, "MDSE_PRICE");
         public final static Property MdseBrand = new Property(3, String.class, "mdseBrand", false, "MDSE_BRAND");
@@ -273,13 +374,21 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property MdseName = new Property(6, String.class, "mdseName", false, "MDSE_NAME");
         public final static Property MdseUrl = new Property(7, String.class, "mdseUrl", false, "MDSE_URL");
         public final static Property ClCode = new Property(8, String.class, "clCode", false, "CL_CODE");
-        public final static Property ClCapacity = new Property(9, int.class, "clCapacity", false, "CL_CAPACITY");
-        public final static Property ClcCapacity = new Property(10, int.class, "clcCapacity", false, "CLC_CAPACITY");
-        public final static Property GamePrice = new Property(11, String.class, "gamePrice", false, "GAME_PRICE");
-        public final static Property GameTimeStart = new Property(12, String.class, "gameTimeStart", false, "GAME_TIME_START");
-        public final static Property GameTimeEnd = new Property(13, String.class, "gameTimeEnd", false, "GAME_TIME_END");
-        public final static Property Position = new Property(14, int.class, "position", false, "POSITION");
-        public final static Property ShopCarNum = new Property(15, int.class, "shopCarNum", false, "SHOP_CAR_NUM");
+        public final static Property ShopCarNum = new Property(9, int.class, "shopCarNum", false, "SHOP_CAR_NUM");
+        public final static Property VmCode = new Property(10, String.class, "vmCode", false, "VM_CODE");
+        public final static Property VmId = new Property(11, Integer.class, "vmId", false, "VM_ID");
+        public final static Property ClId = new Property(12, Integer.class, "clId", false, "CL_ID");
+        public final static Property VmClayers = new Property(13, Integer.class, "vmClayers", false, "VM_CLAYERS");
+        public final static Property Clong = new Property(14, double.class, "clong", false, "CLONG");
+        public final static Property Cwidth = new Property(15, double.class, "cwidth", false, "CWIDTH");
+        public final static Property Cheight = new Property(16, double.class, "cheight", false, "CHEIGHT");
+        public final static Property RealPrice = new Property(17, Integer.class, "realPrice", false, "REAL_PRICE");
+        public final static Property ClCapacity = new Property(18, Integer.class, "clCapacity", false, "CL_CAPACITY");
+        public final static Property ClcCapacity = new Property(19, Integer.class, "clcCapacity", false, "CLC_CAPACITY");
+        public final static Property Threshold = new Property(20, String.class, "threshold", false, "THRESHOLD");
+        public final static Property Replenish = new Property(21, Integer.class, "Replenish", false, "REPLENISH");
+        public final static Property ChannelType = new Property(22, Integer.class, "channelType", false, "CHANNEL_TYPE");
+        public final static Property PriductBatch = new Property(23, String.class, "priductBatch", false, "PRIDUCT_BATCH");
     }
     
 }

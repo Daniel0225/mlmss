@@ -14,6 +14,9 @@ public class Constants {
     public static final String BASE_URL = "http://47.106.143.212:8080/api/";
     public static final String ADDATA = "ad_data";
     public static final String DOWN_LOAD = "down_load";
+    public static final String CHUHUO_WENDU = "chuhuo_wendu";//
+    public static final String COUNTER_NUM = "counterNumber";
+    public static final String COUNTER_NAME = "counterName";
     /**
      * 请求超时时间
      */
@@ -25,8 +28,12 @@ public class Constants {
     public static final String GET_PRODUCT_PRICE = BASE_URL + "syncMdse";//商品同步接口
     public static final String GET_ALL_TYPE = BASE_URL + "getAllType";//商品类型
     public static final String SYN_CHANNEL = BASE_URL + "syncChannel";//货道信息同步接口
-    public static final String WXPAY = BASE_URL + "wxpay";//支付
-    public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步接口
+    public static final String WXPAY = "http://47.106.216.231:8083/api/wxpay";//支付
+    public static final String SYNC_COUNTER = BASE_URL + "syncCounter";//货柜信息接口
+    public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步到上位机
+    public static final String THERMAL = BASE_URL + "syncThermal";//温度接口
+    public static final String ALARM_REPORT = BASE_URL + "alarmReport";//故障接口
+
 
 
     //门禁状态广播

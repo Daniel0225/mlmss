@@ -5,9 +5,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.bms.dialog.SigleChoiceDialog;
+import com.app.mlm.utils.PreferencesUtil;
 import com.dinuscxj.progressbar.CircleProgressBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -48,6 +54,13 @@ public class TemperatureControlActivity extends BaseActivity {
     TextView tvDescHigh;
     @Bind(R.id.temperatureSetting)
     LinearLayout temperatureSetting;
+    @Bind(R.id.low_temp_tx)
+    TextView lowTempTextView;
+    @Bind(R.id.high_temp_tx)
+    TextView highTempTextView;
+
+    private String model;
+    private String coldModel;
 
     @Override
     protected int provideLayoutResId() {
@@ -107,10 +120,29 @@ public class TemperatureControlActivity extends BaseActivity {
     @Override
     public void onActionClicked() {
         super.onActionClicked();
-        finish();
+        upTemp();
     }
 
-    @OnClick({R.id.tvChangwen, R.id.tvZhileng, R.id.tvZhire, R.id.llChuhuo})
+    private void upTemp() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        httpParams.put("currentMode", "制冷");
+        httpParams.put("coolMode", "弱冷");
+        httpParams.put("caseThermal", 30);
+        httpParams.put("outThermal", 50);
+        OkGo.<String>get(Constants.THERMAL)
+                .tag(this)
+                .params(httpParams)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                    }
+                });
+    }
+
+    @OnClick({R.id.tvChangwen, R.id.tvZhileng, R.id.tvZhire, R.id.llChuhuo, R.id.low_temp_reduce, R.id.low_temp_add, R.id.high_temp_add, R.id.high_temp_reduce,
+            R.id.tvSettingMode1, R.id.tvSettingMode2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvChangwen:
@@ -133,9 +165,44 @@ public class TemperatureControlActivity extends BaseActivity {
                     @Override
                     public void onClick(String value) {
                         tvAllowChuhuo.setText(value);
+                        PreferencesUtil.putString(Constants.CHUHUO_WENDU, value);
                     }
                 });
                 choiceDialog.show();
+                break;
+            case R.id.low_temp_reduce:
+                int lowTemp = Integer.valueOf(lowTempTextView.getText().toString());
+                if (lowTemp > 0) {
+                    lowTempTextView.setText(String.valueOf(lowTemp - 1));
+                }
+                break;
+            case R.id.low_temp_add:
+                int lowTempAdd = Integer.valueOf(lowTempTextView.getText().toString());
+                lowTempTextView.setText(String.valueOf(lowTempAdd + 1));
+                break;
+            case R.id.high_temp_reduce:
+                int highTemp = Integer.valueOf(highTempTextView.getText().toString());
+                if (highTemp > 0) {
+                    highTempTextView.setText(String.valueOf(highTemp - 1));
+                }
+                break;
+            case R.id.high_temp_add:
+                int highTempAdd = Integer.valueOf(highTempTextView.getText().toString());
+                highTempTextView.setText(String.valueOf(highTempAdd + 1));
+                break;
+            case R.id.tvSettingMode1:
+                tvSettingMode1.setBackgroundResource(R.drawable.shape_blue);
+                tvSettingMode1.setTextColor(getResources().getColor(R.color.whiteColor));
+                tvSettingMode2.setBackgroundResource(R.drawable.shape_blue_light);
+                tvSettingMode2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                coldModel = tvSettingMode1.getText().toString();
+                break;
+            case R.id.tvSettingMode2:
+                tvSettingMode1.setBackgroundResource(R.drawable.shape_blue_light);
+                tvSettingMode1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvSettingMode2.setBackgroundResource(R.drawable.shape_blue);
+                tvSettingMode2.setTextColor(getResources().getColor(R.color.whiteColor));
+                coldModel = tvSettingMode2.getText().toString();
                 break;
         }
     }
@@ -149,6 +216,7 @@ public class TemperatureControlActivity extends BaseActivity {
         tvZhire.setTextColor(getResources().getColor(R.color.colorPrimary));
         view.setBackgroundResource(R.drawable.shape_blue);
         view.setTextColor(getResources().getColor(R.color.whiteColor));
+        model = view.getText().toString();
     }
 
     private void setCurrentMode(String mode) {

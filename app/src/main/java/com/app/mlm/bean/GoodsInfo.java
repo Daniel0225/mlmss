@@ -2,7 +2,6 @@ package com.app.mlm.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
 
@@ -18,30 +17,39 @@ import java.io.Serializable;
 @Entity
 public class GoodsInfo implements Serializable {
     private static final long serialVersionUID = 536871008L;
-    @Id(autoincrement = true)
     private Long id;
-    private int mdseId;
+    private int mdseId;//商品ID
     private String mdsePrice;
     private String mdseBrand;//品牌
     private String mdsePack;//商品包装类型
     private String merchantType;//商家类型
     private String mdseName;
     private String mdseUrl;
-    private String clCode;
-    private int clCapacity;
-    private int clcCapacity;
-    private String gamePrice;
-    private String gameTimeStart;
-    private String gameTimeEnd;
-    private int position;
+    private String clCode;//货道CODE
     private int shopCarNum = 1;
+    private String vmCode;//售货机Code
+    private Integer vmId;//售货机ID
+    private Integer clId;//货道ID
+    private Integer vmClayers = 0;//售货机货道层数
+    private double clong;//长度
+    private double cwidth;//宽度
+    private double cheight;//高度
+    private Integer realPrice = 0;//实际零售价
+    private Integer clCapacity = 0;//货道容量
+    private Integer clcCapacity = 0;//货道当前容量
+    private String threshold;//阀值
+    private Integer Replenish;//补货数
+    private Integer channelType;//货道类型
+    private String priductBatch;//产品批次
 
-    @Generated(hash = 1397361949)
+    @Generated(hash = 1892760506)
     public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand,
                      String mdsePack, String merchantType, String mdseName, String mdseUrl,
-                     String clCode, int clCapacity, int clcCapacity, String gamePrice,
-                     String gameTimeStart, String gameTimeEnd, int position,
-                     int shopCarNum) {
+                     String clCode, int shopCarNum, String vmCode, Integer vmId,
+                     Integer clId, Integer vmClayers, double clong, double cwidth,
+                     double cheight, Integer realPrice, Integer clCapacity,
+                     Integer clcCapacity, String threshold, Integer Replenish,
+                     Integer channelType, String priductBatch) {
         this.id = id;
         this.mdseId = mdseId;
         this.mdsePrice = mdsePrice;
@@ -51,40 +59,33 @@ public class GoodsInfo implements Serializable {
         this.mdseName = mdseName;
         this.mdseUrl = mdseUrl;
         this.clCode = clCode;
+        this.shopCarNum = shopCarNum;
+        this.vmCode = vmCode;
+        this.vmId = vmId;
+        this.clId = clId;
+        this.vmClayers = vmClayers;
+        this.clong = clong;
+        this.cwidth = cwidth;
+        this.cheight = cheight;
+        this.realPrice = realPrice;
         this.clCapacity = clCapacity;
         this.clcCapacity = clcCapacity;
-        this.gamePrice = gamePrice;
-        this.gameTimeStart = gameTimeStart;
-        this.gameTimeEnd = gameTimeEnd;
-        this.position = position;
-        this.shopCarNum = shopCarNum;
+        this.threshold = threshold;
+        this.Replenish = Replenish;
+        this.channelType = channelType;
+        this.priductBatch = priductBatch;
     }
+
     @Generated(hash = 1227172248)
     public GoodsInfo() {
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getShopCarNum() {
-        return shopCarNum;
-    }
-
-    public void setShopCarNum(int shopCarNum) {
-        this.shopCarNum = shopCarNum;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     public int getMdseId() {
@@ -101,6 +102,30 @@ public class GoodsInfo implements Serializable {
 
     public void setMdsePrice(String mdsePrice) {
         this.mdsePrice = mdsePrice;
+    }
+
+    public String getMdseBrand() {
+        return mdseBrand;
+    }
+
+    public void setMdseBrand(String mdseBrand) {
+        this.mdseBrand = mdseBrand;
+    }
+
+    public String getMdsePack() {
+        return mdsePack;
+    }
+
+    public void setMdsePack(String mdsePack) {
+        this.mdsePack = mdsePack;
+    }
+
+    public String getMerchantType() {
+        return merchantType;
+    }
+
+    public void setMerchantType(String merchantType) {
+        this.merchantType = merchantType;
     }
 
     public String getMdseName() {
@@ -127,67 +152,123 @@ public class GoodsInfo implements Serializable {
         this.clCode = clCode;
     }
 
-    public int getClCapacity() {
+    public int getShopCarNum() {
+        return shopCarNum;
+    }
+
+    public void setShopCarNum(int shopCarNum) {
+        this.shopCarNum = shopCarNum;
+    }
+
+    public String getVmCode() {
+        return vmCode;
+    }
+
+    public void setVmCode(String vmCode) {
+        this.vmCode = vmCode;
+    }
+
+    public Integer getVmId() {
+        return vmId;
+    }
+
+    public void setVmId(Integer vmId) {
+        this.vmId = vmId;
+    }
+
+    public Integer getClId() {
+        return clId;
+    }
+
+    public void setClId(Integer clId) {
+        this.clId = clId;
+    }
+
+    public Integer getVmClayers() {
+        return vmClayers;
+    }
+
+    public void setVmClayers(Integer vmClayers) {
+        this.vmClayers = vmClayers;
+    }
+
+    public double getClong() {
+        return clong;
+    }
+
+    public void setClong(double clong) {
+        this.clong = clong;
+    }
+
+    public double getCwidth() {
+        return cwidth;
+    }
+
+    public void setCwidth(double cwidth) {
+        this.cwidth = cwidth;
+    }
+
+    public double getCheight() {
+        return cheight;
+    }
+
+    public void setCheight(double cheight) {
+        this.cheight = cheight;
+    }
+
+    public Integer getRealPrice() {
+        return realPrice;
+    }
+
+    public void setRealPrice(Integer realPrice) {
+        this.realPrice = realPrice;
+    }
+
+    public Integer getClCapacity() {
         return clCapacity;
     }
 
-    public void setClCapacity(int clCapacity) {
+    public void setClCapacity(Integer clCapacity) {
         this.clCapacity = clCapacity;
     }
 
-    public int getClcCapacity() {
+    public Integer getClcCapacity() {
         return clcCapacity;
     }
 
-    public void setClcCapacity(int clcCapacity) {
+    public void setClcCapacity(Integer clcCapacity) {
         this.clcCapacity = clcCapacity;
     }
 
-    public String getGamePrice() {
-        return gamePrice;
+    public String getThreshold() {
+        return threshold;
     }
 
-    public void setGamePrice(String gamePrice) {
-        this.gamePrice = gamePrice;
+    public void setThreshold(String threshold) {
+        this.threshold = threshold;
     }
 
-    public String getGameTimeStart() {
-        return gameTimeStart;
+    public Integer getReplenish() {
+        return Replenish;
     }
 
-    public void setGameTimeStart(String gameTimeStart) {
-        this.gameTimeStart = gameTimeStart;
+    public void setReplenish(Integer replenish) {
+        Replenish = replenish;
     }
 
-    public String getGameTimeEnd() {
-        return gameTimeEnd;
+    public Integer getChannelType() {
+        return channelType;
     }
 
-    public void setGameTimeEnd(String gameTimeEnd) {
-        this.gameTimeEnd = gameTimeEnd;
+    public void setChannelType(Integer channelType) {
+        this.channelType = channelType;
     }
 
-    public String getMdseBrand() {
-        return mdseBrand;
+    public String getPriductBatch() {
+        return priductBatch;
     }
 
-    public void setMdseBrand(String mdseBrand) {
-        this.mdseBrand = mdseBrand;
-    }
-
-    public String getMdsePack() {
-        return mdsePack;
-    }
-
-    public void setMdsePack(String mdsePack) {
-        this.mdsePack = mdsePack;
-    }
-
-    public String getMerchantType() {
-        return merchantType;
-    }
-
-    public void setMerchantType(String merchantType) {
-        this.merchantType = merchantType;
+    public void setPriductBatch(String priductBatch) {
+        this.priductBatch = priductBatch;
     }
 }

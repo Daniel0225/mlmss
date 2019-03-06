@@ -32,9 +32,12 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
     private Context context;
     private int selectPosition;//当前操作的位置
     private List<GoodsInfo> data = new ArrayList<>();
-    public HDRowGoodsAdapter(Context context, List<GoodsInfo> data){
+    private int rowPosition = 0;//货道行
+
+    public HDRowGoodsAdapter(Context context, List<GoodsInfo> data, int rowPosition) {
         this.context = context;
         this.data = data;
+        this.rowPosition = rowPosition;
     }
     @NonNull
     @Override
@@ -83,6 +86,13 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
         dialog.showMyDialog(new ConfigGoodsDetailDialog.ProductConfigListener() {
             @Override
             public void confirm(GoodsInfo goodsInfo) {
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append(rowPosition);
+                if (selectPosition < 10) {
+                    stringBuffer.append(0);
+                }
+                stringBuffer.append(selectPosition + 1);
+                goodsInfo.setClCode(stringBuffer.toString());
                 data.set(selectPosition, goodsInfo);
                 notifyDataSetChanged();
             }
