@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/close"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="38px"
+        android:layout_marginRight="38px"
         app:cardCornerRadius="20px"
         app:cardElevation="0dp">
 
@@ -129,7 +129,7 @@
             android:id="@+id/empty_contain"
             android:layout_width="1000px"
             android:layout_height="911px"
-            android:background="@color/mainBackground"
+            android:background="@drawable/shape_dialog_layout"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingTop="15dp"
