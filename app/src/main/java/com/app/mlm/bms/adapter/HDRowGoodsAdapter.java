@@ -70,7 +70,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
         }
 
         viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
-        viewHolder.tvCount.setText(goodsInfo.getClcCapacity() + " / " + goodsInfo.getClCapacity());
+        viewHolder.tvCount.setText(goodsInfo.getClcCapacity() + "/" + goodsInfo.getClCapacity());
         viewHolder.tvOrderNum.setText(String.valueOf(i + 1));
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {
             @Override

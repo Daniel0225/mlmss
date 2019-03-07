@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="全道补满"
-            android:textColor="#333333"
+            android:textColor="#2553E1"
             android:textSize="30px"
             />
 

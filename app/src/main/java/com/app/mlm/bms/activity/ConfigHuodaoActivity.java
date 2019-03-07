@@ -67,7 +67,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(8, 8, 0, 0));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(25, 0, 0, 0));
         initList();
         HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);

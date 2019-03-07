@@ -4,10 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.app.mlm.R;
@@ -45,12 +46,13 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
         viewHolder.recyclerView = view.findViewById(R.id.recyclerView);
         viewHolder.tvColumn = view.findViewById(R.id.tvColumn);
         viewHolder.tvSort = view.findViewById(R.id.sort);
+        viewHolder.sellSwitch = view.findViewById(R.id.sell_switch);
+        viewHolder.statusTv = view.findViewById(R.id.status_tv);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RowGoodsViewHolder rowGoodsViewHolder, int i) {
-        Log.e("TAG", i + "");
         LinearLayoutManager ms = new LinearLayoutManager(context);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
@@ -63,6 +65,12 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
             public void onClick(View v) {
                 showSortDialog(context, data.get(i));
                 sortPosition = i;
+            }
+        });
+        rowGoodsViewHolder.sellSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                rowGoodsViewHolder.statusTv.setText(isChecked ? "非常规售卖" : "常规售卖");
             }
         });
     }
@@ -87,7 +95,8 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
         RecyclerView recyclerView;
         TextView tvColumn;
         TextView tvSort;
-
+        Switch sellSwitch;
+        TextView statusTv;
         public RowGoodsViewHolder(View itemView) {
             super(itemView);
         }
