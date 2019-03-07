@@ -11,6 +11,8 @@
     <color name="transparent">#00000000</color>
     <color name="redColor">#F00000</color>
     <color name="numberButton">#4C5683</color>
+    <color name="chuhuoButton">#EBEBEB</color>
+    <color name="chuhuoText">#B2B2B2</color>
 
     <!--字体颜色 浅色，标准，深色-->
     <color name="text_light">#909090</color>

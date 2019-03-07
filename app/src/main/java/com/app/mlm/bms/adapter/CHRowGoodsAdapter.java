@@ -76,8 +76,12 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
         GoodsInfo goodsInfo = data.get(i);
         if (goodsInfo.getMdseUrl().equals("empty")) {
             viewHolder.ivGoodsImg.setImageResource(R.drawable.empty);
+            viewHolder.tvTest.setBackground(context.getResources().getDrawable(R.drawable.shape_chuhuo_text));
+            viewHolder.tvTest.setTextColor(context.getResources().getColor(R.color.chuhuoText));
         } else {
             Glide.with(context).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
+            viewHolder.tvTest.setBackground(context.getResources().getDrawable(R.drawable.shape_blue_light));
+            viewHolder.tvTest.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }
         viewHolder.tvTest.setOnClickListener(new View.OnClickListener() {
             @Override
