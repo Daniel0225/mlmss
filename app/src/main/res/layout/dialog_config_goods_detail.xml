@@ -89,8 +89,9 @@
             <EditText
                 android:id="@+id/etLong"
                 android:layout_width="120px"
-                android:layout_height="wrap_content"
+                android:layout_height="60px"
                 android:layout_marginStart="7px"
+                android:background="@drawable/shape_bluelight_line40"
                 android:gravity="center"
                 android:hint="mm"
                 android:inputType="numberDecimal"
@@ -109,8 +110,9 @@
             <EditText
                 android:id="@+id/etWidth"
                 android:layout_width="120px"
-                android:layout_height="wrap_content"
+                android:layout_height="60px"
                 android:layout_marginStart="7px"
+                android:background="@drawable/shape_bluelight_line40"
                 android:gravity="center"
                 android:hint="mm"
                 android:inputType="numberDecimal"
@@ -128,8 +130,9 @@
             <EditText
                 android:id="@+id/etHight"
                 android:layout_width="120px"
-                android:layout_height="wrap_content"
+                android:layout_height="60px"
                 android:layout_marginStart="7px"
+                android:background="@drawable/shape_bluelight_line40"
                 android:gravity="center"
                 android:hint="mm"
                 android:inputType="numberDecimal"
@@ -153,10 +156,12 @@
             android:textSize="26px" />
 
 
-        <EditText
+        <TextView
             android:id="@+id/etPrice"
             android:layout_width="600px"
             android:layout_height="70px"
+            android:background="@drawable/shape_bluelight_line40"
+            android:enabled="false"
             android:gravity="center"
             android:hint="单位元"
             android:inputType="numberDecimal"
@@ -165,18 +170,17 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70px"
-        android:layout_marginTop="30px"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginTop="30px">
 
         <TextView
             android:layout_width="133px"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="71px"
-            android:text="商品容量："
+            android:text="容\t量："
             android:textColor="@color/text_black"
             android:textSize="26px" />
 
@@ -185,23 +189,41 @@
             android:id="@+id/etCapcity"
             android:layout_width="600px"
             android:layout_height="70px"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="85px"
+            android:background="@drawable/shape_bluelight_line40"
             android:gravity="center"
             android:hint="请输入商品容量"
             android:inputType="number"
             android:textColor="#D03B02"
             android:textSize="28px" />
-    </LinearLayout>
 
-    <LinearLayout
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="228px"
+            android:src="@drawable/jian_goods_nor" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="98px"
+            android:src="@drawable/add_goods" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70px"
-        android:layout_marginTop="30px"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginTop="30px">
 
         <TextView
             android:layout_width="133px"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="71px"
             android:text="补货数量："
             android:textColor="@color/text_black"
@@ -211,23 +233,41 @@
             android:id="@+id/etAddCount"
             android:layout_width="600px"
             android:layout_height="70px"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="85px"
+            android:background="@drawable/shape_bluelight_line40"
             android:gravity="center"
             android:hint="请输入补货数量"
             android:inputType="number"
             android:textColor="#D03B02"
             android:textSize="28px" />
-    </LinearLayout>
 
-    <LinearLayout
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="228px"
+            android:src="@drawable/jian_goods_nor" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="98px"
+            android:src="@drawable/add_goods" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70px"
-        android:layout_marginTop="30px"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginTop="30px">
 
         <TextView
             android:layout_width="133px"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="71px"
             android:text="最低库存："
             android:textColor="@color/text_black"
@@ -237,12 +277,31 @@
             android:id="@+id/etLessCount"
             android:layout_width="600px"
             android:layout_height="70px"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="85px"
+            android:background="@drawable/shape_bluelight_line40"
             android:gravity="center"
             android:hint="请输入最低库存"
             android:inputType="number"
             android:textColor="#D03B02"
             android:textSize="28px" />
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="228px"
+            android:src="@drawable/jian_goods_nor" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="98px"
+            android:src="@drawable/add_goods" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -263,9 +322,9 @@
             android:id="@+id/etSerialNo"
             android:layout_width="600px"
             android:layout_height="70px"
+            android:background="@drawable/shape_bluelight_line40"
             android:gravity="center"
             android:hint="请输入产品批次"
-            android:inputType="number"
             android:textColor="#D03B02"
             android:textSize="28px" />
     </LinearLayout>

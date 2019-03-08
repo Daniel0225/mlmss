@@ -30,7 +30,7 @@
         android:layout_height="100px"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50px"
-        android:background="@drawable/shape_blue"
+        android:background="@drawable/shape_blue_pay_type"
         android:gravity="center"
         android:text="应用"
         android:textColor="@color/whiteColor"

@@ -1,6 +1,7 @@
 package com.app.mlm.bms.dialog;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -48,7 +49,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
     @Bind(R.id.etHight)
     EditText etHight;
     @Bind(R.id.etPrice)
-    EditText etPrice;
+    TextView etPrice;
     @Bind(R.id.etCapcity)
     EditText etCapcity;
     @Bind(R.id.etAddCount)
@@ -89,7 +90,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
 
     }
 
-    @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll})
+    @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll, R.id.ivGoodsImg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cancel:
@@ -98,6 +99,31 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
             case R.id.commit:
                 if (mProductInfo == null) {
                     ToastUtil.showLongCenterToast("请选择商品");
+                    return;
+                }
+                if (TextUtils.isEmpty(etHight.getText().toString()) || TextUtils.isEmpty(etWidth.getText().toString()) ||
+                        TextUtils.isEmpty(etLong.getText().toString())) {
+                    ToastUtil.showLongCenterToast("请输入长宽高");
+                    return;
+                }
+                if (TextUtils.isEmpty(etPrice.getText().toString())) {
+                    ToastUtil.showLongCenterToast("请输入价格");
+                    return;
+                }
+                if (TextUtils.isEmpty(etCapcity.getText().toString())) {
+                    ToastUtil.showLongCenterToast("请输入商品容量");
+                    return;
+                }
+                if (TextUtils.isEmpty(etAddCount.getText().toString())) {
+                    ToastUtil.showLongCenterToast("请输入补货数量");
+                    return;
+                }
+                if (TextUtils.isEmpty(etLessCount.getText().toString())) {
+                    ToastUtil.showLongCenterToast("请输入最低库存数");
+                    return;
+                }
+                if (TextUtils.isEmpty(etSerialNo.getText().toString())) {
+                    ToastUtil.showLongCenterToast("请输入产品批次");
                     return;
                 }
                 GoodsInfo goodsInfo = new GoodsInfo();
@@ -122,6 +148,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 dismiss();
                 break;
             case R.id.tvChangeGoods:
+            case R.id.ivGoodsImg:
                 showGoodsListDialog();
                 break;
             case R.id.tvClear:
@@ -138,7 +165,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         tvGoodsName.setText(mProductInfo.getMdseName());
         tvKucun.setText("库存：0");
         Glide.with(getContext()).load(mProductInfo.getMdseUrl()).into(ivGoodsImg);
-        etPrice.setText(String.valueOf(mProductInfo.getMdsePrice()));
+        etPrice.setText("¥" + String.valueOf(mProductInfo.getMdsePrice()));
     }
 
     private void showGoodsListDialog() {
