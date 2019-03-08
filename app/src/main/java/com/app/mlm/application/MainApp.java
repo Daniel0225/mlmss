@@ -13,7 +13,6 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.app.mlm.Meassage.MyClient;
-import com.app.mlm.MlmServiceConfigure;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
@@ -101,8 +100,8 @@ public class MainApp extends Application {
         initGreenDao();
         myclient = new MyClient();
         myclient.connect();
-        Intent service = new Intent(this, MlmServiceConfigure.class);
-        startService(service);
+      /*  Intent service = new Intent(this, MlmServiceConfigure.class);
+        startService(service);*/
         initOkGo();
         Intent intent = new Intent();
         intent.setAction("android.intent.action.SnbcBvmService");

@@ -47,6 +47,7 @@
         <activity android:name=".bms.activity.TemperatureControlActivity" />
         <activity android:name=".bms.activity.ChuhuoTestActivity" />
         <activity android:name=".bms.activity.ConfigHuodaoActivity"></activity>
+        <activity android:name=".bms.activity.ActivationActivity"></activity>
 
         <!-- 后台服务-长连接 -->
         <service android:name=".MlmService" />

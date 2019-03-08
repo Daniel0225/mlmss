@@ -29,4 +29,6 @@
     <color name="shallow_textColor">#7A7A7A</color>
     <color name="gray_light">#F5F7FF</color>
     <color name="input_key_bg">#6F7DBF</color>
+
+    <color name="f2f4fd">#F2F4FD</color>
 </resources>

@@ -2,10 +2,12 @@ package com.app.mlm.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
+import com.app.mlm.bms.activity.ActivationActivity;
+import com.app.mlm.utils.PreferencesUtil;
 
 /**
  * @author :  luo.xing
@@ -26,7 +28,11 @@ public class StartupActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                MainActivity.start(mContext);
+                if (TextUtils.isEmpty(PreferencesUtil.getString("vmcode"))) {
+                    ActivationActivity.start(mContext);
+                } else {
+                    MainActivity.start(mContext);
+                }
                 finish();
             }
         }, 1000);

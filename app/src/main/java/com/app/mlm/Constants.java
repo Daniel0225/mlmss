@@ -33,7 +33,7 @@ public class Constants {
     public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步到上位机
     public static final String THERMAL = BASE_URL + "syncThermal";//温度接口
     public static final String ALARM_REPORT = BASE_URL + "alarmReport";//故障接口
-
+    public static final String ACTIVATION = BASE_URL + "createActivation";//激活接口
 
 
     //门禁状态广播
