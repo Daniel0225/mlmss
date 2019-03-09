@@ -1,14 +1,19 @@
 package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
+import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.SigleChoiceDialog;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.UpAlarmReportUtils;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -61,6 +66,7 @@ public class TemperatureControlActivity extends BaseActivity {
 
     private String model;
     private String coldModel;
+    private int type = 0;//当前模式
 
     @Override
     protected int provideLayoutResId() {
@@ -69,6 +75,7 @@ public class TemperatureControlActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, 1500);
 //        try {
 //            //获取温度
 //            int[] code = MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
@@ -120,7 +127,40 @@ public class TemperatureControlActivity extends BaseActivity {
     @Override
     public void onActionClicked() {
         super.onActionClicked();
+        setTempDialog();
         upTemp();
+    }
+
+    private void setTempDialog() {
+        CommonDialog dialog = new CommonDialog(this, "温度控制", "请确定修改温度设置", "取消", "确定")
+                .setCommitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int code = 0;
+                        switch (type) {
+                            case 0://常温
+                                try {
+                                    code = MainApp.bvmAidlInterface.BVMSetColdHeatModel(1, 0);
+                                    if (code == 99) {
+                                        Toast.makeText(TemperatureControlActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
+                                    }
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1://制冷
+
+                                break;
+
+                            case 3://制热
+                                break;
+                        }
+
+                    }
+                });
+        dialog.show();
     }
 
     private void upTemp() {
@@ -148,16 +188,19 @@ public class TemperatureControlActivity extends BaseActivity {
             case R.id.tvChangwen:
                 resetState((TextView) view);
                 setCurrentMode("常温");
+                type = 0;
                 temperatureSetting.setVisibility(View.GONE);
                 break;
             case R.id.tvZhileng:
                 resetState((TextView) view);
                 setCurrentMode("制冷");
+                type = 1;
                 temperatureSetting.setVisibility(View.VISIBLE);
                 break;
             case R.id.tvZhire:
                 resetState((TextView) view);
                 setCurrentMode("制热");
+                type = 2;
                 temperatureSetting.setVisibility(View.VISIBLE);
                 break;
             case R.id.llChuhuo:

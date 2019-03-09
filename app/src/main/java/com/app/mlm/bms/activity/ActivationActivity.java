@@ -10,13 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.bms.dialog.ActivationDialog;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.utils.InputLowerToUpper;
+import com.app.mlm.utils.PreferencesUtil;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -108,16 +112,21 @@ public class ActivationActivity extends BaseActivity {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", tvNo.getText().toString());
         httpParams.put("ActivationCode", tvCdkey.getText().toString());
-        OkGo.<String>get(Constants.ACTIVATION)
+        OkGo.<BaseResponse<ActivationBean>>get(Constants.ACTIVATION)
                 .tag(this)
                 .params(httpParams)
-                .execute(new StringCallback() {
+                .execute(new JsonCallBack<BaseResponse<ActivationBean>>() {
                     @Override
-                    public void onSuccess(Response<String> response) {
-                        //  PreferencesUtil.putString("vmcode", tvNo.getText().toString());
-                        ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
-                        dialog1.show();
-                        Log.e("激活", String.valueOf(response));
+                    public void onSuccess(Response<BaseResponse<ActivationBean>> response) {
+                        if (response.body().data.getCode() == 0) {
+                            PreferencesUtil.putString("vmcode", response.body().data.getData().getInnerCode());
+                            //  PreferencesUtil.putString("");
+                            ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
+                            dialog1.show();
+                            Log.e("激活", String.valueOf(response));
+                        } else {
+                            Toast.makeText(ActivationActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
