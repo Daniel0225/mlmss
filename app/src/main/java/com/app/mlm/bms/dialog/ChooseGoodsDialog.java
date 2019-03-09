@@ -73,6 +73,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
     private AllTypeInfoResponse allTypeInfoResponse;
     private ChooseGoodsTypeAdapter.CustomClickListener customClickListener;
     private GoodsTypeSelectBean goodsTypeSelectBean = new GoodsTypeSelectBean();
+
     private ChooseGoodsAdapter.CustomClickListener listener = new ChooseGoodsAdapter.CustomClickListener() {
         @Override
         public void onClick(int position) {

@@ -42,6 +42,7 @@ public class OrderPayActivity extends AppCompatActivity {
     private Integer totalNum;
     private String productId;
     private TextView originPriceView;
+    private String hdCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class OrderPayActivity extends AppCompatActivity {
         totalNum = getIntent().getIntExtra("num", 0);
         totalPrice = getIntent().getDoubleExtra("price", 0);
         productId = getIntent().getStringExtra("productId");
+        hdCode = getIntent().getStringExtra("hdCode");
         imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
         totalPriceView = findViewById(R.id.total_price);
@@ -94,8 +96,8 @@ public class OrderPayActivity extends AppCompatActivity {
     private void getPayInfo() {
 
 
-        CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE), "1",
-                "101", 1);
+        CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE), productId,
+                hdCode);
         List<CreateWxOrderReqVo> list = new ArrayList<>();
         list.add(createWxOrderReqVo);
         HttpParams httpParams = new HttpParams();
@@ -108,7 +110,6 @@ public class OrderPayActivity extends AppCompatActivity {
         OkGo.<BaseResponse<WxPayBean>>post(Constants.WXPAY)
                 .tag(this)
                 .upJson(jsonString)
-//                .params(httpParams)
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {

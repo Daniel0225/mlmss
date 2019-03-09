@@ -37,4 +37,12 @@ public class SyncProgressDialog extends BaseDialog {
     public void onViewClicked() {
         dismiss();
     }
+
+    public int getProgress() {
+        return cpbProgress.getProgress();
+    }
+
+    public void setProgress(int progress) {
+        cpbProgress.setProgress(progress);
+    }
 }

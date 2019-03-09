@@ -44,7 +44,7 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(Gravity.BOTTOM);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
     }
 
@@ -67,7 +67,7 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(gravity);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
         this.isFullScreen = isFullScreen;
         fullScreenWidth = width;
@@ -81,7 +81,7 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(gravity);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
         this.isFullScreen = isFullScreen;
     }
@@ -93,7 +93,7 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(gravity);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
     }
 
@@ -104,7 +104,7 @@ public abstract class BaseDialog  extends Dialog {
         mDialogWindow = this.getWindow();
         mDialogWindow.setGravity(Gravity.BOTTOM);
         mDialogWindow.setBackgroundDrawableResource(R.color.transparent);
-        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
+//        mDialogWindow.setWindowAnimations(R.style.BottomAnimation);
         this.mLayoutResID = layoutResID;
         this.mCountDownSec = countDownSec;
         this.mListener = listener;

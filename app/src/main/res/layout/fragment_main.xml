@@ -104,14 +104,14 @@
 
             <TextView
                 android:id="@+id/tvCartCount"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="21px"
+                android:layout_height="21px"
                 android:layout_alignParentTop="@id/llCart"
                 android:layout_alignRight="@id/llCart"
                 android:background="@drawable/shape_red_circle"
                 android:gravity="center"
                 android:textColor="@color/whiteColor"
-                android:textSize="12sp"
+                android:textSize="14px"
                 android:visibility="gone"
                 />
 

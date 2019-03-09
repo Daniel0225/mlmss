@@ -45,6 +45,7 @@ public class ProductInfo extends LitePalSupport implements Serializable {
     private int merchantId;
     private String mdseExpiration;
     private String mdseDesc;
+    private String quanping;
 
     public int getMdseId() {
         return mdseId;
@@ -172,5 +173,13 @@ public class ProductInfo extends LitePalSupport implements Serializable {
 
     public void setMdseDesc(String mdseDesc) {
         this.mdseDesc = mdseDesc;
+    }
+
+    public String getQuanping() {
+        return quanping;
+    }
+
+    public void setQuanping(String quanping) {
+        this.quanping = quanping;
     }
 }

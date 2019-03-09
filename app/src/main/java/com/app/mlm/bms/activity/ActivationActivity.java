@@ -14,12 +14,14 @@ import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.activity.MainActivity;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.bms.dialog.ActivationDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.utils.InputLowerToUpper;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
@@ -105,7 +107,7 @@ public class ActivationActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        MainActivity.start(mContext);
     }
 
     private void setActivation() {
@@ -118,8 +120,8 @@ public class ActivationActivity extends BaseActivity {
                 .execute(new JsonCallBack<BaseResponse<ActivationBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<ActivationBean>> response) {
-                        if (response.body().data.getCode() == 0) {
-                            PreferencesUtil.putString("vmcode", response.body().data.getData().getInnerCode());
+                        if (response.body().getCode() == 0) {
+                            PreferencesUtil.putString("vmcode", response.body().getData().getInnerCode());
                             //  PreferencesUtil.putString("");
                             ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
                             dialog1.show();
@@ -127,6 +129,11 @@ public class ActivationActivity extends BaseActivity {
                         } else {
                             Toast.makeText(ActivationActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<ActivationBean>> response) {
+                        ToastUtil.showLongToast(response.body().getMsg());
                     }
                 });
     }

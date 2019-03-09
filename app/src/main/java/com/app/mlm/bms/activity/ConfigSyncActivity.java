@@ -1,6 +1,9 @@
 package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,16 +16,17 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.CounterBean;
 import com.app.mlm.http.bean.ProductInfo;
+import com.app.mlm.utils.PinyinComparator;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.TextPinyinUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import org.litepal.LitePal;
-import org.litepal.crud.async.SaveExecutor;
-import org.litepal.crud.callback.SaveCallback;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -39,6 +43,7 @@ public class ConfigSyncActivity extends BaseActivity {
     @Bind(R.id.tvHuogui)
     TextView tvHuogui;
     SyncProgressDialog dialog;
+    private PinyinComparator comparator = new PinyinComparator();
 
     @Override
     protected int provideLayoutResId() {
@@ -66,6 +71,7 @@ public class ConfigSyncActivity extends BaseActivity {
             case R.id.syncShangpin:
                 dialog = new SyncProgressDialog(this);
                 dialog.show();
+                startTimeCounter();
                 syncProduceInfo();
                 break;
             case R.id.syncHuodao:
@@ -76,6 +82,23 @@ public class ConfigSyncActivity extends BaseActivity {
                 syncCounter();
                 break;
         }
+    }
+
+    private void startTimeCounter() {
+        new CountDownTimer(100000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (dialog.getProgress() < 100) {
+                    Log.e("Tag", "progress " + dialog.getProgress());
+                    dialog.setProgress(dialog.getProgress() + 2);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
     }
 
     /**
@@ -94,20 +117,54 @@ public class ConfigSyncActivity extends BaseActivity {
                             saveProductInfo(response.body().getData());
                         }
                     }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<ProductInfo>>> response) {
+                        super.onError(response);
+                        dialog.dismiss();
+                        ToastUtil.showLongToast("请求服务器数据失败");
+                    }
                 });
     }
 
     private void saveProductInfo(List<ProductInfo> list) {
         LitePal.deleteAll(ProductInfo.class);
-        StringBuffer stringBuffer = new StringBuffer();
-        SaveExecutor saveExecutor = LitePal.saveAllAsync(list);
-        saveExecutor.listen(new SaveCallback() {
+
+//        SaveExecutor saveExecutor = LitePal.saveAllAsync(list);
+//        saveExecutor.listen(new SaveCallback() {
+//            @Override
+//            public void onFinish(boolean success) {
+//                dialog.setProgress(100);
+//                dialog.dismiss();
+//                ToastUtil.showLongToast("同步完成");
+//            }
+//        });
+        new Thread(new Runnable() {
             @Override
-            public void onFinish(boolean success) {
-                dialog.dismiss();
-                ToastUtil.showLongToast("同步完成");
+            public void run() {
+                Collections.sort(list, comparator);
+                for (int i = 0; i < list.size(); i++) {
+                    ProductInfo productInfo = list.get(i);
+                    if (TextUtils.isEmpty(productInfo.getMdseName())) {
+                        productInfo.setQuanping("");
+                    } else {
+                        productInfo.setQuanping(TextPinyinUtil.getInstance().getPinyin(productInfo.getMdseName()));
+                    }
+                    productInfo.save();
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        ToastUtil.showLongToast("同步完成");
+                    }
+                });
             }
-        });
+        }).start();
+
+
+
     }
 
     /**

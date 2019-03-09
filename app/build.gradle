@@ -74,4 +74,5 @@ dependencies {
     compile 'com.lzy.net:okgo:3.0.4'
     implementation 'org.litepal.android:java:3.0.0'
     implementation files('libs/eventbus-3.0.0-beta1.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
 }

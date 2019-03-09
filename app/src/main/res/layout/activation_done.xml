@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="750px"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_white_activation"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp">
+        android:layout_width="750px"
+        android:layout_height="600px"
+        android:background="@drawable/shape_white_activation">
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="142px"
+            android:layout_height="142px"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="125px"
             android:src="@drawable/sync_done" />
 
         <TextView
@@ -25,35 +24,32 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/icon"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25px"
             android:text="激活成功！"
             android:textColor="@color/text_nomorl"
-            android:textSize="12sp" />
+            android:textSize="28px" />
 
         <TextView
             android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="500px"
+            android:layout_height="80px"
             android:layout_below="@id/discription"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="114px"
             android:background="@drawable/shape_blue"
-            android:paddingBottom="5dp"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            android:paddingTop="5dp"
+            android:gravity="center"
             android:text="关闭（5s）"
             android:textColor="@color/whiteColor"
-            android:textSize="12sp" />
+            android:textSize="30px" />
 
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/ivClose"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="61px"
+        android:layout_height="61px"
         android:layout_gravity="center_horizontal"
-        android:padding="10dp"
+        android:layout_marginTop="20px"
         android:src="@drawable/dialog_close_nor" />
 
 </LinearLayout>

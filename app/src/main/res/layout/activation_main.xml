@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/f2f4fd"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <LinearLayout
@@ -45,7 +46,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="161px"
+                android:layout_width="163px"
                 android:layout_height="wrap_content"
                 android:text="激活码:"
                 android:textColor="@color/text_black"

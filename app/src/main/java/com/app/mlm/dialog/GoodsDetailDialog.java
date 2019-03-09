@@ -89,6 +89,7 @@ public class GoodsDetailDialog extends Dialog {
                 intent.putExtra("price", Double.valueOf(mGoodsInfo.getMdsePrice()));
                 intent.putExtra("num", 1);
                 intent.putExtra("productId", String.valueOf(mGoodsInfo.getMdseId()));
+                intent.putExtra("hdCode", mGoodsInfo.getClCode());
                 getContext().startActivity(intent);
                 dismiss();
                 break;

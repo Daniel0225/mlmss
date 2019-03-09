@@ -10,17 +10,14 @@ public class CreateWxOrderReqVo implements Serializable {
     private String vmCode;
     private String productId;
     private String hd;
-    private Integer quantity;
-
 
     public CreateWxOrderReqVo() {
     }
 
-    public CreateWxOrderReqVo(String vmCode, String productId, String hd, Integer quantity) {
+    public CreateWxOrderReqVo(String vmCode, String productId, String hd) {
         this.vmCode = vmCode;
         this.productId = productId;
         this.hd = hd;
-        this.quantity = quantity;
     }
 
     public String getVmCode() {
@@ -47,11 +44,4 @@ public class CreateWxOrderReqVo implements Serializable {
         this.hd = hd;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
 }
