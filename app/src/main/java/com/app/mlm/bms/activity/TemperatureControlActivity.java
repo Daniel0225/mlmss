@@ -63,9 +63,13 @@ public class TemperatureControlActivity extends BaseActivity {
     TextView lowTempTextView;
     @Bind(R.id.high_temp_tx)
     TextView highTempTextView;
-
-    private String model;
-    private String coldModel;
+    @Bind(R.id.setcoldline)
+    LinearLayout setcoldline;
+    @Bind(R.id.uptemp)
+    LinearLayout uptemp;
+    int[] code;//室内外温度
+    private String model = "";
+    private String coldModel = "常温";
     private int type = 0;//当前模式
 
     @Override
@@ -118,7 +122,20 @@ public class TemperatureControlActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+       /* cpbProgressLow.setMax(21);
+        cpbProgressHigh.setMax(21);*/
+        cpbProgressHigh.setProgress(25);
+        cpbProgressLow.setProgress(4);
+        // 设置你想要的ProgressFormatter
+        cpbProgressHigh.setProgressFormatter(new MyProgressFormatter());
+        cpbProgressLow.setProgressFormatter(new MyProgressFormatter());
+     /*   try {
+            code = MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
+            tvDeviceTemper.setText("箱体温度："+code[0]+"度");
+            tvRoomTempr.setText("室外温度："+code[1]+"度");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /**
@@ -127,12 +144,12 @@ public class TemperatureControlActivity extends BaseActivity {
     @Override
     public void onActionClicked() {
         super.onActionClicked();
-        setTempDialog();
         upTemp();
+        //setTempDialog();
     }
 
     private void setTempDialog() {
-        CommonDialog dialog = new CommonDialog(this, "温度控制", "请确定修改温度设置", "取消", "确定")
+        CommonDialog dialog = new CommonDialog(this, "温度控制", "请确定修改温度设置", "确定", "取消")
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -142,7 +159,7 @@ public class TemperatureControlActivity extends BaseActivity {
                                 try {
                                     code = MainApp.bvmAidlInterface.BVMSetColdHeatModel(1, 0);
                                     if (code == 99) {
-                                        Toast.makeText(TemperatureControlActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                                        upTemp();
                                     } else {
                                         UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                     }
@@ -151,10 +168,39 @@ public class TemperatureControlActivity extends BaseActivity {
                                 }
                                 break;
                             case 1://制冷
-
+                                try {
+                                    code = MainApp.bvmAidlInterface.BVMSetColdHeatModel(1, 1);
+                                    if (code == 99) {
+                                        code = MainApp.bvmAidlInterface.BVMSetColdTemp(1, Integer.parseInt(highTempTextView.getText().toString()), Integer.parseInt(lowTempTextView.getText().toString()));
+                                        if (code == 99) {
+                                            upTemp();
+                                        } else {
+                                            UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
+                                        }
+                                    } else {
+                                        UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
+                                    }
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
                                 break;
 
                             case 3://制热
+                                try {
+                                    code = MainApp.bvmAidlInterface.BVMSetColdHeatModel(1, 2);
+                                    if (code == 99) {
+                                        code = MainApp.bvmAidlInterface.BVMSetHeatTemp(1, Integer.parseInt(highTempTextView.getText().toString()), Integer.parseInt(lowTempTextView.getText().toString()));
+                                        if (code == 99) {
+                                            upTemp();
+                                        } else {
+                                            UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
+                                        }
+                                    } else {
+                                        UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
+                                    }
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
                                 break;
                         }
 
@@ -166,8 +212,8 @@ public class TemperatureControlActivity extends BaseActivity {
     private void upTemp() {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
-        httpParams.put("currentMode", "制冷");
-        httpParams.put("coolMode", "弱冷");
+        httpParams.put("currentMode", model);
+        httpParams.put("coolMode", coldModel);
         httpParams.put("caseThermal", 30);
         httpParams.put("outThermal", 50);
         OkGo.<String>get(Constants.THERMAL)
@@ -176,7 +222,7 @@ public class TemperatureControlActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-
+                        Toast.makeText(TemperatureControlActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -189,49 +235,88 @@ public class TemperatureControlActivity extends BaseActivity {
                 resetState((TextView) view);
                 setCurrentMode("常温");
                 type = 0;
+                coldModel = "常温";
                 temperatureSetting.setVisibility(View.GONE);
                 break;
             case R.id.tvZhileng:
                 resetState((TextView) view);
                 setCurrentMode("制冷");
+                //重置
+                coldModel = tvSettingMode1.getText().toString();
+                lowTempTextView.setText("4");
+                highTempTextView.setText("25");
+                cpbProgressHigh.setProgress(25);
+                cpbProgressLow.setProgress(4);
                 type = 1;
                 temperatureSetting.setVisibility(View.VISIBLE);
+                setcoldline.setVisibility(View.VISIBLE);
                 break;
             case R.id.tvZhire:
                 resetState((TextView) view);
                 setCurrentMode("制热");
+                //重置
+                coldModel = tvSettingMode1.getText().toString();
+                lowTempTextView.setText("4");
+                highTempTextView.setText("25");
+                cpbProgressHigh.setProgress(25);
+                cpbProgressLow.setProgress(4);
                 type = 2;
+                coldModel = "";
                 temperatureSetting.setVisibility(View.VISIBLE);
+                setcoldline.setVisibility(View.GONE);
                 break;
             case R.id.llChuhuo:
-                SigleChoiceDialog choiceDialog = new SigleChoiceDialog(this, new SigleChoiceDialog.OnItemClickListener() {
-                    @Override
-                    public void onClick(String value) {
-                        tvAllowChuhuo.setText(value);
-                        PreferencesUtil.putString(Constants.CHUHUO_WENDU, value);
-                    }
-                });
-                choiceDialog.show();
+                if (type != 0) {
+                    SigleChoiceDialog choiceDialog = new SigleChoiceDialog(this, new SigleChoiceDialog.OnItemClickListener() {
+                        @Override
+                        public void onClick(String value) {
+                            tvAllowChuhuo.setText(value);
+                            PreferencesUtil.putString(Constants.CHUHUO_WENDU, value);
+                            PreferencesUtil.putInt(Constants.LOW_TEMP, Integer.parseInt(lowTempTextView.getText().toString()));
+                            PreferencesUtil.putInt(Constants.HIGH_TEMP, Integer.parseInt(highTempTextView.getText().toString()));
+                        }
+                    });
+                    choiceDialog.show();
+                } else {
+                    //常温,为默认时，出货时不需要判定温度
+                    PreferencesUtil.putString(Constants.CHUHUO_WENDU, "默认");
+                }
                 break;
             case R.id.low_temp_reduce:
                 int lowTemp = Integer.valueOf(lowTempTextView.getText().toString());
-                if (lowTemp > 0) {
+                if (lowTemp > 4) {
                     lowTempTextView.setText(String.valueOf(lowTemp - 1));
+                    cpbProgressLow.setProgress(lowTemp - 1);
+                } else {
+                    Toast.makeText(TemperatureControlActivity.this, "最低温度为4度", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.low_temp_add:
                 int lowTempAdd = Integer.valueOf(lowTempTextView.getText().toString());
-                lowTempTextView.setText(String.valueOf(lowTempAdd + 1));
+                if (lowTempAdd < Integer.parseInt(highTempTextView.getText().toString()) - 1 && lowTempAdd < 24) {
+                    lowTempTextView.setText(String.valueOf(lowTempAdd + 1));
+                    cpbProgressLow.setProgress(lowTempAdd + 1);
+                } else {
+                    Toast.makeText(TemperatureControlActivity.this, "最低温度已达最高", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.high_temp_reduce:
                 int highTemp = Integer.valueOf(highTempTextView.getText().toString());
-                if (highTemp > 0) {
+                if (highTemp > 4 && highTemp > Integer.parseInt(lowTempTextView.getText().toString()) + 1) {
                     highTempTextView.setText(String.valueOf(highTemp - 1));
+                    cpbProgressHigh.setProgress(highTemp - 1);
+                } else {
+                    Toast.makeText(TemperatureControlActivity.this, "最高温度已达最低", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.high_temp_add:
                 int highTempAdd = Integer.valueOf(highTempTextView.getText().toString());
-                highTempTextView.setText(String.valueOf(highTempAdd + 1));
+                if (highTempAdd < 25) {
+                    highTempTextView.setText(String.valueOf(highTempAdd + 1));
+                    cpbProgressHigh.setProgress(highTempAdd + 1);
+                } else {
+                    Toast.makeText(TemperatureControlActivity.this, "最高温度为25度", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.tvSettingMode1:
                 tvSettingMode1.setBackgroundResource(R.drawable.shape_blue);
@@ -265,5 +350,15 @@ public class TemperatureControlActivity extends BaseActivity {
     private void setCurrentMode(String mode) {
         tvCurrentMode.setText("当前温度：" + mode);
     }
+
+    private static final class MyProgressFormatter implements CircleProgressBar.ProgressFormatter {
+        private static final String DEFAULT_PATTERN = "%s°";
+
+        @Override
+        public CharSequence format(int progress, int max) {
+            return String.format(DEFAULT_PATTERN, (int) ((float) progress / (float) max * 100));
+        }
+    }
+
 
 }

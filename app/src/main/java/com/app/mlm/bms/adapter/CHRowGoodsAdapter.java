@@ -24,6 +24,7 @@ import com.app.mlm.bms.dialog.TestingDialog;
 import com.app.mlm.http.bean.PickBackBean;
 import com.app.mlm.http.bean.ShipmentBean;
 import com.app.mlm.utils.Loading;
+import com.app.mlm.utils.UpAlarmReportUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
@@ -140,6 +141,7 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
                 Log.e("取货结果:", "取货成功");
             } else {
                 //上传错误代码到后台
+                UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
             }
         } catch (RemoteException e) {
             e.printStackTrace();

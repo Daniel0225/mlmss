@@ -19,6 +19,7 @@ import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.UpAlarmReportUtils;
 import com.app.mlm.widget.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -128,6 +129,7 @@ public class ChuhuoTestActivity extends BaseActivity {
                         } else {
                             //错误码
                             loading.dismiss();
+                            UpAlarmReportUtils.upalarmReport(ChuhuoTestActivity.this, code);
                             Log.e("初始化错误码", code + "");
                         }
                         Log.e("返回码", code + "");

@@ -14,7 +14,10 @@ public class Constants {
     public static final String BASE_URL = "http://47.106.143.212:8080/api/";
     public static final String ADDATA = "ad_data";
     public static final String DOWN_LOAD = "down_load";
+    //存储温度的最高和最低温度
     public static final String CHUHUO_WENDU = "chuhuo_wendu";//
+    public static final String LOW_TEMP = "low_temp";//最低温度
+    public static final String HIGH_TEMP = "high_Temp";//最高温度
     public static final String COUNTER_NUM = "counterNumber";
     public static final String COUNTER_NAME = "counterName";
     /**
