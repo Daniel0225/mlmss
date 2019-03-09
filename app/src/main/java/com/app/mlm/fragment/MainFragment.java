@@ -20,6 +20,7 @@ import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
+import com.app.mlm.bms.dialog.ShopCarDialog;
 import com.app.mlm.http.ApiService;
 import com.app.mlm.http.bean.BaseBean;
 import com.app.mlm.http.bean.HuodaoBean;
@@ -62,6 +63,7 @@ public class MainFragment extends BaseFragment {
 
     List<List<GoodsInfo>> dataList = new ArrayList<>();
     ColumnGoodsAdapter adapter;
+    ShopCarDialog shopCarDialog;
     public MainFragment() {
     }
 
@@ -163,7 +165,11 @@ public class MainFragment extends BaseFragment {
                 mActivity.addFragment(new QuhuoFragment());
                 break;
             case R.id.gouwuche:
-                mActivity.addFragment(new ShopCartFragment());
+                if (shopCarDialog == null) {
+                    shopCarDialog = new ShopCarDialog(getContext());
+                }
+                shopCarDialog.show();
+//                mActivity.addFragment(new ShopCartFragment());
                 break;
             case R.id.huodong:
 //                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();

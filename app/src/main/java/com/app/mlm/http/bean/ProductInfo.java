@@ -27,6 +27,7 @@ public class ProductInfo extends LitePalSupport implements Serializable {
      * merchantId : 1
      * mdseExpiration : 30
      * mdseDesc : 矿泉水
+     * firstLetter 首字母
      */
 
     private int mdseId;
@@ -46,6 +47,7 @@ public class ProductInfo extends LitePalSupport implements Serializable {
     private String mdseExpiration;
     private String mdseDesc;
     private String quanping;
+    private String firstLetter;
 
     public int getMdseId() {
         return mdseId;
@@ -181,5 +183,13 @@ public class ProductInfo extends LitePalSupport implements Serializable {
 
     public void setQuanping(String quanping) {
         this.quanping = quanping;
+    }
+
+    public String getFirstLetter() {
+        return firstLetter;
+    }
+
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter;
     }
 }

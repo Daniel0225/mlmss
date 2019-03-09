@@ -133,7 +133,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 goodsInfo.setClong(Double.valueOf(etLong.getText().toString().trim()));
                 goodsInfo.setCwidth(Double.valueOf(etWidth.getText().toString().trim()));
                 goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString().trim()));
-                goodsInfo.setRealPrice(Integer.valueOf(etPrice.getText().toString().trim()));
+                goodsInfo.setRealPrice(Integer.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
                 goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString().trim()));
                 goodsInfo.setPriductBatch(etSerialNo.getText().toString().trim());
                 goodsInfo.setThreshold(etLessCount.getText().toString().trim());

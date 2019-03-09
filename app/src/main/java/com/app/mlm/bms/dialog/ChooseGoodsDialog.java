@@ -3,9 +3,12 @@ package com.app.mlm.bms.dialog;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.app.mlm.Constants;
@@ -65,6 +68,8 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
     TextView packTextView;
     @Bind(R.id.select_grid)
     RecyclerView selectGridView;
+    @Bind(R.id.search_et)
+    EditText searchEdit;
     private List<ProductInfo> originData = new ArrayList<>();
     private List<ProductInfo> data = new ArrayList<>();
     private ChooseGoodsAdapter adapter;
@@ -122,6 +127,23 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         getAllTypeInfo();
 
         allTypeInfoResponse = FastJsonUtil.getObject(PreferencesUtil.getString("allType"), AllTypeInfoResponse.class);
+
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchResult(s.toString());
+            }
+        });
     }
 
     @Override
@@ -194,6 +216,35 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * 搜索
+     */
+    private void searchResult(String keyWords) {
+
+        data.clear();
+        for (int i = 0; i < originData.size(); i++) {
+            ProductInfo productInfo = originData.get(i);
+            if (!TextUtils.isEmpty(productInfo.getMdseName()) && productInfo.getMdseName().contains(keyWords)) {
+                data.add(productInfo);
+                continue;
+            }
+            if (!TextUtils.isEmpty(productInfo.getQuanping()) && productInfo.getQuanping().contains(keyWords.toLowerCase())) {
+                data.add(productInfo);
+                continue;
+            }
+            if (!TextUtils.isEmpty(productInfo.getFirstLetter()) && (productInfo.getFirstLetter().contains(keyWords.toLowerCase())
+                    || productInfo.getFirstLetter().contains(keyWords.toUpperCase()))) {
+                data.add(productInfo);
+            }
+
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 根据类型筛选
+     */
     private void filterData() {
         data.clear();
         for (int i = 0; i < originData.size(); i++) {

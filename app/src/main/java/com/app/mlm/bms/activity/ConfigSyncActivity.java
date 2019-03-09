@@ -85,11 +85,10 @@ public class ConfigSyncActivity extends BaseActivity {
     }
 
     private void startTimeCounter() {
-        new CountDownTimer(100000, 1000) {
+        new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                if (dialog.getProgress() < 100) {
-                    Log.e("Tag", "progress " + dialog.getProgress());
+                if (dialog.getProgress() < 98) {
                     dialog.setProgress(dialog.getProgress() + 2);
                 }
             }
@@ -150,7 +149,8 @@ public class ConfigSyncActivity extends BaseActivity {
                     } else {
                         productInfo.setQuanping(TextPinyinUtil.getInstance().getPinyin(productInfo.getMdseName()));
                     }
-                    productInfo.save();
+                    boolean isSuccess = productInfo.save();
+                    Log.e("Tag", "isSuccess " + isSuccess);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -173,16 +173,36 @@ public class ConfigSyncActivity extends BaseActivity {
     private void syncChannel() {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
-        OkGo.<GoodsInfo>get(Constants.SYN_TO_CHANNEL)
+        OkGo.<BaseResponse<List<GoodsInfo>>>get(Constants.SYN_TO_CHANNEL)
                 .tag(this)
                 .params(httpParams)
-                .execute(new JsonCallBack<GoodsInfo>() {
+                .execute(new JsonCallBack<BaseResponse<List<GoodsInfo>>>() {
                     @Override
-                    public void onSuccess(Response<GoodsInfo> response) {
+                    public void onSuccess(Response<BaseResponse<List<GoodsInfo>>> response) {
+                        updateChannelInfo(response.body().getData());
                         DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
                         dialog1.show();
                     }
                 });
+    }
+
+    private void updateChannelInfo(List<GoodsInfo> list) {
+        for (GoodsInfo goodsInfo : list) {
+
+            List<ProductInfo> productInfos = LitePal.where("mdseId = ?", String.valueOf(goodsInfo.getMdseId())).find(ProductInfo.class);
+
+            if (productInfos.size() > 1) {
+                ProductInfo productInfo = productInfos.get(0);
+                goodsInfo.setMdsePack(productInfo.getMdsePack());
+                goodsInfo.setMdseBrand(productInfo.getMdseBrand());
+                goodsInfo.setMdseName(productInfo.getMdseName());
+                goodsInfo.setMdsePrice(String.valueOf(productInfo.getMdsePrice()));
+                goodsInfo.setMdseUrl(productInfo.getMdseUrl());
+            } else {
+                ToastUtil.showLongToast("找不到商品信息,请先同步商品信息");
+            }
+        }
+
     }
 
     /**
