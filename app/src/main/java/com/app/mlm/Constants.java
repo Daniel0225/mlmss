@@ -17,6 +17,8 @@ public class Constants {
     public static final String CHUHUO_WENDU = "chuhuo_wendu";//
     public static final String COUNTER_NUM = "counterNumber";
     public static final String COUNTER_NAME = "counterName";
+    public static final String TOTAL_NUM = "totalNum";
+    public static final String TOTAL_PRICE = "totalPrice";
     /**
      * 请求超时时间
      */

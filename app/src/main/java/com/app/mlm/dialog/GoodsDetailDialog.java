@@ -13,12 +13,15 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -86,10 +89,11 @@ public class GoodsDetailDialog extends Dialog {
         switch (view.getId()) {
             case R.id.tvBuyImm:
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
-                intent.putExtra("price", Double.valueOf(mGoodsInfo.getMdsePrice()));
-                intent.putExtra("num", 1);
-                intent.putExtra("productId", String.valueOf(mGoodsInfo.getMdseId()));
-                intent.putExtra("hdCode", mGoodsInfo.getClCode());
+                ArrayList<GoodsInfo> list = new ArrayList<>();
+                list.add(mGoodsInfo);
+                intent.putExtra(Constants.TOTAL_NUM, 1);
+                intent.putExtra(Constants.TOTAL_PRICE, mGoodsInfo.getMdsePrice());
+                intent.putExtra("goods", list);
                 getContext().startActivity(intent);
                 dismiss();
                 break;

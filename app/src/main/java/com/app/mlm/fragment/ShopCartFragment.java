@@ -16,7 +16,6 @@ import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,7 +41,7 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
     @Bind(R.id.no_empty_contain)
     View noEmptyContain;
 
-    private List<GoodsInfo> data = new ArrayList<>();
+    private ArrayList<GoodsInfo> data = new ArrayList<>();
     private ShopCartListAdapter adapter;
     private double totalPrice = 0;
     private int totalNum = 0;

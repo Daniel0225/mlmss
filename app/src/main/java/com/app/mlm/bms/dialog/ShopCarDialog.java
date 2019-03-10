@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.adapter.ShopCartListAdapter;
@@ -17,7 +18,6 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +50,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
     @Bind(R.id.no_empty_contain)
     View noEmptyContain;
 
-    private List<GoodsInfo> data = new ArrayList<>();
+    private ArrayList<GoodsInfo> data = new ArrayList<>();
     private ShopCartListAdapter adapter;
     private double totalPrice = 0;
     private int totalNum = 0;
@@ -101,8 +101,9 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
                 break;
             case R.id.tvPay:
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
-                intent.putExtra("price", totalPrice);
-                intent.putExtra("num", totalNum);
+                intent.putExtra(Constants.TOTAL_NUM, totalNum);
+                intent.putExtra(Constants.TOTAL_PRICE, totalPrice);
+                intent.putExtra("goods", data);
                 getContext().startActivity(intent);
                 break;
             case R.id.to_pick:

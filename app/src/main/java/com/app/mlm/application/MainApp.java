@@ -27,7 +27,6 @@ import com.snbc.bvm.BVMAidlInterface;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -42,7 +41,7 @@ import okhttp3.OkHttpClient;
  */
 public class MainApp extends Application {
     public static BVMAidlInterface bvmAidlInterface;
-    public static List<GoodsInfo> shopCarList = new ArrayList<>();
+    public static ArrayList<GoodsInfo> shopCarList = new ArrayList<>();
     private static MainApp appInstance;
     public SharedPreferences mShard;
     public ServiceConnection connection = new ServiceConnection() {

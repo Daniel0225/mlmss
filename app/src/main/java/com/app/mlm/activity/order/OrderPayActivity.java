@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
@@ -40,9 +41,8 @@ public class OrderPayActivity extends AppCompatActivity {
     private TextView totalNumView;
     private double totalPrice;
     private Integer totalNum;
-    private String productId;
     private TextView originPriceView;
-    private String hdCode;
+    private ArrayList<GoodsInfo> data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,10 +55,9 @@ public class OrderPayActivity extends AppCompatActivity {
     }
 
     public void init() {
-        totalNum = getIntent().getIntExtra("num", 0);
-        totalPrice = getIntent().getDoubleExtra("price", 0);
-        productId = getIntent().getStringExtra("productId");
-        hdCode = getIntent().getStringExtra("hdCode");
+        totalNum = getIntent().getIntExtra(Constants.TOTAL_NUM, 1);
+        totalPrice = getIntent().getDoubleExtra(Constants.TOTAL_PRICE, 0);
+        data = (ArrayList<GoodsInfo>) getIntent().getSerializableExtra("goods");
         imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
         totalPriceView = findViewById(R.id.total_price);
@@ -95,11 +94,15 @@ public class OrderPayActivity extends AppCompatActivity {
 
     private void getPayInfo() {
 
-
-        CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE), productId,
-                hdCode);
         List<CreateWxOrderReqVo> list = new ArrayList<>();
-        list.add(createWxOrderReqVo);
+        for (GoodsInfo goodsInfo : data) {
+            for (int i = 0; i < goodsInfo.getShopCarNum(); i++) {
+                CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE),
+                        String.valueOf(goodsInfo.getMdseId()), goodsInfo.getClCode());
+                list.add(createWxOrderReqVo);
+            }
+        }
+
         HttpParams httpParams = new HttpParams();
         CreateWxOrderReqVoList createWxOrderReqVoList = new CreateWxOrderReqVoList();
         createWxOrderReqVoList.setCreateWxOrderReqVoList(list);
