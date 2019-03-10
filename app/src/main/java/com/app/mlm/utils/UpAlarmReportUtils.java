@@ -1,10 +1,13 @@
 package com.app.mlm.utils;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.AlarmReportBean;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -21,13 +24,13 @@ public class UpAlarmReportUtils {
         httpParams.put("code", code);
         httpParams.put("status", 1);
         httpParams.put("ctime", System.currentTimeMillis());
-        OkGo.<String>get(Constants.ALARM_REPORT)
+        OkGo.<BaseResponse<AlarmReportBean>>post(Constants.ALARM_REPORT)
                 .tag(context)
                 .params(httpParams)
-                .execute(new StringCallback() {
+                .execute(new JsonCallBack<BaseResponse<AlarmReportBean>>() {
                     @Override
-                    public void onSuccess(Response<String> response) {
-
+                    public void onSuccess(Response<BaseResponse<AlarmReportBean>> response) {
+                        Toast.makeText(context, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

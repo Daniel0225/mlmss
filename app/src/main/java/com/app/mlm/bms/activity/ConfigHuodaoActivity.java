@@ -22,6 +22,7 @@ import com.app.mlm.http.bean.SyncChannelListVo;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.UpAlarmReportUtils;
 import com.app.mlm.widget.SpacesItemDecoration;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -177,6 +178,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         } else {
                             //错误码
                             loading.dismiss();
+                            UpAlarmReportUtils.upalarmReport(ConfigHuodaoActivity.this, code);
                             Log.e("初始化错误码", code + "");
                         }
                         Log.e("返回码", code + "");
