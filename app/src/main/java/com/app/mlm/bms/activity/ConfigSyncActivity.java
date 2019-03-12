@@ -16,7 +16,6 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.CounterBean;
 import com.app.mlm.http.bean.ProductInfo;
-import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PinyinComparator;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.TextPinyinUtil;
@@ -77,12 +76,9 @@ public class ConfigSyncActivity extends BaseActivity {
                 break;
             case R.id.syncHuodao:
                 syncChannel();
-
                 break;
             case R.id.syncHuogui:
-//                syncCounter();
-                Loading loading = Loading.newLoading(ConfigSyncActivity.this, "初始化中...");
-                loading.show();
+                syncCounter();
                 break;
         }
     }

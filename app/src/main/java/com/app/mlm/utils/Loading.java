@@ -2,9 +2,7 @@ package com.app.mlm.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.mlm.R;
@@ -18,7 +16,7 @@ import com.app.mlm.R;
 public class Loading extends AlertDialog {
 
     private Context context;
-    private ImageView ivProgress;
+    private ProgressBar ivProgress;
     private TextView tvText;
 
     private Loading(Context context, String text) {
@@ -26,7 +24,7 @@ public class Loading extends AlertDialog {
         setCanceledOnTouchOutside(false);//设置点击外部不可以取消;
         show();
         getWindow().setContentView(R.layout.loading_dialog);
-        ivProgress = (ImageView) findViewById(R.id.ivProgress);
+        ivProgress = (ProgressBar) findViewById(R.id.ivProgress);
         tvText = (TextView) findViewById(R.id.tvText);
         tvText.setText(text);
     }
@@ -45,8 +43,8 @@ public class Loading extends AlertDialog {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            Animation animation = AnimationUtils.loadAnimation(context, R.anim.loading_progress);
-            ivProgress.startAnimation(animation);
+//            Animation animation = AnimationUtils.loadAnimation(context, R.anim.loading_progress);
+//            ivProgress.startAnimation(animation);
         }
     }
 
