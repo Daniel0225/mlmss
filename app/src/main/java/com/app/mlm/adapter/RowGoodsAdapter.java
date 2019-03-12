@@ -3,6 +3,7 @@ package com.app.mlm.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.rvRoot = view.findViewById(R.id.rvRoot);
         viewHolder.hasGoodsView = view.findViewById(R.id.has_goods);
         viewHolder.noGoodsView = view.findViewById(R.id.no_goods);
+        viewHolder.miniPicView = view.findViewById(R.id.mini_pic);
         return viewHolder;
     }
 
@@ -76,6 +78,12 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
             Glide.with(context).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
             viewHolder.noGoodsView.setVisibility(View.GONE);
             viewHolder.hasGoodsView.setVisibility(View.VISIBLE);
+        }
+        if (TextUtils.isEmpty(goodsInfo.getMerchantUrl())) {
+            viewHolder.miniPicView.setVisibility(View.GONE);
+        } else {
+            Glide.with(context).load(goodsInfo.getMerchantUrl()).into(viewHolder.miniPicView);
+            viewHolder.miniPicView.setVisibility(View.VISIBLE);
         }
 
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +121,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         ImageView ivNoGoods;
         ImageView ivGoodsImg;
         ImageView ivAddCart;
+        ImageView miniPicView;
         TextView tvGoodsName;
         TextView tvGoodsPrice;
         View rvRoot;

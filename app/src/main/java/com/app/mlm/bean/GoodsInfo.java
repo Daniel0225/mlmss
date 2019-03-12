@@ -41,15 +41,15 @@ public class GoodsInfo implements Serializable {
     private Integer Replenish;//补货数
     private Integer channelType;//货道类型
     private String priductBatch;//产品批次
+    private String merchantUrl;
 
-    @Generated(hash = 1892760506)
-    public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand,
-                     String mdsePack, String merchantType, String mdseName, String mdseUrl,
-                     String clCode, int shopCarNum, String vmCode, Integer vmId,
-                     Integer clId, Integer vmClayers, double clong, double cwidth,
-                     double cheight, Integer realPrice, Integer clCapacity,
-                     Integer clcCapacity, String threshold, Integer Replenish,
-                     Integer channelType, String priductBatch) {
+    @Generated(hash = 646796537)
+    public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand, String mdsePack,
+                     String merchantType, String mdseName, String mdseUrl, String clCode,
+                     int shopCarNum, String vmCode, Integer vmId, Integer clId, Integer vmClayers,
+                     double clong, double cwidth, double cheight, Integer realPrice,
+                     Integer clCapacity, Integer clcCapacity, String threshold, Integer Replenish,
+                     Integer channelType, String priductBatch, String merchantUrl) {
         this.id = id;
         this.mdseId = mdseId;
         this.mdsePrice = mdsePrice;
@@ -74,6 +74,7 @@ public class GoodsInfo implements Serializable {
         this.Replenish = Replenish;
         this.channelType = channelType;
         this.priductBatch = priductBatch;
+        this.merchantUrl = merchantUrl;
     }
 
     @Generated(hash = 1227172248)
@@ -270,5 +271,13 @@ public class GoodsInfo implements Serializable {
 
     public void setPriductBatch(String priductBatch) {
         this.priductBatch = priductBatch;
+    }
+
+    public String getMerchantUrl() {
+        return merchantUrl;
+    }
+
+    public void setMerchantUrl(String merchantUrl) {
+        this.merchantUrl = merchantUrl;
     }
 }

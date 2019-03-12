@@ -48,6 +48,15 @@ public class ProductInfo extends LitePalSupport implements Serializable {
     private String mdseDesc;
     private String quanping;
     private String firstLetter;
+    private String merchantUrl;
+
+    public String getMerchantUrl() {
+        return merchantUrl;
+    }
+
+    public void setMerchantUrl(String merchantUrl) {
+        this.merchantUrl = merchantUrl;
+    }
 
     public int getMdseId() {
         return mdseId;

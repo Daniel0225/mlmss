@@ -3,6 +3,7 @@ package com.app.mlm.bms.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
         viewHolder.tvCount = view.findViewById(R.id.tvGoodsCount);
         viewHolder.tvOrderNum = view.findViewById(R.id.tvGoodsOrder);
         viewHolder.rvRoot = view.findViewById(R.id.rvRoot);
+        viewHolder.miniPicView = view.findViewById(R.id.mini_pic);
         return viewHolder;
     }
 
@@ -67,6 +69,13 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
             viewHolder.ivGoodsImg.setImageResource(R.drawable.empty);
         } else {
             Glide.with(MainApp.getAppInstance()).load(goodsInfo.getMdseUrl()).into(viewHolder.ivGoodsImg);
+        }
+
+        if (TextUtils.isEmpty(goodsInfo.getMerchantUrl())) {
+            viewHolder.miniPicView.setVisibility(View.GONE);
+        } else {
+            viewHolder.miniPicView.setVisibility(View.VISIBLE);
+            Glide.with(context).load(goodsInfo.getMerchantUrl()).into(viewHolder.miniPicView);
         }
 
         viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
@@ -111,6 +120,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
         TextView tvCount;
         TextView tvOrderNum;
         View rvRoot;
+        ImageView miniPicView;
 
         public RowGoodsViewHolder(View itemView) {
             super(itemView);

@@ -1,6 +1,7 @@
 package com.app.mlm.bms.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,13 @@ public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.
         holder.tvGoodsName.setText(item.getMdseName());
         holder.tvGoodsPrice.setText("¥ " + item.getMdsePrice());
         Glide.with(MainApp.getAppInstance()).load(item.getMdseUrl()).into(holder.ivGoodsImg);
+
+        if (TextUtils.isEmpty(item.getMerchantUrl())) {
+            holder.miniPicView.setVisibility(View.GONE);
+        } else {
+            holder.miniPicView.setVisibility(View.VISIBLE);
+            Glide.with(MainApp.getAppInstance()).load(item.getMerchantUrl()).into(holder.miniPicView);
+        }
         holder.mRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +64,7 @@ public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView ivGoodsImg;
+        ImageView miniPicView;
         TextView tvGoodsName;
         TextView tvGoodsPrice;
         View mRoot;
@@ -64,6 +73,7 @@ public class ChooseGoodsAdapter extends RecyclerView.Adapter<ChooseGoodsAdapter.
             ivGoodsImg = (ImageView)itemView.findViewById(R.id.ivGoodsImg);
             tvGoodsName = (TextView)itemView.findViewById(R.id.tvGoodsName);
             tvGoodsPrice = (TextView)itemView.findViewById(R.id.tvGoodsPrice);
+            miniPicView = itemView.findViewById(R.id.mini_pic);
             mRoot = itemView.findViewById(R.id.rvRoot);
         }
     }
