@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2019/3/12.
  */
 
-public class UpTemperatureBean implements Serializable {
+public class AllDataBean implements Serializable {
 
     /**
      * msg : 处理成功

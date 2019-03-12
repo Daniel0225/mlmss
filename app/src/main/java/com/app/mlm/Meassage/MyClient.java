@@ -4,9 +4,11 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.app.mlm.Constants;
 import com.app.mlm.Meassage.entity.AndroidCommonVo;
 import com.app.mlm.Meassage.entity.AndroidVend;
 import com.app.mlm.bean.AndroidHeartBeat;
+import com.app.mlm.utils.PreferencesUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +48,7 @@ public class MyClient {
                     outStream = socket.getOutputStream();
                     lastSendTime = System.currentTimeMillis();
                     lastReciveTime = System.currentTimeMillis();
-                    heart = new AndroidHeartBeat("0000051", "heartbeat");
+                    heart = new AndroidHeartBeat(PreferencesUtil.getString(Constants.VMCODE), "heartbeat");
                     sendHeartMessage();
 //					isconnect = true;
 //					Constants.isNetCon = true;
