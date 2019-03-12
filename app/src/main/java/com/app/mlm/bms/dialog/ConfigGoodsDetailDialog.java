@@ -124,7 +124,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     ToastUtil.showLongCenterToast("请输入最低库存数");
                     return;
                 }
-                if (goodsInfo == null) {
+                if (goodsInfo.getMdseUrl().equals("empty")) {
                     goodsInfo = new GoodsInfo();
                     goodsInfo.setVmCode("0000051");
                     goodsInfo.setVmId(1);

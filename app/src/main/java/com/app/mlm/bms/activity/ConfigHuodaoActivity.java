@@ -60,7 +60,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         //模拟数据保存
-//        int[] strings = {6, 5, 8, 7, 5, 8};
+//        int[] strings = {2, 2, 2, 2, 2, 2};
 //        PreferencesUtil.putString("layer", Arrays.toString(strings));
 //        Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
         fillAll.setSelected(true);
@@ -142,6 +142,11 @@ public class ConfigHuodaoActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         initBox();
+                        //模拟验证货到初始化代码  可删除
+//                        int[] strings = {3, 3, 3, 3, 3, 3};
+//                        PreferencesUtil.putString("layer", Arrays.toString(strings));
+//                        syncData();
+//                        adapter.notifyDataSetChanged();
                     }
                 });
         dialog.show();
@@ -250,7 +255,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
                 for (int j = 0; j < newList.size(); j++) {
                     if (j < oldList.size()) {
-                        newList.add(oldList.get(i));
+                        newList.set(j, oldList.get(j));
                     }
                 }
             } else {
