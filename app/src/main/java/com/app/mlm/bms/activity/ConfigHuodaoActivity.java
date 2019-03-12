@@ -48,6 +48,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     Loading loading;
+    HDColumnGoodsAdapter adapter;
 
     List<List<GoodsInfo>> allDataList = new ArrayList<>();
 
@@ -59,18 +60,16 @@ public class ConfigHuodaoActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         //模拟数据保存
-        int[] strings = {6, 5, 8, 7, 5, 8};
-        // Collections.reverse(Arrays.asList(strings));
-        //   Log.e("数组", Arrays.toString(strings));
-        PreferencesUtil.putString("layer", Arrays.toString(strings));
-        Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
+//        int[] strings = {6, 5, 8, 7, 5, 8};
+//        PreferencesUtil.putString("layer", Arrays.toString(strings));
+//        Log.e("层列数保存取出", PreferencesUtil.getString("layer"));
         fillAll.setSelected(true);
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(ms);
         recyclerView.addItemDecoration(new SpacesItemDecoration(25, 0, 0, 0));
         initList();
-        HDColumnGoodsAdapter adapter = new HDColumnGoodsAdapter(this, allDataList);
+        adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
         showSyncDialog();
     }
@@ -172,6 +171,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
                                 //  Collections.reverse(Arrays.asList(count));
                                 // Log.e("数组", Arrays.toString(count));
                                 PreferencesUtil.putString("layer", Arrays.toString(count));
+                                initList();
+                                adapter.notifyDataSetChanged();
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }
@@ -193,7 +194,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
      * @return
      */
     private void initList() {
-        String huodaoString = PreferencesUtil.getString("huodao");
+        String huodaoString = PreferencesUtil.getString("huodao");//是否本地存有huodao 数据
         if (TextUtils.isEmpty(huodaoString)) {
             allDataList = getData(getHuoDaoData());
         } else {
@@ -264,10 +265,14 @@ public class ConfigHuodaoActivity extends BaseActivity {
      */
     private String[] getHuoDaoData() {
         String layerData = PreferencesUtil.getString("layer");
-        layerData = layerData.replace("[", "").replace("]", "").replace(" ", "");
-        Log.e("Tag", "layerData " + layerData);
-        String[] layers = layerData.split(",");
-        return layers;
+        if (TextUtils.isEmpty(layerData)) {
+            return new String[]{};
+        } else {
+            layerData = layerData.replace("[", "").replace("]", "").replace(" ", "");
+            Log.e("Tag", "layerData " + layerData);
+            String[] layers = layerData.split(",");
+            return layers;
+        }
     }
 
     @Override
