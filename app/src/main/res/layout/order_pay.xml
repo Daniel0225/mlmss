@@ -85,7 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="6px"
-            android:text="¥ 18.00" />
+            android:text="¥ 18.00"
+            android:visibility="gone" />
 
         <View
             android:layout_width="600px"
@@ -125,7 +126,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22px"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"

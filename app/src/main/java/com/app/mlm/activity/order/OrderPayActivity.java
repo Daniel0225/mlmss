@@ -39,7 +39,7 @@ public class OrderPayActivity extends AppCompatActivity {
     CouponDialog couponDialog;//领优惠券的dialog
     private TextView totalPriceView;
     private TextView totalNumView;
-    private double totalPrice;
+    private String totalPrice;
     private Integer totalNum;
     private TextView originPriceView;
     private ArrayList<GoodsInfo> data;
@@ -56,7 +56,7 @@ public class OrderPayActivity extends AppCompatActivity {
 
     public void init() {
         totalNum = getIntent().getIntExtra(Constants.TOTAL_NUM, 1);
-        totalPrice = getIntent().getDoubleExtra(Constants.TOTAL_PRICE, 0);
+        totalPrice = getIntent().getStringExtra(Constants.TOTAL_PRICE);
         data = (ArrayList<GoodsInfo>) getIntent().getSerializableExtra("goods");
         imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
