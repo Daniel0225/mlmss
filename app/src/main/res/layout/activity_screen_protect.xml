@@ -6,11 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".activity.ScreenProtectActivity">
 
+    <com.app.mlm.widget.CoustomTopView
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="1600px"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"
+        app:ctv_height="85" />
+
     <ImageView
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="1600px"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/erweima"
@@ -19,6 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30px"
         android:layout_marginStart="16px"
+        android:background="@color/transparent"
         android:src="@drawable/milimao" />
 
     <ImageView
@@ -61,14 +71,6 @@
         android:layout_marginBottom="25px"
         android:layout_marginEnd="60px"
         android:text="点击屏幕进入购买体验" />
-
-    <com.app.mlm.widget.CoustomTopView
-        android:id="@+id/topView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:visibility="gone"
-        app:ctv_height="75" />
 
     <RelativeLayout
         android:layout_width="match_parent"

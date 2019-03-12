@@ -4,8 +4,10 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,12 +17,14 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.CreateWxOrderReqVo;
 import com.app.mlm.http.bean.CreateWxOrderReqVoList;
 import com.app.mlm.http.bean.WxPayBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.TimeCountUtils;
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
@@ -38,6 +42,7 @@ public class OrderPayActivity extends AppCompatActivity {
     TextView count_down;
     CouponDialog couponDialog;//领优惠券的dialog
     private TextView totalPriceView;
+    private ImageView payAdImageView;
     private TextView totalNumView;
     private String totalPrice;
     private Integer totalNum;
@@ -49,6 +54,7 @@ public class OrderPayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_pay);
         init();
+        initPayAdImage();
         getPayInfo();
         couponDialog = new CouponDialog(this);
         couponDialog.show();
@@ -63,6 +69,7 @@ public class OrderPayActivity extends AppCompatActivity {
         totalPriceView = findViewById(R.id.total_price);
         totalNumView = findViewById(R.id.total_num);
         originPriceView = findViewById(R.id.origin_price);
+        payAdImageView = findViewById(R.id.pay_ad_iv);
 
         originPriceView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         totalPriceView.setText("¥ " + totalPrice);
@@ -80,6 +87,20 @@ public class OrderPayActivity extends AppCompatActivity {
             }
         });
         startTime();
+
+    }
+
+    private void initPayAdImage() {
+        String adString = PreferencesUtil.getString(Constants.ADDATA);
+        List<AdBean> adBeans = new ArrayList<>();
+        if (!TextUtils.isEmpty(adString)) {
+            adBeans = FastJsonUtil.getObjects(adString, AdBean.class);
+        }
+        for (AdBean adBean : adBeans) {
+            if (adBean.getFileType() == 4) {
+                Glide.with(OrderPayActivity.this).load(adBean.getUrl()).into(payAdImageView);
+            }
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.app.imageloader.glide.GlideApp;
 import com.app.mlm.R;
+import com.app.mlm.utils.PhoneUtil;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -76,8 +77,8 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
         //设置控件高度为四分之一屏幕高度
-//        int height = PhoneUtil.getDisplayHeight(mContext) * pecentHeight / 100;
-        int height = 500;
+        int height = PhoneUtil.getDisplayHeight(mContext) * pecentHeight / 100;
+//        int height = 500;
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }

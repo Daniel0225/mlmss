@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
+import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
 import com.app.mlm.http.BaseResponse;
@@ -29,11 +31,15 @@ import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 
 /**
  * @author :  luo.xing
@@ -50,7 +56,6 @@ public class MainActivity extends BaseActivity {
     CoustomTopView topView;
     @Bind(R.id.rlSearch)
     RelativeLayout rlSearch;
-    private List<AdBean> adBeanList;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initView();
         //  startService();
         // bindService();
@@ -76,9 +82,9 @@ public class MainActivity extends BaseActivity {
                     public void onSuccess(Response<BaseResponse<List<AdBean>>> response) {
 
                         if (response.body().getCode() == 0) {
-                            adBeanList = response.body().data;
+                            List<AdBean> adBeanList = response.body().data;
                             PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
-                            setTopViewValue();
+                            setTopViewValue(adBeanList);
                         }
                     }
                 });
@@ -92,7 +98,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("Tag", "MainActivity OnPause");
         topView.playerPause();
     }
 
@@ -100,6 +105,23 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         topView.playerRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        ButterKnife.unbind(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void onMainThread(AddShopCarEvent addShopCarEvent) {
+        String adString = PreferencesUtil.getString(Constants.ADDATA);
+        List<AdBean> adBeans = new ArrayList<>();
+        if (!TextUtils.isEmpty(adString)) {
+            adBeans = FastJsonUtil.getObjects(adString, AdBean.class);
+        }
+        setTopViewValue(adBeans);
     }
 
     private void initView() {
@@ -111,10 +133,10 @@ public class MainActivity extends BaseActivity {
     /**
      * 设置顶部图片
      */
-    private void setTopViewValue() {
+    private void setTopViewValue(List<AdBean> adBeanList) {
         for (AdBean adBean : adBeanList) {
             if (adBean.getFileType() == 3) {
-                if (adBean.getSuffix().equals("mp4") || adBean.getSuffix().equals("MP4")) {
+                if (adBean.getSuffix().toUpperCase().equals("MP4")) {
                     if (playLocalFile(adBean.getFileName())) {
 
                     } else {

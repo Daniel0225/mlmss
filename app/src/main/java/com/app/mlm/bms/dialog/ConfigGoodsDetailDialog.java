@@ -104,7 +104,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 dismiss();
                 break;
             case R.id.commit:
-                if (goodsInfo == null && mProductInfo == null) {
+                if (goodsInfo.getMdseUrl().equals("empty") && mProductInfo == null) {
                     ToastUtil.showLongCenterToast("请选择商品");
                     return;
                 }
@@ -128,6 +128,13 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     goodsInfo = new GoodsInfo();
                     goodsInfo.setVmCode("0000051");
                     goodsInfo.setVmId(1);
+                    goodsInfo.setMdseId(mProductInfo.getMdseId());
+                    goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
+                    goodsInfo.setMdseName(mProductInfo.getMdseName());
+                    goodsInfo.setMdseBrand(mProductInfo.getMdseBrand());
+                    goodsInfo.setMdsePack(mProductInfo.getMdsePack());
+//                goodsInfo.setMerchantType(mProductInfo.getMer);
+                    goodsInfo.setMdsePrice(String.valueOf(mProductInfo.getMdsePrice()));
                 }
                 goodsInfo.setCheight(TextUtils.isEmpty(etHight.getText().toString().trim()) ? 0 : Double.valueOf(etHight.getText().toString().trim()));
                 goodsInfo.setClong(TextUtils.isEmpty(etLong.getText().toString().trim()) ? 0 : Double.valueOf(etLong.getText().toString().trim()));
@@ -137,13 +144,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString().trim()));
                 goodsInfo.setPriductBatch(etSerialNo.getText().toString().trim());
                 goodsInfo.setThreshold(etLessCount.getText().toString().trim());
-                goodsInfo.setMdseId(mProductInfo.getMdseId());
-                goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
-                goodsInfo.setMdseName(mProductInfo.getMdseName());
-                goodsInfo.setMdseBrand(mProductInfo.getMdseBrand());
-                goodsInfo.setMdsePack(mProductInfo.getMdsePack());
-//                goodsInfo.setMerchantType(mProductInfo.getMer);
-                goodsInfo.setMdsePrice(String.valueOf(mProductInfo.getMdsePrice()));
+
                 productConfigListener.confirm(goodsInfo);
                 dismiss();
                 break;

@@ -9,13 +9,16 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.bean.AddInfoEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.DoneDialog;
 import com.app.mlm.bms.dialog.SyncProgressDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.CounterBean;
 import com.app.mlm.http.bean.ProductInfo;
+import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PinyinComparator;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.TextPinyinUtil;
@@ -26,11 +29,13 @@ import com.lzy.okgo.model.Response;
 
 import org.litepal.LitePal;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * 同步配置页
@@ -73,6 +78,7 @@ public class ConfigSyncActivity extends BaseActivity {
                 dialog.show();
                 startTimeCounter();
                 syncProduceInfo();
+                getAddInfo();
                 break;
             case R.id.syncHuodao:
                 syncChannel();
@@ -80,6 +86,53 @@ public class ConfigSyncActivity extends BaseActivity {
             case R.id.syncHuogui:
                 syncCounter();
                 break;
+        }
+    }
+
+    private void getAddInfo() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)
+                .params(httpParams)
+                .tag(this)
+                .execute(new JsonCallBack<BaseResponse<List<AdBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<AdBean>>> response) {
+
+                        if (response.body().getCode() == 0) {
+                            List<AdBean> adBeanList = response.body().data;
+                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 刷新广告信息
+     *
+     * @param adBeanList
+     */
+    private void refreshAddInfo(List<AdBean> adBeanList) {
+        String adString = PreferencesUtil.getString(Constants.ADDATA);
+        List<AdBean> adBeans = new ArrayList<>();
+        if (!TextUtils.isEmpty(adString)) {
+            adBeans = FastJsonUtil.getObjects(adString, AdBean.class);
+        }
+
+        for (AdBean adBean : adBeanList) {
+
+            if (adBean.getFileType() == 3) {
+                for (AdBean ad : adBeans) {
+                    if (ad.getFileType() == 3) {
+                        if (adBean.getSuffix().equals(ad.getSuffix()) && adBean.getUrl().equals(ad.getUrl())) {//广告信息无变化
+
+                        } else {
+                            //广告信息有变化  发消息给首页 更新广告展示
+                            EventBus.getDefault().post(new AddInfoEvent());
+                        }
+                    }
+                }
+            }
         }
     }
 

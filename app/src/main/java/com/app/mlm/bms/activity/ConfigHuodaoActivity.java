@@ -176,8 +176,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                                 PreferencesUtil.putString("layer", Arrays.toString(count));
                                 Log.e("初始化返回值1111--", Arrays.toString(count));
                                 Log.e("初始化返回值2222--", PreferencesUtil.getString("layer"));
-                                PreferencesUtil.clearKey("huodao");
-                                initList();
+                                syncData();
                                 adapter.notifyDataSetChanged();
                             }
                         });
@@ -237,6 +236,30 @@ public class ConfigHuodaoActivity extends BaseActivity {
             goodsInfoList.add(goodsInfo);
         }
         return goodsInfoList;
+    }
+
+    /**
+     * 同步货道有变动之后处理数据
+     */
+    private void syncData() {
+        List<List<GoodsInfo>> newHuoDaoList = getData(getHuoDaoData());
+        for (int i = 0; i < newHuoDaoList.size(); i++) {
+            if (i < allDataList.size()) {
+                List<GoodsInfo> newList = newHuoDaoList.get(i);
+                List<GoodsInfo> oldList = allDataList.get(i);
+
+                for (int j = 0; j < newList.size(); j++) {
+                    if (j < oldList.size()) {
+                        newList.add(oldList.get(i));
+                    }
+                }
+            } else {
+
+            }
+        }
+        allDataList.clear();
+        allDataList.addAll(newHuoDaoList);
+
     }
 
     /**
