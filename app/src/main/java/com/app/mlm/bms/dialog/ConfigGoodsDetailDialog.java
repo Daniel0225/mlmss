@@ -62,6 +62,12 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
     TextView tvClear;
     @Bind(R.id.tvFillAll)
     TextView tvFillAll;
+    @Bind(R.id.capacity_jian)
+    ImageView capacityJian;
+    @Bind(R.id.buhuo_jian)
+    ImageView buhuoJian;
+    @Bind(R.id.zuidi_jian)
+    ImageView zuidiJian;
     private ProductInfo mProductInfo;
     private ProductConfigListener productConfigListener;
     private GoodsInfo goodsInfo;
@@ -90,7 +96,8 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
 
     }
 
-    @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll, R.id.ivGoodsImg})
+    @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll, R.id.ivGoodsImg,
+            R.id.capacity_jian, R.id.capacity_add, R.id.buhuo_add, R.id.buhuo_jian, R.id.zuidi_add, R.id.zuidi_jian})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cancel:
@@ -99,11 +106,6 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
             case R.id.commit:
                 if (mProductInfo == null) {
                     ToastUtil.showLongCenterToast("请选择商品");
-                    return;
-                }
-                if (TextUtils.isEmpty(etHight.getText().toString()) || TextUtils.isEmpty(etWidth.getText().toString()) ||
-                        TextUtils.isEmpty(etLong.getText().toString())) {
-                    ToastUtil.showLongCenterToast("请输入长宽高");
                     return;
                 }
                 if (TextUtils.isEmpty(etPrice.getText().toString())) {
@@ -120,10 +122,6 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 }
                 if (TextUtils.isEmpty(etLessCount.getText().toString())) {
                     ToastUtil.showLongCenterToast("请输入最低库存数");
-                    return;
-                }
-                if (TextUtils.isEmpty(etSerialNo.getText().toString())) {
-                    ToastUtil.showLongCenterToast("请输入产品批次");
                     return;
                 }
                 GoodsInfo goodsInfo = new GoodsInfo();
@@ -152,8 +150,56 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 showGoodsListDialog();
                 break;
             case R.id.tvClear:
+                etAddCount.setText("0");
                 break;
             case R.id.tvFillAll:
+                if (Integer.valueOf(etCapcity.getText().toString()) == 0) {
+                    ToastUtil.showLongCenterToast("请设置货道容量");
+                } else {
+                    etAddCount.setText(etCapcity.getText().toString());
+                }
+                break;
+            case R.id.capacity_jian:
+                int capacity = Integer.valueOf(etCapcity.getText().toString());
+                if (capacity > 0) {
+                    etCapcity.setText(String.valueOf(capacity - 1));
+                }
+                if (capacity == 1) {
+                    capacityJian.setImageResource(R.drawable.jian_goods_nor);
+                }
+                break;
+            case R.id.capacity_add:
+                int capacity2 = Integer.valueOf(etCapcity.getText().toString());
+                etCapcity.setText(String.valueOf(capacity2 + 1));
+                capacityJian.setImageResource(R.drawable.jian_goods);
+                break;
+            case R.id.buhuo_jian:
+                int buhuoNum = Integer.valueOf(etAddCount.getText().toString());
+                if (buhuoNum > 0) {
+                    etCapcity.setText(String.valueOf(buhuoNum - 1));
+                }
+                if (buhuoNum == 1) {
+                    buhuoJian.setImageResource(R.drawable.jian_goods_nor);
+                }
+                break;
+            case R.id.buhuo_add:
+                int buhuoNum2 = Integer.valueOf(etAddCount.getText().toString());
+                etAddCount.setText(String.valueOf(buhuoNum2 + 1));
+                buhuoJian.setImageResource(R.drawable.jian_goods);
+                break;
+            case R.id.zuidi_jian:
+                int zuidiNum = Integer.valueOf(etLessCount.getText().toString());
+                if (zuidiNum > 0) {
+                    etLessCount.setText(String.valueOf(zuidiNum - 1));
+                }
+                if (zuidiNum == 1) {
+                    zuidiJian.setImageResource(R.drawable.jian_goods_nor);
+                }
+                break;
+            case R.id.zuidi_add:
+                int zuidiNum2 = Integer.valueOf(etLessCount.getText().toString());
+                etLessCount.setText(String.valueOf(zuidiNum2 + 1));
+                zuidiJian.setImageResource(R.drawable.jian_goods);
                 break;
         }
     }

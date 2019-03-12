@@ -200,6 +200,7 @@
             android:textSize="28px" />
 
         <ImageView
+            android:id="@+id/capacity_jian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -207,6 +208,7 @@
             android:src="@drawable/jian_goods_nor" />
 
         <ImageView
+            android:id="@+id/capacity_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -240,10 +242,12 @@
             android:gravity="center"
             android:hint="请输入补货数量"
             android:inputType="number"
+            android:text="0"
             android:textColor="#D03B02"
             android:textSize="28px" />
 
         <ImageView
+            android:id="@+id/buhuo_jian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -251,6 +255,7 @@
             android:src="@drawable/jian_goods_nor" />
 
         <ImageView
+            android:id="@+id/buhuo_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -284,10 +289,12 @@
             android:gravity="center"
             android:hint="请输入最低库存"
             android:inputType="number"
+            android:text="0"
             android:textColor="#D03B02"
             android:textSize="28px" />
 
         <ImageView
+            android:id="@+id/zuidi_jian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -295,6 +302,7 @@
             android:src="@drawable/jian_goods_nor" />
 
         <ImageView
+            android:id="@+id/zuidi_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
