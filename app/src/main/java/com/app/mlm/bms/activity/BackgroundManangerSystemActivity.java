@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 import com.app.mlm.utils.PreferencesUtil;
@@ -27,6 +26,9 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
     private static BVMAidlInterface bvmAidlInterface;
     @Bind(R.id.location)
     TextView location;
+    String version;
+    @Bind(R.id.state)
+    TextView state;
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -46,7 +48,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        PreferencesUtil.putString(Constants.VMCODE, "0000051");
+        // PreferencesUtil.putString(Constants.VMCODE, "0000051");
     }
 
     @Override
@@ -55,7 +57,12 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+     /*   try {
+            version = MainApp.bvmAidlInterface.BVMGetVersion();
+            Log.e("version",version);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }*/
     }
 
     @OnClick({R.id.chuhuoceshi, R.id.zhifupeizhi, R.id.huodaopeizhi, R.id.tongbupeizhi, R.id.wendukongzhi, R.id.banbenxinxi, R.id.fanhui, R.id.state})
@@ -77,13 +84,24 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
                 startActivity(new Intent(this, TemperatureControlActivity.class));
                 break;
             case R.id.banbenxinxi: //版本信息
-                VersionInfoDialog versionInfoDialog = new VersionInfoDialog(this);
+                VersionInfoDialog versionInfoDialog = new VersionInfoDialog(this, version);
                 versionInfoDialog.show();
                 break;
             case R.id.fanhui: //返回
                 finish();
                 break;
             case R.id.state: //状态：正常售卖/系统维护
+                switch (PreferencesUtil.getInt("status")) {
+                    case 0:
+                        state.setText("未启用");
+                        break;
+                    case 1:
+                        state.setText("正常售卖");
+                        break;
+                    case 2:
+                        state.setText("维修中");
+                        break;
+                }
 
                 break;
 

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.R;
 import com.app.mlm.bms.adapter.PaymentListAdapter;
@@ -13,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * 支付配置页
@@ -21,8 +22,11 @@ import butterknife.ButterKnife;
 public class ConfigPaymentActivity extends BaseActivity {
     @Bind(R.id.lvPayment)
     ListView lvPayment;
+    @Bind(R.id.set)
+    TextView set;
     private PaymentListAdapter adapter;
     private List<PaymentInfo> data = new ArrayList<>();
+
     @Override
     protected int provideLayoutResId() {
         return R.layout.activity_config_payment;
@@ -48,7 +52,13 @@ public class ConfigPaymentActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ConfigPaymentActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
 }

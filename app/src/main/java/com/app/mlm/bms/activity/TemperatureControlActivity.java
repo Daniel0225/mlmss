@@ -12,11 +12,13 @@ import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.SigleChoiceDialog;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.UpTemperatureBean;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
@@ -129,13 +131,13 @@ public class TemperatureControlActivity extends BaseActivity {
         // 设置你想要的ProgressFormatter
         cpbProgressHigh.setProgressFormatter(new MyProgressFormatter());
         cpbProgressLow.setProgressFormatter(new MyProgressFormatter());
-     /*   try {
+        try {
             code = MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
             tvDeviceTemper.setText("箱体温度："+code[0]+"度");
             tvRoomTempr.setText("室外温度："+code[1]+"度");
         } catch (RemoteException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     /**
@@ -144,8 +146,8 @@ public class TemperatureControlActivity extends BaseActivity {
     @Override
     public void onActionClicked() {
         super.onActionClicked();
-        upTemp();
-        //setTempDialog();
+        //upTemp();
+        setTempDialog();
     }
 
     private void setTempDialog() {
@@ -163,8 +165,10 @@ public class TemperatureControlActivity extends BaseActivity {
                                     } else {
                                         UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                     }
+                                    finish();
                                 } catch (RemoteException e) {
                                     e.printStackTrace();
+                                    UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                 }
                                 break;
                             case 1://制冷
@@ -180,8 +184,10 @@ public class TemperatureControlActivity extends BaseActivity {
                                     } else {
                                         UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                     }
+                                    finish();
                                 } catch (RemoteException e) {
                                     e.printStackTrace();
+                                    UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                 }
                                 break;
 
@@ -198,8 +204,10 @@ public class TemperatureControlActivity extends BaseActivity {
                                     } else {
                                         UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                     }
+                                    finish();
                                 } catch (RemoteException e) {
                                     e.printStackTrace();
+                                    UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, code);
                                 }
                                 break;
                         }
@@ -216,13 +224,15 @@ public class TemperatureControlActivity extends BaseActivity {
         httpParams.put("coolMode", coldModel);
         httpParams.put("caseThermal", 30);
         httpParams.put("outThermal", 50);
-        OkGo.<String>get(Constants.THERMAL)
+        OkGo.<BaseResponse<UpTemperatureBean>>get(Constants.THERMAL)
                 .tag(this)
                 .params(httpParams)
-                .execute(new StringCallback() {
+                .execute(new JsonCallBack<BaseResponse<UpTemperatureBean>>() {
                     @Override
-                    public void onSuccess(Response<String> response) {
-                        Toast.makeText(TemperatureControlActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(Response<BaseResponse<UpTemperatureBean>> response) {
+                        if (response.body().data.getCode() == 0) {
+                            Toast.makeText(TemperatureControlActivity.this, response.body().data.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

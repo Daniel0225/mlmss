@@ -7,52 +7,54 @@ import java.io.Serializable;
  */
 
 public class ShipmentBean implements Serializable {
-    private String boxid;//int 副柜id 一体式为1
-    private String positionX;//int 货物所在层（1-10）
-    private String positionY;//int  货物所在列
-    private String elcspeed;//int xy轴电机速度 0(60%)低速/1(80%)中速/2(100%)高速
-    private String chspeed;//int 取货斗电机速度 0(60%)低速/1(80%)中速/2(100%)高速
+    private int boxid;//int 副柜id 一体式为1
+    private int positionX;//int 货物所在层（1-10）
+    private int positionY;//int  货物所在列
+    private int elcspeed;//int xy轴电机速度 0(60%)低速/1(80%)中速/2(100%)高速
+    private int chspeed;//int 取货斗电机速度 0(60%)低速/1(80%)中速/2(100%)高速
     private String ordernumber;//String 订单号，最大32字节
-    private String price;//int 单位：分
-    private String goodsnum;// int 暂时为1
+    private int price;//int 单位：分
+    private int goodsnum;// int 暂时为1
+    private int laser;//激光测距
+    private int pickup;//是否取货
 
-    public String getBoxid() {
+    public int getBoxid() {
         return boxid;
     }
 
-    public void setBoxid(String boxid) {
+    public void setBoxid(int boxid) {
         this.boxid = boxid;
     }
 
-    public String getPositionX() {
+    public int getPositionX() {
         return positionX;
     }
 
-    public void setPositionX(String positionX) {
+    public void setPositionX(int positionX) {
         this.positionX = positionX;
     }
 
-    public String getPositionY() {
+    public int getPositionY() {
         return positionY;
     }
 
-    public void setPositionY(String positionY) {
+    public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
 
-    public String getElcspeed() {
+    public int getElcspeed() {
         return elcspeed;
     }
 
-    public void setElcspeed(String elcspeed) {
+    public void setElcspeed(int elcspeed) {
         this.elcspeed = elcspeed;
     }
 
-    public String getChspeed() {
+    public int getChspeed() {
         return chspeed;
     }
 
-    public void setChspeed(String chspeed) {
+    public void setChspeed(int chspeed) {
         this.chspeed = chspeed;
     }
 
@@ -64,19 +66,35 @@ public class ShipmentBean implements Serializable {
         this.ordernumber = ordernumber;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getGoodsnum() {
+    public int getGoodsnum() {
         return goodsnum;
     }
 
-    public void setGoodsnum(String goodsnum) {
+    public void setGoodsnum(int goodsnum) {
         this.goodsnum = goodsnum;
+    }
+
+    public int getLaser() {
+        return laser;
+    }
+
+    public void setLaser(int laser) {
+        this.laser = laser;
+    }
+
+    public int getPickup() {
+        return pickup;
+    }
+
+    public void setPickup(int pickup) {
+        this.pickup = pickup;
     }
 }

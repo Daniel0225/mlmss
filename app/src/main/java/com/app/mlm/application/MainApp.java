@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -13,6 +15,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.app.mlm.Meassage.MyClient;
+import com.app.mlm.R;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
@@ -170,6 +173,23 @@ public class MainApp extends Application {
     public void onTerminate() {
         super.onTerminate();
         //unregisterReceiver(receiver);
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+    public String getVersion() {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return this.getString(R.string.usercenter_version_ok);
+        }
     }
 
     //内部类实现广播接收者

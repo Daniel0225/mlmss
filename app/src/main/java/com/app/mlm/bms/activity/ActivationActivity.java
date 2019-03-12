@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.activity.MainActivity;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.bms.dialog.ActivationDialog;
 import com.app.mlm.http.BaseResponse;
@@ -107,7 +106,7 @@ public class ActivationActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        MainActivity.start(mContext);
+
     }
 
     private void setActivation() {
@@ -122,7 +121,7 @@ public class ActivationActivity extends BaseActivity {
                     public void onSuccess(Response<BaseResponse<ActivationBean>> response) {
                         if (response.body().getCode() == 0) {
                             PreferencesUtil.putString("vmcode", response.body().getData().getInnerCode());
-                            //  PreferencesUtil.putString("");
+                            PreferencesUtil.putInt("status", response.body().getData().getStatus());
                             ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
                             dialog1.show();
                             Log.e("激活", String.valueOf(response));

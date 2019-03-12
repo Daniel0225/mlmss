@@ -47,5 +47,4 @@ public class Loading extends AlertDialog {
 //            ivProgress.startAnimation(animation);
         }
     }
-
 }

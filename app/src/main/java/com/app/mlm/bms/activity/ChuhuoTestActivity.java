@@ -36,7 +36,9 @@ public class ChuhuoTestActivity extends BaseActivity {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     List<List<GoodsInfo>> list = new ArrayList<>();
+    int code = 0;
     Loading loading;
+    CHColumnGoodsAdapter adapter;
     @Override
     protected int provideLayoutResId() {
         return R.layout.activity_chuhuo_test;
@@ -49,7 +51,7 @@ public class ChuhuoTestActivity extends BaseActivity {
         recyclerView.setLayoutManager(ms);
         initList();
         recyclerView.addItemDecoration(new SpacesItemDecoration(12, 12, 0, 0));
-        CHColumnGoodsAdapter adapter = new CHColumnGoodsAdapter(this, list);
+        adapter = new CHColumnGoodsAdapter(this, list);
         recyclerView.setAdapter(adapter);
 
     }
@@ -108,31 +110,55 @@ public class ChuhuoTestActivity extends BaseActivity {
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int code = 0;
-                        try {
-                            code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
-                            loading = Loading.newLoading(ChuhuoTestActivity.this, "初始化中...");
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                        Log.e("初始化返回值", code + "");//初始化返回值: 99
-                        if (code == 99) {
-                            try {
-                                int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
-                                loading.dismiss();
-                                //  Collections.reverse(Arrays.asList(count));
-                                // Log.e("数组", Arrays.toString(count));
-                                PreferencesUtil.putString("layer", Arrays.toString(count));
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
+                        loading = Loading.newLoading(ChuhuoTestActivity.this, "初始化中...");
+                        loading.show();
+                        //  ProgressDialog.show(ConfigHuodaoActivity.this,"初始化中...",false);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.e("初始化返回值", code + "");//初始化返回值: 99
+                                if (code == 99) {
+                                    try {
+                                        int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (loading != null && loading.isShowing()) {
+                                                    loading.dismiss();
+                                                }
+                                                //  ProgressDialog.cancel();
+                                                PreferencesUtil.putString("layer", Arrays.toString(count));
+                                                Log.e("初始化返回值1111--", Arrays.toString(count));
+                                                Log.e("初始化返回值2222--", PreferencesUtil.getString("layer"));
+                                                initList();
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
+                                    } catch (RemoteException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //错误码
+                                            // ProgressDialog.cancel();
+                                            if (loading != null && loading.isShowing()) {
+                                                loading.dismiss();
+                                            }
+                                            UpAlarmReportUtils.upalarmReport(ChuhuoTestActivity.this, code);
+                                            Log.e("初始化错误码", code + "");
+                                        }
+                                    });
+                                }
+                                Log.e("返回码", code + "");
                             }
-                        } else {
-                            //错误码
-                            loading.dismiss();
-                            UpAlarmReportUtils.upalarmReport(ChuhuoTestActivity.this, code);
-                            Log.e("初始化错误码", code + "");
-                        }
-                        Log.e("返回码", code + "");
+                        }).start();
                     }
                 })
                 .setCancelClickListener(new View.OnClickListener() {

@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -49,6 +48,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     RecyclerView recyclerView;
     Loading loading;
     HDColumnGoodsAdapter adapter;
+    int code = 0;
 
     List<List<GoodsInfo>> allDataList = new ArrayList<>();
 
@@ -81,8 +81,6 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //  String json="";
-        // String code=MainApp.bvmAidlInterface.BVMStartShip();
     }
 
     @OnClick({R.id.cleanAll, R.id.fillAll, R.id.oneKey})
@@ -112,20 +110,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
         dialog.setCommitClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //查询层列数
-           /*     try {
-                    int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
-                    for (int i = 0; i < count.length; i++) {
-                        Log.e("count", count[i] + "");//count: 0
-                    }
-                    Log.e("count", "第0个" + count[0] + "第1个" + count[1] + "第2个" + count[2] + "第3个" + count[3]);//count: 0
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }*/
-//                loading = Loading.newLoading(ConfigHuodaoActivity.this, "初始化中...");
-               /* if (loading != null) {
-                    loading.dismiss();
-                }*/
+                initBox();
             }
         }).setCancelClickListener(new View.OnClickListener() {
             @Override
@@ -156,36 +141,67 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int code = 0;
-                        try {
-                            code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
-                            loading = Loading.newLoading(ConfigHuodaoActivity.this, "初始化中...");
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                        Log.e("初始化返回值", code + "");//初始化返回值: 99
-                        if (code == 99) {
-                            try {
-                                int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
-                                loading.dismiss();
-                                //  Collections.reverse(Arrays.asList(count));
-                                // Log.e("数组", Arrays.toString(count));
-                                PreferencesUtil.putString("layer", Arrays.toString(count));
-                                initList();
-                                adapter.notifyDataSetChanged();
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            //错误码
-                            loading.dismiss();
-                            UpAlarmReportUtils.upalarmReport(ConfigHuodaoActivity.this, code);
-                            Log.e("初始化错误码", code + "");
-                        }
-                        Log.e("返回码", code + "");
+                        initBox();
                     }
                 });
         dialog.show();
+    }
+
+    /**
+     * 货道初始化
+     */
+    private void initBox() {
+        loading = Loading.newLoading(ConfigHuodaoActivity.this, "初始化中...");
+        loading.show();
+        //  ProgressDialog.show(ConfigHuodaoActivity.this,"初始化中...",false);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    code = MainApp.bvmAidlInterface.BVMInitXYRoad(1, 0, 0, 0);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                Log.e("初始化返回值", code + "");//初始化返回值: 99
+                if (code == 99) {
+                    try {
+                        int[] count = MainApp.bvmAidlInterface.BVMQueryInitResult(1);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (loading != null && loading.isShowing()) {
+                                    loading.dismiss();
+                                }
+                                //  ProgressDialog.cancel();
+                                PreferencesUtil.putString("layer", Arrays.toString(count));
+                                Log.e("初始化返回值1111--", Arrays.toString(count));
+                                Log.e("初始化返回值2222--", PreferencesUtil.getString("layer"));
+                                PreferencesUtil.clearKey("huodao");
+                                initList();
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //错误码
+                            // ProgressDialog.cancel();
+                            if (loading != null && loading.isShowing()) {
+                                loading.dismiss();
+                            }
+                            UpAlarmReportUtils.upalarmReport(ConfigHuodaoActivity.this, code);
+                            Log.e("初始化错误码", code + "");
+                        }
+                    });
+                }
+                Log.e("返回码", code + "");
+            }
+        }).start();
+
     }
 
     /**
@@ -275,10 +291,4 @@ public class ConfigHuodaoActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

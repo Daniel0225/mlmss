@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.dialog.BaseDialog;
 
 import butterknife.Bind;
@@ -37,14 +38,18 @@ public class VersionInfoDialog extends BaseDialog {
     TextView pandianchengxu;
     @Bind(R.id.button)
     TextView button;
+    String version;
 
-    public VersionInfoDialog(Context context) {
+    public VersionInfoDialog(Context context, String version) {
         super(context, R.layout.dialog_version_info, Gravity.CENTER);
+        this.version = version;
     }
 
     @Override
     public void initView() {
-
+        peizhixitong.setText(MainApp.getAppInstance().getVersion());
+        shoumaixitong.setText(MainApp.getAppInstance().getVersion());
+        zhongjiancengchengxu.setText(version);
     }
 
     @OnClick(R.id.button)
