@@ -196,10 +196,10 @@ public class ConfigHuodaoActivity extends BaseActivity {
     private void initList() {
         String huodaoString = PreferencesUtil.getString("huodao");//是否本地存有huodao 数据
         if (TextUtils.isEmpty(huodaoString)) {
-            allDataList = getData(getHuoDaoData());
+            allDataList.addAll(getData(getHuoDaoData()));
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
-            allDataList = huodaoBean.getAllDataList();
+            allDataList.addAll(huodaoBean.getAllDataList());
         }
     }
 

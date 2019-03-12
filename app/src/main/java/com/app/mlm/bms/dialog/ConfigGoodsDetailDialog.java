@@ -104,7 +104,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 dismiss();
                 break;
             case R.id.commit:
-                if (mProductInfo == null) {
+                if (goodsInfo == null && mProductInfo == null) {
                     ToastUtil.showLongCenterToast("请选择商品");
                     return;
                 }
@@ -124,12 +124,14 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     ToastUtil.showLongCenterToast("请输入最低库存数");
                     return;
                 }
-                GoodsInfo goodsInfo = new GoodsInfo();
-                goodsInfo.setVmCode("0000051");
-                goodsInfo.setVmId(1);
-                goodsInfo.setCheight(Double.valueOf(etHight.getText().toString().trim()));
-                goodsInfo.setClong(Double.valueOf(etLong.getText().toString().trim()));
-                goodsInfo.setCwidth(Double.valueOf(etWidth.getText().toString().trim()));
+                if (goodsInfo == null) {
+                    goodsInfo = new GoodsInfo();
+                    goodsInfo.setVmCode("0000051");
+                    goodsInfo.setVmId(1);
+                }
+                goodsInfo.setCheight(TextUtils.isEmpty(etHight.getText().toString().trim()) ? 0 : Double.valueOf(etHight.getText().toString().trim()));
+                goodsInfo.setClong(TextUtils.isEmpty(etLong.getText().toString().trim()) ? 0 : Double.valueOf(etLong.getText().toString().trim()));
+                goodsInfo.setCwidth(TextUtils.isEmpty(etWidth.getText().toString().trim()) ? 0 : Double.valueOf(etWidth.getText().toString().trim()));
                 goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString().trim()));
                 goodsInfo.setRealPrice(Integer.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
                 goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString().trim()));
@@ -184,8 +186,12 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 break;
             case R.id.buhuo_add:
                 int buhuoNum2 = Integer.valueOf(etAddCount.getText().toString());
-                etAddCount.setText(String.valueOf(buhuoNum2 + 1));
-                buhuoJian.setImageResource(R.drawable.jian_goods);
+                if (buhuoNum2 < Integer.valueOf(etCapcity.getText().toString())) {
+                    etAddCount.setText(String.valueOf(buhuoNum2 + 1));
+                    buhuoJian.setImageResource(R.drawable.jian_goods);
+                } else {
+                    ToastUtil.showLongCenterToast("补货数不能超过货道容量");
+                }
                 break;
             case R.id.zuidi_jian:
                 int zuidiNum = Integer.valueOf(etLessCount.getText().toString());
