@@ -32,6 +32,9 @@ import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2018/12/30.
  */
@@ -41,6 +44,10 @@ public class OrderPayActivity extends AppCompatActivity {
     TimeCountUtils timeCount;
     TextView count_down;
     CouponDialog couponDialog;//领优惠券的dialog
+    @Bind(R.id.iv_wx_code)
+    ImageView ivWxCode;
+    @Bind(R.id.zhifubao)
+    ImageView zhifubao;
     private TextView totalPriceView;
     private ImageView payAdImageView;
     private TextView totalNumView;
@@ -53,6 +60,7 @@ public class OrderPayActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_pay);
+        ButterKnife.bind(this);
         init();
         initPayAdImage();
         getPayInfo();
@@ -120,6 +128,7 @@ public class OrderPayActivity extends AppCompatActivity {
             for (int i = 0; i < goodsInfo.getShopCarNum(); i++) {
                 CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE),
                         String.valueOf(goodsInfo.getMdseId()), goodsInfo.getClCode());
+                Log.e("clcode", goodsInfo.getClCode());
                 list.add(createWxOrderReqVo);
             }
         }
@@ -137,7 +146,9 @@ public class OrderPayActivity extends AppCompatActivity {
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
-
+                        if (response.body().getCode() == 0) {
+                            Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(ivWxCode);
+                        }
                     }
                 });
     }

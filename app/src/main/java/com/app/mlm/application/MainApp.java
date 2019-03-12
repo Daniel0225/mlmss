@@ -109,14 +109,7 @@ public class MainApp extends Application {
         intent.setAction("android.intent.action.SnbcBvmService");
         intent.setPackage("com.snbc.bvm");
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
-     /*   IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.DOOR_BROADCAST);
-        filter.addAction(Constants.ERRORSTATERECEIVER_BROADCAST);
-        filter.addAction(Constants.FGWORKRECEIVER_BROADCAST);
-        filter.addAction(Constants.SENZRECEIVER_BROADCAST);
-        filter.addAction(Constants.GOODSSTATERECEIVER_BROADCAST);
-        filter.addAction(Constants.HEARTBEAT_BROADCAST);
-        registerReceiver(receiver, filter);*/
+
 
     }
 
@@ -191,38 +184,4 @@ public class MainApp extends Application {
             return this.getString(R.string.usercenter_version_ok);
         }
     }
-
-    //内部类实现广播接收者
-  /*  private class MyReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
-                case Constants.DOOR_BROADCAST:
-                    int status = Integer.parseInt(intent.getStringExtra("SENSTATE"));
-                    switch (status) {
-                        case 1://柜门开
-                            Log.e("收到开柜广播", "-----");
-                            Toast.makeText(MainApp.appInstance, "收到开机广播", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainApp.appInstance, BackgroundManangerSystemActivity.class));
-                            break;
-                        case 2://柜门关
-                            // startActivity(new Intent(MainApp.appInstance, ScreenProtectActivity.class));
-                            break;
-                    }
-                    break;
-                case Constants.ERRORSTATERECEIVER_BROADCAST://故障状态广播
-
-                    break;
-                case Constants.FGWORKRECEIVER_BROADCAST://整机状态广播
-
-                    break;
-                case Constants.SENZRECEIVER_BROADCAST: //闸门门禁广播
-                    break;
-                case Constants.GOODSSTATERECEIVER_BROADCAST://货道状态广播
-                    break;
-                case Constants.HEARTBEAT_BROADCAST://进程状态广播
-                    break;
-            }
-        }
-    }*/
 }

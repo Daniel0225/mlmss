@@ -14,7 +14,7 @@ import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.SigleChoiceDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
-import com.app.mlm.http.bean.UpTemperatureBean;
+import com.app.mlm.http.bean.AllDataBean;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
 import com.dinuscxj.progressbar.CircleProgressBar;
@@ -224,12 +224,12 @@ public class TemperatureControlActivity extends BaseActivity {
         httpParams.put("coolMode", coldModel);
         httpParams.put("caseThermal", 30);
         httpParams.put("outThermal", 50);
-        OkGo.<BaseResponse<UpTemperatureBean>>get(Constants.THERMAL)
+        OkGo.<BaseResponse<AllDataBean>>get(Constants.THERMAL)
                 .tag(this)
                 .params(httpParams)
-                .execute(new JsonCallBack<BaseResponse<UpTemperatureBean>>() {
+                .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
                     @Override
-                    public void onSuccess(Response<BaseResponse<UpTemperatureBean>> response) {
+                    public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
                         if (response.body().data.getCode() == 0) {
                             Toast.makeText(TemperatureControlActivity.this, response.body().data.getMsg(), Toast.LENGTH_SHORT).show();
                         }
