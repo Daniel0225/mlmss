@@ -39,15 +39,15 @@
                 android:textSize="37px"
                 />
 
-            <TextView
-                android:id="@+id/tvCountDown"
-                android:layout_width="90px"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:text="60s"
-                android:textColor="@color/black"
-                android:textSize="32px"
-                />
+            <!--     <TextView
+                     android:id="@+id/tvCountDown"
+                     android:layout_width="90px"
+                     android:layout_height="match_parent"
+                     android:gravity="center|left"
+                     android:text="60s"
+                     android:textColor="@color/black"
+                     android:textSize="32px"
+                     />-->
         </LinearLayout>
 
         <RelativeLayout
@@ -100,10 +100,10 @@
                 android:id="@+id/single_goods_view"
                 android:layout_width="110px"
                 android:layout_height="110px"
+                android:layout_below="@id/tvCount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="21px"
-                android:visibility="gone"
-                android:layout_below="@id/tvCount">
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="100px"
@@ -129,9 +129,9 @@
                 <ImageView
                     android:layout_width="20px"
                     android:layout_height="20px"
-                    android:src="@drawable/select_nor"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/select_nor"
                     />
 
             </RelativeLayout>
@@ -140,11 +140,11 @@
                 android:id="@+id/multi_goods_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="190px"
+                android:layout_below="@id/tvCount"
                 android:layout_marginEnd="190px"
+                android:layout_marginStart="190px"
                 android:layout_marginTop="5px"
-                android:visibility="visible"
-                android:layout_below="@id/tvCount">
+                android:visibility="visible">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"

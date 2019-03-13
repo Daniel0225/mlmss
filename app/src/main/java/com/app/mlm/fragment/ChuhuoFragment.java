@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.R;
@@ -37,8 +36,8 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
  */
 @SuppressLint("ValidFragment")
 public class ChuhuoFragment extends ChuhuoBaseFragment {
-    @Bind(R.id.tvCountDown)
-    TextView tvCountDownView;
+/*    @Bind(R.id.tvCountDown)
+    TextView tvCountDownView;*/
 
     @Bind(R.id.progress_circle)
     ImageView progressCircle;
@@ -52,6 +51,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     @Bind(R.id.multi_goods_view)
     View multiGoodsView;
     String json = "";
+    int count = 0;
 
     private ChuhuoAdapter chuhuoAdapter;
 
@@ -91,6 +91,9 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             for (int i = 1; i < shipmentList.size(); i++) {
                 //int position,int positionX, int positionY,String snm,int goodNum
                 pick(i, 1, 1, "2323", 2);
+                if (count == shipmentList.size()) {
+                    mActivity.addFragment(new ChuhuoSuccessFragment());
+                }
             }
         }
     }
@@ -157,6 +160,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    count++;
                                     chuhuoAdapter.refreshChuhuoStatus(position);
                                     Log.e("取货结果:", "取货成功");
                                 }
@@ -167,6 +171,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                 @Override
                                 public void run() {
                                     //上传错误代码到后台
+                                    count++;
                                     UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
                                 }
                             });
