@@ -95,25 +95,61 @@
                 android:textColor="@color/black"
                 android:textSize="32px" />
 
+
             <RelativeLayout
-                android:layout_width="100px"
-                android:layout_height="100px"
-                android:layout_below="@id/tvCount"
+                android:id="@+id/single_goods_view"
+                android:layout_width="110px"
+                android:layout_height="110px"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="21px">
+                android:layout_marginTop="21px"
+                android:visibility="gone"
+                android:layout_below="@id/tvCount">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/circle_gray" />
-
-                <ImageView
-                    android:id="@+id/goods_pic"
-                    android:layout_width="60px"
-                    android:layout_height="60px"
+                <RelativeLayout
+                    android:layout_width="100px"
+                    android:layout_height="100px"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/chanpin" />
+                    android:background="@drawable/shape_white_circle"
+                    >
 
+                    <ImageView
+                        android:id="@+id/progress_circle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/circle_gray" />
+
+                    <ImageView
+                        android:id="@+id/goods_pic"
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/chanpin" />
+
+                </RelativeLayout>
+                <ImageView
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:src="@drawable/select_nor"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    />
+
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/multi_goods_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="190px"
+                android:layout_marginEnd="190px"
+                android:layout_marginTop="5px"
+                android:visibility="visible"
+                android:layout_below="@id/tvCount">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </RelativeLayout>
 
         </RelativeLayout>

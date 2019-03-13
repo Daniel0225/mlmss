@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/single_goods_view"
+        android:layout_width="110px"
+        android:layout_height="110px"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:layout_below="@id/tvCount">
+
+        <RelativeLayout
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_white_circle"
+            >
+
+            <ImageView
+                android:id="@+id/progress_end_circle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:src="@drawable/circle_gray" />
+
+            <ImageView
+                android:id="@+id/progress_circle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ring_gray" />
+
+            <ImageView
+                android:id="@+id/goods_pic"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/chanpin" />
+
+            <ImageView
+                android:id="@+id/wait_chuhuo"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:visibility="gone"
+                android:src="@drawable/shape_gray_circle"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_result"
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:src="@drawable/select_nor"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

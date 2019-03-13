@@ -108,6 +108,8 @@ public class MainFragment extends BaseFragment {
         super.onResume();
         initList();
         adapter.notifyDataSetChanged();
+        MainApp.shopCarList.clear();
+        refreshShopCar();
     }
 
     @Override
@@ -233,4 +235,5 @@ public class MainFragment extends BaseFragment {
             shopCarTV.setVisibility(View.VISIBLE);
         }
     }
+
 }
