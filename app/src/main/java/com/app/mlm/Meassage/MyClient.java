@@ -1,5 +1,6 @@
 package com.app.mlm.Meassage;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
@@ -7,6 +8,8 @@ import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
 import com.app.mlm.Meassage.entity.AndroidCommonVo;
 import com.app.mlm.Meassage.entity.AndroidVend;
+import com.app.mlm.activity.ChuhuoActivity;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AndroidHeartBeat;
 import com.app.mlm.utils.PreferencesUtil;
 
@@ -184,7 +187,7 @@ public class MyClient {
                                 AndroidCommonVo.class);
                         if (vo.getBusType().equals("heartbeat")) {// 心跳包
                         /*	AndroidHeartBeat beat = JSON.parseObject(vo.getT(),
-									AndroidHeartBeat.class);
+                                    AndroidHeartBeat.class);
 							Message msg = Message.obtain();
 							Bundle bundle = new Bundle();
 							bundle.putSerializable("beat", beat);
@@ -211,6 +214,10 @@ public class MyClient {
 //							bundle.putSerializable("beat", vend);
 //							msg.setData(bundle);
 //							handler.sendMessage(msg);
+
+                            Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
+                            intent.putExtra("shipment", vend.toString());
+                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);
 
                             Log.d("main", "接收到出货指令:" + vend.toString());
 

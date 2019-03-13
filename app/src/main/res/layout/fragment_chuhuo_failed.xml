@@ -36,7 +36,7 @@
                 android:textSize="37px" />
 
             <TextView
-                android:id="@+id/tvCountDown"
+                android:id="@+id/count_down"
                 android:layout_width="90px"
                 android:layout_height="match_parent"
                 android:gravity="center|left"

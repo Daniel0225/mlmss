@@ -10,6 +10,7 @@ public class ActivationBean implements Serializable {
 
     private int vmId;
     private int vtId;
+    private String vmName;
     private int nodeId;
     private int vmModelId;
     private int vmClayers;
@@ -36,6 +37,14 @@ public class ActivationBean implements Serializable {
 
     public void setVmId(int vmId) {
         this.vmId = vmId;
+    }
+
+    public String getVmName() {
+        return vmName;
+    }
+
+    public void setVmName(String vmName) {
+        this.vmName = vmName;
     }
 
     public int getVtId() {

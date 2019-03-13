@@ -100,6 +100,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
             case R.id.close:
                 break;
             case R.id.tvPay:
+                dismiss();
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
                 intent.putExtra(Constants.TOTAL_NUM, totalNum);
                 intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(totalPrice));

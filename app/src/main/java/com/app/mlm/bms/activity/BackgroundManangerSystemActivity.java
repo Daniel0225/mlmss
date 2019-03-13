@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -57,12 +58,9 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-     /*   try {
-            version = MainApp.bvmAidlInterface.BVMGetVersion();
-            Log.e("version",version);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }*/
+        if (TextUtils.isEmpty(PreferencesUtil.getString("vmName"))) {
+            location.setText(PreferencesUtil.getString("vmName"));
+        }
     }
 
     @OnClick({R.id.chuhuoceshi, R.id.zhifupeizhi, R.id.huodaopeizhi, R.id.tongbupeizhi, R.id.wendukongzhi, R.id.banbenxinxi, R.id.fanhui, R.id.state})

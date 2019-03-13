@@ -23,7 +23,7 @@ import com.app.mlm.http.bean.CreateWxOrderReqVoList;
 import com.app.mlm.http.bean.WxPayBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
-import com.app.mlm.utils.TimeCountUtils;
+import com.app.mlm.utils.TimeCountUtilsFinish;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
@@ -41,7 +41,7 @@ import butterknife.ButterKnife;
 
 public class OrderPayActivity extends AppCompatActivity {
     LinearLayout imageView;
-    TimeCountUtils timeCount;
+    TimeCountUtilsFinish timeCount;
     TextView count_down;
     CouponDialog couponDialog;//领优惠券的dialog
     @Bind(R.id.iv_wx_code)
@@ -116,7 +116,7 @@ public class OrderPayActivity extends AppCompatActivity {
      */
     public void startTime() {
         if (timeCount == null) {
-            timeCount = new TimeCountUtils(60000, 1000, count_down);
+            timeCount = new TimeCountUtilsFinish(OrderPayActivity.this, 60000, 1000, count_down);
         }
         timeCount.start(); //倒计时后重新获取
     }

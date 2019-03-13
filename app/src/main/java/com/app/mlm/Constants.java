@@ -22,6 +22,8 @@ public class Constants {
     public static final String COUNTER_NAME = "counterName";
     public static final String TOTAL_NUM = "totalNum";
     public static final String TOTAL_PRICE = "totalPrice";
+    public static final String SHIPMENT = "shipment";
+
     /**
      * 请求超时时间
      */
@@ -53,7 +55,8 @@ public class Constants {
     public static final String GOODSSTATERECEIVER_BROADCAST = "com.snbc.bvm.action.goodsstatereceiver";
     //进程状态广播
     public static final String HEARTBEAT_BROADCAST = "android.intent.action.active.heartbeat";
-
+    //出货广播
+    public static final String SHIPMENT_BROADCAST = "com.app.mlm.shipment_broadcast";
 
 
 }

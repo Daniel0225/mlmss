@@ -80,6 +80,7 @@ public class ActivationActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
         tvNo.setTransformationMethod(new InputLowerToUpper());
         tvNo.addTextChangedListener(textWatcher);
         tvCdkey.addTextChangedListener(textWatcher);
@@ -126,6 +127,7 @@ public class ActivationActivity extends BaseActivity {
                         if (response.body().getCode() == 0) {
                             PreferencesUtil.putString("vmcode", response.body().getData().getInnerCode());
                             PreferencesUtil.putInt("status", response.body().getData().getStatus());
+                            PreferencesUtil.putString("vmName", response.body().getData().getVmName());
                             ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
                             dialog1.show();
                             Log.e("激活", String.valueOf(response));

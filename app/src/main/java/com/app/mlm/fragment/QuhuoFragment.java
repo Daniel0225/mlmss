@@ -17,6 +17,7 @@ import com.app.mlm.R;
 import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.adapter.InputGridAdapter;
 import com.app.mlm.countdown.CountDownManager;
+import com.app.mlm.utils.TimeCountUtilsFinishFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +27,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class QuhuoFragment extends BaseFragment implements CountDownManager.OnCountDownListener {
+    TimeCountUtilsFinishFragment timeCount;
     @Bind(R.id.ivBack)
     ImageView ivBack;
     @Bind(R.id.tvCountDown)
@@ -72,7 +74,7 @@ public class QuhuoFragment extends BaseFragment implements CountDownManager.OnCo
 
     @Override
     protected void initData() {
-
+        startTime();
     }
 
     private void deleteLastChar() {
@@ -95,10 +97,10 @@ public class QuhuoFragment extends BaseFragment implements CountDownManager.OnCo
         mActivity.setSearchLayoutVisible(View.VISIBLE);
     }
 
-    @Override
+   /* @Override
     public void onTick(int seconds) {
         tvCountDown.setText(seconds + "s");
-    }
+    }*/
 
     @Override
     public void onFinish() {
@@ -138,4 +140,21 @@ public class QuhuoFragment extends BaseFragment implements CountDownManager.OnCo
         return rootView;
     }
 
+    /**
+     * 开启倒计时
+     */
+    public void startTime() {
+        if (timeCount == null) {
+            timeCount = new TimeCountUtilsFinishFragment(mActivity, 60000, 1000, tvCountDown);
+        }
+        timeCount.start(); //倒计时后重新获取
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timeCount != null) {
+            timeCount.cancel();
+        }
+    }
 }

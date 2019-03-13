@@ -4,16 +4,20 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
+import com.app.mlm.activity.MainActivity;
+
 /**
- * Created by qibo on 16/8/9.
+ * Created by Administrator on 2019/3/12.
  */
-public class TimeCountUtils extends CountDownTimer {
 
+public class TimeCountUtilsFinishFragment extends CountDownTimer {
     private TextView textView;
+    private MainActivity mActivity;
 
-    public TimeCountUtils(long millisInFuture, long countDownInterval, TextView textView) {
+    public TimeCountUtilsFinishFragment(MainActivity mActivity, long millisInFuture, long countDownInterval, TextView textView) {
         super(millisInFuture, countDownInterval);
         this.textView = textView;
+        this.mActivity = mActivity;
     }
 
 
@@ -29,5 +33,6 @@ public class TimeCountUtils extends CountDownTimer {
         textView.setText("0s");
         textView.setClickable(true);
         textView.setTextColor(Color.parseColor("#999999"));
+        mActivity.removeFragment();
     }
 }
