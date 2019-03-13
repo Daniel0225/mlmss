@@ -11,7 +11,7 @@ import butterknife.Bind;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChuhuoFragment extends BaseFragment {
+public class ChuhuoFragment extends ChuhuoBaseFragment {
     @Bind(R.id.tvCountDown)
     TextView tvCountDownView;
 

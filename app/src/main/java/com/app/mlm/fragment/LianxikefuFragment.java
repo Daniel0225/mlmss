@@ -9,7 +9,7 @@ import com.app.mlm.R;
  * 出货失败Fragment
  * A simple {@link Fragment} subclass.
  */
-public class LianxikefuFragment extends BaseFragment {
+public class LianxikefuFragment extends ChuhuoBaseFragment {
     public LianxikefuFragment() {
     }
 

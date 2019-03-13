@@ -13,7 +13,7 @@ import butterknife.OnClick;
  * 出货成功Fragment
  * A simple {@link Fragment} subclass.
  */
-public class ChuhuoSuccessFragment extends BaseFragment {
+public class ChuhuoSuccessFragment extends ChuhuoBaseFragment {
 
     public ChuhuoSuccessFragment() {
     }
