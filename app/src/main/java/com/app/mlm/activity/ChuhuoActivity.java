@@ -59,7 +59,6 @@ public class ChuhuoActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
 
-
     private void initView() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, new ChuhuoFragment(json));

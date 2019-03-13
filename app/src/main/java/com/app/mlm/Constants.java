@@ -42,6 +42,9 @@ public class Constants {
     public static final String ALARM_REPORT = BASE_URL + "alarmReport";//故障接口
     public static final String ACTIVATION = BASE_URL + "createActivation";//激活接口
 
+    //长连接收到取货指令回复接口
+    public static final String RECEVE_MSG = BASE_URL + "vendConfirmTest";//收到取货回复
+
 
     //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";
