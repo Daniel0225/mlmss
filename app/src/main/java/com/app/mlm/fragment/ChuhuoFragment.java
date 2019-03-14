@@ -76,7 +76,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
-                    countView.setText(String.format("%d / %d", count + 1, hdDataBeans.size()));
+                    countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
                     String hdCodeT = hdDataBeans.get(count).getHdCode();
                     if (!TextUtils.isEmpty(hdCodeT)) {
                         int one = Integer.parseInt(hdCodeT.substring(0, 1));
