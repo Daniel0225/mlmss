@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
@@ -66,7 +65,6 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
         }else{
             holder.waiteChuhuo.setVisibility(View.VISIBLE);
         }
-        holder.tvCount.setText(1 + "/" + mList.size());
     }
 
     @Override
@@ -79,7 +77,6 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
         ImageView ivResult;
         ImageView progressCircle;
         ImageView progressEndCircle;
-        TextView tvCount;
         View waiteChuhuo;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -88,7 +85,6 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
             progressEndCircle = itemView.findViewById(R.id.progress_end_circle);
             ivResult = itemView.findViewById(R.id.iv_result);
             waiteChuhuo = itemView.findViewById(R.id.wait_chuhuo);
-            tvCount = itemView.findViewById(R.id.tvCount);
         }
     }
 }
