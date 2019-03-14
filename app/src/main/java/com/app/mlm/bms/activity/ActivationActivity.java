@@ -125,7 +125,7 @@ public class ActivationActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<BaseResponse<ActivationBean>> response) {
                         if (response.body().getCode() == 0) {
-                            PreferencesUtil.putString("vmcode", response.body().getData().getInnerCode());
+                            PreferencesUtil.putString(Constants.VMCODE, response.body().getData().getInnerCode());
                             PreferencesUtil.putInt("status", response.body().getData().getStatus());
                             PreferencesUtil.putString("vmName", response.body().getData().getVmName());
                             ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
