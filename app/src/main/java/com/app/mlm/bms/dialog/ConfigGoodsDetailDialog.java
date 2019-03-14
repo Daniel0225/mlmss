@@ -8,11 +8,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
 import com.app.mlm.http.bean.ProductInfo;
+import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 
@@ -126,7 +128,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 }
                 if (goodsInfo.getMdseUrl().equals("empty")) {
                     goodsInfo = new GoodsInfo();
-                    goodsInfo.setVmCode("0000051");
+                    goodsInfo.setVmCode(PreferencesUtil.getString(Constants.VMCODE));
                     goodsInfo.setVmId(1);
                     goodsInfo.setMdseId(mProductInfo.getMdseId());
                     goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
