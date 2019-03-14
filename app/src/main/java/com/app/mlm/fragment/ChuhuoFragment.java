@@ -76,6 +76,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
+                    Toast.makeText(getContext(), "开始取第" + count + "个", Toast.LENGTH_SHORT).show();
                     countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
                     String hdCodeT = hdDataBeans.get(count).getHdCode();
                     if (!TextUtils.isEmpty(hdCodeT)) {
@@ -261,6 +262,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         shipmentBean.setPickup(1);
         Log.e("--------------", positionX + "列" + positionY);
         String pickData = new Gson().toJson(shipmentBean);
+        Toast.makeText(getContext(), pickData, Toast.LENGTH_SHORT).show();
         Log.e("--------------", pickData);
         try {
             new Thread(new Runnable() {
@@ -274,6 +276,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Toast.makeText(getContext(), "取货第" + count + "成功", Toast.LENGTH_SHORT).show();
                                     count++;
                                     //出货成功改变状态
                                     hdDataBeans.get(position).setSuccess(true);
@@ -291,6 +294,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     } else {
                                         mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
                                     }
+
                                     Log.e("取货结果:", "取货成功");
                                 }
                             });
@@ -300,6 +304,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                 @Override
                                 public void run() {
                                     //上传错误代码到后台
+                                    Toast.makeText(getContext(), "取货第" + count + "失败", Toast.LENGTH_SHORT).show();
                                     count++;
                                     UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
                                     //添加成功的数据到上传成功的model
