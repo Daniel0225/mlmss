@@ -156,12 +156,11 @@
             android:textSize="26px" />
 
 
-        <TextView
+        <EditText
             android:id="@+id/etPrice"
             android:layout_width="600px"
             android:layout_height="70px"
             android:background="@drawable/shape_bluelight_line40"
-            android:enabled="false"
             android:gravity="center"
             android:hint="单位元"
             android:inputType="numberDecimal"

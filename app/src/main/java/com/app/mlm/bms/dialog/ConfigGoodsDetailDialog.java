@@ -142,7 +142,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 goodsInfo.setClong(TextUtils.isEmpty(etLong.getText().toString().trim()) ? 0 : Double.valueOf(etLong.getText().toString().trim()));
                 goodsInfo.setCwidth(TextUtils.isEmpty(etWidth.getText().toString().trim()) ? 0 : Double.valueOf(etWidth.getText().toString().trim()));
                 goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString().trim()));
-                goodsInfo.setRealPrice(Integer.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
+                goodsInfo.setRealPrice(Double.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
                 goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString().trim()));
                 goodsInfo.setPriductBatch(etSerialNo.getText().toString().trim());
                 goodsInfo.setThreshold(etLessCount.getText().toString().trim());
@@ -158,14 +158,14 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 etAddCount.setText("0");
                 break;
             case R.id.tvFillAll:
-                if (Integer.valueOf(etCapcity.getText().toString()) == 0) {
+                if (TextUtils.isEmpty(etCapcity.getText().toString()) || Integer.valueOf(etCapcity.getText().toString()) == 0) {
                     ToastUtil.showLongCenterToast("请设置货道容量");
                 } else {
                     etAddCount.setText(etCapcity.getText().toString());
                 }
                 break;
             case R.id.capacity_jian:
-                int capacity = Integer.valueOf(etCapcity.getText().toString());
+                int capacity = TextUtils.isEmpty(etCapcity.getText().toString()) ? 0 :Integer.valueOf(etCapcity.getText().toString());
                 if (capacity > 0) {
                     etCapcity.setText(String.valueOf(capacity - 1));
                 }
@@ -174,12 +174,12 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 }
                 break;
             case R.id.capacity_add:
-                int capacity2 = Integer.valueOf(etCapcity.getText().toString());
+                int capacity2 = TextUtils.isEmpty(etCapcity.getText().toString()) ? 0 : Integer.valueOf(etCapcity.getText().toString());
                 etCapcity.setText(String.valueOf(capacity2 + 1));
                 capacityJian.setImageResource(R.drawable.jian_goods);
                 break;
             case R.id.buhuo_jian:
-                int buhuoNum = Integer.valueOf(etAddCount.getText().toString());
+                int buhuoNum = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
                 if (buhuoNum > 0) {
                     etCapcity.setText(String.valueOf(buhuoNum - 1));
                 }
@@ -188,7 +188,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 }
                 break;
             case R.id.buhuo_add:
-                int buhuoNum2 = Integer.valueOf(etAddCount.getText().toString());
+                int buhuoNum2 = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
                 if (buhuoNum2 < Integer.valueOf(etCapcity.getText().toString())) {
                     etAddCount.setText(String.valueOf(buhuoNum2 + 1));
                     buhuoJian.setImageResource(R.drawable.jian_goods);
@@ -197,7 +197,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 }
                 break;
             case R.id.zuidi_jian:
-                int zuidiNum = Integer.valueOf(etLessCount.getText().toString());
+                int zuidiNum = TextUtils.isEmpty(etLessCount.getText().toString()) ? 0 : Integer.valueOf(etLessCount.getText().toString());
                 if (zuidiNum > 0) {
                     etLessCount.setText(String.valueOf(zuidiNum - 1));
                 }
@@ -206,7 +206,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 }
                 break;
             case R.id.zuidi_add:
-                int zuidiNum2 = Integer.valueOf(etLessCount.getText().toString());
+                int zuidiNum2 = TextUtils.isEmpty(etLessCount.getText().toString()) ? 0 : Integer.valueOf(etLessCount.getText().toString());
                 etLessCount.setText(String.valueOf(zuidiNum2 + 1));
                 zuidiJian.setImageResource(R.drawable.jian_goods);
                 break;
@@ -228,6 +228,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         dialog.showDialog(new ChooseGoodsDialog.SelectProductListener() {
             @Override
             public void select(ProductInfo productInfo) {
+                goodsInfo.setMdseUrl("empty");
                 mProductInfo = productInfo;
                 refreshUi();
             }

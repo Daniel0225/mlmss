@@ -34,7 +34,7 @@ public class GoodsInfo implements Serializable {
     private double clong;//长度
     private double cwidth;//宽度
     private double cheight;//高度
-    private Integer realPrice = 0;//实际零售价
+    private double realPrice = 0;//实际零售价
     private Integer clCapacity = 0;//货道容量
     private Integer clcCapacity = 0;//货道当前容量
     private String threshold;//阀值
@@ -43,13 +43,12 @@ public class GoodsInfo implements Serializable {
     private String priductBatch;//产品批次
     private String merchantUrl;
 
-    @Generated(hash = 646796537)
+    @Generated(hash = 1987831322)
     public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand, String mdsePack,
-                     String merchantType, String mdseName, String mdseUrl, String clCode,
-                     int shopCarNum, String vmCode, Integer vmId, Integer clId, Integer vmClayers,
-                     double clong, double cwidth, double cheight, Integer realPrice,
-                     Integer clCapacity, Integer clcCapacity, String threshold, Integer Replenish,
-                     Integer channelType, String priductBatch, String merchantUrl) {
+            String merchantType, String mdseName, String mdseUrl, String clCode, int shopCarNum,
+            String vmCode, Integer vmId, Integer clId, Integer vmClayers, double clong, double cwidth,
+            double cheight, double realPrice, Integer clCapacity, Integer clcCapacity, String threshold,
+            Integer Replenish, Integer channelType, String priductBatch, String merchantUrl) {
         this.id = id;
         this.mdseId = mdseId;
         this.mdsePrice = mdsePrice;
@@ -217,11 +216,11 @@ public class GoodsInfo implements Serializable {
         this.cheight = cheight;
     }
 
-    public Integer getRealPrice() {
+    public double getRealPrice() {
         return realPrice;
     }
 
-    public void setRealPrice(Integer realPrice) {
+    public void setRealPrice(double realPrice) {
         this.realPrice = realPrice;
     }
 

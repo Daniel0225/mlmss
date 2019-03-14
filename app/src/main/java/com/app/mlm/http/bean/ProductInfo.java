@@ -39,7 +39,7 @@ public class ProductInfo extends LitePalSupport implements Serializable {
     private String mdsePack;
     private int mdseContent;
     private String mdseUnit;
-    private int mdsePrice;
+    private double mdsePrice;
     private String mdseStatus;
     private long mdseTx;
     private String mdseUrl;
@@ -130,11 +130,11 @@ public class ProductInfo extends LitePalSupport implements Serializable {
         this.mdseUnit = mdseUnit;
     }
 
-    public int getMdsePrice() {
+    public double getMdsePrice() {
         return mdsePrice;
     }
 
-    public void setMdsePrice(int mdsePrice) {
+    public void setMdsePrice(double mdsePrice) {
         this.mdsePrice = mdsePrice;
     }
 
