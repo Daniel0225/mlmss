@@ -2,16 +2,25 @@ package com.app.mlm.Meassage;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
 import com.app.mlm.Meassage.entity.AndroidCommonVo;
-import com.app.mlm.Meassage.entity.AndroidVend;
 import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AndroidHeartBeat;
+import com.app.mlm.http.BaseResponse;
+import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.AllDataBean;
+import com.app.mlm.http.bean.SocketShipmentBean;
+import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -138,6 +147,38 @@ public class MyClient {
         new Thread(new ReConnect()).start();
     }
 
+    private void rebackShipment(String json) {
+        SocketShipmentBean socketShipmentBean = FastJsonUtil.getObject(json, SocketShipmentBean.class);
+        if (!TextUtils.isEmpty(json)) {
+            HttpParams httpParams = new HttpParams();
+            httpParams.put("deviceId", PreferencesUtil.getString(Constants.VMCODE));
+            httpParams.put("snm", socketShipmentBean.getT().getSnm());
+            OkGo.<BaseResponse<AllDataBean>>post(Constants.RECEVE_MSG)
+                    .tag(this)
+                    .params(httpParams)
+                    .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
+                        @Override
+                        public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
+                            Log.e("接收", "返回成功");
+                            if (response.body().getCode() == 0) {
+                                Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
+                                intent.putExtra("shipment", json);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                MainApp.getAppInstance().getApplicationContext().startActivity(intent);
+                            } else {
+                                Log.e("上传失败", String.valueOf(response.body().getCode()));
+                                //  Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Response<BaseResponse<AllDataBean>> response) {
+                            ToastUtil.showLongToast(response.body().getMsg());
+                        }
+                    });
+        }
+    }
+
     class KeepAliveWatchDog implements Runnable {
         long checkDelay = 1000;
 
@@ -194,15 +235,22 @@ public class MyClient {
 							msg.setData(bundle);
 							handler.sendMessage(msg);*/
                             Log.d("1111push", "接收心跳包");
+
                         } else if (vo.getBusType().equals("vend")) {// 出货指令
-                            StringBuffer buf = new StringBuffer();
+                           /* AndroidVend vend = JSON.parseObject(vo.getT(),
+                                    AndroidVend.class);*/
+                            //rebackShipment(obj.toString());
+                            Log.d("main", "接收到出货指令:" + obj.toString());
+                            Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
+                            intent.putExtra("shipment", obj.toString());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);
+                       /*     StringBuffer buf = new StringBuffer();
                             buf.append(Util.getCurDate() + " ");
                             buf.append("out order:");
-                            AndroidVend vend = JSON.parseObject(vo.getT(),
-                                    AndroidVend.class);
                             //打印出货指令到日志
                             buf.append(vend.getSnm());
-                            buf.append("\r\n");
+                            buf.append("\r\n");*/
                             //Util.WriteFileData(FileManager.BASE_PATH+FileManager.LOGINFO, buf.toString());
 
                             //回复确认
@@ -215,11 +263,7 @@ public class MyClient {
 //							msg.setData(bundle);
 //							handler.sendMessage(msg);
 
-                            Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
-                            intent.putExtra("shipment", vend.toString());
-                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);
-
-                            Log.d("main", "接收到出货指令:" + vend.toString());
+                            Log.d("main", "接收到出货指令:" + obj.toString());
 
                         } else if (vo.getBusType().equals("priceChange") || vo.getBusType().equals("syncQrCode")) {
                             //价格修改、更新微信二维码

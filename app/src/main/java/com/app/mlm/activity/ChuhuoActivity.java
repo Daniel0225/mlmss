@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
@@ -35,7 +36,9 @@ public class ChuhuoActivity extends BaseActivity {
     }
 
     private void initdata() {
+        // json="{\"busType\":\"vend\",\"ctime\":1552558368822,\"t\":{\"clientHardCode\":\"\",\"clientIp\":\"/112.97.63.114:35202\",\"hd\":\"101#1#10#http://vm.minimall24h.com/Public/images/product/436.jpg#1,\",\"num\":\"1\",\"snm\":\"1903141809070000051986393\",\"test\":\"0\",\"vmCode\":\"0000051\"}}";
         json = getIntent().getStringExtra("shipment");
+        Log.e("json", json);
     }
 
     @Override
@@ -60,8 +63,12 @@ public class ChuhuoActivity extends BaseActivity {
     }
 
     private void initView() {
+        ChuhuoFragment fragment = new ChuhuoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("str", json);
+        fragment.setArguments(bundle);
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, new ChuhuoFragment(json));
+        transaction.replace(R.id.container, fragment);
         //transaction.replace(R.id.container, new ChuhuoFailedFragment());
         transaction.commit();
     }

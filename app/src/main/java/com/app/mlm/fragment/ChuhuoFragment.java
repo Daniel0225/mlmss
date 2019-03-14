@@ -2,7 +2,6 @@ package com.app.mlm.fragment;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,7 +34,6 @@ import com.app.mlm.utils.UpAlarmReportUtils;
 import com.app.mlm.widget.SpacesItemDecoration;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
@@ -48,7 +46,6 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 /**
  * A simple {@link Fragment} subclass.
  */
-@SuppressLint("ValidFragment")
 public class ChuhuoFragment extends ChuhuoBaseFragment {
 /*    @Bind(R.id.tvCountDown)
     TextView tvCountDownView;*/
@@ -94,10 +91,9 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         ;
     };
 
-    @SuppressLint("ValidFragment")
-    public ChuhuoFragment(String json) {
+ /*   public ChuhuoFragment(String json) {
         this.json = json;
-    }
+    }*/
 
     @Override
     protected int provideLayoutResId() {
@@ -107,10 +103,11 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     @Override
     protected void initView(Bundle savedInstanceState) {
         initCountDownMananger();
+        json = (String) getArguments().get("str");
         //shipmentList = new ArrayList<SocketShipmentBean>();
         if (!TextUtils.isEmpty(json)) {
             socketShipmentBean = FastJsonUtil.getObject(json, SocketShipmentBean.class);
-            rebackShipment();
+            // rebackShipment();
             dealData();
         }
     }
@@ -122,10 +119,10 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
 
     private void dealData() {
         String hd = socketShipmentBean.getT().getHd();
-        String[] hdData = hd.split(",");
-        for (int i = 1; i < hdData.length; i++) {
-            String hdback = hdData[i];
-            String trunString = hdback.replace("#", ",");
+        Log.e("list长度", hd + "======");
+        if (!hd.contains(",")) {
+            //只有一条数据
+            String trunString = hd.replace("#", ",");
             String[] finalData = trunString.split(",");
             HdDataBean hdDataBean = new HdDataBean();
             hdDataBean.setHdCode(finalData[0]);
@@ -137,7 +134,27 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             hdDataBean.setVmCode(socketShipmentBean.getT().getVmCode());
             hdDataBean.setNum(socketShipmentBean.getT().getNum());
             hdDataBeans.add(hdDataBean);
+            Log.e("list长度", hd + "===qqqqq===" + hdDataBeans.size());
+        } else {
+            String[] hdData = hd.split(",");
+            for (int i = 1; i < hdData.length; i++) {
+                String hdback = hdData[i];
+                String trunString = hdback.replace("#", ",");
+                String[] finalData = trunString.split(",");
+                HdDataBean hdDataBean = new HdDataBean();
+                hdDataBean.setHdCode(finalData[0]);
+                hdDataBean.setShopNum(Integer.parseInt(finalData[1]));
+                hdDataBean.setShopId(Integer.parseInt(finalData[2]));
+                hdDataBean.setShopUrl(finalData[3]);
+                hdDataBean.setOrderProject(finalData[4]);
+                hdDataBean.setSnm(socketShipmentBean.getT().getSnm());
+                hdDataBean.setVmCode(socketShipmentBean.getT().getVmCode());
+                hdDataBean.setNum(socketShipmentBean.getT().getNum());
+                hdDataBeans.add(hdDataBean);
+                Log.e("list长度", hd + "===wwww===" + hdDataBeans.size());
+            }
         }
+
         // shipmentList = FastJsonUtil.getObjects(json, SocketShipmentBean.class);
         //如果是单个商品 那么现实单个的 并开始动画
         //  boolean isSingle = false;
@@ -147,13 +164,16 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             objectAnimator.setDuration(4000)
                     .setRepeatCount(ValueAnimator.INFINITE);
             objectAnimator.start();
+            Log.e("list长度", hd + "===1111111===" + hdDataBeans.size());
         } else {//多个 那么初始化recyclerview
             multiGoodsView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
             recyclerView.addItemDecoration(new SpacesItemDecoration(20, 20, 20, 20));
             chuhuoAdapter = new ChuhuoAdapter(getContext(), null);
             recyclerView.setAdapter(chuhuoAdapter);
+            Log.e("list长度", hd + "===22222===" + hdDataBeans.size());
         }
+        Log.e("list长度", String.valueOf(hdDataBeans.size()));
         String hdCodeT = hdDataBeans.get(0).getHdCode();
         if (!TextUtils.isEmpty(hdCodeT)) {
             int one = Integer.parseInt(hdCodeT.substring(0, 1));
@@ -167,7 +187,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         }
     }
 
-    private void rebackShipment() {
+  /*  private void rebackShipment() {
         if (!TextUtils.isEmpty(json)) {
             HttpParams httpParams = new HttpParams();
             httpParams.put("deviceId", PreferencesUtil.getString(Constants.VMCODE));
@@ -179,11 +199,11 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                     .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
                         @Override
                         public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
-                          /*  if (response.body().getCode() == 0) {
+                          *//*  if (response.body().getCode() == 0) {
                                 Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                            }*/
+                            }*//*
                         }
 
                         @Override
@@ -192,7 +212,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                         }
                     });
         }
-    }
+    }*/
 
     @Override
     protected void initData() {

@@ -71,7 +71,6 @@
                 android:layout_below="@id/ivCode"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="46px"
-                android:text="1/10"
                 android:textColor="@color/text_dark"
                 android:textSize="30px"
                 />

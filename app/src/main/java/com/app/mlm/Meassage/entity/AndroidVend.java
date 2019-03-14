@@ -86,4 +86,17 @@ public class AndroidVend implements Serializable {
     public void setVmCode(String vmCode) {
         this.vmCode = vmCode;
     }
+
+    @Override
+    public String toString() {
+        return "AndroidVend{" +
+                "clientHardCode='" + clientHardCode + '\'' +
+                ", clientIp='" + clientIp + '\'' +
+                ", hd='" + hd + '\'' +
+                ", num='" + num + '\'' +
+                ", snm='" + snm + '\'' +
+                ", test='" + test + '\'' +
+                ", vmCode='" + vmCode + '\'' +
+                '}';
+    }
 }

@@ -46,7 +46,9 @@
         <activity android:name=".bms.activity.ConfigPaymentActivity" />
         <activity android:name=".bms.activity.ConfigSyncActivity" />
         <activity android:name=".bms.activity.TemperatureControlActivity" />
-        <activity android:name=".activity.ChuhuoActivity" />
+        <activity
+            android:name=".activity.ChuhuoActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".bms.activity.ChuhuoTestActivity" />
         <activity android:name=".bms.activity.ConfigHuodaoActivity"></activity>
         <activity android:name=".bms.activity.ActivationActivity"></activity>
