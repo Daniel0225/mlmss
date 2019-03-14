@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -59,6 +60,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     View singleGoodsView;
     @Bind(R.id.multi_goods_view)
     View multiGoodsView;
+    @Bind(R.id.tvCount)
+    TextView countView;
     String json = "";
     int count = 0;
     // List<SocketShipmentBean> shipmentList = new ArrayList<>();
@@ -73,6 +76,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
+                    countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
                     String hdCodeT = hdDataBeans.get(count).getHdCode();
                     if (!TextUtils.isEmpty(hdCodeT)) {
                         int one = Integer.parseInt(hdCodeT.substring(0, 1));
