@@ -21,7 +21,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class MyClient {
-    public static final String IP = "47.106.143.212";//ZGL
+    public static final String IP = "47.106.143.212";
     public static final int PORT = 65132;
     public static final int keepAliveDelay = 10000;// 心跳时长
     public Socket socket;

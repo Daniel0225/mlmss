@@ -40,7 +40,7 @@
                 android:layout_width="90px"
                 android:layout_height="match_parent"
                 android:gravity="center|left"
-                android:text="60s"
+                android:text="10s"
                 android:textColor="@color/black"
                 android:textSize="32px" />
         </LinearLayout>

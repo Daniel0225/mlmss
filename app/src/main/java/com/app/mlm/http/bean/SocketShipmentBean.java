@@ -8,10 +8,11 @@ import java.io.Serializable;
 
 public class SocketShipmentBean implements Serializable {
 
+
     /**
      * busType : vend
-     * ctime : 1552480693210
-     * t : {"clientHardCode":"","clientIp":"/112.97.63.114:33687","hd":"101","num":"1","snm":"1903132032050000051936137","test":"0","vmCode":"0000051"}
+     * ctime : 1552492046495
+     * t : {"clientHardCode":"","clientIp":"/112.97.63.114:33702","hd":"101#1#10#http://vm.minimall24h.com/Public/images/product/436.jpg#1,101#1#10#http://vm.minimall24h.com/Public/images/product/436.jpg#2","num":"2","snm":"1903132347060000051776757","test":"0","vmCode":"0000051"}
      */
 
     private String busType;
@@ -45,10 +46,10 @@ public class SocketShipmentBean implements Serializable {
     public static class TBean {
         /**
          * clientHardCode :
-         * clientIp : /112.97.63.114:33687
-         * hd : 101
-         * num : 1
-         * snm : 1903132032050000051936137
+         * clientIp : /112.97.63.114:33702
+         * hd : 101#1#10#http://vm.minimall24h.com/Public/images/product/436.jpg#1,101#1#10#http://vm.minimall24h.com/Public/images/product/436.jpg#2
+         * num : 2
+         * snm : 1903132347060000051776757
          * test : 0
          * vmCode : 0000051
          */

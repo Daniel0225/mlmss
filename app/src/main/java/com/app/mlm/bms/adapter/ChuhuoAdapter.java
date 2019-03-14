@@ -4,28 +4,24 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.app.mlm.R;
-import com.app.mlm.application.MainApp;
-import com.app.mlm.http.bean.ProductInfo;
-import com.bumptech.glide.Glide;
+import com.app.mlm.http.bean.HdDataBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHolder>{
-
-    private List<ProductInfo> mList;
+    private List<HdDataBean> mList = new ArrayList<HdDataBean>();
     private int chuhuoPosition = 0; //正在出货的位置
     private Context context;
     private ObjectAnimator objectAnimator;
 
-    public ChuhuoAdapter(Context context,List<ProductInfo> mList) {
+    public ChuhuoAdapter(Context context, List<HdDataBean> mList) {
         this.mList = mList;
         this.context = context;
     }
@@ -51,7 +47,7 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
             holder.progressCircle.setVisibility(View.GONE);
             holder.ivResult.setVisibility(View.VISIBLE);
             holder.waiteChuhuo.setVisibility(View.GONE);
-            if(true){//如果出货成功 显示成功的图片
+            if (mList.get(position).isSuccess()) {//如果出货成功 显示成功的图片
                 holder.ivResult.setImageResource(R.drawable.select_nor);
             }else{//显示失败的图片
                 holder.ivResult.setImageResource(R.drawable.shibai);

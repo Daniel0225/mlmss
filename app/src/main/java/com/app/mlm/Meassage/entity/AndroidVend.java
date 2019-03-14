@@ -1,7 +1,5 @@
 package com.app.mlm.Meassage.entity;
 
-import com.alibaba.fastjson.JSON;
-
 import java.io.Serializable;
 
 /**
@@ -16,40 +14,53 @@ import java.io.Serializable;
 public class AndroidVend implements Serializable {
 
     /**
-     *
+     * clientHardCode :
+     * clientIp : /112.97.63.114:33702
+     * hd : 101
+     * num : 1
+     * snm : 1903132347060000051776757
+     * test : 0
+     * vmCode : 0000051
      */
-    private static final long serialVersionUID = 1L;
-    private int hd; // 货道
-    private int num; // 数量（默认1）
-    private int test; // 是否测试（1是，0否）
-    private String snm; // 订单号
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    private String clientHardCode;
+    private String clientIp;
+    private String hd;
+    private String num;
+    private String snm;
+    private String test;
+    private String vmCode;
+
+    public String getClientHardCode() {
+        return clientHardCode;
     }
 
-    public int getHd() {
+    public void setClientHardCode(String clientHardCode) {
+        this.clientHardCode = clientHardCode;
+    }
+
+    public String getClientIp() {
+        return clientIp;
+    }
+
+    public void setClientIp(String clientIp) {
+        this.clientIp = clientIp;
+    }
+
+    public String getHd() {
         return hd;
     }
 
-    public void setHd(int hd) {
+    public void setHd(String hd) {
         this.hd = hd;
     }
 
-    public int getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(String num) {
         this.num = num;
-    }
-
-    public int getTest() {
-        return test;
-    }
-
-    public void setTest(int test) {
-        this.test = test;
     }
 
     public String getSnm() {
@@ -60,7 +71,19 @@ public class AndroidVend implements Serializable {
         this.snm = snm;
     }
 
-    public String toString() {
-        return JSON.toJSONString(this);
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
+
+    public String getVmCode() {
+        return vmCode;
+    }
+
+    public void setVmCode(String vmCode) {
+        this.vmCode = vmCode;
     }
 }

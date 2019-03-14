@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.adapter.InputGridAdapter;
 import com.app.mlm.countdown.CountDownManager;
 import com.app.mlm.utils.TimeCountUtilsFinishFragment;
@@ -122,7 +121,7 @@ public class QuhuoFragment extends BaseFragment implements CountDownManager.OnCo
                 break;
             case R.id.tvQuhuo:
 //                mActivity.addFragment(new ChuhuoFragment());
-                ChuhuoActivity.start(getContext());
+                //    ChuhuoActivity.start(getContext());
                 break;
         }
     }

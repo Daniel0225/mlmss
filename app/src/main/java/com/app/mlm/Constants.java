@@ -44,7 +44,8 @@ public class Constants {
 
     //长连接收到取货指令回复接口
     public static final String RECEVE_MSG = BASE_URL + "vendConfirmTest";//收到取货回复
-
+    //出货后反馈给后台数据
+    public static final String VENDREPORT = BASE_URL + "vendReport";
 
     //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";

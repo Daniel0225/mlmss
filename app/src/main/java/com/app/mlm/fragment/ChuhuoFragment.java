@@ -23,9 +23,11 @@ import com.app.mlm.bms.adapter.ChuhuoAdapter;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AllDataBean;
+import com.app.mlm.http.bean.HdDataBean;
 import com.app.mlm.http.bean.PickBackBean;
 import com.app.mlm.http.bean.ShipmentBean;
 import com.app.mlm.http.bean.SocketShipmentBean;
+import com.app.mlm.http.bean.UploadShipmentStatusBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
@@ -62,13 +64,29 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     View multiGoodsView;
     String json = "";
     int count = 0;
-    List<SocketShipmentBean> shipmentList = new ArrayList<>();
+    // List<SocketShipmentBean> shipmentList = new ArrayList<>();
+    SocketShipmentBean socketShipmentBean = new SocketShipmentBean();
+    List<HdDataBean> hdDataBeans = new ArrayList<HdDataBean>();
+    //上传取货结果
+    UploadShipmentStatusBean uploadShipmentStatusBean = new UploadShipmentStatusBean();
+    List<UploadShipmentStatusBean.SuccessVendInfoVo> successVendInfoVos = new ArrayList<UploadShipmentStatusBean.SuccessVendInfoVo>();
+    List<UploadShipmentStatusBean.FailVendInfoVo> failVendInfoVos = new ArrayList<UploadShipmentStatusBean.FailVendInfoVo>();
     private ChuhuoAdapter chuhuoAdapter;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
-                    pick(count, 1, 1, "2323", 2);
+                    String hdCodeT = hdDataBeans.get(count).getHdCode();
+                    if (!TextUtils.isEmpty(hdCodeT)) {
+                        int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                        int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                        int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                        if (two == 0) {
+                            pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                        } else {
+                            pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                        }
+                    }
                     break;
             }
         }
@@ -89,25 +107,11 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     @Override
     protected void initView(Bundle savedInstanceState) {
         initCountDownMananger();
-
-        shipmentList = new ArrayList<SocketShipmentBean>();
+        //shipmentList = new ArrayList<SocketShipmentBean>();
         if (!TextUtils.isEmpty(json)) {
-            shipmentList = FastJsonUtil.getObjects(json, SocketShipmentBean.class);
-            //如果是单个商品 那么现实单个的 并开始动画
-            //  boolean isSingle = false;
-            if (shipmentList.size() == 1) {
-                singleGoodsView.setVisibility(View.VISIBLE);
-                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressCircle, "rotation", 0f, 360f);
-                objectAnimator.setDuration(4000)
-                        .setRepeatCount(ValueAnimator.INFINITE);
-                objectAnimator.start();
-            } else {//多个 那么初始化recyclerview
-                multiGoodsView.setVisibility(View.VISIBLE);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
-                recyclerView.addItemDecoration(new SpacesItemDecoration(20, 20, 20, 20));
-                chuhuoAdapter = new ChuhuoAdapter(getContext(), null);
-                recyclerView.setAdapter(chuhuoAdapter);
-            }
+            socketShipmentBean = FastJsonUtil.getObject(json, SocketShipmentBean.class);
+            rebackShipment();
+            dealData();
         }
     }
 
@@ -116,25 +120,70 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
 
     }
 
-    @Override
-    protected void initData() {
+    private void dealData() {
+        String hd = socketShipmentBean.getT().getHd();
+        String[] hdData = hd.split(",");
+        for (int i = 1; i < hdData.length; i++) {
+            String hdback = hdData[i];
+            String trunString = hdback.replace("#", ",");
+            String[] finalData = trunString.split(",");
+            HdDataBean hdDataBean = new HdDataBean();
+            hdDataBean.setHdCode(finalData[0]);
+            hdDataBean.setShopNum(Integer.parseInt(finalData[1]));
+            hdDataBean.setShopId(Integer.parseInt(finalData[2]));
+            hdDataBean.setShopUrl(finalData[3]);
+            hdDataBean.setOrderProject(finalData[4]);
+            hdDataBean.setSnm(socketShipmentBean.getT().getSnm());
+            hdDataBean.setVmCode(socketShipmentBean.getT().getVmCode());
+            hdDataBean.setNum(socketShipmentBean.getT().getNum());
+            hdDataBeans.add(hdDataBean);
+        }
+        // shipmentList = FastJsonUtil.getObjects(json, SocketShipmentBean.class);
+        //如果是单个商品 那么现实单个的 并开始动画
+        //  boolean isSingle = false;
+        if (hdDataBeans.size() == 1) {
+            singleGoodsView.setVisibility(View.VISIBLE);
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressCircle, "rotation", 0f, 360f);
+            objectAnimator.setDuration(4000)
+                    .setRepeatCount(ValueAnimator.INFINITE);
+            objectAnimator.start();
+        } else {//多个 那么初始化recyclerview
+            multiGoodsView.setVisibility(View.VISIBLE);
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
+            recyclerView.addItemDecoration(new SpacesItemDecoration(20, 20, 20, 20));
+            chuhuoAdapter = new ChuhuoAdapter(getContext(), null);
+            recyclerView.setAdapter(chuhuoAdapter);
+        }
+        String hdCodeT = hdDataBeans.get(0).getHdCode();
+        if (!TextUtils.isEmpty(hdCodeT)) {
+            int one = Integer.parseInt(hdCodeT.substring(0, 1));
+            int two = Integer.parseInt(hdCodeT.substring(1, 2));
+            int three = Integer.parseInt(hdCodeT.substring(2, 3));
+            if (two == 0) {
+                pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+            } else {
+                pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+            }
+        }
+    }
+
+    private void rebackShipment() {
         if (!TextUtils.isEmpty(json)) {
             HttpParams httpParams = new HttpParams();
             httpParams.put("deviceId", PreferencesUtil.getString(Constants.VMCODE));
-            httpParams.put("machineId", PreferencesUtil.getString(Constants.VMCODE));
-            //   httpParams.put("snm", tvCdkey.getText().toString());
+            httpParams.put("machineId", "");
+            httpParams.put("snm", socketShipmentBean.getT().getSnm());
             OkGo.<BaseResponse<AllDataBean>>get(Constants.RECEVE_MSG)
                     .tag(this)
                     .params(httpParams)
                     .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
                         @Override
                         public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
-                            if (response.body().getCode() == 0) {
+                          /*  if (response.body().getCode() == 0) {
                                 Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                                Log.e("激活", String.valueOf(response));
                             } else {
                                 Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                         }
 
                         @Override
@@ -143,6 +192,10 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                         }
                     });
         }
+    }
+
+    @Override
+    protected void initData() {
     }
 
     @Override
@@ -170,7 +223,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     /**
      * 取货
      */
-    private void pick(int position, int positionX, int positionY, String snm, int goodNum) {
+    private void pick(int position, String hdCode, int positionX, int positionY, String snm, int goodNum) {
         ShipmentBean shipmentBean = new ShipmentBean();
         shipmentBean.setBoxid(1);
         shipmentBean.setChspeed(1);
@@ -198,9 +251,19 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                 @Override
                                 public void run() {
                                     count++;
+                                    //出货成功改变状态
+                                    hdDataBeans.get(position).setSuccess(true);
                                     chuhuoAdapter.refreshChuhuoStatus(position);
-                                    if (count == shipmentList.size()) {
-                                        mActivity.addFragment(new ChuhuoSuccessFragment());
+                                    //添加成功的数据到上传成功的model
+                                    UploadShipmentStatusBean.SuccessVendInfoVo successVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
+                                    successVendInfoVo.setHdId(hdCode);
+                                    successVendInfoVo.setNum(1);
+                                    successVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                    successVendInfoVos.add(successVendInfoVo);
+                                    if (count == hdDataBeans.size()) {
+                                        //处理上传接口
+                                        dealUpShipmenData();
+                                        //  mActivity.addFragment(new ChuhuoSuccessFragment());
                                     } else {
                                         mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
                                     }
@@ -215,8 +278,16 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     //上传错误代码到后台
                                     count++;
                                     UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
-                                    if (count == shipmentList.size()) {
-                                        mActivity.addFragment(new ChuhuoSuccessFragment());
+                                    //添加成功的数据到上传成功的model
+                                    UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo = new UploadShipmentStatusBean.FailVendInfoVo();
+                                    failVendInfoVo.setHdId(hdCode);
+                                    failVendInfoVo.setNum(1);
+                                    failVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                    failVendInfoVos.add(failVendInfoVo);
+                                    if (count == hdDataBeans.size()) {
+                                        //处理上传接口
+                                        dealUpShipmenData();
+                                        //  mActivity.addFragment(new ChuhuoSuccessFragment());
                                     } else {
                                         mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
                                     }
@@ -232,5 +303,39 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 处理取货后上传数据到后台
+     */
+    private void dealUpShipmenData() {
+        uploadShipmentStatusBean.setCtime(socketShipmentBean.getCtime());
+        uploadShipmentStatusBean.setDeviceID(PreferencesUtil.getString(Constants.VMCODE));
+        uploadShipmentStatusBean.setSnm(socketShipmentBean.getT().getSnm());
+        uploadShipmentStatusBean.setNum(socketShipmentBean.getT().getNum());
+        uploadShipmentStatusBean.setStatus("0");
+        uploadShipmentStatusBean.setFailVendInfoVoList(failVendInfoVos);
+        uploadShipmentStatusBean.setSuccessVendInfoVos(successVendInfoVos);
+        String upJson = new Gson().toJson(uploadShipmentStatusBean);
+        OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
+                .tag(this)
+                .upJson(upJson)
+                .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
+                        if (response.body().getCode() == 0) {
+                            mActivity.addFragment(new ChuhuoSuccessFragment());
+                            Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            mActivity.addFragment(new ChuhuoFailedFragment());
+                            Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<AllDataBean>> response) {
+                        ToastUtil.showLongToast(response.body().getMsg());
+                    }
+                });
     }
 }

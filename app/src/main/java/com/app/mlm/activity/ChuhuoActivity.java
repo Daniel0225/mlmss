@@ -62,6 +62,7 @@ public class ChuhuoActivity extends BaseActivity {
     private void initView() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, new ChuhuoFragment(json));
+        //transaction.replace(R.id.container, new ChuhuoFailedFragment());
         transaction.commit();
     }
 

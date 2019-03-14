@@ -20,8 +20,8 @@ public class MCBDetail {
         // }
         // 模拟测试下位机处理出货，并返回报告
         VendOutEntity vendout = new VendOutEntity();
-        vendout.setHdId(vend.getHd());
-        vendout.setNum(vend.getNum());
+        vendout.setHdId(Integer.parseInt(vend.getHd()));
+        vendout.setNum(Integer.parseInt(vend.getNum()));
         vendout.setSnm(vend.getSnm());
         vendout.setDeviceId(Util.getLoginPropertiesValue("machineId"));
         vendout.setDevice(1);

@@ -3,10 +3,17 @@ package com.app.mlm.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.utils.TimeCountUtilsFinish;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -14,6 +21,19 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
+    TimeCountUtilsFinish timeCount;
+    @Bind(R.id.ivBack)
+    ImageView ivBack;
+    @Bind(R.id.count_down)
+    TextView countDown;
+    @Bind(R.id.shibai)
+    ImageView shibai;
+    @Bind(R.id.tvCount)
+    TextView tvCount;
+    @Bind(R.id.tvCancel)
+    TextView tvCancel;
+    @Bind(R.id.tvCommit)
+    TextView tvCommit;
 
     public ChuhuoFailedFragment() {
     }
@@ -41,7 +61,7 @@ public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
 
     @Override
     protected void initData() {
-
+        startTime();
     }
 
     @Override
@@ -57,5 +77,55 @@ public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
     @Override
     public void onFinish() {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    /**
+     * 开启倒计时
+     */
+    public void startTime() {
+        if (timeCount == null) {
+            timeCount = new TimeCountUtilsFinish(mActivity, 10000, 1000, countDown);
+        }
+        timeCount.start(); //倒计时后重新获取
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timeCount != null) {
+            timeCount.cancel();
+        }
+    }
+
+    @OnClick({R.id.ivBack, R.id.tvCancel, R.id.tvCommit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ivBack:
+                mActivity.finish();
+                break;
+            case R.id.tvCancel:
+                if (timeCount != null) {
+                    timeCount.cancel();
+                }
+                mActivity.addFragment(new LianxikefuFragment());
+                break;
+            case R.id.tvCommit:
+                mActivity.finish();
+                break;
+        }
     }
 }
