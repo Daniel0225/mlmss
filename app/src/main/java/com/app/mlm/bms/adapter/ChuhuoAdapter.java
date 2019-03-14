@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.http.bean.HdDataBean;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 //        ProductInfo item = mList.get(position);
-//        Glide.with(MainApp.getAppInstance()).load(item.getMdseUrl()).into(holder.ivGoodsImg);
+        Glide.with(MainApp.getAppInstance()).load(mList.get(position).getShopUrl()).into(holder.ivGoodsImg);
         if(position < chuhuoPosition){//已出的
             holder.progressEndCircle.setVisibility(View.VISIBLE);
             holder.progressCircle.setVisibility(View.GONE);
