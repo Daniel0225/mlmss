@@ -155,7 +155,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 showGoodsListDialog();
                 break;
             case R.id.tvClear:
-                etAddCount.setText("0");
+                clearHuoDaoInfo();
                 break;
             case R.id.tvFillAll:
                 if (TextUtils.isEmpty(etCapcity.getText().toString()) || Integer.valueOf(etCapcity.getText().toString()) == 0) {
@@ -233,6 +233,46 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 refreshUi();
             }
         });
+    }
+
+    private void clearHuoDaoInfo(){
+        CommonDialog dialog = new CommonDialog(getContext(), "提示", "清空当前货道所有数据，是否清空", "清空", "取消");
+        dialog.setCommitClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearGoodsInfo();
+            }
+        }).setCancelClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void clearGoodsInfo(){
+//        mProductInfo = null;
+//        goodsInfo.setMdseUrl("empty");
+//        tvKucun.setText("0");
+//        tvGoodsName.setText("请选择商品");
+//        ivGoodsImg.setImageResource(R.drawable.empty);
+//        etLong.setText("");
+//        etWidth.setText("");
+//        etHight.setText("");
+//        etPrice.setText("");
+//        etCapcity.setText("");
+//        etAddCount.setText("");
+//        etLessCount.setText("");
+//        etSerialNo.setText("");
+        GoodsInfo goodsInfo = new GoodsInfo();
+        goodsInfo.setMdseName("请补货");
+        goodsInfo.setMdseUrl("empty");
+        goodsInfo.setMdsePrice("0");
+        productConfigListener.confirm(goodsInfo);
+        dismiss();
     }
 
     public interface ProductConfigListener {

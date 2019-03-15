@@ -89,11 +89,26 @@ public class ConfigHuodaoActivity extends BaseActivity {
             case R.id.cleanAll:
                 break;
             case R.id.fillAll:
+                fillAllGood();
                 break;
             case R.id.oneKey:
                 showOneKeyDialog();
                 break;
         }
+    }
+
+    private void fillAllGood(){
+        for (int i = 0; i < allDataList.size();i++){
+            List<GoodsInfo> list = allDataList.get(i);
+            for(int j = 0; j < list.size();j++){
+                GoodsInfo goodsInfo = list.get(j);
+                if(!goodsInfo.getMdseUrl().equals("empty")){
+                    goodsInfo.setClcCapacity(goodsInfo.getClCapacity());
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     /**
