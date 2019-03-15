@@ -1,5 +1,6 @@
 package com.app.mlm.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.activity.MainActivity;
 import com.app.mlm.utils.TimeCountUtilsFinish;
 
 import butterknife.Bind;
@@ -100,7 +102,8 @@ public class LianxikefuFragment extends ChuhuoBaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
-                mActivity.finish();
+                //mActivity.finish();
+                getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
             case R.id.tvCountDown:
                 break;

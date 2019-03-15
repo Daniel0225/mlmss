@@ -47,6 +47,10 @@ public class Constants {
     //出货后反馈给后台数据
     public static final String VENDREPORT = BASE_URL + "vendReport";
 
+    //断电保存数据
+    public static final String GETSHOPS = BASE_URL + "getShops";
+
+
     //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";
     //故障状态广播

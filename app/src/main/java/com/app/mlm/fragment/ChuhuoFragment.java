@@ -71,6 +71,11 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     UploadShipmentStatusBean uploadShipmentStatusBean = new UploadShipmentStatusBean();
     List<UploadShipmentStatusBean.SuccessVendInfoVo> successVendInfoVos = new ArrayList<UploadShipmentStatusBean.SuccessVendInfoVo>();
     List<UploadShipmentStatusBean.FailVendInfoVo> failVendInfoVos = new ArrayList<UploadShipmentStatusBean.FailVendInfoVo>();
+
+    //处理断电上传取货结果
+    UploadShipmentStatusBean outageUploadShipmentStatusBean = new UploadShipmentStatusBean();
+    List<UploadShipmentStatusBean.SuccessVendInfoVo> outageSuccessVendInfoVos = new ArrayList<UploadShipmentStatusBean.SuccessVendInfoVo>();
+    List<UploadShipmentStatusBean.FailVendInfoVo> outageFailVendInfoVos = new ArrayList<UploadShipmentStatusBean.FailVendInfoVo>();
     private ChuhuoAdapter chuhuoAdapter;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -287,6 +292,15 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     successVendInfoVo.setNum(1);
                                     successVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
                                     successVendInfoVos.add(successVendInfoVo);
+
+                                    //处理断电model
+                                    UploadShipmentStatusBean.SuccessVendInfoVo cSuccessVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
+                                    cSuccessVendInfoVo.setHdId(hdCode);
+                                    cSuccessVendInfoVo.setNum(1);
+                                    cSuccessVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                    outageSuccessVendInfoVos.add(successVendInfoVo);
+                                    saveData();
+
                                     if (count == hdDataBeans.size()) {
                                         //处理上传接口
                                         dealUpShipmenData();
@@ -314,6 +328,15 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     failVendInfoVo.setNum(1);
                                     failVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
                                     failVendInfoVos.add(failVendInfoVo);
+
+                                    //处理断电model
+                                    UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo1 = new UploadShipmentStatusBean.FailVendInfoVo();
+                                    failVendInfoVo1.setHdId(hdCode);
+                                    failVendInfoVo1.setNum(1);
+                                    failVendInfoVo1.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                    outageFailVendInfoVos.add(failVendInfoVo1);
+                                    saveData();
+
                                     if (count == hdDataBeans.size()) {
                                         //处理上传接口
                                         Log.e("上传", "上传第" + count + "失败");
@@ -338,6 +361,21 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     }
 
     /**
+     * 处理断电数据保存
+     */
+    private void saveData() {
+        outageUploadShipmentStatusBean.setCtime(socketShipmentBean.getCtime());
+        outageUploadShipmentStatusBean.setDeviceID(PreferencesUtil.getString(Constants.VMCODE));
+        outageUploadShipmentStatusBean.setSnm(socketShipmentBean.getT().getSnm());
+        outageUploadShipmentStatusBean.setNum(socketShipmentBean.getT().getNum());
+        outageUploadShipmentStatusBean.setStatus("0");
+        outageUploadShipmentStatusBean.setFailVendInfoVoList(outageFailVendInfoVos);
+        outageUploadShipmentStatusBean.setSuccessVendInfoVos(outageSuccessVendInfoVos);
+        String upJson = new Gson().toJson(uploadShipmentStatusBean);
+        PreferencesUtil.putString(Constants.GETSHOPS, upJson);
+    }
+
+    /**
      * 处理取货后上传数据到后台
      */
     private void dealUpShipmenData() {
@@ -356,6 +394,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                     @Override
                     public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
                         if (response.body().getCode() == 0) {
+                            //如果数据上传完成则清空
+                            PreferencesUtil.putString(Constants.GETSHOPS, "");
                             if (uploadShipmentStatusBean.getFailVendInfoVoList().size() > 0) {
                                 mActivity.addFragment(new ChuhuoFailedFragment());
                                 Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();

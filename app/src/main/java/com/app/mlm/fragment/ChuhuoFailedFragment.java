@@ -1,5 +1,6 @@
 package com.app.mlm.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mlm.R;
+import com.app.mlm.activity.MainActivity;
 import com.app.mlm.utils.TimeCountUtilsFinish;
 
 import butterknife.Bind;
@@ -115,7 +117,8 @@ public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
-                mActivity.finish();
+                // mActivity.finish();
+                getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
             case R.id.tvCancel:
                 if (timeCount != null) {
@@ -124,7 +127,8 @@ public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
                 mActivity.addFragment(new LianxikefuFragment());
                 break;
             case R.id.tvCommit:
-                mActivity.finish();
+                // mActivity.finish();
+                getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
         }
     }

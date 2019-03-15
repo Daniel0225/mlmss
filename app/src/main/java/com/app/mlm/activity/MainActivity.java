@@ -21,9 +21,12 @@ import com.app.mlm.fragment.MainFragment;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
+import com.app.mlm.http.bean.AllDataBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 import com.app.mlm.widget.CoustomTopView;
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.HttpParams;
@@ -86,6 +89,35 @@ public class MainActivity extends BaseActivity {
                             PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             setTopViewValue(adBeanList);
                         }
+                    }
+                });
+        //处理断电数据
+        if (!TextUtils.isEmpty(PreferencesUtil.getString(Constants.GETSHOPS))) {
+            dealUpShipmenData();
+        }
+    }
+
+    /**
+     * 处理断电取货后上传数据到后台
+     */
+    private void dealUpShipmenData() {
+        String upJson = new Gson().toJson(PreferencesUtil.getString(Constants.GETSHOPS));
+        OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
+                .tag(this)
+                .upJson(upJson)
+                .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
+                        if (response.body().getCode() == 0) {
+                            //如果数据上传完成则清空
+                            PreferencesUtil.putString(Constants.GETSHOPS, "");
+                        } else {
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<AllDataBean>> response) {
+                        ToastUtil.showLongToast(response.body().getMsg());
                     }
                 });
     }

@@ -39,7 +39,9 @@
             </intent-filter>
         </activity>
         <!-- 首页 -->
-        <activity android:name=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.ScreenProtectActivity" />
         <activity android:name=".activity.order.OrderPayActivity" />
         <activity android:name=".bms.activity.BackgroundManangerSystemActivity" />
