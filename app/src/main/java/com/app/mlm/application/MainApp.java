@@ -20,6 +20,7 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
+import com.app.mlm.utils.CrashHandler;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
@@ -100,6 +101,7 @@ public class MainApp extends Application {
         initServerState();
         initRxHttp();
         initGreenDao();
+        CrashHandler.getInstance().init(this);
         myclient = new MyClient();
         myclient.connect();
       /*  Intent service = new Intent(this, MlmServiceConfigure.class);

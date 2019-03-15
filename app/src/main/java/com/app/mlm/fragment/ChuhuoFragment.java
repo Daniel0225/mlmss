@@ -76,7 +76,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
-                    Toast.makeText(getContext(), "开始取第" + count + "个", Toast.LENGTH_SHORT).show();
+                    Log.e("开始取第", "开始取第" + count + "个");
                     countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
                     String hdCodeT = hdDataBeans.get(count).getHdCode();
                     if (!TextUtils.isEmpty(hdCodeT)) {
@@ -276,8 +276,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Log.e("出货成功", "取货第" + count + "成功");
                                     Toast.makeText(getContext(), "取货第" + count + "成功", Toast.LENGTH_SHORT).show();
-                                    count++;
                                     //出货成功改变状态
                                     hdDataBeans.get(position).setSuccess(true);
                                     chuhuoAdapter.refreshChuhuoStatus(position);
@@ -292,6 +292,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         dealUpShipmenData();
                                         //  mActivity.addFragment(new ChuhuoSuccessFragment());
                                     } else {
+                                        count++;
                                         mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
                                     }
 
@@ -305,7 +306,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                 public void run() {
                                     //上传错误代码到后台
                                     Toast.makeText(getContext(), "取货第" + count + "失败", Toast.LENGTH_SHORT).show();
-                                    count++;
+                                    Log.e("出货失败", "取货第" + count + "失败");
                                     UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
                                     //添加成功的数据到上传成功的model
                                     UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo = new UploadShipmentStatusBean.FailVendInfoVo();
@@ -315,9 +316,11 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     failVendInfoVos.add(failVendInfoVo);
                                     if (count == hdDataBeans.size()) {
                                         //处理上传接口
+                                        Log.e("上传", "上传第" + count + "失败");
                                         dealUpShipmenData();
                                         //  mActivity.addFragment(new ChuhuoSuccessFragment());
                                     } else {
+                                        count++;
                                         mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
                                     }
                                 }
