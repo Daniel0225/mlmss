@@ -356,8 +356,14 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                     @Override
                     public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
                         if (response.body().getCode() == 0) {
-                            mActivity.addFragment(new ChuhuoSuccessFragment());
-                            Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            if (uploadShipmentStatusBean.getFailVendInfoVoList().size() > 0) {
+                                mActivity.addFragment(new ChuhuoFailedFragment());
+                                Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                mActivity.addFragment(new ChuhuoSuccessFragment());
+                                Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
                             mActivity.addFragment(new ChuhuoFailedFragment());
                             Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();

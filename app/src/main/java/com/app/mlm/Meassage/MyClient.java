@@ -239,12 +239,12 @@ public class MyClient {
                         } else if (vo.getBusType().equals("vend")) {// 出货指令
                            /* AndroidVend vend = JSON.parseObject(vo.getT(),
                                     AndroidVend.class);*/
-                            //rebackShipment(obj.toString());
+                            rebackShipment(obj.toString());
                             Log.d("main", "接收到出货指令:" + obj.toString());
-                            Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
+                           /* Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
                             intent.putExtra("shipment", obj.toString());
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);
+                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);*/
                        /*     StringBuffer buf = new StringBuffer();
                             buf.append(Util.getCurDate() + " ");
                             buf.append("out order:");
