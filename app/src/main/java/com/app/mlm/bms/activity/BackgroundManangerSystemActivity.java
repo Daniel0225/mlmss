@@ -58,7 +58,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (TextUtils.isEmpty(PreferencesUtil.getString("vmName"))) {
+        if (!TextUtils.isEmpty(PreferencesUtil.getString("vmName"))) {
             location.setText(PreferencesUtil.getString("vmName"));
         }
     }

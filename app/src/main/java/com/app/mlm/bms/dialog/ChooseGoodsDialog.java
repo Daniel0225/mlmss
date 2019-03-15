@@ -123,6 +123,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         brandView.setOnClickListener(this);
         typeTextView.setOnClickListener(this);
         packTextView.setOnClickListener(this);
+        findViewById(R.id.cancel_search).setOnClickListener(this);
 
         getAllTypeInfo();
 
@@ -196,6 +197,14 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
                 goodsTypeSelectBean.setType(2);
                 goodsTypeAdapter = new ChooseGoodsTypeAdapter(mContext, allTypeInfoResponse.getPack(), customClickListener, goodsTypeSelectBean);
                 selectGridView.setAdapter(goodsTypeAdapter);
+                break;
+
+            case R.id.cancel_search:
+                typeView.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.GONE);
+                data.clear();
+                data.addAll(originData);
+                adapter.notifyDataSetChanged();
                 break;
         }
     }

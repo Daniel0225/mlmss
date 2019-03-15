@@ -147,6 +147,12 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         getUpJson();
                         finish();
                     }
+                })
+                .setCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
                 });
         dialog.show();
     }
