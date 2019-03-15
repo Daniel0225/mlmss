@@ -46,6 +46,7 @@ import okhttp3.OkHttpClient;
 public class MainApp extends Application {
     public static BVMAidlInterface bvmAidlInterface;
     public static ArrayList<GoodsInfo> shopCarList = new ArrayList<>();
+    public static MyClient myclient;
     private static MainApp appInstance;
     public SharedPreferences mShard;
     public ServiceConnection connection = new ServiceConnection() {
@@ -65,7 +66,6 @@ public class MainApp extends Application {
 
         }
     };
-    MyClient myclient;
     private DaoSession daoSession;
     //   private MyReceiver receiver;
 

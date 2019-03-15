@@ -7,11 +7,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.app.mlm.application.MainApp;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,8 +62,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
     public static String getGlobalpath() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "crash" + File.separator;
+        return MainApp.getAppInstance().getApplicationContext().getExternalCacheDir().getPath();
+        /*return Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "crash" + File.separator;*/
     }
 
     public static void setTag(String tag) {

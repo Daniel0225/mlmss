@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
 import com.app.mlm.bms.activity.ActivationActivity;
@@ -28,7 +29,7 @@ public class StartupActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (TextUtils.isEmpty(PreferencesUtil.getString("vmcode"))) {
+                if (TextUtils.isEmpty(PreferencesUtil.getString(Constants.VMCODE))) {
                     ActivationActivity.start(mContext);
                 } else {
                     MainActivity.start(mContext);
