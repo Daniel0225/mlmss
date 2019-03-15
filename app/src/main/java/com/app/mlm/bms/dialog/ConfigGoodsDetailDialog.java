@@ -92,10 +92,14 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
             ivGoodsImg.setImageResource(R.drawable.empty);
         } else {
             Glide.with(MainApp.getAppInstance()).load(goodsInfo.getMdseUrl()).into(ivGoodsImg);
+            etLong.setText(String.valueOf(goodsInfo.getClong()));
+            etWidth.setText(String.valueOf(goodsInfo.getCwidth()));
+            etHight.setText(String.valueOf(goodsInfo.getCheight()));
+            etPrice.setText(String.valueOf(goodsInfo.getMdsePrice()));
+            etCapcity.setText(String.valueOf(goodsInfo.getClCapacity()));
+            etSerialNo.setText(goodsInfo.getPriductBatch());
+            etLessCount.setText(goodsInfo.getThreshold());
         }
-        etPrice.setText(String.valueOf(goodsInfo.getMdsePrice()));
-        etCapcity.setText(String.valueOf(goodsInfo.getClcCapacity()));
-
     }
 
     @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll, R.id.ivGoodsImg,
@@ -122,6 +126,10 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     ToastUtil.showLongCenterToast("请输入补货数量");
                     return;
                 }
+                if(goodsInfo.getClcCapacity() + Integer.valueOf(etAddCount.getText().toString().trim()) > goodsInfo.getClCapacity()){
+                    ToastUtil.showLongCenterToast("补货数量超出最大可补货数");
+                    return;
+                }
                 if (TextUtils.isEmpty(etLessCount.getText().toString())) {
                     ToastUtil.showLongCenterToast("请输入最低库存数");
                     return;
@@ -136,12 +144,12 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     goodsInfo.setMdseBrand(mProductInfo.getMdseBrand());
                     goodsInfo.setMdsePack(mProductInfo.getMdsePack());
 //                goodsInfo.setMerchantType(mProductInfo.getMer);
-                    goodsInfo.setMdsePrice(String.valueOf(mProductInfo.getMdsePrice()));
                 }
+                goodsInfo.setMdsePrice(String.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
                 goodsInfo.setCheight(TextUtils.isEmpty(etHight.getText().toString().trim()) ? 0 : Double.valueOf(etHight.getText().toString().trim()));
                 goodsInfo.setClong(TextUtils.isEmpty(etLong.getText().toString().trim()) ? 0 : Double.valueOf(etLong.getText().toString().trim()));
                 goodsInfo.setCwidth(TextUtils.isEmpty(etWidth.getText().toString().trim()) ? 0 : Double.valueOf(etWidth.getText().toString().trim()));
-                goodsInfo.setClcCapacity(Integer.valueOf(etAddCount.getText().toString().trim()));
+                goodsInfo.setClcCapacity(goodsInfo.getClcCapacity() + Integer.valueOf(etAddCount.getText().toString().trim()));
                 goodsInfo.setRealPrice(Double.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
                 goodsInfo.setClCapacity(Integer.valueOf(etCapcity.getText().toString().trim()));
                 goodsInfo.setPriductBatch(etSerialNo.getText().toString().trim());
@@ -155,13 +163,14 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 showGoodsListDialog();
                 break;
             case R.id.tvClear:
-                etAddCount.setText("0");
+                clearHuoDaoInfo();
                 break;
             case R.id.tvFillAll:
                 if (TextUtils.isEmpty(etCapcity.getText().toString()) || Integer.valueOf(etCapcity.getText().toString()) == 0) {
                     ToastUtil.showLongCenterToast("请设置货道容量");
                 } else {
-                    etAddCount.setText(etCapcity.getText().toString());
+                    int capcity = Integer.valueOf(etCapcity.getText().toString());
+                    etAddCount.setText(String.valueOf(capcity - goodsInfo.getClcCapacity()));
                 }
                 break;
             case R.id.capacity_jian:
@@ -180,12 +189,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 break;
             case R.id.buhuo_jian:
                 int buhuoNum = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
-                if (buhuoNum > 0) {
-                    etCapcity.setText(String.valueOf(buhuoNum - 1));
-                }
-                if (buhuoNum == 1) {
-                    buhuoJian.setImageResource(R.drawable.jian_goods_nor);
-                }
+                etAddCount.setText(String.valueOf(buhuoNum - 1));
                 break;
             case R.id.buhuo_add:
                 int buhuoNum2 = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
@@ -233,6 +237,46 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 refreshUi();
             }
         });
+    }
+
+    private void clearHuoDaoInfo(){
+        CommonDialog dialog = new CommonDialog(getContext(), "提示", "清空当前货道所有数据，是否清空", "清空", "取消");
+        dialog.setCommitClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearGoodsInfo();
+            }
+        }).setCancelClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void clearGoodsInfo(){
+//        mProductInfo = null;
+//        goodsInfo.setMdseUrl("empty");
+//        tvKucun.setText("0");
+//        tvGoodsName.setText("请选择商品");
+//        ivGoodsImg.setImageResource(R.drawable.empty);
+//        etLong.setText("");
+//        etWidth.setText("");
+//        etHight.setText("");
+//        etPrice.setText("");
+//        etCapcity.setText("");
+//        etAddCount.setText("");
+//        etLessCount.setText("");
+//        etSerialNo.setText("");
+        GoodsInfo goodsInfo = new GoodsInfo();
+        goodsInfo.setMdseName("请补货");
+        goodsInfo.setMdseUrl("empty");
+        goodsInfo.setMdsePrice("0");
+        productConfigListener.confirm(goodsInfo);
+        dismiss();
     }
 
     public interface ProductConfigListener {

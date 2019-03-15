@@ -40,6 +40,7 @@
             android:src="@drawable/search_nor"/>
 
         <TextView
+            android:id="@+id/cancel_search"
             android:layout_width="100px"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"

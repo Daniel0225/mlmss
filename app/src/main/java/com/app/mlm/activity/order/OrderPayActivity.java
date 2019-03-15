@@ -65,7 +65,7 @@ public class OrderPayActivity extends AppCompatActivity {
         initPayAdImage();
         getPayInfo();
         couponDialog = new CouponDialog(this);
-        couponDialog.show();
+//        couponDialog.show();
     }
 
     public void init() {

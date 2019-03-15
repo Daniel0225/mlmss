@@ -240,7 +240,7 @@
             android:background="@drawable/shape_bluelight_line40"
             android:gravity="center"
             android:hint="请输入补货数量"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:text="0"
             android:textColor="#D03B02"
             android:textSize="28px" />
@@ -251,7 +251,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="228px"
-            android:src="@drawable/jian_goods_nor" />
+            android:src="@drawable/jian_goods" />
 
         <ImageView
             android:id="@+id/buhuo_add"
