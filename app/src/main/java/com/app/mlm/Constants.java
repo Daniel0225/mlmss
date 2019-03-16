@@ -36,6 +36,7 @@ public class Constants {
     public static final String GET_ALL_TYPE = BASE_URL + "getAllType";//商品类型
     public static final String SYN_CHANNEL = BASE_URL + "syncChannel";//货道信息同步接口
     public static final String WXPAY = "http://47.106.216.231:8083/api/wxpay";//支付http://47.106.216.231:8083/api/wxpay
+    public static final String ALIPAY = "http://47.106.216.231:8082/alipay";//支付 http://47.106.216.231:8082/alipay支付宝
     public static final String SYNC_COUNTER = BASE_URL + "syncCounter";//货柜信息接口
     public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步到上位机
     public static final String THERMAL = BASE_URL + "syncThermal";//温度接口
