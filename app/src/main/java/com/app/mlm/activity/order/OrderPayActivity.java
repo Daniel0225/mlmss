@@ -91,7 +91,7 @@ public class OrderPayActivity extends AppCompatActivity {
         findViewById(R.id.show_coupon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                couponDialog.show();
+//                couponDialog.show();
             }
         });
         startTime();

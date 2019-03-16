@@ -213,5 +213,6 @@
         android:layout_height="144px"
         android:layout_gravity="center"
         android:background="@drawable/youhuiquan"
-        android:scaleType="center" />
+        android:scaleType="center"
+        android:visibility="gone" />
 </LinearLayout>

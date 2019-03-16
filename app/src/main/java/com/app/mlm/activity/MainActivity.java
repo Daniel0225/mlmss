@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
-import com.app.mlm.bean.AddShopCarEvent;
+import com.app.mlm.bean.AddInfoEvent;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
 import com.app.mlm.http.BaseResponse;
@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity {
         initView();
         //  startService();
         // bindService();
-        //  PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
+        PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)
@@ -131,11 +131,13 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         topView.playerPause();
+        Log.e("Tag", "pause");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("Tag", "onResume");
         topView.playerRestart();
     }
 
@@ -147,12 +149,13 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread)
-    public void onMainThread(AddShopCarEvent addShopCarEvent) {
+    public void onMainThread(AddInfoEvent addInfoEvent) {
         String adString = PreferencesUtil.getString(Constants.ADDATA);
         List<AdBean> adBeans = new ArrayList<>();
         if (!TextUtils.isEmpty(adString)) {
             adBeans = FastJsonUtil.getObjects(adString, AdBean.class);
         }
+        topView.playerStop();
         setTopViewValue(adBeans);
     }
 

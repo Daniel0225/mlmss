@@ -17,6 +17,7 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.CounterBean;
+import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PinyinComparator;
@@ -81,6 +82,11 @@ public class ConfigSyncActivity extends BaseActivity {
                 getAddInfo();
                 break;
             case R.id.syncHuodao:
+                String layerString = PreferencesUtil.getString("layer");
+                if (TextUtils.isEmpty(layerString)) {
+                    ToastUtil.showLongCenterToast("请先初始化货道");
+                    return;
+                }
                 syncChannel();
                 break;
             case R.id.syncHuogui:
@@ -181,15 +187,6 @@ public class ConfigSyncActivity extends BaseActivity {
     private void saveProductInfo(List<ProductInfo> list) {
         LitePal.deleteAll(ProductInfo.class);
 
-//        SaveExecutor saveExecutor = LitePal.saveAllAsync(list);
-//        saveExecutor.listen(new SaveCallback() {
-//            @Override
-//            public void onFinish(boolean success) {
-//                dialog.setProgress(100);
-//                dialog.dismiss();
-//                ToastUtil.showLongToast("同步完成");
-//            }
-//        });
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -232,8 +229,6 @@ public class ConfigSyncActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<BaseResponse<List<GoodsInfo>>> response) {
                         updateChannelInfo(response.body().getData());
-                        DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
-                        dialog1.show();
                     }
                 });
     }
@@ -243,7 +238,7 @@ public class ConfigSyncActivity extends BaseActivity {
 
             List<ProductInfo> productInfos = LitePal.where("mdseId = ?", String.valueOf(goodsInfo.getMdseId())).find(ProductInfo.class);
 
-            if (productInfos.size() > 1) {
+            if (productInfos.size() > 0) {
                 ProductInfo productInfo = productInfos.get(0);
                 goodsInfo.setMdsePack(productInfo.getMdsePack());
                 goodsInfo.setMdseBrand(productInfo.getMdseBrand());
@@ -255,6 +250,66 @@ public class ConfigSyncActivity extends BaseActivity {
             }
         }
 
+        List<List<GoodsInfo>> newHuoDaoList = getData(getHuoDaoData());
+        for (int i = 0; i < newHuoDaoList.size(); i++) {
+            List<GoodsInfo> itemList = newHuoDaoList.get(i);
+            for (int j = 0; j < itemList.size(); j++) {
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append((i + 1));
+                if (j < 10) {
+                    stringBuffer.append(0);
+                }
+                stringBuffer.append(j + 1);
+                String clCode = stringBuffer.toString();
+                for (int h = 0; h < list.size(); h++) {
+                    GoodsInfo goods = list.get(h);
+                    if (goods.getClCode().equals(clCode)) {
+                        itemList.set(j, goods);
+                    }
+                }
+            }
+        }
+
+        HuodaoBean huodaoBean = new HuodaoBean(newHuoDaoList);
+        PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
+
+        DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
+        dialog1.show();
+    }
+
+    /**
+     * 解析机器层数据
+     */
+    private String[] getHuoDaoData() {
+        String layerData = PreferencesUtil.getString("layer");
+        if (TextUtils.isEmpty(layerData)) {
+            return new String[]{};
+        } else {
+            layerData = layerData.replace("[", "").replace("]", "").replace(" ", "");
+            Log.e("Tag", "layerData " + layerData);
+            String[] layers = layerData.split(",");
+            return layers;
+        }
+    }
+
+    private List<List<GoodsInfo>> getData(String[] layers) {
+        List<List<GoodsInfo>> list = new ArrayList<>();
+        for (int i = layers.length - 1; i >= 0; i--) {
+            list.add(getDefaultData(Integer.valueOf(layers[i])));
+        }
+        return list;
+    }
+
+    private List<GoodsInfo> getDefaultData(int column) {//传入当前行 有几列
+        List<GoodsInfo> goodsInfoList = new ArrayList<>();
+        for (int i = 0; i < column; i++) {
+            GoodsInfo goodsInfo = new GoodsInfo();
+            goodsInfo.setMdseName("请补货");
+            goodsInfo.setMdseUrl("empty");
+            goodsInfo.setMdsePrice("0");
+            goodsInfoList.add(goodsInfo);
+        }
+        return goodsInfoList;
     }
 
     /**

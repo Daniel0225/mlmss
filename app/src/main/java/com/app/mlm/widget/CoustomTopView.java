@@ -104,6 +104,10 @@ public class CoustomTopView extends RelativeLayout implements PlaybackPreparer, 
         }
     }
 
+    public void playerStop() {
+        playerView.getPlayer().stop();
+    }
+
     private void initJpgAndGif() {
         imageView.setVisibility(View.VISIBLE);
         GlideApp
