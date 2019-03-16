@@ -151,6 +151,18 @@ public class OrderPayActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        OkGo.<BaseResponse<WxPayBean>>post(Constants.ALIPAY)
+                .tag(this)
+                .upJson(jsonString)
+                .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
+                        if (response.body().getCode() == 0) {
+                            Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(zhifubao);
+                        }
+                    }
+                });
     }
 
     @Override
