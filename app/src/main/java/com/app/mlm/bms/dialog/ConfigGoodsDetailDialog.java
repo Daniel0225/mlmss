@@ -103,12 +103,16 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
             etSerialNo.setText(goodsInfo.getPriductBatch());
             etLessCount.setText(goodsInfo.getThreshold());
 
-            List<Integer> lockIds = FastJsonUtil.getObjects(PreferencesUtil.getString(Constants.LOCK_IDS), Integer.class);
-            for (Integer lockId : lockIds) {
-                if (goodsInfo.getMdseId() == lockId) {
-                    etPrice.setEnabled(false);
+            String cacheString = PreferencesUtil.getString(Constants.LOCK_IDS);
+            if (!TextUtils.isEmpty(cacheString)) {
+                List<Integer> lockIds = FastJsonUtil.getObjects(PreferencesUtil.getString(Constants.LOCK_IDS), Integer.class);
+                for (Integer lockId : lockIds) {
+                    if (goodsInfo.getMdseId() == lockId) {
+                        etPrice.setEnabled(false);
+                    }
                 }
             }
+
         }
 
     }
@@ -237,12 +241,16 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         Glide.with(getContext()).load(mProductInfo.getMdseUrl()).into(ivGoodsImg);
         etPrice.setText("¥" + String.valueOf(mProductInfo.getMdsePrice()));
 
-        List<Integer> lockIds = FastJsonUtil.getObjects(PreferencesUtil.getString(Constants.LOCK_IDS), Integer.class);
-        for (Integer lockId : lockIds) {
-            if (etPrice.getId() == lockId) {
-                etPrice.setEnabled(false);
+        String cacheString = PreferencesUtil.getString(Constants.LOCK_IDS);
+        if (!TextUtils.isEmpty(cacheString)) {
+            List<Integer> lockIds = FastJsonUtil.getObjects(cacheString, Integer.class);
+            for (Integer lockId : lockIds) {
+                if (mProductInfo.getMdseId() == lockId) {
+                    etPrice.setEnabled(false);
+                }
             }
         }
+
     }
 
     private void showGoodsListDialog() {
