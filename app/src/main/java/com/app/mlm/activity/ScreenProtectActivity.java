@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
@@ -69,6 +70,7 @@ public class ScreenProtectActivity extends AppCompatActivity {
             }
         }
         Glide.with(this).load(getResources().getDrawable(R.drawable.banner)).into(bannerView);
+        MainApp.shopCarList.clear();
     }
 
     private boolean playLocalFile(String fileName) {

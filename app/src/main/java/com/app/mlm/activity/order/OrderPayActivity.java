@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
@@ -54,7 +55,6 @@ public class OrderPayActivity extends AppCompatActivity {
     private String totalPrice;
     private Integer totalNum;
     private TextView originPriceView;
-    private ArrayList<GoodsInfo> data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class OrderPayActivity extends AppCompatActivity {
     public void init() {
         totalNum = getIntent().getIntExtra(Constants.TOTAL_NUM, 1);
         totalPrice = getIntent().getStringExtra(Constants.TOTAL_PRICE);
-        data = (ArrayList<GoodsInfo>) getIntent().getSerializableExtra("goods");
         imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
         totalPriceView = findViewById(R.id.total_price);
@@ -124,7 +123,7 @@ public class OrderPayActivity extends AppCompatActivity {
     private void getPayInfo() {
 
         List<CreateWxOrderReqVo> list = new ArrayList<>();
-        for (GoodsInfo goodsInfo : data) {
+        for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             for (int i = 0; i < goodsInfo.getShopCarNum(); i++) {
                 CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE),
                         String.valueOf(goodsInfo.getMdseId()), goodsInfo.getClCode());

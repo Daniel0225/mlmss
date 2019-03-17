@@ -12,8 +12,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.app.mlm.Constants;
 import com.app.mlm.Meassage.MyClient;
 import com.app.mlm.R;
 import com.app.mlm.bean.GoodsInfo;
@@ -21,6 +23,8 @@ import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
 import com.app.mlm.utils.CrashHandler;
+import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.PreferencesUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
@@ -31,6 +35,7 @@ import com.snbc.bvm.BVMAidlInterface;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -45,7 +50,7 @@ import okhttp3.OkHttpClient;
  */
 public class MainApp extends Application {
     public static BVMAidlInterface bvmAidlInterface;
-    public static ArrayList<GoodsInfo> shopCarList = new ArrayList<>();
+    public static List<GoodsInfo> shopCarList;
     public static MyClient myclient;
     private static MainApp appInstance;
     public SharedPreferences mShard;
@@ -111,9 +116,14 @@ public class MainApp extends Application {
         intent.setAction("android.intent.action.SnbcBvmService");
         intent.setPackage("com.snbc.bvm");
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
-
-
+        String shopCarString = PreferencesUtil.getString(Constants.SHOP_CAR);
+        if (TextUtils.isEmpty(shopCarString)) {
+            shopCarList = new ArrayList<>();
+        } else {
+            shopCarList = FastJsonUtil.getObjects(shopCarString, GoodsInfo.class);
+        }
     }
+
 
     private void initOkGo() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -168,6 +178,7 @@ public class MainApp extends Application {
     public void onTerminate() {
         super.onTerminate();
         //unregisterReceiver(receiver);
+        PreferencesUtil.putString(Constants.SHOP_CAR, FastJsonUtil.createJsonString(shopCarList));
     }
 
     /**

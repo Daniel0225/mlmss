@@ -17,8 +17,6 @@ import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
 
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,7 +48,6 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
     @Bind(R.id.no_empty_contain)
     View noEmptyContain;
 
-    private ArrayList<GoodsInfo> data = new ArrayList<>();
     private ShopCartListAdapter adapter;
     private double totalPrice = 0;
     private int totalNum = 0;
@@ -62,11 +59,10 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
 
     @Override
     public void initView() {
-        data = MainApp.shopCarList;
-        adapter = new ShopCartListAdapter(getContext(), data, this);
+        adapter = new ShopCartListAdapter(getContext(), MainApp.shopCarList, this);
         listView.setAdapter(adapter);
 
-        if (data.size() == 0) {
+        if (MainApp.shopCarList.size() == 0) {
             emptyContain.setVisibility(View.VISIBLE);
             noEmptyContain.setVisibility(View.GONE);
         } else {
@@ -76,10 +72,16 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
         }
     }
 
+    public void showShopCarDialog() {
+        adapter.notifyDataSetChanged();
+        refreshShopCarInfo();
+        show();
+    }
+
     private void refreshShopCarInfo() {
         totalNum = 0;
         totalPrice = 0;
-        for (GoodsInfo goodsInfo : data) {
+        for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
             totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
         }
@@ -104,7 +106,6 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
                 intent.putExtra(Constants.TOTAL_NUM, totalNum);
                 intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(totalPrice));
-                intent.putExtra("goods", data);
                 getContext().startActivity(intent);
                 break;
             case R.id.to_pick:
@@ -119,31 +120,28 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
 
     @Override
     public void addOne(int position) {
-        int originNum = data.get(position).getShopCarNum();
-        data.get(position).setShopCarNum(originNum + 1);
+        int originNum = MainApp.shopCarList.get(position).getShopCarNum();
+        MainApp.shopCarList.get(position).setShopCarNum(originNum + 1);
         adapter.notifyDataSetChanged();
         refreshShopCarInfo();
-        MainApp.shopCarList = data;
         EventBus.getDefault().post(new AddShopCarEvent());
     }
 
     @Override
     public void reduceOne(int position) {
-        int originNum = data.get(position).getShopCarNum();
-        data.get(position).setShopCarNum(originNum - 1);
+        int originNum = MainApp.shopCarList.get(position).getShopCarNum();
+        MainApp.shopCarList.get(position).setShopCarNum(originNum - 1);
         adapter.notifyDataSetChanged();
         refreshShopCarInfo();
-        MainApp.shopCarList = data;
         EventBus.getDefault().post(new AddShopCarEvent());
     }
 
     @Override
     public void deleteOne(int position) {
-        data.remove(position);
+        MainApp.shopCarList.remove(position);
         adapter.notifyDataSetChanged();
         refreshShopCarInfo();
-        MainApp.shopCarList = data;
-        if (data.size() == 0) {
+        if (MainApp.shopCarList.size() == 0) {
             dismiss();
         }
         EventBus.getDefault().post(new AddShopCarEvent());
