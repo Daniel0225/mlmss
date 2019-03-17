@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.app.mlm.R;
 import com.app.mlm.activity.MainActivity;
+import com.app.mlm.bms.activity.ActivationActivity;
 import com.app.mlm.dialog.BaseDialog;
 
 import butterknife.Bind;
@@ -29,6 +30,7 @@ public class ActivationDialog extends BaseDialog {
     TextView button;
     @Bind(R.id.ivClose)
     ImageView ivClose;
+    ActivationActivity activationActivity;
     private String mDescription, mButton;
     private int iconId;
 
@@ -36,8 +38,9 @@ public class ActivationDialog extends BaseDialog {
         super(context, R.layout.activation_done, Gravity.CENTER);
     }
 
-    public ActivationDialog(Context context, String description, String button, int iconId) {
-        super(context, R.layout.activation_done, Gravity.CENTER);
+    public ActivationDialog(ActivationActivity activationActivity, String description, String button, int iconId) {
+        super(activationActivity, R.layout.activation_done, Gravity.CENTER);
+        this.activationActivity = activationActivity;
         this.mDescription = description;
         this.mButton = button;
         this.iconId = iconId;
@@ -61,7 +64,8 @@ public class ActivationDialog extends BaseDialog {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button:
-
+                dismiss();
+                MainActivity.start(mContext);
             case R.id.ivClose:
                 dismiss();
                 break;
