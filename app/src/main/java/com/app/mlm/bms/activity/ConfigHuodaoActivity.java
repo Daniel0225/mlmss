@@ -22,9 +22,11 @@ import com.app.mlm.http.bean.SyncChannelListVo;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
 import com.app.mlm.widget.SpacesItemDecoration;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     int code = 0;
 
     List<List<GoodsInfo>> allDataList = new ArrayList<>();
+    private List<Integer> lockIds = new ArrayList<>();
 
     @Override
     protected int provideLayoutResId() {
@@ -81,6 +84,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        getLockInfo();
     }
 
     @OnClick({R.id.cleanAll, R.id.fillAll, R.id.oneKey})
@@ -302,12 +306,10 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 }
             }
         }
-        SyncChannelListVo syncChannelListVo = new SyncChannelListVo(list, "0000051");
+        SyncChannelListVo syncChannelListVo = new SyncChannelListVo(list, PreferencesUtil.getString(Constants.VMCODE));
         String upJsonString = FastJsonUtil.createJsonString(syncChannelListVo);
         Log.e("Tag", upJsonString);
 
-        HuodaoBean huodaoBean = new HuodaoBean(allDataList);
-        PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
         SynChannel(upJsonString);
 
         return upJsonString;
@@ -321,6 +323,10 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 .execute(new JsonCallBack<BaseResponse>() {
                     @Override
                     public void onSuccess(Response<BaseResponse> response) {
+                        if (response.body().getCode() == 0) {
+                            HuodaoBean huodaoBean = new HuodaoBean(allDataList);
+                            PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
+                        }
                     }
                 });
     }
@@ -338,6 +344,28 @@ public class ConfigHuodaoActivity extends BaseActivity {
             String[] layers = layerData.split(",");
             return layers;
         }
+    }
+
+    private void getLockInfo() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<Integer>>>get(Constants.LOCKVMMDSELIST)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<List<Integer>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<Integer>>> response) {
+                        if (response.body().getCode() == 0) {
+                            lockIds = response.body().getData();
+                            PreferencesUtil.putString(Constants.LOCK_IDS, FastJsonUtil.createJsonString(lockIds));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<Integer>>> response) {
+                        ToastUtil.showLongCenterToast("请求数据失败");
+                    }
+                });
     }
 
 }

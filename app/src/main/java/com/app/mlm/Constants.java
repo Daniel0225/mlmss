@@ -15,6 +15,7 @@ public class Constants {
     public static final String ADDATA = "ad_data";
     public static final String DOWN_LOAD = "down_load";
     public static final String SHOP_CAR = "shop_car";
+    public static final String LOCK_IDS = "lock_ids";
     //存储温度的最高和最低温度
     public static final String CHUHUO_WENDU = "chuhuo_wendu";//
     public static final String LOW_TEMP = "low_temp";//最低温度

@@ -14,9 +14,12 @@ import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
 import com.app.mlm.http.bean.ProductInfo;
+import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -99,7 +102,15 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
             etCapcity.setText(String.valueOf(goodsInfo.getClCapacity()));
             etSerialNo.setText(goodsInfo.getPriductBatch());
             etLessCount.setText(goodsInfo.getThreshold());
+
+            List<Integer> lockIds = FastJsonUtil.getObjects(PreferencesUtil.getString(Constants.LOCK_IDS), Integer.class);
+            for (Integer lockId : lockIds) {
+                if (goodsInfo.getMdseId() == lockId) {
+                    etPrice.setEnabled(false);
+                }
+            }
         }
+
     }
 
     @OnClick({R.id.cancel, R.id.commit, R.id.tvChangeGoods, R.id.tvClear, R.id.tvFillAll, R.id.ivGoodsImg,
@@ -225,6 +236,13 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         tvKucun.setText("库存：0");
         Glide.with(getContext()).load(mProductInfo.getMdseUrl()).into(ivGoodsImg);
         etPrice.setText("¥" + String.valueOf(mProductInfo.getMdsePrice()));
+
+        List<Integer> lockIds = FastJsonUtil.getObjects(PreferencesUtil.getString(Constants.LOCK_IDS), Integer.class);
+        for (Integer lockId : lockIds) {
+            if (etPrice.getId() == lockId) {
+                etPrice.setEnabled(false);
+            }
+        }
     }
 
     private void showGoodsListDialog() {

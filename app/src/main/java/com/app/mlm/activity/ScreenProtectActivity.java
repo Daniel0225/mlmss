@@ -116,4 +116,10 @@ public class ScreenProtectActivity extends AppCompatActivity {
         finish();
         return super.dispatchTouchEvent(ev);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        topView.playerStop();
+    }
 }
