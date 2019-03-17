@@ -55,7 +55,6 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        data = MainApp.shopCarList;
         adapter = new ShopCartListAdapter(getActivity(), data, this);
         listView.setAdapter(adapter);
 

@@ -158,6 +158,9 @@ public class MainFragment extends BaseFragment {
                 }
             }
         }
+        if (shopCarDialog != null && shopCarDialog.isShowing()) {
+            shopCarDialog.dismiss();
+        }
     }
 
     @OnClick({R.id.quhuo, R.id.gouwuche, R.id.huodong})
@@ -167,9 +170,8 @@ public class MainFragment extends BaseFragment {
                 mActivity.addFragment(new QuhuoFragment());
                 break;
             case R.id.gouwuche:
-                if (shopCarDialog == null) {
-                    shopCarDialog = new ShopCarDialog(getContext());
-                }
+                shopCarDialog = null;
+                shopCarDialog = new ShopCarDialog(getContext());
                 shopCarDialog.show();
 //                mActivity.addFragment(new ShopCartFragment());
                 break;
@@ -186,6 +188,7 @@ public class MainFragment extends BaseFragment {
                 break;
         }
     }
+
 
     private List<List<GoodsInfo>> getData() {
         List<List<GoodsInfo>> list = new ArrayList<>();
