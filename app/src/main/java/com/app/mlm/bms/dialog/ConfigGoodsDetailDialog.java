@@ -152,7 +152,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 if (goodsInfo.getMdseUrl().equals("empty")) {
                     goodsInfo = new GoodsInfo();
                     goodsInfo.setVmCode(PreferencesUtil.getString(Constants.VMCODE));
-                    goodsInfo.setVmId(1);
+                    goodsInfo.setVmId(PreferencesUtil.getInt(Constants.VMID));
                     goodsInfo.setMdseId(mProductInfo.getMdseId());
                     goodsInfo.setMdseUrl(mProductInfo.getMdseUrl());
                     goodsInfo.setMdseName(mProductInfo.getMdseName());

@@ -127,6 +127,7 @@ public class ActivationActivity extends BaseActivity {
                             PreferencesUtil.putString(Constants.VMCODE, response.body().getData().getInnerCode());
                             PreferencesUtil.putInt("status", response.body().getData().getStatus());
                             PreferencesUtil.putString("vmName", response.body().getData().getVmName());
+                            PreferencesUtil.putInt("vmID", response.body().getData().getVmId());
                             MainApp.myclient.close();
                             MainApp.myclient.connect();
                             ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
