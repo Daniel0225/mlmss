@@ -27,7 +27,9 @@
             android:background="@drawable/shape_search_layout2"
             android:gravity="center|left"
             android:hint="请输入商品名称"
+            android:imeOptions="actionSearch"
             android:paddingStart="97px"
+            android:singleLine="true"
             android:textColor="@color/text_nomorl"
             android:textSize="30px"
             />

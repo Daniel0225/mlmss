@@ -7,7 +7,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -145,6 +147,22 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
                 searchResult(s.toString());
             }
         });
+
+        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (!TextUtils.isEmpty(searchEdit.getText().toString().trim())) {
+                        // searchMsg = mEtSearchMsg.getText().toString().trim();
+                        searchResult(searchEdit.getText().toString().trim().toString());
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
     }
 
     @Override
