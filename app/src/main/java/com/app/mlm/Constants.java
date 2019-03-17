@@ -37,12 +37,14 @@ public class Constants {
     public static final String GET_ALL_TYPE = BASE_URL + "getAllType";//商品类型
     public static final String SYN_CHANNEL = BASE_URL + "syncChannel";//货道信息同步接口
     public static final String WXPAY = "http://47.106.216.231:8083/api/wxpay";//支付http://47.106.216.231:8083/api/wxpay
-    public static final String ALIPAY = "http://47.106.216.231:8082/alipay";//支付 http://47.106.216.231:8082/alipay支付宝
+    public static final String ALIPAY = "http://47.106.216.231:8082/api/alipay";//支付 http://47.106.216.231:8082/api/alipay支付宝
     public static final String SYNC_COUNTER = BASE_URL + "syncCounter";//货柜信息接口
     public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步到上位机
     public static final String THERMAL = BASE_URL + "syncThermal";//温度接口
     public static final String ALARM_REPORT = BASE_URL + "alarmReport";//故障接口
     public static final String ACTIVATION = BASE_URL + "createActivation";//激活接口
+
+    public static final String LOCKVMMDSELIST = BASE_URL + "getLockVmMdseList";//锁单价接口
 
     //长连接收到取货指令回复接口
     public static final String RECEVE_MSG = BASE_URL + "vendConfirmTest";//收到取货回复

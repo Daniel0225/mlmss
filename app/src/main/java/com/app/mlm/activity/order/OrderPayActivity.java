@@ -21,6 +21,7 @@ import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.CreateWxOrderReqVo;
 import com.app.mlm.http.bean.CreateWxOrderReqVoList;
+import com.app.mlm.http.bean.CreateZfbOrderReqVoList;
 import com.app.mlm.http.bean.WxPayBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
@@ -151,9 +152,15 @@ public class OrderPayActivity extends AppCompatActivity {
                     }
                 });
 
+        HttpParams httpParams1 = new HttpParams();
+        CreateZfbOrderReqVoList createZfbOrderReqVoList = new CreateZfbOrderReqVoList();
+        createZfbOrderReqVoList.setCreateZfbOrderReqVoList(list);
+        String zfb = FastJsonUtil.createJsonString(createZfbOrderReqVoList);
+        httpParams1.put("createZfbOrderReqVoList", zfb);
+        Log.e("Tag", "params " + zfb);
         OkGo.<BaseResponse<WxPayBean>>post(Constants.ALIPAY)
                 .tag(this)
-                .upJson(jsonString)
+                .upJson(zfb)
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {

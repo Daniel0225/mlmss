@@ -187,6 +187,7 @@
                 android:textColor="@color/black"
                 android:textSize="20px" />
 
+
             <ImageView
                 android:id="@+id/zhifubao"
                 android:layout_width="200px"
