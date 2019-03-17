@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.mlm.R;
-import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 import com.app.mlm.utils.PreferencesUtil;
 import com.snbc.bvm.BVMAidlInterface;
@@ -87,8 +86,8 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
                 versionInfoDialog.show();
                 break;
             case R.id.fanhui: //返回
-                startActivity(new Intent(this, ChuhuoActivity.class));
-                //finish();
+                // startActivity(new Intent(this, ChuhuoActivity.class));
+                finish();
                 break;
             case R.id.state: //状态：正常售卖/系统维护
                 switch (PreferencesUtil.getInt("status")) {
