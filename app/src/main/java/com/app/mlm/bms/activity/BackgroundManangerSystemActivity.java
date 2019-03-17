@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.mlm.R;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 import com.app.mlm.utils.PreferencesUtil;
 import com.snbc.bvm.BVMAidlInterface;
@@ -61,6 +62,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
         if (!TextUtils.isEmpty(PreferencesUtil.getString("vmName"))) {
             location.setText(PreferencesUtil.getString("vmName"));
         }
+        MainApp.shopCarList.clear();
     }
 
     @OnClick({R.id.chuhuoceshi, R.id.zhifupeizhi, R.id.huodaopeizhi, R.id.tongbupeizhi, R.id.wendukongzhi, R.id.banbenxinxi, R.id.fanhui, R.id.state})

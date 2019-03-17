@@ -108,7 +108,6 @@ public class MainFragment extends BaseFragment {
         super.onResume();
         initList();
         adapter.notifyDataSetChanged();
-        MainApp.shopCarList.clear();
         refreshShopCar();
     }
 
