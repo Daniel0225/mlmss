@@ -56,6 +56,7 @@ public class OrderPayActivity extends AppCompatActivity {
     private String totalPrice;
     private Integer totalNum;
     private TextView originPriceView;
+    private ArrayList<GoodsInfo> goodsInfoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,9 +123,14 @@ public class OrderPayActivity extends AppCompatActivity {
     }
 
     private void getPayInfo() {
-
+        if (getIntent().hasExtra("goods")) {
+            goodsInfoList = (ArrayList<GoodsInfo>) getIntent().getSerializableExtra("goods");
+        } else {
+            goodsInfoList = new ArrayList<>();
+            goodsInfoList.addAll(MainApp.shopCarList);
+        }
         List<CreateWxOrderReqVo> list = new ArrayList<>();
-        for (GoodsInfo goodsInfo : MainApp.shopCarList) {
+        for (GoodsInfo goodsInfo : goodsInfoList) {
             for (int i = 0; i < goodsInfo.getShopCarNum(); i++) {
                 CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE),
                         String.valueOf(goodsInfo.getMdseId()), goodsInfo.getClCode());
