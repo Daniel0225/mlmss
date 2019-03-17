@@ -45,6 +45,7 @@ public class Constants {
     public static final String ALARM_REPORT = BASE_URL + "alarmReport";//故障接口
     public static final String ACTIVATION = BASE_URL + "createActivation";//激活接口
 
+    public static final String CREATEOPERATIONQRCODE = "http://47.106.216.231:8083/api/createOperationQRcode ";//维护二维码
     public static final String LOCKVMMDSELIST = BASE_URL + "getLockVmMdseList";//锁单价接口
 
     //长连接收到取货指令回复接口

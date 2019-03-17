@@ -326,6 +326,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         if (response.body().getCode() == 0) {
                             HuodaoBean huodaoBean = new HuodaoBean(allDataList);
                             PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
+                            finish();
                         }
                     }
                 });

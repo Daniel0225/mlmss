@@ -18,6 +18,13 @@
             android:background="@color/colorPrimary"
             app:ctv_height="30" />
 
+        <Button
+            android:id="@+id/enter_maintain"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_alignParentRight="true"
+            android:background="#00000000" />
+
         <RelativeLayout
             android:id="@+id/rlSearch"
             android:layout_width="800px"

@@ -279,7 +279,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
 
     private void getAllTypeInfo() {
         HttpParams httpParams = new HttpParams();
-        httpParams.put("vmCode", "0000051");
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<AllTypeInfoResponse>>get(Constants.GET_ALL_TYPE)
                 .tag(this)
                 .params(httpParams)

@@ -2,15 +2,24 @@ package com.app.mlm.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -22,9 +31,12 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.AllDataBean;
+import com.app.mlm.http.bean.CreatQrcodeBean;
 import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.MyDialogUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
+import com.app.mlm.utils.Utils;
 import com.app.mlm.widget.CoustomTopView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -45,7 +57,7 @@ import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 
 /**
- * @author :  luo.xing
+ * @author :
  * @version : 1.0.0
  * @package : com.app.mlm.countdown
  * @fileName : CountDownManager
@@ -54,11 +66,19 @@ import de.greenrobot.event.ThreadMode;
  * @email : xing.luo@taojiji.com
  */
 public class MainActivity extends BaseActivity {
+    final static int COUNTS = 5;//点击次数
+    final static long DURATION = 3 * 1000;//规定有效时间
     public FragmentManager manager = getSupportFragmentManager();
     @Bind(R.id.topView)
     CoustomTopView topView;
     @Bind(R.id.rlSearch)
     RelativeLayout rlSearch;
+    @Bind(R.id.enter_maintain)
+    Button enterMaintain;
+    long[] mHits = new long[COUNTS];
+    AlertDialog myDialogUtil;
+    CountDownTimer timer;
+
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -74,7 +94,7 @@ public class MainActivity extends BaseActivity {
         initView();
         //  startService();
         // bindService();
-//        PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
+        //  PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)
@@ -95,6 +115,60 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(PreferencesUtil.getString(Constants.GETSHOPS))) {
             dealUpShipmenData();
         }
+        enterMaintain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+                mHits[mHits.length - 1] = SystemClock.uptimeMillis();//System.currentTimeMillis()
+                if ((mHits[mHits.length - 1] - mHits[0] <= DURATION)) {
+                    maintain();
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 维护
+     */
+    private void maintain() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<CreatQrcodeBean>>get(Constants.CREATEOPERATIONQRCODE)
+                .params(httpParams)
+                .tag(this)
+                .execute(new JsonCallBack<BaseResponse<CreatQrcodeBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<CreatQrcodeBean>> response) {
+                        if (response.body().getCode() == 0) {
+                            myDialogUtil = MyDialogUtil.getDialog(MainActivity.this, initLogOutDialogView(response.body().getData().getUrl()), Gravity.CENTER);
+                            myDialogUtil.show();
+                        }
+                    }
+                });
+    }
+
+    public View initLogOutDialogView(String str) {
+        View verifyCodeView = LayoutInflater.from(this).inflate(R.layout.dialog_qrcode, null);
+        Bitmap bitmap = Utils.encodeAsBitmap(str, 600, 600);
+        ImageView qrcode = verifyCodeView.findViewById(R.id.qrcode);
+        qrcode.setImageBitmap(bitmap);
+        TextView time = verifyCodeView.findViewById(R.id.time);
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new CountDownTimer(30000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                time.setText(millisUntilFinished / 1000 + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                myDialogUtil.dismiss();
+            }
+        }.start();
+        return verifyCodeView;
     }
 
     /**
@@ -244,7 +318,7 @@ public class MainActivity extends BaseActivity {
         manager.popBackStack();
     }
 
-    public void setSearchLayoutVisible(int visibility){
+    public void setSearchLayoutVisible(int visibility) {
         this.rlSearch.setVisibility(visibility);
     }
 
