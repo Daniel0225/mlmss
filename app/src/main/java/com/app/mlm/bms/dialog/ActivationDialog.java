@@ -64,8 +64,6 @@ public class ActivationDialog extends BaseDialog {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button:
-                dismiss();
-                MainActivity.start(mContext);
             case R.id.ivClose:
                 dismiss();
                 break;
