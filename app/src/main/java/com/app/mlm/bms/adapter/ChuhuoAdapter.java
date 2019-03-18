@@ -56,6 +56,7 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
                 holder.ivResult.setImageResource(R.drawable.shibai);
             }
         }else if(position == chuhuoPosition){
+            holder.ivResult.setVisibility(View.GONE);
             holder.progressCircle.setVisibility(View.VISIBLE);
             holder.progressEndCircle.setVisibility(View.GONE);
             holder.waiteChuhuo.setVisibility(View.GONE);
@@ -65,6 +66,7 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
             objectAnimator.start();
         }else{
             holder.waiteChuhuo.setVisibility(View.VISIBLE);
+            holder.ivResult.setVisibility(View.GONE);
         }
     }
 
