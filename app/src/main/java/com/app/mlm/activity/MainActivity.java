@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
+import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddInfoEvent;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
@@ -81,9 +82,9 @@ public class MainActivity extends BaseActivity {
     long[] mHits = new long[COUNTS];
     AlertDialog myDialogUtil;
     CountDownTimer timer;
+    MainFragment mainFragment = new MainFragment();
     private IntentFilter intentFilter;
     private MainChangeReceiver mainChangeReceiver;
-
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -228,6 +229,10 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Log.e("Tag", "onResume");
+        if (!MainApp.myclient.isconnect) {
+            Log.e("长连接断开重连", "onResume");
+            MainApp.myclient.connect();
+        }
         topView.playerRestart();
     }
 
@@ -251,7 +256,7 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, new MainFragment());
+        transaction.replace(R.id.container, mainFragment);
         transaction.commit();
     }
 
@@ -355,7 +360,7 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             String state = intent.getAction();
             if (state.equals(Constants.PRICECHANGE)) {
-                onResume();
+                mainFragment.onResume();
             }
         }
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
@@ -13,6 +12,7 @@ import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AndroidHeartBeat;
 import com.app.mlm.bean.GoodsInfo;
+import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
@@ -199,7 +199,7 @@ public class MyClient {
     /**
      * 同步机器信息接口
      */
-    private void setActivation() {
+    private void setActivation(String busType) {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<ActivationBean>>get(Constants.SYNCVM)
@@ -214,14 +214,16 @@ public class MyClient {
                             PreferencesUtil.putString("vmName", response.body().getData().getVmName());
                             PreferencesUtil.putInt(Constants.VMID, response.body().getData().getVmId());
                             Log.e("vmid", PreferencesUtil.getInt(Constants.VMID) + "" + PreferencesUtil.getString(Constants.VMCODE));
+                            reply(busType, "成功", 1);
                         } else {
-                            Toast.makeText(MainApp.getAppInstance().getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(MainApp.getAppInstance().getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onError(Response<BaseResponse<ActivationBean>> response) {
-                        ToastUtil.showLongToast(response.body().getMsg());
+                        reply(busType, "失败", 2);
+                        // ToastUtil.showLongToast(response.body().getMsg());
                     }
                 });
     }
@@ -229,7 +231,7 @@ public class MyClient {
     /**
      * 同步商品数据
      */
-    private void syncProduceInfo() {
+    private void syncProduceInfo(String busType) {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<List<ProductInfo>>>get(Constants.GET_PRODUCT_PRICE)
@@ -239,19 +241,23 @@ public class MyClient {
                     @Override
                     public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
                         if (response.body().getCode() == 0) {
-                            saveProductInfo(response.body().getData());
+                            saveProductInfo(response.body().getData(), busType);
+                            reply(busType, "成功", 1);
+                        } else {
+                            reply(busType, "失败", 2);
                         }
                     }
 
                     @Override
                     public void onError(Response<BaseResponse<List<ProductInfo>>> response) {
                         super.onError(response);
-                        ToastUtil.showLongToast("请求服务器数据失败");
+                        reply("priceChange", "失败", 2);
+                        // ToastUtil.showLongToast("请求服务器数据失败");
                     }
                 });
     }
 
-    private void saveProductInfo(List<ProductInfo> list) {
+    private void saveProductInfo(List<ProductInfo> list, String busType) {
         LitePal.deleteAll(ProductInfo.class);
 
         new Thread(new Runnable() {
@@ -272,8 +278,8 @@ public class MyClient {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        syncChannel();
-                        ToastUtil.showLongToast("同步完成");
+                        syncChannel(busType);
+                        // ToastUtil.showLongToast("同步完成");
                     }
                 });
             }
@@ -283,7 +289,7 @@ public class MyClient {
     /**
      * 同步货道配置
      */
-    private void syncChannel() {
+    private void syncChannel(String busType) {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<List<GoodsInfo>>>get(Constants.SYN_TO_CHANNEL)
@@ -294,10 +300,18 @@ public class MyClient {
                     public void onSuccess(Response<BaseResponse<List<GoodsInfo>>> response) {
                         if (response.body().getCode() == 0) {
                             updateChannelInfo(response.body().getData());
+                            reply(busType, "成功", 1);
                         } else {
-                            ToastUtil.showLongCenterToast(response.body().getMsg());
+                            reply(busType, "失败", 2);
+                            // ToastUtil.showLongCenterToast(response.body().getMsg());
                         }
 
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<GoodsInfo>>> response) {
+                        super.onError(response);
+                        reply(busType, "失败", 2);
                     }
                 });
     }
@@ -381,6 +395,35 @@ public class MyClient {
             return layers;
         }
     }
+
+    /**
+     * 回复响应类型
+     */
+    private void reply(String busType, String noticeDescribe, int isSuccess) {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        httpParams.put("noticeType", busType);
+        httpParams.put("noticeDescribe", noticeDescribe);
+        httpParams.put("isSuccess", isSuccess);
+        OkGo.<BaseResponse<AllDataBean>>post(Constants.GET_PRODUCT_PRICE)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
+                        if (response.body().getCode() == 0) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<AllDataBean>> response) {
+                        super.onError(response);
+                        //ToastUtil.showLongToast("请求服务器数据失败");
+                    }
+                });
+    }
+
 
     class KeepAliveWatchDog implements Runnable {
         long checkDelay = 1000;
@@ -466,13 +509,18 @@ public class MyClient {
 
                         } else if (vo.getBusType().equals("priceChange")) {//限时售价
                             Log.d("main", "接收到限时售价指令:" + obj.toString());
-                            syncProduceInfo();
+                            syncProduceInfo(vo.getBusType());
                         } else if (vo.getBusType().equals("vmSync")) {//同步机器信息接口
                             Log.d("main", "同步机器信息接口:" + obj.toString());
-                            setActivation();
+                            setActivation(vo.getBusType());
                         } else if (vo.getBusType().equals("activityStop")) {//活动结束
                             Log.d("main", "接收到限时售价活动结束指令:" + obj.toString());
-                            syncProduceInfo();
+                            syncProduceInfo(vo.getBusType());
+                        } else if (vo.getBusType().equals("gzhJump")) {//跳转到维护页面
+                            Log.d("main", "接收到跳转到维护页面指令:" + obj.toString());
+                            Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), BackgroundManangerSystemActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);
                         } else if (vo.getBusType().equals("priceChange") || vo.getBusType().equals("syncQrCode")) {
                             //价格修改、更新微信二维码
 

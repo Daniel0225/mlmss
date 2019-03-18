@@ -108,6 +108,7 @@ public class ConfigSyncActivity extends BaseActivity {
                         if (response.body().getCode() == 0) {
                             List<AdBean> adBeanList = response.body().data;
                             PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
+                            refreshAddInfo(adBeanList);
                         }
                     }
                 });
