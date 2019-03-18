@@ -355,7 +355,7 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             String state = intent.getAction();
             if (state.equals(Constants.PRICECHANGE)) {
-
+                onResume();
             }
         }
     }

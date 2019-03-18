@@ -12,17 +12,24 @@ import com.app.mlm.Meassage.entity.AndroidCommonVo;
 import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AndroidHeartBeat;
+import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AllDataBean;
+import com.app.mlm.http.bean.HuodaoBean;
+import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.http.bean.SocketShipmentBean;
 import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.PinyinComparator;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.TextPinyinUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+
+import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +37,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
 public class MyClient {
     public static final String IP = "47.106.143.212";
@@ -43,6 +55,7 @@ public class MyClient {
     AndroidHeartBeat heart;// 心跳
     Handler handler;
     private long lastSendTime, lastReciveTime;
+    private PinyinComparator comparator = new PinyinComparator();
 
     public MyClient() {
     }
@@ -200,7 +213,7 @@ public class MyClient {
                             PreferencesUtil.putInt("status", response.body().getData().getStatus());
                             PreferencesUtil.putString("vmName", response.body().getData().getVmName());
                             PreferencesUtil.putInt(Constants.VMID, response.body().getData().getVmId());
-                            Log.e("vmid", PreferencesUtil.getInt(Constants.VMID) + "");
+                            Log.e("vmid", PreferencesUtil.getInt(Constants.VMID) + "" + PreferencesUtil.getString(Constants.VMCODE));
                         } else {
                             Toast.makeText(MainApp.getAppInstance().getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
@@ -211,6 +224,162 @@ public class MyClient {
                         ToastUtil.showLongToast(response.body().getMsg());
                     }
                 });
+    }
+
+    /**
+     * 同步商品数据
+     */
+    private void syncProduceInfo() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<ProductInfo>>>get(Constants.GET_PRODUCT_PRICE)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<List<ProductInfo>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
+                        if (response.body().getCode() == 0) {
+                            saveProductInfo(response.body().getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<ProductInfo>>> response) {
+                        super.onError(response);
+                        ToastUtil.showLongToast("请求服务器数据失败");
+                    }
+                });
+    }
+
+    private void saveProductInfo(List<ProductInfo> list) {
+        LitePal.deleteAll(ProductInfo.class);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Collections.sort(list, comparator);
+                for (int i = 0; i < list.size(); i++) {
+                    ProductInfo productInfo = list.get(i);
+                    if (TextUtils.isEmpty(productInfo.getMdseName())) {
+                        productInfo.setQuanping("");
+                    } else {
+                        productInfo.setQuanping(TextPinyinUtil.getInstance().getPinyin(productInfo.getMdseName()));
+                    }
+                    boolean isSuccess = productInfo.save();
+                    Log.e("Tag", "isSuccess " + isSuccess);
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        syncChannel();
+                        ToastUtil.showLongToast("同步完成");
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * 同步货道配置
+     */
+    private void syncChannel() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<GoodsInfo>>>get(Constants.SYN_TO_CHANNEL)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<List<GoodsInfo>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<GoodsInfo>>> response) {
+                        if (response.body().getCode() == 0) {
+                            updateChannelInfo(response.body().getData());
+                        } else {
+                            ToastUtil.showLongCenterToast(response.body().getMsg());
+                        }
+
+                    }
+                });
+    }
+
+    private void updateChannelInfo(List<GoodsInfo> list) {
+        for (GoodsInfo goodsInfo : list) {
+
+            List<ProductInfo> productInfos = LitePal.where("mdseId = ?", String.valueOf(goodsInfo.getMdseId())).find(ProductInfo.class);
+
+            if (productInfos.size() > 0) {
+                ProductInfo productInfo = productInfos.get(0);
+                goodsInfo.setMdsePack(productInfo.getMdsePack());
+                goodsInfo.setMdseBrand(productInfo.getMdseBrand());
+                goodsInfo.setMdseName(productInfo.getMdseName());
+                goodsInfo.setMdsePrice(String.valueOf(productInfo.getMdsePrice()));
+                goodsInfo.setMdseUrl(productInfo.getMdseUrl());
+            } else {
+                ToastUtil.showLongToast("找不到商品信息,请先同步商品信息");
+            }
+        }
+
+        List<List<GoodsInfo>> newHuoDaoList = getData(getHuoDaoData());
+        for (int i = 0; i < newHuoDaoList.size(); i++) {
+            List<GoodsInfo> itemList = newHuoDaoList.get(i);
+            for (int j = 0; j < itemList.size(); j++) {
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append((i + 1));
+                if (j < 10) {
+                    stringBuffer.append(0);
+                }
+                stringBuffer.append(j + 1);
+                String clCode = stringBuffer.toString();
+                for (int h = 0; h < list.size(); h++) {
+                    GoodsInfo goods = list.get(h);
+                    if (goods.getClCode().equals(clCode)) {
+                        itemList.set(j, goods);
+                    }
+                }
+            }
+        }
+
+        HuodaoBean huodaoBean = new HuodaoBean(newHuoDaoList);
+        PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
+        Intent intent = new Intent();
+        intent.setAction(Constants.PRICECHANGE);
+        MainApp.getAppInstance().getApplicationContext().sendBroadcast(intent);
+
+    }
+
+    private List<List<GoodsInfo>> getData(String[] layers) {
+        List<List<GoodsInfo>> list = new ArrayList<>();
+        for (int i = layers.length - 1; i >= 0; i--) {
+            list.add(getDefaultData(Integer.valueOf(layers[i])));
+        }
+        return list;
+    }
+
+    private List<GoodsInfo> getDefaultData(int column) {//传入当前行 有几列
+        List<GoodsInfo> goodsInfoList = new ArrayList<>();
+        for (int i = 0; i < column; i++) {
+            GoodsInfo goodsInfo = new GoodsInfo();
+            goodsInfo.setMdseName("请补货");
+            goodsInfo.setMdseUrl("empty");
+            goodsInfo.setMdsePrice("0");
+            goodsInfoList.add(goodsInfo);
+        }
+        return goodsInfoList;
+    }
+
+    /**
+     * 解析机器层数据
+     */
+    private String[] getHuoDaoData() {
+        String layerData = PreferencesUtil.getString("layer");
+        if (TextUtils.isEmpty(layerData)) {
+            return new String[]{};
+        } else {
+            layerData = layerData.replace("[", "").replace("]", "").replace(" ", "");
+            Log.e("Tag", "layerData " + layerData);
+            String[] layers = layerData.split(",");
+            return layers;
+        }
     }
 
     class KeepAliveWatchDog implements Runnable {
@@ -297,10 +466,13 @@ public class MyClient {
 
                         } else if (vo.getBusType().equals("priceChange")) {//限时售价
                             Log.d("main", "接收到限时售价指令:" + obj.toString());
-
+                            syncProduceInfo();
                         } else if (vo.getBusType().equals("vmSync")) {//同步机器信息接口
                             Log.d("main", "同步机器信息接口:" + obj.toString());
                             setActivation();
+                        } else if (vo.getBusType().equals("activityStop")) {//活动结束
+                            Log.d("main", "接收到限时售价活动结束指令:" + obj.toString());
+                            syncProduceInfo();
                         } else if (vo.getBusType().equals("priceChange") || vo.getBusType().equals("syncQrCode")) {
                             //价格修改、更新微信二维码
 
@@ -308,8 +480,8 @@ public class MyClient {
                             msg.what = MsgType.UP_CODE;
 							handler.sendMessage(msg);*/
                         } else if (vo.getBusType().equals("syncVersion")) {
-						/*	//下位机更新
-							BinFileEntity binentity = JSON.parseObject(vo.getT(),
+                        /*	//下位机更新
+                            BinFileEntity binentity = JSON.parseObject(vo.getT(),
 									BinFileEntity.class);
 							Message msg = Message.obtain();
 							msg.what = MsgType.DOWNLOADMCBFILE_C;
@@ -445,4 +617,5 @@ public class MyClient {
             }
         }
     }
+
 }
