@@ -1,9 +1,12 @@
 package com.app.mlm.utils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.widget.TextView;
+
+import com.app.mlm.Constants;
 
 /**
  * Created by Administrator on 2019/3/12.
@@ -33,5 +36,7 @@ public class TimeCountUtilsFinish extends CountDownTimer {
         textView.setClickable(true);
         textView.setTextColor(Color.parseColor("#999999"));
         activity.finish();
+        Intent intent = new Intent(Constants.ORDER);
+        activity.sendBroadcast(intent);
     }
 }

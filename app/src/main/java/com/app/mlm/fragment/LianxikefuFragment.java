@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.MainActivity;
 import com.app.mlm.utils.TimeCountUtilsFinish;
@@ -104,6 +105,8 @@ public class LianxikefuFragment extends ChuhuoBaseFragment {
             case R.id.ivBack:
                 //mActivity.finish();
                 getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent = new Intent(Constants.ORDER);
+                getActivity().sendBroadcast(intent);
                 break;
             case R.id.tvCountDown:
                 break;
