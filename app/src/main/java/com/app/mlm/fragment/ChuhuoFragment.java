@@ -52,6 +52,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     TextView tvCountDownView;*/
 
     public final int MSG_DOWN_SUCCESS = 2;
+    public final int MSG_DOWN_FINISH = 3;
     @Bind(R.id.progress_circle)
     ImageView progressCircle;
     @Bind(R.id.recyclerView)
@@ -86,7 +87,32 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
 
-                    //如果是单个商品出货  直接出货结束 隐藏转圈的 限时成功或者失败
+                    chuhuoAdapter.refreshChuhuoStatus(count);
+                    Log.e("开始取第", "开始取第" + count + "个");
+                    countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
+                    String hdCodeT = hdDataBeans.get(count).getHdCode();
+                    if (!TextUtils.isEmpty(hdCodeT)) {
+                        int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                        int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                        int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                        try {
+                            if (MainApp.bvmAidlInterface.BVMGetRunningState(1) == 2) {
+                                if (two == 0) {
+                                    pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                } else {
+                                    pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                }
+                            } else {
+                                mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
+                            }
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+                case MSG_DOWN_FINISH:
+                    //单个商品取货结束
                     if(hdDataBeans.size() == 1){
                         progressCircle.setVisibility(View.GONE);
                         chuhuoResultView.setVisibility(View.VISIBLE);
@@ -96,30 +122,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                         }else {
                             chuhuoResultView.setImageResource(R.drawable.shibai);
                         }
-                    }else{//多商品出货
+                    }else{//多商品取货结束
                         chuhuoAdapter.refreshChuhuoStatus(count);
-                        Log.e("开始取第", "开始取第" + count + "个");
-                        countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
-                        String hdCodeT = hdDataBeans.get(count).getHdCode();
-                        if (!TextUtils.isEmpty(hdCodeT)) {
-                            int one = Integer.parseInt(hdCodeT.substring(0, 1));
-                            int two = Integer.parseInt(hdCodeT.substring(1, 2));
-                            int three = Integer.parseInt(hdCodeT.substring(2, 3));
-                            try {
-                                if (MainApp.bvmAidlInterface.BVMGetRunningState(1) == 2) {
-                                    if (two == 0) {
-                                        pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
-                                    } else {
-                                        pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
-                                    }
-                                } else {
-                                    mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                                }
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
                     }
                     break;
             }
@@ -340,6 +344,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         saveData();
 
                                         if (count + 1 == hdDataBeans.size()) {
+                                            mHandler.sendEmptyMessage(MSG_DOWN_FINISH);//发消息 刷新UI
                                             //处理上传接口
                                             dealUpShipmenData();
                                             //  mActivity.addFragment(new ChuhuoSuccessFragment());
@@ -376,6 +381,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         saveData();
 
                                         if (count + 1 == hdDataBeans.size()) {
+                                            mHandler.sendEmptyMessage(MSG_DOWN_FINISH);//发消息 刷新UI
                                             //处理上传接口
                                             Log.e("上传", "上传第" + count + "失败");
                                             dealUpShipmenData();
