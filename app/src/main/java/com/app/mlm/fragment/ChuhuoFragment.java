@@ -299,66 +299,71 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        switch (PreferencesUtil.getString(Constants.CHUHUO_WENDU)) {
-            case "默认":
-                pick(position, hdCode, positionX, positionY, snm, 1);
-                break;
-            case "允许":
-                pick(position, hdCode, positionX, positionY, snm, 1);
-                break;
-            case "":
-                pick(position, hdCode, positionX, positionY, snm, 1);
-                break;
-            case "拒绝":
-                dealUpShipmenDataExcption();
-                Toast.makeText(getActivity(), "温度未到达已拒绝出货", Toast.LENGTH_SHORT).show();
-                break;
-            case "提示":
-                if (PreferencesUtil.getString("currentMode").equals("制冷")) {
-                    if (code[0] > PreferencesUtil.getInt(Constants.COLL_LOW_TEMP) && code[0] < PreferencesUtil.getInt(Constants.COOL_HIGH_TEMP)) {
-                        pick(position, hdCode, positionX, positionY, snm, 1);
-                        Log.e("制冷温度出货", "进入");
-                    } else {
-                        Log.e("制冷温度未达标出货", "进入");
-                        CommonDialog commonDialog = new CommonDialog(getActivity(), "提示", "温度未到达是否继续出货", "确定", "取消")
-                                .setCommitClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        pick(position, hdCode, positionX, positionY, snm, 1);
-                                    }
-                                })
-                                .setCancelClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dealUpShipmenDataExcption();
-                                    }
-                                });
-                        commonDialog.show();
+        if (TextUtils.isEmpty(PreferencesUtil.getString(Constants.CHUHUO_WENDU))) {
+            pick(position, hdCode, positionX, positionY, snm, 1);
+        } else {
+            switch (PreferencesUtil.getString(Constants.CHUHUO_WENDU)) {
+                case "默认":
+                    pick(position, hdCode, positionX, positionY, snm, 1);
+                    break;
+                case "允许":
+                    pick(position, hdCode, positionX, positionY, snm, 1);
+                    break;
+                case "":
+                    pick(position, hdCode, positionX, positionY, snm, 1);
+                    break;
+                case "拒绝":
+                    dealUpShipmenDataExcption();
+                    Toast.makeText(getActivity(), "温度未到达已拒绝出货", Toast.LENGTH_SHORT).show();
+                    break;
+                case "提示":
+                    if (PreferencesUtil.getString("currentMode").equals("制冷")) {
+                        if (code[0] > PreferencesUtil.getInt(Constants.COLL_LOW_TEMP) && code[0] < PreferencesUtil.getInt(Constants.COOL_HIGH_TEMP)) {
+                            pick(position, hdCode, positionX, positionY, snm, 1);
+                            Log.e("制冷温度出货", "进入");
+                        } else {
+                            Log.e("制冷温度未达标出货", "进入");
+                            CommonDialog commonDialog = new CommonDialog(getActivity(), "提示", "温度未到达是否继续出货", "确定", "取消")
+                                    .setCommitClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            pick(position, hdCode, positionX, positionY, snm, 1);
+                                        }
+                                    })
+                                    .setCancelClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dealUpShipmenDataExcption();
+                                        }
+                                    });
+                            commonDialog.show();
+                        }
+                    } else if (PreferencesUtil.getString("currentMode").equals("制热")) {
+                        if (code[0] > PreferencesUtil.getInt(Constants.HEAT_LOW_TEMP) && code[0] < PreferencesUtil.getInt(Constants.HEAT_HIGH_TEMP)) {
+                            pick(position, hdCode, positionX, positionY, snm, 1);
+                            Log.e("制热温度出货", "进入");
+                        } else {
+                            Log.e("制热温度未达标出货", "进入");
+                            CommonDialog commonDialog = new CommonDialog(getActivity(), "提示", "温度未到达是否继续出货", "确定", "取消")
+                                    .setCommitClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            pick(position, hdCode, positionX, positionY, snm, 1);
+                                        }
+                                    })
+                                    .setCancelClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dealUpShipmenDataExcption();
+                                        }
+                                    });
+                            commonDialog.show();
+                        }
                     }
-                } else if (PreferencesUtil.getString("currentMode").equals("制热")) {
-                    if (code[0] > PreferencesUtil.getInt(Constants.HEAT_LOW_TEMP) && code[0] < PreferencesUtil.getInt(Constants.HEAT_HIGH_TEMP)) {
-                        pick(position, hdCode, positionX, positionY, snm, 1);
-                        Log.e("制热温度出货", "进入");
-                    } else {
-                        Log.e("制热温度未达标出货", "进入");
-                        CommonDialog commonDialog = new CommonDialog(getActivity(), "提示", "温度未到达是否继续出货", "确定", "取消")
-                                .setCommitClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        pick(position, hdCode, positionX, positionY, snm, 1);
-                                    }
-                                })
-                                .setCancelClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dealUpShipmenDataExcption();
-                                    }
-                                });
-                        commonDialog.show();
-                    }
-                }
-                break;
+                    break;
+            }
         }
+
     }
 
     /**
