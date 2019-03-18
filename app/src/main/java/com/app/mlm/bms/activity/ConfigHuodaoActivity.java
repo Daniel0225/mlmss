@@ -91,6 +91,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cleanAll:
+                clearHuoDaoInfo();
                 break;
             case R.id.fillAll:
                 fillAllGood();
@@ -121,6 +122,34 @@ public class ConfigHuodaoActivity extends BaseActivity {
     private void showOneKeyDialog() {
         CommonDialog dialog = new CommonDialog(this, "提示", "暂无配货单", "确定", "");
         dialog.show();
+    }
+
+    private void clearHuoDaoInfo() {
+        CommonDialog dialog = new CommonDialog(ConfigHuodaoActivity.this, "提示", "是否要清空所有货道数据", "清空", "取消");
+        dialog.setCommitClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAllGoodsInfo();
+            }
+        }).setCancelClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void clearAllGoodsInfo() {
+        for (int i = 0; i < allDataList.size(); i++) {
+            List<GoodsInfo> goodsInfoList = allDataList.get(i);
+            for (int j = 0; j < goodsInfoList.size(); j++) {
+                goodsInfoList.get(j).setClcCapacity(0);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

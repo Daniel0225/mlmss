@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.app.mlm.bean.AndroidHeartBeat;
+import com.app.mlm.utils.PreferencesUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class MlmService extends Service {
             if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
                 try {
                     heart = new AndroidHeartBeat();
-                    heart.setVmCode("0000051");
+                    heart.setVmCode(PreferencesUtil.getString(Constants.VMCODE));
                     heart.setBusType("heartbeat");
                     String json = new Gson().toJson(heart);
                     boolean isSuccess = mWebSocket.send(json);//发送一个空消息给服务器，通过发送消息的成功失败来判断长连接的连接状态
