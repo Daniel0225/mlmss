@@ -57,9 +57,12 @@ public class Constants {
     public static final String VENDREPORT = BASE_URL + "vendReport";
 
     //断电保存数据
-    public static final String GETSHOPS = BASE_URL + "getShops";
+    public static final String GETSHOPS = "getShops";
+    //同步机器信息接口
+    public static final String SYNCVM = BASE_URL + "syncVm";
 
     public static final String ORDER = "com.mlm.app.Order";//订单广播
+    public static final String PRICECHANGE = "com.mlm.app.priceChange";//显示售价广播
 
     //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";

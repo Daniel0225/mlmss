@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
@@ -11,6 +12,7 @@ import com.app.mlm.Meassage.entity.AndroidCommonVo;
 import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AndroidHeartBeat;
+import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AllDataBean;
@@ -181,6 +183,36 @@ public class MyClient {
         }
     }
 
+    /**
+     * 同步机器信息接口
+     */
+    private void setActivation() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<ActivationBean>>get(Constants.SYNCVM)
+                .tag(this)
+                .params(httpParams)
+                .execute(new JsonCallBack<BaseResponse<ActivationBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<ActivationBean>> response) {
+                        if (response.body().getCode() == 0) {
+                            PreferencesUtil.putString(Constants.VMCODE, response.body().getData().getInnerCode());
+                            PreferencesUtil.putInt("status", response.body().getData().getStatus());
+                            PreferencesUtil.putString("vmName", response.body().getData().getVmName());
+                            PreferencesUtil.putInt(Constants.VMID, response.body().getData().getVmId());
+                            Log.e("vmid", PreferencesUtil.getInt(Constants.VMID) + "");
+                        } else {
+                            Toast.makeText(MainApp.getAppInstance().getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<ActivationBean>> response) {
+                        ToastUtil.showLongToast(response.body().getMsg());
+                    }
+                });
+    }
+
     class KeepAliveWatchDog implements Runnable {
         long checkDelay = 1000;
 
@@ -243,10 +275,6 @@ public class MyClient {
                                     AndroidVend.class);*/
                             rebackShipment(obj.toString());
                             Log.d("main", "接收到出货指令:" + obj.toString());
-                           /* Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), ChuhuoActivity.class);
-                            intent.putExtra("shipment", obj.toString());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            MainApp.getAppInstance().getApplicationContext().startActivity(intent);*/
                        /*     StringBuffer buf = new StringBuffer();
                             buf.append(Util.getCurDate() + " ");
                             buf.append("out order:");
@@ -267,11 +295,17 @@ public class MyClient {
 
                             Log.d("main", "接收到出货指令:" + obj.toString());
 
+                        } else if (vo.getBusType().equals("priceChange")) {//限时售价
+                            Log.d("main", "接收到限时售价指令:" + obj.toString());
+
+                        } else if (vo.getBusType().equals("vmSync")) {//同步机器信息接口
+                            Log.d("main", "同步机器信息接口:" + obj.toString());
+                            setActivation();
                         } else if (vo.getBusType().equals("priceChange") || vo.getBusType().equals("syncQrCode")) {
                             //价格修改、更新微信二维码
 
 						/*	Message msg = Message.obtain();
-							msg.what = MsgType.UP_CODE;
+                            msg.what = MsgType.UP_CODE;
 							handler.sendMessage(msg);*/
                         } else if (vo.getBusType().equals("syncVersion")) {
 						/*	//下位机更新
@@ -411,5 +445,4 @@ public class MyClient {
             }
         }
     }
-
 }

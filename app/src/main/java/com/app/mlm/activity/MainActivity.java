@@ -1,7 +1,9 @@
 package com.app.mlm.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -79,6 +81,8 @@ public class MainActivity extends BaseActivity {
     long[] mHits = new long[COUNTS];
     AlertDialog myDialogUtil;
     CountDownTimer timer;
+    private IntentFilter intentFilter;
+    private MainChangeReceiver mainChangeReceiver;
 
 
     public static void start(Context context) {
@@ -92,6 +96,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Constants.PRICECHANGE);
+        mainChangeReceiver = new MainChangeReceiver();
+        registerReceiver(mainChangeReceiver, intentFilter);
         initView();
         //  startService();
         // bindService();
@@ -341,4 +349,14 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    //自定义接受网络变化的广播接收器
+    class MainChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String state = intent.getAction();
+            if (state.equals(Constants.PRICECHANGE)) {
+
+            }
+        }
+    }
 }

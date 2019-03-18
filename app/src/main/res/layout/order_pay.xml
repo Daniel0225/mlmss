@@ -178,15 +178,27 @@
                 android:layout_marginStart="212px"
                 android:scaleType="fitXY" />
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_wx_code"
-                android:layout_marginStart="271px"
-                android:text="微信支付"
-                android:textColor="@color/black"
-                android:textSize="20px" />
+                android:layout_marginStart="245px"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="38px"
+                    android:layout_height="34px"
+                    android:src="@drawable/wx" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8px"
+                    android:text="微信支付"
+                    android:textColor="@color/black"
+                    android:textSize="20px" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/zhifubao"
@@ -196,15 +208,27 @@
                 android:layout_marginEnd="212px"
                 android:scaleType="fitXY" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/iv_wx_code"
-                android:layout_marginEnd="271px"
-                android:text="支付宝支付"
-                android:textColor="@color/black"
-                android:textSize="20px" />
+                android:layout_marginEnd="247px"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:src="@drawable/zfb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8px"
+                    android:text="支付宝支付"
+                    android:textColor="@color/black"
+                    android:textSize="20px" />
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
