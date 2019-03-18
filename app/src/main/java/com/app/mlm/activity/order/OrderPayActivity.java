@@ -196,7 +196,7 @@ public class OrderPayActivity extends AppCompatActivity {
         unregisterReceiver(orderChangeReceiver);
     }
 
-    //自定义接受网络变化的广播接收器
+    //关闭订单页面广播
     class OrderChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

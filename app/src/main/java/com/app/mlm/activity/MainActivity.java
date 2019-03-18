@@ -349,7 +349,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    //自定义接受网络变化的广播接收器
+    //刷新UI广播
     class MainChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
