@@ -13,7 +13,7 @@
         android:textColor="@color/withe"
         android:textSize="20px" />
 
-    <ImageView
+    <WebView
         android:id="@+id/qrcode"
         android:layout_width="300px"
         android:layout_height="300px"

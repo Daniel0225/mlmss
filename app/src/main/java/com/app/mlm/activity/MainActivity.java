@@ -16,8 +16,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -121,7 +122,9 @@ public class MainActivity extends BaseActivity {
                 System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
                 mHits[mHits.length - 1] = SystemClock.uptimeMillis();//System.currentTimeMillis()
                 if ((mHits[mHits.length - 1] - mHits[0] <= DURATION)) {
-                    maintain();
+                    if (Utils.isFastClick()) {
+                        maintain();
+                    }
                 }
             }
         });
@@ -133,7 +136,7 @@ public class MainActivity extends BaseActivity {
      */
     private void maintain() {
         HttpParams httpParams = new HttpParams();
-        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        httpParams.put("vmid", PreferencesUtil.getInt(Constants.VMID));
         OkGo.<BaseResponse<CreatQrcodeBean>>get(Constants.CREATEOPERATIONQRCODE)
                 .params(httpParams)
                 .tag(this)
@@ -151,8 +154,12 @@ public class MainActivity extends BaseActivity {
     public View initLogOutDialogView(String str) {
         View verifyCodeView = LayoutInflater.from(this).inflate(R.layout.dialog_qrcode, null);
         Bitmap bitmap = Utils.encodeAsBitmap(str, 600, 600);
-        ImageView qrcode = verifyCodeView.findViewById(R.id.qrcode);
-        qrcode.setImageBitmap(bitmap);
+        WebView webView = verifyCodeView.findViewById(R.id.qrcode);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.loadUrl(str);
+        // qrcode.setImageBitmap(bitmap);
         TextView time = verifyCodeView.findViewById(R.id.time);
         if (timer != null) {
             timer.cancel();

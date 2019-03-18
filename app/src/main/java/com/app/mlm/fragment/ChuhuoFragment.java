@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+
+import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,6 +81,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
+                    chuhuoAdapter.refreshChuhuoStatus(count);
                     Log.e("开始取第", "开始取第" + count + "个");
                     countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
                     String hdCodeT = hdDataBeans.get(count).getHdCode();
@@ -86,11 +89,20 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                         int one = Integer.parseInt(hdCodeT.substring(0, 1));
                         int two = Integer.parseInt(hdCodeT.substring(1, 2));
                         int three = Integer.parseInt(hdCodeT.substring(2, 3));
-                        if (two == 0) {
-                            pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
-                        } else {
-                            pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                        try {
+                            if (MainApp.bvmAidlInterface.BVMGetRunningState(1) == 2) {
+                                if (two == 0) {
+                                    pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                } else {
+                                    pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                }
+                            } else {
+                                mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
+                            }
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
                         }
+
                     }
                     break;
             }
@@ -162,7 +174,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                 Log.e("list长度", hd + "===wwww===" + hdDataBeans.size());
             }
         }
-
+        countView.setText(String.format("%d/%d", 1, hdDataBeans.size()));
         // shipmentList = FastJsonUtil.getObjects(json, SocketShipmentBean.class);
         //如果是单个商品 那么现实单个的 并开始动画
         //  boolean isSingle = false;
@@ -175,7 +187,12 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             Log.e("list长度", hd + "===1111111===" + hdDataBeans.size());
         } else {//多个 那么初始化recyclerview
             multiGoodsView.setVisibility(View.VISIBLE);
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
+            // recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
+            int spanCount = 5;
+            if (hdDataBeans.size() < 5) {
+                spanCount = hdDataBeans.size();
+            }
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
             recyclerView.addItemDecoration(new SpacesItemDecoration(20, 20, 20, 20));
             chuhuoAdapter = new ChuhuoAdapter(getContext(), hdDataBeans);
             recyclerView.setAdapter(chuhuoAdapter);
@@ -258,177 +275,114 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         shipmentBean.setElcspeed(1);
         shipmentBean.setGoodsnum(goodNum);
         shipmentBean.setPrice(250);//单位分
-        shipmentBean.setOrdernumber(snm);//订单号
+        shipmentBean.setOrdernumber(snm + position);//订单号
         shipmentBean.setPositionX(positionX);//坐标x
         shipmentBean.setPositionY(positionY);//坐标y
         shipmentBean.setLaser(1);
         shipmentBean.setPickup(1);
         Log.e("--------------", positionX + "列" + positionY);
         String pickData = new Gson().toJson(shipmentBean);
-        Toast.makeText(getContext(), pickData, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getContext(), pickData, Toast.LENGTH_SHORT).show();
+        try {
+            Log.e("机器状态", String.valueOf(MainApp.bvmAidlInterface.BVMGetRunningState(1)));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         Log.e("--------------", pickData);
         try {
-            String backjson = MainApp.bvmAidlInterface.BVMStartShip(pickData);
-            Log.e("back", backjson);
-            PickBackBean pickBackBean = JSON.parseObject(backjson, PickBackBean.class);
-            if (pickBackBean.getShipresult() == 0) {
-                Log.e("出货成功", "取货第" + count + "成功");
-                Toast.makeText(getContext(), "取货第" + count + "成功", Toast.LENGTH_SHORT).show();
-                //出货成功改变状态
-                hdDataBeans.get(position).setSuccess(true);
-                chuhuoAdapter.refreshChuhuoStatus(position);
-                //添加成功的数据到上传成功的model
-                UploadShipmentStatusBean.SuccessVendInfoVo successVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
-                successVendInfoVo.setHdId(hdCode);
-                successVendInfoVo.setNum(1);
-                successVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                successVendInfoVos.add(successVendInfoVo);
+            try {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String backjson = MainApp.bvmAidlInterface.BVMStartShip(pickData);
+                            Log.e("back", backjson);
+                            PickBackBean pickBackBean = JSON.parseObject(backjson, PickBackBean.class);
+                            if (pickBackBean.getShipresult() == 0) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.e("出货成功", "取货第" + count + "成功");
+                                        //  Toast.makeText(getContext(), "取货第" + count + "成功", Toast.LENGTH_SHORT).show();
+                                        //出货成功改变状态
+                                        hdDataBeans.get(position).setSuccess(true);
+                                        chuhuoAdapter.refreshChuhuoStatus(position);
+                                        //添加成功的数据到上传成功的model
+                                        UploadShipmentStatusBean.SuccessVendInfoVo successVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
+                                        successVendInfoVo.setHdId(hdCode);
+                                        successVendInfoVo.setNum(1);
+                                        successVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                        successVendInfoVos.add(successVendInfoVo);
 
-                //处理断电model
-                UploadShipmentStatusBean.SuccessVendInfoVo cSuccessVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
-                cSuccessVendInfoVo.setHdId(hdCode);
-                cSuccessVendInfoVo.setNum(1);
-                cSuccessVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                outageSuccessVendInfoVos.add(successVendInfoVo);
-                saveData();
+                                        //处理断电model
+                                        UploadShipmentStatusBean.SuccessVendInfoVo cSuccessVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
+                                        cSuccessVendInfoVo.setHdId(hdCode);
+                                        cSuccessVendInfoVo.setNum(1);
+                                        cSuccessVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                        outageSuccessVendInfoVos.add(successVendInfoVo);
+                                        saveData();
 
-                if (count + 1 == hdDataBeans.size()) {
-                    //处理上传接口
-                    dealUpShipmenData();
-                    //  mActivity.addFragment(new ChuhuoSuccessFragment());
-                } else {
-                    count++;
-                    mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                }
+                                        if (count + 1 == hdDataBeans.size()) {
+                                            //处理上传接口
+                                            dealUpShipmenData();
+                                            //  mActivity.addFragment(new ChuhuoSuccessFragment());
+                                        } else {
+                                            count++;
+                                            mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
+                                        }
 
-                Log.e("取货结果:", "取货成功");
+                                        Log.e("取货结果:", "取货成功");
+                                    }
+                                });
 
-            } else {
-                //上传错误代码到后台
-                Toast.makeText(getContext(), "取货第" + count + "失败", Toast.LENGTH_SHORT).show();
-                Log.e("出货失败", "取货第" + count + "失败");
-                UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
-                //添加成功的数据到上传成功的model
-                UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo = new UploadShipmentStatusBean.FailVendInfoVo();
-                failVendInfoVo.setHdId(hdCode);
-                failVendInfoVo.setNum(1);
-                failVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                failVendInfoVos.add(failVendInfoVo);
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //上传错误代码到后台
+                                        //Toast.makeText(getContext(), "取货第" + count + "失败", Toast.LENGTH_SHORT).show();
+                                        Log.e("出货失败", "取货第" + count + "失败");
+                                        UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
+                                        //添加成功的数据到上传成功的model
+                                        UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo = new UploadShipmentStatusBean.FailVendInfoVo();
+                                        failVendInfoVo.setHdId(hdCode);
+                                        failVendInfoVo.setNum(1);
+                                        failVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                        failVendInfoVos.add(failVendInfoVo);
 
-                //处理断电model
-                UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo1 = new UploadShipmentStatusBean.FailVendInfoVo();
-                failVendInfoVo1.setHdId(hdCode);
-                failVendInfoVo1.setNum(1);
-                failVendInfoVo1.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                outageFailVendInfoVos.add(failVendInfoVo1);
-                saveData();
+                                        //处理断电model
+                                        UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo1 = new UploadShipmentStatusBean.FailVendInfoVo();
+                                        failVendInfoVo1.setHdId(hdCode);
+                                        failVendInfoVo1.setNum(1);
+                                        failVendInfoVo1.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
+                                        outageFailVendInfoVos.add(failVendInfoVo1);
+                                        saveData();
 
-                if (count + 1 == hdDataBeans.size()) {
-                    //处理上传接口
-                    Log.e("上传", "上传第" + count + "失败");
-                    dealUpShipmenData();
-                    //  mActivity.addFragment(new ChuhuoSuccessFragment());
-                } else {
-                    count++;
-                    mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                }
+                                        if (count + 1 == hdDataBeans.size()) {
+                                            //处理上传接口
+                                            Log.e("上传", "上传第" + count + "失败");
+                                            dealUpShipmenData();
+                                            //  mActivity.addFragment(new ChuhuoSuccessFragment());
+                                        } else {
+                                            count++;
+                                            mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
+                                        }
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-   /* public void ss(){
-        try {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String backjson = MainApp.bvmAidlInterface.BVMStartShip(pickData);
-                        Log.e("back", backjson);
-                        PickBackBean pickBackBean = JSON.parseObject(backjson, PickBackBean.class);
-                        if (pickBackBean.getShipresult() == 0) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.e("出货成功", "取货第" + count + "成功");
-                                    Toast.makeText(getContext(), "取货第" + count + "成功", Toast.LENGTH_SHORT).show();
-                                    //出货成功改变状态
-                                    hdDataBeans.get(position).setSuccess(true);
-                                    chuhuoAdapter.refreshChuhuoStatus(position);
-                                    //添加成功的数据到上传成功的model
-                                    UploadShipmentStatusBean.SuccessVendInfoVo successVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
-                                    successVendInfoVo.setHdId(hdCode);
-                                    successVendInfoVo.setNum(1);
-                                    successVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                                    successVendInfoVos.add(successVendInfoVo);
-
-                                    //处理断电model
-                                    UploadShipmentStatusBean.SuccessVendInfoVo cSuccessVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
-                                    cSuccessVendInfoVo.setHdId(hdCode);
-                                    cSuccessVendInfoVo.setNum(1);
-                                    cSuccessVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                                    outageSuccessVendInfoVos.add(successVendInfoVo);
-                                    saveData();
-
-                                    if (count == hdDataBeans.size()) {
-                                        //处理上传接口
-                                        dealUpShipmenData();
-                                        //  mActivity.addFragment(new ChuhuoSuccessFragment());
-                                    } else {
-                                        count++;
-                                        mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                                    }
-
-                                    Log.e("取货结果:", "取货成功");
-                                }
-                            });
-
-                        } else {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //上传错误代码到后台
-                                    Toast.makeText(getContext(), "取货第" + count + "失败", Toast.LENGTH_SHORT).show();
-                                    Log.e("出货失败", "取货第" + count + "失败");
-                                    UpAlarmReportUtils.upalarmReport(context, pickBackBean.getShipresult());
-                                    //添加成功的数据到上传成功的model
-                                    UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo = new UploadShipmentStatusBean.FailVendInfoVo();
-                                    failVendInfoVo.setHdId(hdCode);
-                                    failVendInfoVo.setNum(1);
-                                    failVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                                    failVendInfoVos.add(failVendInfoVo);
-
-                                    //处理断电model
-                                    UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo1 = new UploadShipmentStatusBean.FailVendInfoVo();
-                                    failVendInfoVo1.setHdId(hdCode);
-                                    failVendInfoVo1.setNum(1);
-                                    failVendInfoVo1.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                                    outageFailVendInfoVos.add(failVendInfoVo1);
-                                    saveData();
-
-                                    if (count == hdDataBeans.size()) {
-                                        //处理上传接口
-                                        Log.e("上传", "上传第" + count + "失败");
-                                        dealUpShipmenData();
-                                        //  mActivity.addFragment(new ChuhuoSuccessFragment());
-                                    } else {
-                                        count++;
-                                        mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                                    }
-                                }
-                            });
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     /**
      * 处理断电数据保存
@@ -449,6 +403,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
      * 处理取货后上传数据到后台
      */
     private void dealUpShipmenData() {
+        chuhuoAdapter.refreshChuhuoStatus(count);
         uploadShipmentStatusBean.setCtime(socketShipmentBean.getCtime());
         uploadShipmentStatusBean.setDeviceID(PreferencesUtil.getString(Constants.VMCODE));
         uploadShipmentStatusBean.setSnm(socketShipmentBean.getT().getSnm());
@@ -467,16 +422,42 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                             //如果数据上传完成则清空
                             PreferencesUtil.putString(Constants.GETSHOPS, "");
                             if (uploadShipmentStatusBean.getFailVendInfoVoList().size() > 0) {
-                                mActivity.addFragment(new ChuhuoFailedFragment());
-                                Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        /**
+                                         *要执行的操作
+                                         */
+                                        mActivity.addFragment(new ChuhuoFailedFragment());
+                                    }
+                                }, 3000);
+                                //   Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                             } else {
-                                mActivity.addFragment(new ChuhuoSuccessFragment());
-                                Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        /**
+                                         *要执行的操作
+                                         */
+                                        mActivity.addFragment(new ChuhuoSuccessFragment());
+                                    }
+                                }, 3000);
+                                //    Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                             }
-
                         } else {
-                            mActivity.addFragment(new ChuhuoFailedFragment());
-                            Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    /**
+                                     *要执行的操作
+                                     */
+                                    mActivity.addFragment(new ChuhuoFailedFragment());
+                                }
+                            }, 3000);
+                            // Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
