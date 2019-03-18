@@ -137,6 +137,12 @@ public class ChuhuoTestActivity extends BaseActivity {
                                                 Log.e("初始化返回值2222--", PreferencesUtil.getString("layer"));
                                                 initList();
                                                 adapter.notifyDataSetChanged();
+                                                try {
+                                                    int code = MainApp.bvmAidlInterface.BVMSetWorkMode(1, 0);
+                                                    //  Toast.makeText(ChuhuoTestActivity.this, "初始化"+code+"", Toast.LENGTH_SHORT).show();
+                                                } catch (RemoteException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         });
                                     } catch (RemoteException e) {
@@ -150,6 +156,12 @@ public class ChuhuoTestActivity extends BaseActivity {
                                             // ProgressDialog.cancel();
                                             if (loading != null && loading.isShowing()) {
                                                 loading.dismiss();
+                                            }
+                                            try {
+                                                int code = MainApp.bvmAidlInterface.BVMSetWorkMode(1, 0);
+                                                //  Toast.makeText(ChuhuoTestActivity.this, "初始化"+code+"", Toast.LENGTH_SHORT).show();
+                                            } catch (RemoteException e) {
+                                                e.printStackTrace();
                                             }
                                             UpAlarmReportUtils.upalarmReport(ChuhuoTestActivity.this, code);
                                             Log.e("初始化错误码", code + "");

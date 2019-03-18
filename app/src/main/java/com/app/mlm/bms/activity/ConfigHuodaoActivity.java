@@ -208,6 +208,12 @@ public class ConfigHuodaoActivity extends BaseActivity {
                                 Log.e("初始化返回值2222--", PreferencesUtil.getString("layer"));
                                 syncData();
                                 adapter.notifyDataSetChanged();
+                                try {
+                                    int code = MainApp.bvmAidlInterface.BVMSetWorkMode(1, 0);
+                                    // Toast.makeText(ConfigHuodaoActivity.this, "初始化"+code+"", Toast.LENGTH_SHORT).show();
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     } catch (RemoteException e) {
@@ -221,6 +227,12 @@ public class ConfigHuodaoActivity extends BaseActivity {
                             // ProgressDialog.cancel();
                             if (loading != null && loading.isShowing()) {
                                 loading.dismiss();
+                            }
+                            try {
+                                int code = MainApp.bvmAidlInterface.BVMSetWorkMode(1, 0);
+                                //  Toast.makeText(ConfigHuodaoActivity.this, "初始化"+code+"", Toast.LENGTH_SHORT).show();
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
                             }
                             UpAlarmReportUtils.upalarmReport(ConfigHuodaoActivity.this, code);
                             Log.e("初始化错误码", code + "");

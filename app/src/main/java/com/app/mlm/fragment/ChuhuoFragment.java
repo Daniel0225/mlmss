@@ -327,7 +327,6 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         //  Toast.makeText(getContext(), "取货第" + count + "成功", Toast.LENGTH_SHORT).show();
                                         //出货成功改变状态
                                         hdDataBeans.get(position).setSuccess(true);
-                                        chuhuoAdapter.refreshChuhuoStatus(position);
                                         //添加成功的数据到上传成功的model
                                         UploadShipmentStatusBean.SuccessVendInfoVo successVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
                                         successVendInfoVo.setHdId(hdCode);
@@ -340,7 +339,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         cSuccessVendInfoVo.setHdId(hdCode);
                                         cSuccessVendInfoVo.setNum(1);
                                         cSuccessVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
-                                        outageSuccessVendInfoVos.add(successVendInfoVo);
+                                        outageSuccessVendInfoVos.add(cSuccessVendInfoVo);
                                         saveData();
 
                                         if (count + 1 == hdDataBeans.size()) {
@@ -426,7 +425,6 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
      * 处理取货后上传数据到后台
      */
     private void dealUpShipmenData() {
-        chuhuoAdapter.refreshChuhuoStatus(count);
         uploadShipmentStatusBean.setCtime(socketShipmentBean.getCtime());
         uploadShipmentStatusBean.setDeviceID(PreferencesUtil.getString(Constants.VMCODE));
         uploadShipmentStatusBean.setSnm(socketShipmentBean.getT().getSnm());
@@ -452,10 +450,14 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         /**
                                          *要执行的操作
                                          */
-                                        mActivity.addFragment(new ChuhuoFailedFragment());
+                                        ChuhuoFailedFragment chuhuoFailedFragment = new ChuhuoFailedFragment();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("count", String.valueOf(hdDataBeans.size()));
+                                        bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVos().size()));
+                                        chuhuoFailedFragment.setArguments(bundle);
+                                        mActivity.addFragment(chuhuoFailedFragment);
                                     }
                                 }, 3000);
-                                //   Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -467,7 +469,6 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         mActivity.addFragment(new ChuhuoSuccessFragment());
                                     }
                                 }, 3000);
-                                //    Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Handler handler = new Handler();
@@ -477,10 +478,14 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     /**
                                      *要执行的操作
                                      */
-                                    mActivity.addFragment(new ChuhuoFailedFragment());
+                                    ChuhuoFailedFragment chuhuoFailedFragment = new ChuhuoFailedFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("count", String.valueOf(hdDataBeans.size()));
+                                    bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVos().size()));
+                                    chuhuoFailedFragment.setArguments(bundle);
+                                    mActivity.addFragment(chuhuoFailedFragment);
                                 }
                             }, 3000);
-                            // Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

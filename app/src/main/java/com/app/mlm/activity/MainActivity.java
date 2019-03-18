@@ -183,6 +183,7 @@ public class MainActivity extends BaseActivity {
      */
     private void dealUpShipmenData() {
         String upJson = new Gson().toJson(PreferencesUtil.getString(Constants.GETSHOPS));
+        Log.e("---33", upJson);
         OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
                 .tag(this)
                 .upJson(upJson)

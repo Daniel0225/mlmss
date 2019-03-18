@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
@@ -160,7 +159,7 @@ public class MyClient {
                     .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
                         @Override
                         public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
-                            Toast.makeText(MainApp.getAppInstance().getApplicationContext(), "接收返回成功", Toast.LENGTH_SHORT).show();
+                            //  Toast.makeText(MainApp.getAppInstance().getApplicationContext(), "接收返回成功", Toast.LENGTH_SHORT).show();
                             Log.e("接收", "返回成功");
                             if (response.body().getCode() == 0) {
                                 // Toast.makeText(MainApp.getAppInstance().getApplicationContext(),"接收返回成功++"+response.body().data,Toast.LENGTH_SHORT).show();

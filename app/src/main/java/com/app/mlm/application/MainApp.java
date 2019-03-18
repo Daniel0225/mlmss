@@ -22,7 +22,6 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.greendao.DaoMaster;
 import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
-import com.app.mlm.utils.CrashHandler;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.lzy.okgo.OkGo;
@@ -106,7 +105,7 @@ public class MainApp extends Application {
         initServerState();
         initRxHttp();
         initGreenDao();
-        CrashHandler.getInstance().init(this);
+        //CrashHandler.getInstance().init(this);
         myclient = new MyClient();
         myclient.connect();
       /*  Intent service = new Intent(this, MlmServiceConfigure.class);

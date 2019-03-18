@@ -36,6 +36,8 @@ public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
     TextView tvCancel;
     @Bind(R.id.tvCommit)
     TextView tvCommit;
+    String count;
+    String successCount;
 
     public ChuhuoFailedFragment() {
     }
@@ -63,6 +65,9 @@ public class ChuhuoFailedFragment extends ChuhuoBaseFragment {
 
     @Override
     protected void initData() {
+        count = (String) getArguments().get("count");
+        successCount = (String) getArguments().get("count");
+        tvCount.setText(successCount + "/" + count);
         startTime();
     }
 
