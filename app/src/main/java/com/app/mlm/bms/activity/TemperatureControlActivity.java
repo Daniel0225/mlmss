@@ -2,6 +2,7 @@ package com.app.mlm.bms.activity;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,7 +82,7 @@ public class TemperatureControlActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, 1500);
+        //UpAlarmReportUtils.upalarmReport(TemperatureControlActivity.this, 1500);
 //        try {
 //            //获取温度
 //            int[] code = MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
@@ -119,7 +120,6 @@ public class TemperatureControlActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-
     }
 
     @Override
@@ -133,10 +133,60 @@ public class TemperatureControlActivity extends BaseActivity {
         cpbProgressLow.setProgressFormatter(new MyProgressFormatter());
         try {
             code = MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
-            tvDeviceTemper.setText("箱体温度："+code[0]+"度");
-            tvRoomTempr.setText("室外温度："+code[1]+"度");
+            tvDeviceTemper.setText("箱体温度：" + code[0] + "度");
+            tvRoomTempr.setText("室外温度：" + code[1] + "度");
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+        if (!TextUtils.isEmpty(PreferencesUtil.getString("currentMode"))) {
+            switch (PreferencesUtil.getString("currentMode")) {
+                case "常温":
+                    tvChangwen.performLongClick();
+                    resetState((TextView) tvChangwen);
+                    setCurrentMode("常温");
+                    type = 0;
+                    coldModel = "常温";
+                    temperatureSetting.setVisibility(View.GONE);
+                    break;
+                case "制冷":
+                    resetState((TextView) tvZhileng);
+                    setCurrentMode("制冷");
+                    //重置
+                    coldModel = tvSettingMode1.getText().toString();
+                    lowTempTextView.setText(PreferencesUtil.getInt(Constants.COLL_LOW_TEMP) + "");
+                    highTempTextView.setText(PreferencesUtil.getInt(Constants.COOL_HIGH_TEMP) + "");
+                    cpbProgressHigh.setProgress(PreferencesUtil.getInt(Constants.COOL_HIGH_TEMP));
+                    cpbProgressLow.setProgress(PreferencesUtil.getInt(Constants.COLL_LOW_TEMP));
+                    type = 1;
+                    temperatureSetting.setVisibility(View.VISIBLE);
+                    setcoldline.setVisibility(View.VISIBLE);
+                    if (PreferencesUtil.getString("coolMode").equals("弱冷")) {
+                        tvSettingMode1.performClick();
+                    } else if (PreferencesUtil.getString("coolMode").equals("强冷")) {
+                        tvSettingMode2.performClick();
+                    }
+                    if (!TextUtils.isEmpty(PreferencesUtil.getString(Constants.CHUHUO_WENDU))) {
+                        tvAllowChuhuo.setText(PreferencesUtil.getString(Constants.CHUHUO_WENDU));
+                    }
+                    break;
+                case "制热":
+                    resetState((TextView) tvZhire);
+                    setCurrentMode("制热");
+                    //重置
+                    coldModel = tvSettingMode1.getText().toString();
+                    lowTempTextView.setText(PreferencesUtil.getInt(Constants.HEAT_LOW_TEMP) + "");
+                    highTempTextView.setText(PreferencesUtil.getInt(Constants.HEAT_HIGH_TEMP) + "");
+                    cpbProgressHigh.setProgress(PreferencesUtil.getInt(Constants.HEAT_HIGH_TEMP));
+                    cpbProgressLow.setProgress(PreferencesUtil.getInt(Constants.HEAT_LOW_TEMP));
+                    type = 2;
+                    coldModel = "";
+                    temperatureSetting.setVisibility(View.VISIBLE);
+                    setcoldline.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(PreferencesUtil.getString(Constants.CHUHUO_WENDU))) {
+                        tvAllowChuhuo.setText(PreferencesUtil.getString(Constants.CHUHUO_WENDU));
+                    }
+                    break;
+            }
         }
     }
 
@@ -231,7 +281,21 @@ public class TemperatureControlActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
                         if (response.body().data.getCode() == 0) {
-                            Toast.makeText(TemperatureControlActivity.this, response.body().data.getMsg(), Toast.LENGTH_SHORT).show();
+                            if (model.equals("制冷")) {
+                                PreferencesUtil.putInt(Constants.COLL_LOW_TEMP, Integer.parseInt(lowTempTextView.getText().toString()));
+                                PreferencesUtil.putInt(Constants.COOL_HIGH_TEMP, Integer.parseInt(highTempTextView.getText().toString()));
+                            } else if (model.equals("制热")) {
+                                PreferencesUtil.putInt(Constants.HEAT_LOW_TEMP, Integer.parseInt(lowTempTextView.getText().toString()));
+                                PreferencesUtil.putInt(Constants.HEAT_HIGH_TEMP, Integer.parseInt(highTempTextView.getText().toString()));
+                            } else {
+                                PreferencesUtil.putInt(Constants.COLL_LOW_TEMP, 4);
+                                PreferencesUtil.putInt(Constants.COOL_HIGH_TEMP, 25);
+                                PreferencesUtil.putInt(Constants.HEAT_LOW_TEMP, 4);
+                                PreferencesUtil.putInt(Constants.HEAT_HIGH_TEMP, 25);
+                            }
+                            PreferencesUtil.putString("currentMode", model);
+                            PreferencesUtil.putString("coolMode", coldModel);
+                            // Toast.makeText(TemperatureControlActivity.this, response.body().data.getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -282,8 +346,6 @@ public class TemperatureControlActivity extends BaseActivity {
                         public void onClick(String value) {
                             tvAllowChuhuo.setText(value);
                             PreferencesUtil.putString(Constants.CHUHUO_WENDU, value);
-                            PreferencesUtil.putInt(Constants.LOW_TEMP, Integer.parseInt(lowTempTextView.getText().toString()));
-                            PreferencesUtil.putInt(Constants.HIGH_TEMP, Integer.parseInt(highTempTextView.getText().toString()));
                         }
                     });
                     choiceDialog.show();

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.MainActivity;
 import com.app.mlm.utils.TimeCountUtilsFinish;
@@ -110,13 +111,19 @@ public class ChuhuoSuccessFragment extends ChuhuoBaseFragment {
             case R.id.tvCancel:
                 // mActivity.finish();
                 getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent = new Intent(Constants.ORDER);
+                getActivity().sendBroadcast(intent);
                 break;
             case R.id.tvCommit:
                 getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent1 = new Intent(Constants.ORDER);
+                getActivity().sendBroadcast(intent1);
                 //  mActivity.finish();
                 break;
             case R.id.ivBack:
                 getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent2 = new Intent(Constants.ORDER);
+                getActivity().sendBroadcast(intent2);
                 //mActivity.finish();
                 break;
         }

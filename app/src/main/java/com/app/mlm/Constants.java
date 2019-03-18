@@ -19,8 +19,10 @@ public class Constants {
     public static final String LOCK_IDS = "lock_ids";
     //存储温度的最高和最低温度
     public static final String CHUHUO_WENDU = "chuhuo_wendu";//
-    public static final String LOW_TEMP = "low_temp";//最低温度
-    public static final String HIGH_TEMP = "high_Temp";//最高温度
+    public static final String COLL_LOW_TEMP = "coll_low_temp";//制冷最低温度
+    public static final String COOL_HIGH_TEMP = "cool_high_Temp";//制冷最高温度
+    public static final String HEAT_LOW_TEMP = "heat_low_temp";//制热最低温度
+    public static final String HEAT_HIGH_TEMP = "heat_high_Temp";//制热最高温度
     public static final String COUNTER_NUM = "counterNumber";
     public static final String COUNTER_NAME = "counterName";
     public static final String TOTAL_NUM = "totalNum";
@@ -57,6 +59,7 @@ public class Constants {
     //断电保存数据
     public static final String GETSHOPS = BASE_URL + "getShops";
 
+    public static final String ORDER = "com.mlm.app.Order";//订单广播
 
     //门禁状态广播
     public static final String DOOR_BROADCAST = "com.snbc.bvm.action.senreceiver";

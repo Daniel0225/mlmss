@@ -1,5 +1,9 @@
 package com.app.mlm.activity.order;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -57,6 +61,8 @@ public class OrderPayActivity extends AppCompatActivity {
     private Integer totalNum;
     private TextView originPriceView;
     private ArrayList<GoodsInfo> goodsInfoList;
+    private IntentFilter intentFilter;
+    private OrderChangeReceiver orderChangeReceiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +72,11 @@ public class OrderPayActivity extends AppCompatActivity {
         init();
         initPayAdImage();
         getPayInfo();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.mlm.app.Order");
         couponDialog = new CouponDialog(this);
+        orderChangeReceiver = new OrderChangeReceiver();
+        registerReceiver(orderChangeReceiver, intentFilter);
 //        couponDialog.show();
     }
 
@@ -182,6 +192,18 @@ public class OrderPayActivity extends AppCompatActivity {
         super.onDestroy();
         if (timeCount != null) {
             timeCount.cancel();
+        }
+        unregisterReceiver(orderChangeReceiver);
+    }
+
+    //自定义接受网络变化的广播接收器
+    class OrderChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String state = intent.getAction();
+            if (state.equals(Constants.ORDER)) {
+                finish();
+            }
         }
     }
 }

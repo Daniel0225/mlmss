@@ -14,12 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bms.adapter.ChuhuoAdapter;
+import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AllDataBean;
@@ -69,6 +71,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     ImageView chuhuoResultView;
     String json = "";
     int count = 0;
+    int[] code;//温度
     // List<SocketShipmentBean> shipmentList = new ArrayList<>();
     SocketShipmentBean socketShipmentBean = new SocketShipmentBean();
     List<HdDataBean> hdDataBeans = new ArrayList<HdDataBean>();
@@ -226,9 +229,9 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             int two = Integer.parseInt(hdCodeT.substring(1, 2));
             int three = Integer.parseInt(hdCodeT.substring(2, 3));
             if (two == 0) {
-                pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                isTemperature(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
             } else {
-                pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                isTemperature(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
             }
         }
     }
@@ -284,6 +287,78 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     @Override
     public void onFinish() {
 
+    }
+
+    /**
+     * 判断是否够温度出货
+     */
+    private void isTemperature(int position, String hdCode, int positionX, int positionY, String snm, int goodNum) {
+        //获取
+        try {
+            code = MainApp.bvmAidlInterface.BVMGetColdHeatTemp(1);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        switch (PreferencesUtil.getString(Constants.CHUHUO_WENDU)) {
+            case "默认":
+                pick(position, hdCode, positionX, positionY, snm, 1);
+                break;
+            case "允许":
+                pick(position, hdCode, positionX, positionY, snm, 1);
+                break;
+            case "":
+                pick(position, hdCode, positionX, positionY, snm, 1);
+                break;
+            case "拒绝":
+                dealUpShipmenDataExcption();
+                Toast.makeText(getActivity(), "温度未到达已拒绝出货", Toast.LENGTH_SHORT).show();
+                break;
+            case "提示":
+                if (PreferencesUtil.getString("currentMode").equals("制冷")) {
+                    if (code[0] > PreferencesUtil.getInt(Constants.COLL_LOW_TEMP) && code[0] < PreferencesUtil.getInt(Constants.COOL_HIGH_TEMP)) {
+                        pick(position, hdCode, positionX, positionY, snm, 1);
+                        Log.e("制冷温度出货", "进入");
+                    } else {
+                        Log.e("制冷温度未达标出货", "进入");
+                        CommonDialog commonDialog = new CommonDialog(getActivity(), "提示", "温度未到达是否继续出货", "确定", "取消")
+                                .setCommitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        pick(position, hdCode, positionX, positionY, snm, 1);
+                                    }
+                                })
+                                .setCancelClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dealUpShipmenDataExcption();
+                                    }
+                                });
+                        commonDialog.show();
+                    }
+                } else if (PreferencesUtil.getString("currentMode").equals("制热")) {
+                    if (code[0] > PreferencesUtil.getInt(Constants.HEAT_LOW_TEMP) && code[0] < PreferencesUtil.getInt(Constants.HEAT_HIGH_TEMP)) {
+                        pick(position, hdCode, positionX, positionY, snm, 1);
+                        Log.e("制热温度出货", "进入");
+                    } else {
+                        Log.e("制热温度未达标出货", "进入");
+                        CommonDialog commonDialog = new CommonDialog(getActivity(), "提示", "温度未到达是否继续出货", "确定", "取消")
+                                .setCommitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        pick(position, hdCode, positionX, positionY, snm, 1);
+                                    }
+                                })
+                                .setCancelClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dealUpShipmenDataExcption();
+                                    }
+                                });
+                        commonDialog.show();
+                    }
+                }
+                break;
+        }
     }
 
     /**
@@ -482,6 +557,56 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("count", String.valueOf(hdDataBeans.size()));
                                     bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVos().size()));
+                                    chuhuoFailedFragment.setArguments(bundle);
+                                    mActivity.addFragment(chuhuoFailedFragment);
+                                }
+                            }, 3000);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<AllDataBean>> response) {
+                        ToastUtil.showLongToast(response.body().getMsg());
+                    }
+                });
+    }
+
+    /**
+     * 处理拒绝出货
+     */
+    private void dealUpShipmenDataExcption() {
+        uploadShipmentStatusBean.setCtime(socketShipmentBean.getCtime());
+        uploadShipmentStatusBean.setDeviceID(PreferencesUtil.getString(Constants.VMCODE));
+        uploadShipmentStatusBean.setSnm(socketShipmentBean.getT().getSnm());
+        uploadShipmentStatusBean.setNum(socketShipmentBean.getT().getNum());
+        uploadShipmentStatusBean.setStatus("0");
+        for (int i = 0; i < hdDataBeans.size(); i++) {
+            UploadShipmentStatusBean.FailVendInfoVo failVendInfoVo = new UploadShipmentStatusBean.FailVendInfoVo();
+            failVendInfoVo.setHdId(hdDataBeans.get(i).getHdCode());
+            failVendInfoVo.setNum(1);
+            failVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(i).getOrderProject()));
+            failVendInfoVos.add(failVendInfoVo);
+        }
+        uploadShipmentStatusBean.setFailVendInfoVoList(failVendInfoVos);
+        String upJson = new Gson().toJson(uploadShipmentStatusBean);
+        OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
+                .tag(this)
+                .upJson(upJson)
+                .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
+                        if (response.body().getCode() == 0) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    /**
+                                     *要执行的操作
+                                     */
+                                    ChuhuoFailedFragment chuhuoFailedFragment = new ChuhuoFailedFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("count", String.valueOf(hdDataBeans.size()));
+                                    bundle.putString("successcount", String.valueOf(hdDataBeans.size()));
                                     chuhuoFailedFragment.setArguments(bundle);
                                     mActivity.addFragment(chuhuoFailedFragment);
                                 }
