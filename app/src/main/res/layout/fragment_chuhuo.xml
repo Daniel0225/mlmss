@@ -104,7 +104,7 @@
                 android:layout_below="@id/tvCount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="21px"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="100px"
