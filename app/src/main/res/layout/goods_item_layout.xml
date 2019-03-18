@@ -62,14 +62,24 @@
 
             <TextView
                 android:id="@+id/tvGoodsPrice"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:paddingLeft="37px"
                 android:singleLine="true"
                 android:text="¥12.8"
                 android:textColor="#ffd0021b"
                 android:textSize="14px" />
+
+            <TextView
+                android:id="@+id/tvActivePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="4px"
+                android:singleLine="true"
+                android:text="¥12.8"
+                android:textColor="#B2B2B2"
+                android:textSize="12px" />
 
             <ImageView
                 android:id="@+id/ivAddCart"

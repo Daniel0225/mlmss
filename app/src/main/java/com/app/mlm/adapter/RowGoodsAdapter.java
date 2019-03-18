@@ -1,6 +1,7 @@
 package com.app.mlm.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -54,6 +55,8 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.hasGoodsView = view.findViewById(R.id.has_goods);
         viewHolder.noGoodsView = view.findViewById(R.id.no_goods);
         viewHolder.miniPicView = view.findViewById(R.id.mini_pic);
+        viewHolder.tvActivePrice = view.findViewById(R.id.tvActivePrice);
+        viewHolder.tvActivePrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         return viewHolder;
     }
 
@@ -68,9 +71,15 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         }
 
         GoodsInfo goodsInfo = data.get(i);
-
         viewHolder.tvGoodsName.setText(goodsInfo.getMdseName());
-        viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+        if(goodsInfo.getActivityPrice() == 0){
+            viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+            viewHolder.tvActivePrice.setText("");
+        }else{
+            viewHolder.tvActivePrice.setText("¥" + goodsInfo.getMdsePrice());
+            viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getActivityPrice());
+        }
+
         if (goodsInfo.getMdseUrl().equals("empty")) {
             viewHolder.noGoodsView.setVisibility(View.VISIBLE);
             viewHolder.hasGoodsView.setVisibility(View.GONE);
@@ -124,6 +133,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         ImageView miniPicView;
         TextView tvGoodsName;
         TextView tvGoodsPrice;
+        TextView tvActivePrice;
         View rvRoot;
         View hasGoodsView;
         View noGoodsView;

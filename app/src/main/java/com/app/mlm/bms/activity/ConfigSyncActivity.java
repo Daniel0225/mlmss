@@ -228,7 +228,12 @@ public class ConfigSyncActivity extends BaseActivity {
                 .execute(new JsonCallBack<BaseResponse<List<GoodsInfo>>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<List<GoodsInfo>>> response) {
-                        updateChannelInfo(response.body().getData());
+                        if(response.body().getCode() == 0){
+                            updateChannelInfo(response.body().getData());
+                        }else{
+                            ToastUtil.showLongCenterToast(response.body().getMsg());
+                        }
+
                     }
                 });
     }

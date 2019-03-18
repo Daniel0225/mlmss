@@ -42,13 +42,15 @@ public class GoodsInfo implements Serializable {
     private Integer channelType;//货道类型
     private String priductBatch;//产品批次
     private String merchantUrl;
+    private double activityPrice = 0;//活动售价
 
-    @Generated(hash = 1987831322)
+    @Generated(hash = 99251587)
     public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand, String mdsePack,
             String merchantType, String mdseName, String mdseUrl, String clCode, int shopCarNum,
             String vmCode, Integer vmId, Integer clId, Integer vmClayers, double clong, double cwidth,
             double cheight, double realPrice, Integer clCapacity, Integer clcCapacity, String threshold,
-            Integer Replenish, Integer channelType, String priductBatch, String merchantUrl) {
+            Integer Replenish, Integer channelType, String priductBatch, String merchantUrl,
+            double activityPrice) {
         this.id = id;
         this.mdseId = mdseId;
         this.mdsePrice = mdsePrice;
@@ -74,6 +76,7 @@ public class GoodsInfo implements Serializable {
         this.channelType = channelType;
         this.priductBatch = priductBatch;
         this.merchantUrl = merchantUrl;
+        this.activityPrice = activityPrice;
     }
 
     @Generated(hash = 1227172248)
@@ -278,5 +281,13 @@ public class GoodsInfo implements Serializable {
 
     public void setMerchantUrl(String merchantUrl) {
         this.merchantUrl = merchantUrl;
+    }
+
+    public double getActivityPrice() {
+        return activityPrice;
+    }
+
+    public void setActivityPrice(double activityPrice) {
+        this.activityPrice = activityPrice;
     }
 }

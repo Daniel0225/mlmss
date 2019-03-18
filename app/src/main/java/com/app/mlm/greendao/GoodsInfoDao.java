@@ -49,6 +49,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
         public final static Property ChannelType = new Property(22, Integer.class, "channelType", false, "CHANNEL_TYPE");
         public final static Property PriductBatch = new Property(23, String.class, "priductBatch", false, "PRIDUCT_BATCH");
         public final static Property MerchantUrl = new Property(24, String.class, "merchantUrl", false, "MERCHANT_URL");
+        public final static Property ActivityPrice = new Property(25, double.class, "activityPrice", false, "ACTIVITY_PRICE");
     }
 
 
@@ -88,7 +89,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
                 "\"REPLENISH\" INTEGER," + // 21: Replenish
                 "\"CHANNEL_TYPE\" INTEGER," + // 22: channelType
                 "\"PRIDUCT_BATCH\" TEXT," + // 23: priductBatch
-                "\"MERCHANT_URL\" TEXT);"); // 24: merchantUrl
+                "\"MERCHANT_URL\" TEXT," + // 24: merchantUrl
+                "\"ACTIVITY_PRICE\" REAL NOT NULL );"); // 25: activityPrice
     }
 
     /** Drops the underlying database table. */
@@ -201,6 +203,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
         if (merchantUrl != null) {
             stmt.bindString(25, merchantUrl);
         }
+        stmt.bindDouble(26, entity.getActivityPrice());
     }
 
     @Override
@@ -307,6 +310,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
         if (merchantUrl != null) {
             stmt.bindString(25, merchantUrl);
         }
+        stmt.bindDouble(26, entity.getActivityPrice());
     }
 
     @Override
@@ -341,7 +345,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
             cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21), // Replenish
             cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22), // channelType
             cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // priductBatch
-            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24) // merchantUrl
+            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // merchantUrl
+            cursor.getDouble(offset + 25) // activityPrice
         );
         return entity;
     }
@@ -373,6 +378,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Void> {
         entity.setChannelType(cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22));
         entity.setPriductBatch(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
         entity.setMerchantUrl(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
+        entity.setActivityPrice(cursor.getDouble(offset + 25));
      }
     
     @Override
