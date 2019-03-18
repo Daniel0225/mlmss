@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="ring"
-    android:innerRadius="45px"
-    android:thickness="3px"
-    android:useLevel="false">
-    <!--android:useLevel="false"必须是false-->
-
-    <size
-        android:width="100px"
-        android:height="100px" />
-
-    <!--扫描渐变shape不能设置角度-->
-    <gradient
-        android:centerColor="#802553E1"
-        android:endColor="#ffA4B7F2"
-        android:startColor="#00A4B7F2"
-        android:type="sweep" />
-</shape>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:pivotX="0.5"
+    android:pivotY="0.5"
+    android:toDegrees="360" >
+       <shape android:innerRadiusRatio="3"
+            android:shape="ring"
+            android:thicknessRatio="8"
+            android:useLevel="false">
+                <gradient
+                    android:centerX="0.5"
+                    android:centerY="0.5"
+                    android:endColor="#ffA4B7F2"
+                    android:startColor="#00A4B7F2"
+                    android:centerColor="#802553E1"
+                    android:type="sweep"
+                    android:useLevel="false" />
+    </shape>
+</rotate>
+<!--<gradient-->
+<!--android:centerColor="#802553E1"-->
+<!--android:endColor="#ffA4B7F2"-->
+<!--android:startColor="#00A4B7F2"-->
+<!--android:type="sweep" />-->

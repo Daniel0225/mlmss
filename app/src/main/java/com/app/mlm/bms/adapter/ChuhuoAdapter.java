@@ -29,7 +29,8 @@ public class ChuhuoAdapter extends RecyclerView.Adapter<ChuhuoAdapter.MyViewHold
     }
 
     public void refreshChuhuoStatus(int position){
-        chuhuoPosition = position;
+
+        chuhuoPosition = chuhuoPosition == position ? position+1 : position;
         notifyDataSetChanged();
     }
 

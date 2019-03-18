@@ -62,6 +62,10 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     View multiGoodsView;
     @Bind(R.id.tvCount)
     TextView countView;
+    @Bind(R.id.progress_end_circle)
+    ImageView progressEndImage;
+    @Bind(R.id.chuhuo_result)
+    ImageView chuhuoResultView;
     String json = "";
     int count = 0;
     // List<SocketShipmentBean> shipmentList = new ArrayList<>();
@@ -81,28 +85,41 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
-                    chuhuoAdapter.refreshChuhuoStatus(count);
-                    Log.e("开始取第", "开始取第" + count + "个");
-                    countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
-                    String hdCodeT = hdDataBeans.get(count).getHdCode();
-                    if (!TextUtils.isEmpty(hdCodeT)) {
-                        int one = Integer.parseInt(hdCodeT.substring(0, 1));
-                        int two = Integer.parseInt(hdCodeT.substring(1, 2));
-                        int three = Integer.parseInt(hdCodeT.substring(2, 3));
-                        try {
-                            if (MainApp.bvmAidlInterface.BVMGetRunningState(1) == 2) {
-                                if (two == 0) {
-                                    pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
-                                } else {
-                                    pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
-                                }
-                            } else {
-                                mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                            }
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
 
+                    //如果是单个商品出货  直接出货结束 隐藏转圈的 限时成功或者失败
+                    if(hdDataBeans.size() == 1){
+                        progressCircle.setVisibility(View.GONE);
+                        chuhuoResultView.setVisibility(View.VISIBLE);
+                        progressEndImage.setVisibility(View.VISIBLE);
+                        if(hdDataBeans.get(0).isSuccess()){
+                            chuhuoResultView.setImageResource(R.drawable.select_nor);
+                        }else {
+                            chuhuoResultView.setImageResource(R.drawable.shibai);
+                        }
+                    }else{//多商品出货
+                        chuhuoAdapter.refreshChuhuoStatus(count);
+                        Log.e("开始取第", "开始取第" + count + "个");
+                        countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
+                        String hdCodeT = hdDataBeans.get(count).getHdCode();
+                        if (!TextUtils.isEmpty(hdCodeT)) {
+                            int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                            int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                            int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                            try {
+                                if (MainApp.bvmAidlInterface.BVMGetRunningState(1) == 2) {
+                                    if (two == 0) {
+                                        pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                    } else {
+                                        pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                    }
+                                } else {
+                                    mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
+                                }
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
                     }
                     break;
             }

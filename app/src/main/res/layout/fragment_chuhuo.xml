@@ -104,7 +104,7 @@
                 android:layout_below="@id/tvCount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="21px"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="100px"
@@ -114,10 +114,17 @@
                     >
 
                     <ImageView
+                        android:id="@+id/progress_end_circle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:src="@drawable/circle_gray" />
+
+                    <ImageView
                         android:id="@+id/progress_circle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/circle_gray" />
+                        android:src="@drawable/ic_huhuo_progress" />
 
                     <ImageView
                         android:id="@+id/goods_pic"
@@ -128,11 +135,13 @@
 
                 </RelativeLayout>
                 <ImageView
+                    android:id="@+id/chuhuo_result"
                     android:layout_width="20px"
                     android:layout_height="20px"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/select_nor"
+                    android:visibility="gone"
                     />
 
             </RelativeLayout>
@@ -145,7 +154,7 @@
                 android:layout_marginEnd="190px"
                 android:layout_marginStart="190px"
                 android:layout_marginTop="5px"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
