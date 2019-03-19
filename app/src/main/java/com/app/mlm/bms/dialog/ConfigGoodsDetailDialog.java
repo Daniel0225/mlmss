@@ -196,6 +196,12 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 if (capacity == 1) {
                     capacityJian.setImageResource(R.drawable.jian_goods_nor);
                 }
+
+                int buhuoNum3 = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
+                int keBuhuoShu = Integer.valueOf(etCapcity.getText().toString()) - goodsInfo.getClcCapacity() - buhuoNum3;
+                if ( keBuhuoShu < 0 ) {
+                    etAddCount.setText(String.valueOf(buhuoNum3 + keBuhuoShu));
+                }
                 break;
             case R.id.capacity_add:
                 int capacity2 = TextUtils.isEmpty(etCapcity.getText().toString()) ? 0 : Integer.valueOf(etCapcity.getText().toString());
