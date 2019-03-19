@@ -49,7 +49,7 @@ public class CHColumnGoodsAdapter extends RecyclerView.Adapter<CHColumnGoodsAdap
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
         int position = data.size() - i;//注意机器货道最下一层是1
-        CHRowGoodsAdapter adapter = new CHRowGoodsAdapter(context, data.get(i), position);
+        CHRowGoodsAdapter adapter = new CHRowGoodsAdapter(context, data.get(i), position, i);
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
         rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 2));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));
