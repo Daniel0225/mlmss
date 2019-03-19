@@ -205,7 +205,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
                     selectView.setVisibility(View.VISIBLE);
                 }
                 goodsTypeSelectBean.setType(1);
-                goodsTypeAdapter = new ChooseGoodsTypeAdapter(mContext, allTypeInfoResponse.getType(), customClickListener, goodsTypeSelectBean);
+                goodsTypeAdapter = new ChooseGoodsTypeAdapter(mContext, allTypeInfoResponse.getMerchant(), customClickListener, goodsTypeSelectBean);
                 selectGridView.setAdapter(goodsTypeAdapter);
                 break;
             case R.id.pack:
@@ -277,13 +277,13 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         for (int i = 0; i < originData.size(); i++) {
             ProductInfo productInfo = originData.get(i);
             if (goodsTypeSelectBean.getType() == 0) {//品牌
-                String keyWord = allTypeInfoResponse.getType().get(goodsTypeSelectBean.getSelectPosition()).getBrandName();
+                String keyWord = allTypeInfoResponse.getBrand().get(goodsTypeSelectBean.getSelectPosition()).getBrandName();
                 if (!TextUtils.isEmpty(productInfo.getMdseBrand()) && productInfo.getMdseBrand().equals(keyWord)) {
                     data.add(productInfo);
                 }
 
             } else if (goodsTypeSelectBean.getType() == 1) {//类型
-                int keyWord = allTypeInfoResponse.getBrand().get(goodsTypeSelectBean.getSelectPosition()).getMerchantId();
+                int keyWord = allTypeInfoResponse.getMerchant().get(goodsTypeSelectBean.getSelectPosition()).getMerchantId();
                 if (productInfo.getMerchantId() == keyWord) {
                     data.add(productInfo);
                 }
@@ -308,9 +308,9 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
                         if (response.body().getCode() == 0) {
                             allTypeInfoResponse = response.body().getData();
                             AllTypeInfo allTypeInfo = new AllTypeInfo("不限");
-                            allTypeInfoResponse.getBrand().add(0, allTypeInfo);
+                            allTypeInfoResponse.getMerchant().add(0, allTypeInfo);
                             allTypeInfoResponse.getPack().add(0, allTypeInfo);
-                            allTypeInfoResponse.getType().add(0, allTypeInfo);
+                            allTypeInfoResponse.getBrand().add(0, allTypeInfo);
                             PreferencesUtil.putString("allType", FastJsonUtil.createJsonString(allTypeInfoResponse));
                         }
                     }

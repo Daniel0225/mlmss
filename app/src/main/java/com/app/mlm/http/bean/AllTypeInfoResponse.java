@@ -10,17 +10,9 @@ import java.util.List;
  */
 
 public class AllTypeInfoResponse implements Serializable {
-    private List<AllTypeInfo> type;
     private List<AllTypeInfo> brand;
+    private List<AllTypeInfo> merchant;
     private List<AllTypeInfo> pack;
-
-    public List<AllTypeInfo> getType() {
-        return type;
-    }
-
-    public void setType(List<AllTypeInfo> type) {
-        this.type = type;
-    }
 
     public List<AllTypeInfo> getBrand() {
         return brand;
@@ -28,6 +20,14 @@ public class AllTypeInfoResponse implements Serializable {
 
     public void setBrand(List<AllTypeInfo> brand) {
         this.brand = brand;
+    }
+
+    public List<AllTypeInfo> getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(List<AllTypeInfo> merchant) {
+        this.merchant = merchant;
     }
 
     public List<AllTypeInfo> getPack() {

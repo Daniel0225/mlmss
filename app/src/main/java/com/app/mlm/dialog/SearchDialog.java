@@ -141,28 +141,33 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
     }
 
     private void clearKeywords(){
-        etSearch.setText("");
+        etSearch.setText(String.valueOf(1));
+        deleteLastChar();
+
     }
 
     private void searchResult(String clCode) {
         data.clear();
-        int huodao = Integer.valueOf(clCode);
-        if(huodao < originData.size()){
-            for (GoodsInfo goods: originData.get(huodao)) {
-                if(!goods.getMdseUrl().equals("empty")){
-                    data.add(goods);
+        if(!TextUtils.isEmpty(clCode)){
+            int huodao = Integer.valueOf(clCode);
+            if(huodao < originData.size()){
+                for (GoodsInfo goods: originData.get(huodao)) {
+                    if(!goods.getMdseUrl().equals("empty")){
+                        data.add(goods);
+                    }
+                }
+            }
+            for (int i = 0; i < originData.size(); i++) {
+                List<GoodsInfo> list = originData.get(i);
+                for (int j = 0; j < list.size();j++){
+                    GoodsInfo goodsInfo = list.get(j);
+                    if (goodsInfo.getClCode() != null && goodsInfo.getClCode().equals(clCode)) {
+                        data.add(goodsInfo);
+                    }
                 }
             }
         }
-        for (int i = 0; i < originData.size(); i++) {
-            List<GoodsInfo> list = originData.get(i);
-            for (int j = 0; j < list.size();j++){
-                GoodsInfo goodsInfo = list.get(j);
-                if (goodsInfo.getClCode() != null && goodsInfo.getClCode().equals(clCode)) {
-                    data.add(goodsInfo);
-                }
-            }
-        }
+
         searchResultAdapter.notifyDataSetChanged();
     }
     /**
