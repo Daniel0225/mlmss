@@ -210,7 +210,11 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 break;
             case R.id.buhuo_jian:
                 int buhuoNum = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
-                etAddCount.setText(String.valueOf(buhuoNum - 1));
+                int currentStock = Integer.valueOf(etCapcity.getText().toString()) - goodsInfo.getClcCapacity();
+                if(buhuoNum + goodsInfo.getClcCapacity() > 0){
+                    etAddCount.setText(String.valueOf(buhuoNum - 1));
+                }
+
                 break;
             case R.id.buhuo_add:
                 int buhuoNum2 = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
