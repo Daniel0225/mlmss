@@ -47,11 +47,13 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
     private List<GoodsInfo> data = new ArrayList<>();
     private Loading loading;
     private int row;
+    private int finalrow;
 
-    public CHRowGoodsAdapter(Context context, List<GoodsInfo> data, int row) {
+    public CHRowGoodsAdapter(Context context, List<GoodsInfo> data, int row, int finalrow) {
         this.context = context;
         this.data = data;
         this.row = row;
+        this.finalrow = finalrow;
     }
 
     @NonNull
@@ -100,7 +102,7 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
                             public void onClick(View v) {
                            /*     Log.e("取货", "第" + row + "行" + "第" + i + "列");
                                 Toast.makeText(context, "第" + row + "行" + "第" + i + "列", Toast.LENGTH_SHORT).show();*/
-                                pick(row + 1, i + 1);
+                                pick(finalrow, row, i + 1);
                             }
                         })
                         .setCancelClickListener(new View.OnClickListener() {
@@ -117,7 +119,7 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
     /**
      * 取货
      */
-    private void pick(int positionX, int positionY) {
+    private void pick(int finalrow, int positionX, int positionY) {
         loading = Loading.newLoading(context, "取货中...");
         loading.show();
         //ProgressDialog.show(context,"取货中...",false);
@@ -152,7 +154,12 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
                                     }
                                     //  ProgressDialog.cancel();
                                     TestResult testResult = new TestResult();
-                                    String result = (positionX) + "0" + positionY;
+                                    String result = "";
+                                    if (positionX > 9) {
+                                        result = String.valueOf(finalrow + 1) + String.valueOf(positionY);
+                                    } else {
+                                        result = (finalrow + 1) + "0" + positionY;
+                                    }
                                     testResult.setHuodaoName(result);
                                     testResult.setState(String.valueOf(pickBackBean.getShipresult()));
                                     testResult.setDesc("出货成功");
@@ -172,7 +179,12 @@ public class CHRowGoodsAdapter extends RecyclerView.Adapter<CHRowGoodsAdapter.Ro
                                         loading.dismiss();
                                     }
                                     TestResult testResult = new TestResult();
-                                    String result = (positionX) + "0" + positionY;
+                                    String result = "";
+                                    if (positionX > 9) {
+                                        result = String.valueOf(finalrow + 1) + String.valueOf(positionY);
+                                    } else {
+                                        result = (finalrow + 1) + "0" + positionY;
+                                    }
                                     testResult.setHuodaoName(result);
                                     testResult.setState(String.valueOf(pickBackBean.getShipresult()));
                                     testResult.setDesc("出货失败");
