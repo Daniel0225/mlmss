@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -55,7 +56,7 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
     private InputGridAdapter inputGridAdapter;
     private SearchResultAdapter searchResultAdapter;
     private List<GoodsInfo> data = new ArrayList<>();
-    private List<GoodsInfo> originData = new ArrayList<>();
+    private List<List<GoodsInfo>> originData = new ArrayList<>();
 
     public SearchDialog(Context context) {
         super(context, R.layout.dialog_search_layout, true);
@@ -145,10 +146,21 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
 
     private void searchResult(String clCode) {
         data.clear();
+        int huodao = Integer.valueOf(clCode);
+        if(huodao < originData.size()){
+            for (GoodsInfo goods: originData.get(huodao)) {
+                if(!goods.getMdseUrl().equals("empty")){
+                    data.add(goods);
+                }
+            }
+        }
         for (int i = 0; i < originData.size(); i++) {
-            GoodsInfo goodsInfo = originData.get(i);
-            if (goodsInfo.getClCode() != null && goodsInfo.getClCode().equals(clCode)) {
-                data.add(goodsInfo);
+            List<GoodsInfo> list = originData.get(i);
+            for (int j = 0; j < list.size();j++){
+                GoodsInfo goodsInfo = list.get(j);
+                if (goodsInfo.getClCode() != null && goodsInfo.getClCode().equals(clCode)) {
+                    data.add(goodsInfo);
+                }
             }
         }
         searchResultAdapter.notifyDataSetChanged();
@@ -160,12 +172,12 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
         originData.clear();
         String huodaoString = PreferencesUtil.getString("huodao");
         if (TextUtils.isEmpty(huodaoString)) {
-            originData.addAll(getDefaultData());
+//            originData.addAll(getDefaultData());
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             List<List<GoodsInfo>> dataList = huodaoBean.getAllDataList();
             for (int i = 0; i < dataList.size(); i++) {
-                originData.addAll(dataList.get(i));
+                originData.addAll(dataList);
             }
         }
     }
