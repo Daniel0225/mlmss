@@ -195,12 +195,12 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        initBox();
+                        initBox();
                         //模拟验证货到初始化代码  可删除
-                        int[] strings = {3, 3, 3, 3, 3, 3};
+                        /*int[] strings = {3, 3, 3, 3, 3, 3};
                         PreferencesUtil.putString("layer", Arrays.toString(strings));
                         syncData();
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();*/
                     }
                 });
         dialog.show();
