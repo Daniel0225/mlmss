@@ -12,10 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.mlm.BuildConfig;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.activity.MainActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.bms.dialog.ActivationDialog;
@@ -110,15 +108,15 @@ public class ActivationActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (BuildConfig.DEBUG) {
+     /*   if (BuildConfig.DEBUG) {
             MainActivity.start(this);
-        }
+        }*/
     }
 
     private void setActivation() {
         HttpParams httpParams = new HttpParams();
-        httpParams.put("vmCode", tvNo.getText().toString());
-        httpParams.put("ActivationCode", tvCdkey.getText().toString());
+        httpParams.put("vmCode", tvNo.getText().toString().trim());
+        httpParams.put("ActivationCode", tvCdkey.getText().toString().trim());
         OkGo.<BaseResponse<ActivationBean>>get(Constants.ACTIVATION)
                 .tag(this)
                 .params(httpParams)

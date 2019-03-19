@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,6 +54,8 @@ import com.lzy.okgo.model.Response;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -85,6 +89,25 @@ public class MainActivity extends BaseActivity {
     MainFragment mainFragment = new MainFragment();
     private IntentFilter intentFilter;
     private MainChangeReceiver mainChangeReceiver;
+    private Timer timerC = new Timer();
+    ;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                Log.e("十秒进入~", "连接状态" + MainApp.myclient.isconnect);
+                if (!MainApp.myclient.isconnect) {
+                    /**
+                     * 在这里写我们需要一直重复执行的代码
+                     * */
+                    Log.e("断开后重连", "进入");
+                    MainApp.myclient.connect();
+                } else {
+                    Log.e("已连接中~", "进入" + MainApp.myclient.isconnect);
+                }
+            }
+        }
+    };
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -137,6 +160,16 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        timerC.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Log.e("每隔十秒检测一次", "进入");
+                // (1) 使用handler发送消息
+                Message message = new Message();
+                message.what = 0;
+                mHandler.sendMessage(message);
+            }
+        }, 0, 10000);//每隔一秒使用handler发送一下消息,也就是每隔一秒执行一次,一直重复执行
 
     }
 
@@ -229,10 +262,10 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Log.e("Tag", "onResume");
-        if (!MainApp.myclient.isconnect) {
+   /*     if (!MainApp.myclient.isconnect) {
             Log.e("长连接断开重连", "onResume");
             MainApp.myclient.connect();
-        }
+        }*/
         topView.playerRestart();
     }
 

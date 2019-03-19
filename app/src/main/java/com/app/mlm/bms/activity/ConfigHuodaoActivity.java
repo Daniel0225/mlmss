@@ -63,7 +63,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         //模拟数据保存
-      /*  int[] strings = {2, 2, 2, 2, 2, 2};
+       /* int[] strings = {2, 2, 2, 2, 2, 2};
         PreferencesUtil.putString("layer", Arrays.toString(strings));
         Log.e("层列数保存取出", PreferencesUtil.getString("layer"));*/
         fillAll.setSelected(true);
