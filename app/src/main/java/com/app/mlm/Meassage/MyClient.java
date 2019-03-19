@@ -341,7 +341,7 @@ public class MyClient {
             List<GoodsInfo> itemList = newHuoDaoList.get(i);
             for (int j = 0; j < itemList.size(); j++) {
                 StringBuffer stringBuffer = new StringBuffer();
-                stringBuffer.append((i + 1));
+                stringBuffer.append((newHuoDaoList.size() - i));
                 if (j < 10) {
                     stringBuffer.append(0);
                 }
