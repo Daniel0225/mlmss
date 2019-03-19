@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -312,6 +313,8 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
                             allTypeInfoResponse.getPack().add(0, allTypeInfo);
                             allTypeInfoResponse.getBrand().add(0, allTypeInfo);
                             PreferencesUtil.putString("allType", FastJsonUtil.createJsonString(allTypeInfoResponse));
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

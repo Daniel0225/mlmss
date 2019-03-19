@@ -17,6 +17,7 @@ import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AllDataBean;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.lzy.okgo.OkGo;
@@ -296,7 +297,14 @@ public class TemperatureControlActivity extends BaseActivity {
                             PreferencesUtil.putString("currentMode", model);
                             PreferencesUtil.putString("coolMode", coldModel);
                             // Toast.makeText(TemperatureControlActivity.this, response.body().data.getMsg(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TemperatureControlActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<AllDataBean>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }

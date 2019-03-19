@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -109,7 +110,14 @@ public class ConfigSyncActivity extends BaseActivity {
                             List<AdBean> adBeanList = response.body().data;
                             PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             refreshAddInfo(adBeanList);
+                        } else {
+                            Toast.makeText(ConfigSyncActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<AdBean>>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }
@@ -173,6 +181,8 @@ public class ConfigSyncActivity extends BaseActivity {
                     public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
                         if (response.body().getCode() == 0) {
                             saveProductInfo(response.body().getData());
+                        } else {
+                            Toast.makeText(ConfigSyncActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -233,7 +243,11 @@ public class ConfigSyncActivity extends BaseActivity {
                         }else{
                             ToastUtil.showLongCenterToast(response.body().getMsg());
                         }
+                    }
 
+                    @Override
+                    public void onError(Response<BaseResponse<List<GoodsInfo>>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }
@@ -340,9 +354,16 @@ public class ConfigSyncActivity extends BaseActivity {
                                 PreferencesUtil.putString(Constants.COUNTER_NAME, counterBean.getCounterName());
                                 DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
                                 dialog1.show();
+                            } else {
+                                Toast.makeText(ConfigSyncActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<CounterBean>>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }

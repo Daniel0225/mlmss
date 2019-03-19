@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -30,6 +31,7 @@ import com.app.mlm.http.bean.WxPayBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.TimeCountUtilsFinish;
+import com.app.mlm.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
@@ -164,7 +166,14 @@ public class OrderPayActivity extends AppCompatActivity {
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
                         if (response.body().getCode() == 0) {
                             Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(ivWxCode);
+                        } else {
+                            Toast.makeText(OrderPayActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<WxPayBean>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
 
@@ -182,7 +191,14 @@ public class OrderPayActivity extends AppCompatActivity {
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
                         if (response.body().getCode() == 0) {
                             Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(zhifubao);
+                        } else {
+                            Toast.makeText(OrderPayActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<WxPayBean>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }

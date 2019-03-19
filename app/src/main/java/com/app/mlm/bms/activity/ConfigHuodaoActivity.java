@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -368,9 +369,17 @@ public class ConfigHuodaoActivity extends BaseActivity {
                             HuodaoBean huodaoBean = new HuodaoBean(allDataList);
                             PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
                             finish();
+                        } else {
+                            Toast.makeText(ConfigHuodaoActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
+
+                    @Override
+                    public void onError(Response<BaseResponse> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                    }
                 });
+
     }
 
     /**

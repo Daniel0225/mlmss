@@ -190,7 +190,7 @@ public class MyClient {
 
                         @Override
                         public void onError(Response<BaseResponse<AllDataBean>> response) {
-                            ToastUtil.showLongToast(response.body().getMsg());
+                            // ToastUtil.showLongToast(response.body().getMsg());
                         }
                     });
         }
@@ -422,7 +422,7 @@ public class MyClient {
                     @Override
                     public void onError(Response<BaseResponse<AllDataBean>> response) {
                         super.onError(response);
-                        //ToastUtil.showLongToast("请求服务器数据失败");
+                        ToastUtil.showLongToast("请求服务器数据失败");
                     }
                 });
     }

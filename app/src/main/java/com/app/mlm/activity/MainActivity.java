@@ -25,6 +25,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
@@ -141,7 +142,14 @@ public class MainActivity extends BaseActivity {
                             List<AdBean> adBeanList = response.body().data;
                             PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             setTopViewValue(adBeanList);
+                        } else {
+                            Toast.makeText(MainActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<AdBean>>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
         //处理断电数据
@@ -189,6 +197,11 @@ public class MainActivity extends BaseActivity {
                             myDialogUtil = MyDialogUtil.getDialog(MainActivity.this, initLogOutDialogView(response.body().getData().getUrl()), Gravity.CENTER);
                             myDialogUtil.show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<CreatQrcodeBean>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }

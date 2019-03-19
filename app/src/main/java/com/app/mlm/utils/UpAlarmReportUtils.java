@@ -1,7 +1,6 @@
 package com.app.mlm.utils;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.http.BaseResponse;
@@ -30,7 +29,7 @@ public class UpAlarmReportUtils {
                 .execute(new JsonCallBack<BaseResponse<AlarmReportBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<AlarmReportBean>> response) {
-                        Toast.makeText(context, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(context, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
