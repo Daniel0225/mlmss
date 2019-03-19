@@ -19,7 +19,7 @@ public class GoodsInfo implements Serializable {
     private static final long serialVersionUID = 536871008L;
     private Long id;
     private int mdseId;//商品ID
-    private String mdsePrice;
+    private double mdsePrice;//商品原价
     private String mdseBrand;//品牌
     private String mdsePack;//商品包装类型
     private String merchantType;//商家类型
@@ -44,12 +44,17 @@ public class GoodsInfo implements Serializable {
     private String merchantUrl;
     private double activityPrice = 0;//活动售价
 
-    @Generated(hash = 99251587)
-    public GoodsInfo(Long id, int mdseId, String mdsePrice, String mdseBrand, String mdsePack,
-            String merchantType, String mdseName, String mdseUrl, String clCode, int shopCarNum,
-            String vmCode, Integer vmId, Integer clId, Integer vmClayers, double clong, double cwidth,
-            double cheight, double realPrice, Integer clCapacity, Integer clcCapacity, String threshold,
-            Integer Replenish, Integer channelType, String priductBatch, String merchantUrl,
+
+
+
+    @Generated(hash = 491286049)
+    public GoodsInfo(Long id, int mdseId, double mdsePrice, String mdseBrand,
+            String mdsePack, String merchantType, String mdseName, String mdseUrl,
+            String clCode, int shopCarNum, String vmCode, Integer vmId,
+            Integer clId, Integer vmClayers, double clong, double cwidth,
+            double cheight, double realPrice, Integer clCapacity,
+            Integer clcCapacity, String threshold, Integer Replenish,
+            Integer channelType, String priductBatch, String merchantUrl,
             double activityPrice) {
         this.id = id;
         this.mdseId = mdseId;
@@ -83,6 +88,9 @@ public class GoodsInfo implements Serializable {
     public GoodsInfo() {
     }
 
+
+
+
     public Long getId() {
         return id;
     }
@@ -99,11 +107,11 @@ public class GoodsInfo implements Serializable {
         this.mdseId = mdseId;
     }
 
-    public String getMdsePrice() {
+    public double getMdsePrice() {
         return mdsePrice;
     }
 
-    public void setMdsePrice(String mdsePrice) {
+    public void setMdsePrice(double mdsePrice) {
         this.mdsePrice = mdsePrice;
     }
 

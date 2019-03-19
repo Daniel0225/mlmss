@@ -73,7 +73,7 @@ public class ShopCartFragment extends BaseFragment implements ShopCartListAdapte
         totalPrice = 0;
         for (GoodsInfo goodsInfo : data) {
             totalNum += goodsInfo.getShopCarNum();
-            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
+            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getRealPrice());
         }
 
         tvPrice.setText("¥ " + totalPrice);

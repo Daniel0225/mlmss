@@ -69,7 +69,7 @@ public class ShopCartListAdapter extends BaseAdapter {
         GoodsInfo goodsInfo = data.get(position);
         Glide.with(mContext).load(goodsInfo.getMdseUrl()).into(holder.ivGoodsImg);
         holder.tvGoodsName.setText(goodsInfo.getMdseName());
-        holder.tvGoodsPrice.setText(goodsInfo.getMdsePrice());
+        holder.tvGoodsPrice.setText(String.valueOf(goodsInfo.getRealPrice()));
         holder.tvGoodsNum.setText(String.valueOf(goodsInfo.getShopCarNum()));
 
         if (goodsInfo.getShopCarNum() > 1) {

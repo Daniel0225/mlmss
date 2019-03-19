@@ -83,7 +83,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
         totalPrice = 0;
         for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
-            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
+            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getRealPrice());
         }
 
         tvPrice.setText("¥ " + totalPrice);

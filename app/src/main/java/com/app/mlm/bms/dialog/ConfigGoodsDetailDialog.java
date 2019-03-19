@@ -98,7 +98,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
             etLong.setText(String.valueOf(goodsInfo.getClong()));
             etWidth.setText(String.valueOf(goodsInfo.getCwidth()));
             etHight.setText(String.valueOf(goodsInfo.getCheight()));
-            etPrice.setText(String.valueOf(goodsInfo.getMdsePrice()));
+            etPrice.setText(String.valueOf(goodsInfo.getRealPrice()));
             etCapcity.setText(String.valueOf(goodsInfo.getClCapacity()));
             etSerialNo.setText(goodsInfo.getPriductBatch());
             etLessCount.setText(goodsInfo.getThreshold());
@@ -158,9 +158,9 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                     goodsInfo.setMdseName(mProductInfo.getMdseName());
                     goodsInfo.setMdseBrand(mProductInfo.getMdseBrand());
                     goodsInfo.setMdsePack(mProductInfo.getMdsePack());
+                    goodsInfo.setMdsePrice(mProductInfo.getMdsePrice());
 //                goodsInfo.setMerchantType(mProductInfo.getMer);
                 }
-                goodsInfo.setMdsePrice(String.valueOf(etPrice.getText().toString().trim().replace("¥", "")));
                 goodsInfo.setCheight(TextUtils.isEmpty(etHight.getText().toString().trim()) ? 0 : Double.valueOf(etHight.getText().toString().trim()));
                 goodsInfo.setClong(TextUtils.isEmpty(etLong.getText().toString().trim()) ? 0 : Double.valueOf(etLong.getText().toString().trim()));
                 goodsInfo.setCwidth(TextUtils.isEmpty(etWidth.getText().toString().trim()) ? 0 : Double.valueOf(etWidth.getText().toString().trim()));
@@ -300,7 +300,7 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
         GoodsInfo goodsInfo = new GoodsInfo();
         goodsInfo.setMdseName("请补货");
         goodsInfo.setMdseUrl("empty");
-        goodsInfo.setMdsePrice("0");
+        goodsInfo.setMdsePrice(0);
         productConfigListener.confirm(goodsInfo);
         dismiss();
     }

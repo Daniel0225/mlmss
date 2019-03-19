@@ -73,11 +73,11 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         GoodsInfo goodsInfo = data.get(i);
         viewHolder.tvGoodsName.setText(goodsInfo.getMdseName());
         if(goodsInfo.getActivityPrice() == 0){
-            viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+            viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getRealPrice());//显示当前售价
             viewHolder.tvActivePrice.setText("");
         }else{
-            viewHolder.tvActivePrice.setText("¥" + goodsInfo.getMdsePrice());
-            viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getActivityPrice());
+            viewHolder.tvActivePrice.setText("¥" + goodsInfo.getRealPrice());
+            viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());//显示原价
         }
 
         if (goodsInfo.getMdseUrl().equals("empty")) {

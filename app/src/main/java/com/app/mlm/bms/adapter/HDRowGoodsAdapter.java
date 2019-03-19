@@ -78,7 +78,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
             Glide.with(context).load(goodsInfo.getMerchantUrl()).into(viewHolder.miniPicView);
         }
 
-        viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getMdsePrice());
+        viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getRealPrice());
         viewHolder.tvCount.setText(goodsInfo.getClcCapacity() + "/" + goodsInfo.getClCapacity());
         viewHolder.tvOrderNum.setText(String.valueOf(i + 1));
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {

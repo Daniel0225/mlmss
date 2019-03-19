@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity {
         initView();
         //  startService();
         // bindService();
-        //  PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
+          PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)

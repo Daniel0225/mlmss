@@ -276,14 +276,15 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         data.clear();
         for (int i = 0; i < originData.size(); i++) {
             ProductInfo productInfo = originData.get(i);
-            if (goodsTypeSelectBean.getType() == 0) {
-                int keyWord = allTypeInfoResponse.getBrand().get(goodsTypeSelectBean.getSelectPosition()).getMerchantId();
-                if (productInfo.getMerchantId() == keyWord) {
-                    data.add(productInfo);
-                }
-            } else if (goodsTypeSelectBean.getType() == 1) {
+            if (goodsTypeSelectBean.getType() == 0) {//品牌
                 String keyWord = allTypeInfoResponse.getType().get(goodsTypeSelectBean.getSelectPosition()).getBrandName();
                 if (!TextUtils.isEmpty(productInfo.getMdseBrand()) && productInfo.getMdseBrand().equals(keyWord)) {
+                    data.add(productInfo);
+                }
+
+            } else if (goodsTypeSelectBean.getType() == 1) {//类型
+                int keyWord = allTypeInfoResponse.getBrand().get(goodsTypeSelectBean.getSelectPosition()).getMerchantId();
+                if (productInfo.getMerchantId() == keyWord) {
                     data.add(productInfo);
                 }
             } else {

@@ -203,7 +203,7 @@ public class MainFragment extends BaseFragment {
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setMdseName("请补货");
             goodsInfo.setMdseUrl("empty");
-            goodsInfo.setMdsePrice("0");
+            goodsInfo.setMdsePrice(0);
             goodsInfoList.add(goodsInfo);
         }
         return goodsInfoList;
@@ -222,7 +222,7 @@ public class MainFragment extends BaseFragment {
         double totalPrice = 0;
         for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
-            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
+            totalPrice += goodsInfo.getShopCarNum() * goodsInfo.getRealPrice();
         }
 
         if (totalNum > 0) {

@@ -177,7 +177,7 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setMdseName("请补货");
             goodsInfo.setMdseUrl("empty");
-            goodsInfo.setMdsePrice("0");
+            goodsInfo.setMdsePrice(0);
             goodsInfoList.add(goodsInfo);
         }
         return goodsInfoList;

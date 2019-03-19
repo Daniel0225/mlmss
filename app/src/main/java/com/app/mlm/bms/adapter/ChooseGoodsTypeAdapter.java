@@ -39,9 +39,9 @@ public class ChooseGoodsTypeAdapter extends RecyclerView.Adapter<ChooseGoodsType
     public void onBindViewHolder(MyViewHolder holder, int position) {
         AllTypeInfo item = mList.get(position);
         if (goodsTypeSelectBean.getType() == 0) {
-            holder.typeName.setText(item.getMerchantType());
-        } else if (goodsTypeSelectBean.getType() == 1) {
             holder.typeName.setText(item.getBrandName());
+        } else if (goodsTypeSelectBean.getType() == 1) {
+            holder.typeName.setText(item.getMerchantType());
         } else {
             holder.typeName.setText(item.getPackName());
         }

@@ -326,7 +326,10 @@ public class MyClient {
                 goodsInfo.setMdsePack(productInfo.getMdsePack());
                 goodsInfo.setMdseBrand(productInfo.getMdseBrand());
                 goodsInfo.setMdseName(productInfo.getMdseName());
-                goodsInfo.setMdsePrice(String.valueOf(productInfo.getMdsePrice()));
+                goodsInfo.setMdsePrice(productInfo.getMdsePrice());
+                if(goodsInfo.getActivityPrice() != 0){
+                    goodsInfo.setRealPrice(goodsInfo.getRealPrice());
+                }
                 goodsInfo.setMdseUrl(productInfo.getMdseUrl());
             } else {
                 ToastUtil.showLongToast("找不到商品信息,请先同步商品信息");
@@ -375,7 +378,7 @@ public class MyClient {
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setMdseName("请补货");
             goodsInfo.setMdseUrl("empty");
-            goodsInfo.setMdsePrice("0");
+            goodsInfo.setMdsePrice(0);
             goodsInfoList.add(goodsInfo);
         }
         return goodsInfoList;

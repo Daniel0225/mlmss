@@ -81,7 +81,7 @@ public class GoodsDetailDialog extends Dialog {
     private void initView() {
         Glide.with(getContext()).load(mGoodsInfo.getMdseUrl()).into(ivGoodsImg);
         tvGoodsName.setText(mGoodsInfo.getMdseName());
-        tvGoodsPrice.setText("¥" + mGoodsInfo.getMdsePrice());
+        tvGoodsPrice.setText("¥" + mGoodsInfo.getRealPrice());
     }
 
     @OnClick({R.id.tvBuyImm, R.id.tvAddCart, R.id.ivClose})
@@ -92,7 +92,7 @@ public class GoodsDetailDialog extends Dialog {
                 ArrayList<GoodsInfo> list = new ArrayList<>();
                 list.add(mGoodsInfo);
                 intent.putExtra(Constants.TOTAL_NUM, 1);
-                intent.putExtra(Constants.TOTAL_PRICE, mGoodsInfo.getMdsePrice());
+                intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(mGoodsInfo.getRealPrice()));
                 intent.putExtra("goods", list);
                 getContext().startActivity(intent);
                 dismiss();

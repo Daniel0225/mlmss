@@ -69,7 +69,7 @@ public class SearchResultAdapter extends BaseAdapter {
         }
         GoodsInfo goodsInfo = data.get(position);
         holder.tvGoodsName.setText(goodsInfo.getMdseName());
-        holder.tvGoodsPrice.setText(goodsInfo.getMdsePrice());
+        holder.tvGoodsPrice.setText(String.valueOf(goodsInfo.getRealPrice()));
 
         if (goodsInfo.getMdseUrl().equals("empty")) {
             holder.ivGoodsImg.setImageResource(R.drawable.empty);
