@@ -614,7 +614,7 @@ public class MyClient {
                     outStream = socket.getOutputStream();
                     lastSendTime = System.currentTimeMillis();
                     lastReciveTime = System.currentTimeMillis();
-                    heart = new AndroidHeartBeat(Util.getLoginPropertiesValue("machineId"), "heartbeat");
+                    heart = new AndroidHeartBeat(PreferencesUtil.getString(Constants.VMCODE), "heartbeat");
                     sendHeartMessage();
                     // 心跳
                     new Thread(new KeepAliveWatchDog()).start();
