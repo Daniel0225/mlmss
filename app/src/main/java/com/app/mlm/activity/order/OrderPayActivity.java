@@ -164,6 +164,10 @@ public class OrderPayActivity extends AppCompatActivity {
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
+                        if(response.body() == null){
+                            ToastUtil.showLongCenterToast("获取微信支付信息异常");
+                            return;
+                        }
                         if (response.body().getCode() == 0) {
                             Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(ivWxCode);
                         } else {
@@ -189,6 +193,10 @@ public class OrderPayActivity extends AppCompatActivity {
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
+                        if(response == null){
+                            ToastUtil.showLongCenterToast("获取支付宝支付信息异常");
+                            return;
+                        }
                         if (response.body().getCode() == 0) {
                             Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(zhifubao);
                         } else {
