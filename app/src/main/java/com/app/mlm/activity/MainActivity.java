@@ -254,7 +254,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<BaseResponse<AllDataBean>> response) {
-                        ToastUtil.showLongToast(response.body().getMsg());
+                        ToastUtil.showLongToast("请求服务器失败，请稍后重试");
                     }
                 });
     }

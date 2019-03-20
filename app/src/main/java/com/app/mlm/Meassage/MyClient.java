@@ -190,7 +190,7 @@ public class MyClient {
 
                         @Override
                         public void onError(Response<BaseResponse<AllDataBean>> response) {
-                            // ToastUtil.showLongToast(response.body().getMsg());
+                            ToastUtil.showLongToast("请求服务器失败，请稍后重试");
                         }
                     });
         }
