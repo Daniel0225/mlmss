@@ -89,7 +89,6 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DOWN_SUCCESS:
-
                     chuhuoAdapter.refreshChuhuoStatus(count);
                     Log.e("开始取第", "开始取第" + count + "个");
                     countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
@@ -98,20 +97,11 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                         int one = Integer.parseInt(hdCodeT.substring(0, 1));
                         int two = Integer.parseInt(hdCodeT.substring(1, 2));
                         int three = Integer.parseInt(hdCodeT.substring(2, 3));
-                        try {
-                            if (MainApp.bvmAidlInterface.BVMGetRunningState(1) == 2) {
-                                if (two == 0) {
-                                    pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
-                                } else {
-                                    pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
-                                }
-                            } else {
-                                mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
-                            }
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
+                        if (two == 0) {
+                            pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                        } else {
+                            pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
                         }
-
                     }
                     break;
                 case MSG_DOWN_FINISH:
