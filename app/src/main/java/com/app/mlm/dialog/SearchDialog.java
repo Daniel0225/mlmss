@@ -150,8 +150,8 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
         data.clear();
         if(!TextUtils.isEmpty(clCode)){
             int huodao = Integer.valueOf(clCode);
-            if(huodao < originData.size()){
-                for (GoodsInfo goods: originData.get(huodao)) {
+            if(huodao != 0 && huodao <= originData.size()){
+                for (GoodsInfo goods: originData.get(huodao - 1)) {
                     if(!goods.getMdseUrl().equals("empty")){
                         data.add(goods);
                     }
@@ -181,9 +181,7 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             List<List<GoodsInfo>> dataList = huodaoBean.getAllDataList();
-            for (int i = 0; i < dataList.size(); i++) {
-                originData.addAll(dataList);
-            }
+            originData.addAll(dataList);
         }
     }
 
