@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import com.app.mlm.R;
 import com.app.mlm.adapter.ColumnGoodsAdapter;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
+import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.dialog.CommonDialog;
@@ -94,6 +96,7 @@ public class MainFragment extends BaseFragment {
      */
     private void initList() {
         dataList.clear();
+        Log.e("Tag","init shujv");
         String huodaoString = PreferencesUtil.getString("huodao");
         if (TextUtils.isEmpty(huodaoString)) {
             dataList.addAll(getData());
@@ -101,6 +104,7 @@ public class MainFragment extends BaseFragment {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             dataList.addAll(huodaoBean.getAllDataList());
         }
+        Log.e("Tag","kucunC " + dataList.get(0).get(0).getClcCapacity());
     }
 
     @Override
@@ -210,8 +214,25 @@ public class MainFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread)
-    public void onMainThread(AddShopCarEvent addShopCarEvent) {
-        refreshShopCar();
+    public void onMainThread(Object object) {
+        if(object instanceof AddShopCarEvent){
+            refreshShopCar();
+        }else if(object instanceof ChuhuoSuccessBean){
+            ChuhuoSuccessBean chuhuoSuccessBean = (ChuhuoSuccessBean)object;
+            Log.e("Tag","kucunA " + dataList.get(0).get(0).getClcCapacity());
+            for (List<GoodsInfo> goodsInfoList : dataList){
+                for (GoodsInfo goodsInfo : goodsInfoList){
+                    if(!TextUtils.isEmpty(goodsInfo.getClCode()) && goodsInfo.getClCode().equals(chuhuoSuccessBean.getHdCode())){
+                        goodsInfo.setClcCapacity(goodsInfo.getClcCapacity() - 1);
+                        break;
+                    }
+                }
+            }
+            Log.e("Tag","kucunB " + dataList.get(0).get(0).getClcCapacity());
+            HuodaoBean huodaoBean = new HuodaoBean(dataList);
+            PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
+        }
+
     }
 
     /**

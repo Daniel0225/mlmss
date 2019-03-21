@@ -16,6 +16,7 @@ import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
+import com.app.mlm.utils.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -121,6 +122,10 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
     @Override
     public void addOne(int position) {
         int originNum = MainApp.shopCarList.get(position).getShopCarNum();
+        if(originNum >=  MainApp.shopCarList.get(position).getClcCapacity()){
+            ToastUtil.showLongCenterToast(String.format("该商品当前库存仅有%d个",originNum));
+            return;
+        }
         MainApp.shopCarList.get(position).setShopCarNum(originNum + 1);
         adapter.notifyDataSetChanged();
         refreshShopCarInfo();
@@ -138,6 +143,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
 
     @Override
     public void deleteOne(int position) {
+        MainApp.shopCarList.get(position).setShopCarNum(1);
         MainApp.shopCarList.remove(position);
         adapter.notifyDataSetChanged();
         refreshShopCarInfo();

@@ -24,6 +24,7 @@ import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
@@ -86,7 +87,11 @@ public class MainApp extends Application {
         boolean isContain = false;
         for (GoodsInfo goods : shopCarList) {
             if (goods.getMdseId() == goodsInfo.getMdseId()) {
-                goods.setShopCarNum(goods.getShopCarNum() + 1);
+                if(goods.getShopCarNum() < goods.getClcCapacity()){
+                    goods.setShopCarNum(goods.getShopCarNum() + 1);
+                }else{
+                    ToastUtil.showLongCenterToast("库存不足");
+                }
                 isContain = true;
                 break;
             }

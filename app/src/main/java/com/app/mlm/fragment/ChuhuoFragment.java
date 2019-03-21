@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bms.adapter.ChuhuoAdapter;
 import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.http.BaseResponse;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
 
 import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
@@ -421,7 +423,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                             count++;
                                             mHandler.sendEmptyMessage(MSG_DOWN_SUCCESS);
                                         }
-
+                                        EventBus.getDefault().post(new ChuhuoSuccessBean(hdCode));//通知首页刷新库存
                                         Log.e("取货结果:", "取货成功");
                                     }
                                 });

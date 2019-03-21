@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
@@ -42,6 +43,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2018/12/30.
@@ -80,6 +82,7 @@ public class OrderPayActivity extends AppCompatActivity {
         orderChangeReceiver = new OrderChangeReceiver();
         registerReceiver(orderChangeReceiver, intentFilter);
 //        couponDialog.show();
+        EventBus.getDefault().post(new ChuhuoSuccessBean("601"));//通知首页刷新库存
     }
 
     public void init() {

@@ -19,6 +19,7 @@ import com.app.mlm.activity.order.OrderPayActivity;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
+import com.app.mlm.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -88,6 +89,10 @@ public class GoodsDetailDialog extends Dialog {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvBuyImm:
+                if(mGoodsInfo.getClcCapacity() <= 0){
+                    ToastUtil.showLongCenterToast("该商品库存不足");
+                    return;
+                }
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
                 ArrayList<GoodsInfo> list = new ArrayList<>();
                 list.add(mGoodsInfo);
@@ -98,6 +103,10 @@ public class GoodsDetailDialog extends Dialog {
                 dismiss();
                 break;
             case R.id.tvAddCart:
+                if(mGoodsInfo.getClcCapacity() <= 0){
+                    ToastUtil.showLongCenterToast("该商品库存不足");
+                    return;
+                }
                 MainApp.addShopCar(mGoodsInfo);
                 EventBus.getDefault().post(new AddShopCarEvent());
                 dismiss();

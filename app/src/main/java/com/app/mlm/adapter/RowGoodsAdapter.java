@@ -114,6 +114,10 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
                     ToastUtil.showLongToast("该货道暂无商品");
                     return;
                 }
+                if(data.get(i).getClcCapacity() <= 0){
+                    ToastUtil.showLongCenterToast("该商品库存不足");
+                    return;
+                }
                 MainApp.addShopCar(data.get(i));
                 ToastUtil.showLongToast("加入成功");
                 EventBus.getDefault().post(new AddShopCarEvent());//发送消息到首页 更新购物车TAB角标数据
