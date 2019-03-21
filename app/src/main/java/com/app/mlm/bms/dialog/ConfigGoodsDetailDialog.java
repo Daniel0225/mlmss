@@ -210,6 +210,10 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 break;
             case R.id.buhuo_jian:
                 int buhuoNum = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
+                if(TextUtils.isEmpty(etCapcity.getText().toString())){
+                    ToastUtil.showLongCenterToast("请先设置货道容量");
+                    return;
+                }
                 int currentStock = Integer.valueOf(etCapcity.getText().toString()) - goodsInfo.getClcCapacity();
                 if(buhuoNum + goodsInfo.getClcCapacity() > 0){
                     etAddCount.setText(String.valueOf(buhuoNum - 1));
@@ -218,6 +222,10 @@ public class ConfigGoodsDetailDialog extends BaseDialog {
                 break;
             case R.id.buhuo_add:
                 int buhuoNum2 = TextUtils.isEmpty(etAddCount.getText().toString()) ? 0 : Integer.valueOf(etAddCount.getText().toString());
+                if(TextUtils.isEmpty(etCapcity.getText().toString())){
+                    ToastUtil.showLongCenterToast("请先设置货道容量");
+                    return;
+                }
                 if (buhuoNum2 <  Integer.valueOf(etCapcity.getText().toString()) - goodsInfo.getClcCapacity()) {
                     etAddCount.setText(String.valueOf(buhuoNum2 + 1));
                     buhuoJian.setImageResource(R.drawable.jian_goods);
