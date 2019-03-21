@@ -82,7 +82,6 @@ public class OrderPayActivity extends AppCompatActivity {
         orderChangeReceiver = new OrderChangeReceiver();
         registerReceiver(orderChangeReceiver, intentFilter);
 //        couponDialog.show();
-        EventBus.getDefault().post(new ChuhuoSuccessBean("601"));//通知首页刷新库存
     }
 
     public void init() {
