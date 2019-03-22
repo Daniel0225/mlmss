@@ -128,6 +128,7 @@ public class ConfigSyncActivity extends BaseActivity {
      */
     private void refreshAddInfo(List<AdBean> adBeanList) {
         String adString = PreferencesUtil.getString(Constants.ADDATA);
+        PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
         List<AdBean> adBeans = new ArrayList<>();
         if (!TextUtils.isEmpty(adString)) {
             adBeans = FastJsonUtil.getObjects(adString, AdBean.class);
@@ -141,7 +142,6 @@ public class ConfigSyncActivity extends BaseActivity {
                         if (adBean.getSuffix().equals(ad.getSuffix()) && adBean.getUrl().equals(ad.getUrl())) {//广告信息无变化
 
                         } else {
-                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             //广告信息有变化  发消息给首页 更新广告展示
                             EventBus.getDefault().post(new AddInfoEvent());
                         }
