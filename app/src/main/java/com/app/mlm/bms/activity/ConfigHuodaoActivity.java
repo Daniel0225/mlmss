@@ -75,7 +75,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
         initList();
         adapter = new HDColumnGoodsAdapter(this, allDataList);
         recyclerView.setAdapter(adapter);
-        showSyncDialog();
+        //showSyncDialog();
     }
 
     @Override
@@ -155,7 +155,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
 
     @Override
     public void onActionClicked() {
-        CommonDialog dialog = new CommonDialog(this, "提示", "货道配置信息发生了变化，是否应用！", "初始化", "保存");
+        CommonDialog dialog = new CommonDialog(this, "货道初始化", "请点击初始化按钮，然后等待初始化完成", "初始化", "取消");
         dialog.setCommitClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +164,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
         }).setCancelClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getUpJson();
+                // getUpJson();
                 dialog.dismiss();
             }
         });

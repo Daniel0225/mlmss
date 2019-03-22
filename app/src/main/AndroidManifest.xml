@@ -56,7 +56,6 @@
         <activity android:name=".bms.activity.ActivationActivity"></activity>
 
         <!-- 后台服务-长连接 -->
-        <service android:name=".MlmService" />
         <service android:name=".BackService" />
 
         <service

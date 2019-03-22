@@ -128,7 +128,7 @@ public class TemperatureControlActivity extends BaseActivity {
        /* cpbProgressLow.setMax(21);
         cpbProgressHigh.setMax(21);*/
         cpbProgressHigh.setProgress(25);
-        cpbProgressLow.setProgress(4);
+        cpbProgressLow.setProgress(10);
         // 设置你想要的ProgressFormatter
         cpbProgressHigh.setProgressFormatter(new MyProgressFormatter());
         cpbProgressLow.setProgressFormatter(new MyProgressFormatter());
@@ -289,9 +289,9 @@ public class TemperatureControlActivity extends BaseActivity {
                                 PreferencesUtil.putInt(Constants.HEAT_LOW_TEMP, Integer.parseInt(lowTempTextView.getText().toString()));
                                 PreferencesUtil.putInt(Constants.HEAT_HIGH_TEMP, Integer.parseInt(highTempTextView.getText().toString()));
                             } else {
-                                PreferencesUtil.putInt(Constants.COLL_LOW_TEMP, 4);
+                                PreferencesUtil.putInt(Constants.COLL_LOW_TEMP, 10);
                                 PreferencesUtil.putInt(Constants.COOL_HIGH_TEMP, 25);
-                                PreferencesUtil.putInt(Constants.HEAT_LOW_TEMP, 4);
+                                PreferencesUtil.putInt(Constants.HEAT_LOW_TEMP, 10);
                                 PreferencesUtil.putInt(Constants.HEAT_HIGH_TEMP, 25);
                             }
                             PreferencesUtil.putString("currentMode", model);
@@ -325,10 +325,10 @@ public class TemperatureControlActivity extends BaseActivity {
                 setCurrentMode("制冷");
                 //重置
                 coldModel = tvSettingMode1.getText().toString();
-                lowTempTextView.setText("4");
+                lowTempTextView.setText("10");
                 highTempTextView.setText("25");
                 cpbProgressHigh.setProgress(25);
-                cpbProgressLow.setProgress(4);
+                cpbProgressLow.setProgress(10);
                 type = 1;
                 temperatureSetting.setVisibility(View.VISIBLE);
                 setcoldline.setVisibility(View.VISIBLE);
@@ -338,10 +338,10 @@ public class TemperatureControlActivity extends BaseActivity {
                 setCurrentMode("制热");
                 //重置
                 coldModel = tvSettingMode1.getText().toString();
-                lowTempTextView.setText("4");
+                lowTempTextView.setText("10");
                 highTempTextView.setText("25");
                 cpbProgressHigh.setProgress(25);
-                cpbProgressLow.setProgress(4);
+                cpbProgressLow.setProgress(10);
                 type = 2;
                 coldModel = "";
                 temperatureSetting.setVisibility(View.VISIBLE);
