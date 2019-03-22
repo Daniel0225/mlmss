@@ -1,6 +1,8 @@
 package com.app.mlm.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
@@ -64,9 +66,11 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.miniPicView = view.findViewById(R.id.mini_pic);
         viewHolder.tvActivePrice = view.findViewById(R.id.tvActivePrice);
         viewHolder.tvActivePrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
+        viewHolder.sellOut = view.findViewById(R.id.sell_out);
         return viewHolder;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull RowGoodsViewHolder viewHolder, int i) {
         if(i == 0){
@@ -102,6 +106,18 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
             viewHolder.miniPicView.setVisibility(View.VISIBLE);
         }
 
+        if (data.get(i).getClcCapacity() <= 0) {
+            viewHolder.sellOut.setVisibility(View.VISIBLE);
+            viewHolder.tvGoodsName.setTextColor(R.color.color_666666);
+            viewHolder.ivAddCart.setBackgroundResource(R.drawable.add_gray);
+            viewHolder.tvGoodsPrice.setTextColor(Color.parseColor("#666666"));
+        } else {
+            viewHolder.sellOut.setVisibility(View.GONE);
+            viewHolder.tvGoodsName.setTextColor(R.color.color_ff000000);
+            viewHolder.ivAddCart.setBackgroundResource(R.drawable.go_nor);
+            viewHolder.tvGoodsPrice.setTextColor(Color.parseColor("#ffd0021b"));
+        }
+
         viewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +125,10 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
                     ToastUtil.showLongToast("该货道暂无商品");
                     return;
                 }
-                GoodsDetailDialog dialog = new GoodsDetailDialog(context, data.get(i));
-                dialog.show();
+                if (data.get(i).getClcCapacity() > 0) {
+                    GoodsDetailDialog dialog = new GoodsDetailDialog(context, data.get(i));
+                    dialog.show();
+                }
             }
         });
 
@@ -187,6 +205,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         View rvRoot;
         View hasGoodsView;
         View noGoodsView;
+        ImageView sellOut;
 
         public RowGoodsViewHolder(View itemView) {
             super(itemView);
