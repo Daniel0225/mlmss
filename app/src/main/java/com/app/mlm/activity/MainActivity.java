@@ -88,26 +88,6 @@ public class MainActivity extends BaseActivity {
     private IntentFilter intentFilter;
     private MainChangeReceiver mainChangeReceiver;
     private Timer timerC = new Timer();
-    ;
-  /*  private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 0) {
-                Log.e("十秒进入~", "连接状态" + MainApp.myclient.isconnect);
-                if (!MainApp.myclient.isconnect) {
-                    */
-
-    /**
-                     * 在这里写我们需要一直重复执行的代码
-     * *//*
-                    Log.e("断开后重连", "进入");
-                    MainApp.myclient.connect();
-                } else {
-                    Log.e("已连接中~", "进入" + MainApp.myclient.isconnect);
-                }
-            }
-        }
-    };*/
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -167,17 +147,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
- /*       timerC.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Log.e("每隔十秒检测一次", "进入");
-                // (1) 使用handler发送消息
-                Message message = new Message();
-                message.what = 0;
-                mHandler.sendMessage(message);
-            }
-        }, 0, 10000);//每隔一秒使用handler发送一下消息,也就是每隔一秒执行一次,一直重复执行*/
-
     }
 
     /**

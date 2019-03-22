@@ -1,6 +1,5 @@
 package com.app.mlm.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allen.library.RxHttpUtils;
 import com.allen.library.base.BaseObserver;
@@ -20,8 +20,6 @@ import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bean.GoodsInfo;
-import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
-import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.ShopCarDialog;
 import com.app.mlm.http.ApiService;
 import com.app.mlm.http.bean.BaseBean;
@@ -179,15 +177,15 @@ public class MainFragment extends BaseFragment {
 //                mActivity.addFragment(new ShopCartFragment());
                 break;
             case R.id.huodong:
-//                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
-                CommonDialog commonDialog = new CommonDialog(getActivity(), "系统维护", "请确认是否维护售货机", "确定", "取消");
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
+               /* CommonDialog commonDialog = new CommonDialog(getActivity(), "系统维护", "请确认是否维护售货机", "确定", "取消");
                 commonDialog.setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(getActivity(), BackgroundManangerSystemActivity.class));
                     }
                 });
-                commonDialog.show();
+                commonDialog.show();*/
                 break;
         }
     }
