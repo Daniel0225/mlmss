@@ -108,7 +108,6 @@ public class ConfigSyncActivity extends BaseActivity {
 
                         if (response.body().getCode() == 0) {
                             List<AdBean> adBeanList = response.body().data;
-                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             refreshAddInfo(adBeanList);
                         } else {
                             Toast.makeText(ConfigSyncActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
@@ -142,6 +141,7 @@ public class ConfigSyncActivity extends BaseActivity {
                         if (adBean.getSuffix().equals(ad.getSuffix()) && adBean.getUrl().equals(ad.getUrl())) {//广告信息无变化
 
                         } else {
+                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             //广告信息有变化  发消息给首页 更新广告展示
                             EventBus.getDefault().post(new AddInfoEvent());
                         }
