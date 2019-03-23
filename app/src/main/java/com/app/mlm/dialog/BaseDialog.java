@@ -122,7 +122,7 @@ public abstract class BaseDialog  extends Dialog {
         Display display = windowManager.getDefaultDisplay();
         if(isFullScreen){
             lp.width = fullScreenWidth != 0 ? fullScreenWidth : display.getWidth();
-            lp.height = fullScreenHeight != 0 ? fullScreenHeight : display.getHeight();
+            lp.height = fullScreenHeight != 0 ? fullScreenHeight : display.getHeight() + 40;
         }else {
             lp.width = display.getWidth() * 2 / 3;
         }
