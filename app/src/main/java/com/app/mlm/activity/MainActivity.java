@@ -223,7 +223,7 @@ public class MainActivity extends BaseActivity {
 
                         @Override
                         public void onError(Response<BaseResponse<AllDataBean>> response) {
-                            ToastUtil.showLongToast("请求服务器失败，请稍后重试");
+                            //    ToastUtil.showLongToast("请求服务器失败，请稍后重试");
                         }
                     });
         }
@@ -245,10 +245,6 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Log.e("Tag", "onResume");
-   /*     if (!MainApp.myclient.isconnect) {
-            Log.e("长连接断开重连", "onResume");
-            MainApp.myclient.connect();
-        }*/
         topView.playerRestart();
     }
 

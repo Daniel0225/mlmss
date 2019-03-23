@@ -221,6 +221,7 @@ public class GoodsDetailDialog extends Dialog {
                     e.printStackTrace();
                 }
             }
-        }.start();
+        };
+        timer.start();
     }
 }

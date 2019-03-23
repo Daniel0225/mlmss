@@ -101,8 +101,8 @@ public class MainFragment extends BaseFragment {
         } else {
             HuodaoBean huodaoBean = FastJsonUtil.getObject(huodaoString, HuodaoBean.class);
             dataList.addAll(huodaoBean.getAllDataList());
+            //    Log.e("Tag","kucunC " + dataList.get(0).get(0).getClcCapacity());
         }
-        Log.e("Tag","kucunC " + dataList.get(0).get(0).getClcCapacity());
     }
 
     @Override
