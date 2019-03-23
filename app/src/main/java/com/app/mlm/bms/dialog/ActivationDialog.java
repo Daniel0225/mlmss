@@ -1,6 +1,5 @@
 package com.app.mlm.bms.dialog;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -34,8 +33,9 @@ public class ActivationDialog extends BaseDialog {
     private String mDescription, mButton;
     private int iconId;
 
-    public ActivationDialog(Context context) {
-        super(context, R.layout.activation_done, Gravity.CENTER);
+    public ActivationDialog(ActivationActivity activationActivity) {
+        super(activationActivity, R.layout.activation_done, Gravity.CENTER);
+        this.activationActivity = activationActivity;
     }
 
     public ActivationDialog(ActivationActivity activationActivity, String description, String button, int iconId) {
@@ -87,6 +87,7 @@ public class ActivationDialog extends BaseDialog {
             @Override
             public void onFinish() {
                 dismiss();
+                activationActivity.finish();
                 MainActivity.start(mContext);
             }
         }.start();

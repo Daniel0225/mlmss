@@ -97,11 +97,19 @@
 
             <ImageView
                 android:id="@+id/libao"
-                android:layout_width="900px"
-                android:layout_height="258px"
+                android:layout_width="300px"
+                android:layout_height="300px"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="420px"
-                android:src="@mipmap/banner2" />
+                android:src="@drawable/qr_code" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/libao"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20px"
+                android:text="感谢您的惠顾,更多优惠请关注我们" />
         </RelativeLayout>
     </LinearLayout>
 

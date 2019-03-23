@@ -3,6 +3,7 @@ package com.app.mlm.fragment;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
@@ -181,6 +182,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     }
                                 } else {
                                     mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                                    Log.e("ss", "第一次进来了");
                                 }
                             } catch (RemoteException e) {
                                 e.printStackTrace();
@@ -216,6 +218,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     int statusCode = 0;
                                     for (int i = 0; i < status.length; i++) {
                                         if (status[i].contains("0FA")) {
+                                            Log.e("错误码", status[i]);
                                             statusCode = 1;
                                             break;
                                         }
@@ -292,61 +295,69 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     public View initLogOutDialogView() {
         View verifyCodeView = LayoutInflater.from(getActivity()).inflate(R.layout.go_on_chuhuo, null);
         TextView chuhuo = verifyCodeView.findViewById(R.id.chuhuo);
-        chuhuo.setOnClickListener(new View.OnClickListener() {
+        startTime(chuhuo);
+        return verifyCodeView;
+    }
+
+    /**
+     * 开启倒计时
+     */
+    public void startTime(TextView chuhuo) {
+        /** 倒计时60秒，一次1秒 */
+        CountDownTimer timer = new CountDownTimer(25 * 1000, 1000) {
             @Override
-            public void onClick(View v) {
+            public void onTick(long millisUntilFinished) {
+                chuhuo.setText(millisUntilFinished / 1000 + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                myDialogUtil.dismiss();
                 try {
-                    myDialogUtil.dismiss();
-                    int machineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
-                    Log.e("整机状态", String.valueOf(machineStatus));
-                    if (machineStatus == 2) {//可以出货
-                        Log.e("整机状态dialog为2", String.valueOf(machineStatus));
-                        myDialogUtil.dismiss();
-                        String hdCodeT = hdDataBeans.get(count).getHdCode();
-                        if (!TextUtils.isEmpty(hdCodeT)) {
-                            int one = Integer.parseInt(hdCodeT.substring(0, 1));
-                            int two = Integer.parseInt(hdCodeT.substring(1, 2));
-                            int three = Integer.parseInt(hdCodeT.substring(2, 3));
-                            if (two == 0) {
-                                pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
-                            } else {
-                                pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
-                            }
-                        }
-                    } else if (machineStatus == 6) {
-                        String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
-                        int statusCode = 0;
-                        for (int i = 0; i < status.length; i++) {
-                            if (status[i].contains("0FA")) {
-                                statusCode = 1;
-                                Log.e("整机状态为6里面包含0FA", String.valueOf(machineStatus));
-                                break;
-                            }
-                        }
-                        switch (statusCode) {
-                            case 0:
-                                break;
-                            case 1:
-                                Log.e("整机状态dialog为1", String.valueOf(machineStatus));
-                                Toast.makeText(getContext(), "您有未取走的商品", Toast.LENGTH_SHORT).show();
-                                int salegood = MainApp.bvmAidlInterface.BVMReSaleGoods(1);
-                                if (salegood == 99) {
-                                    Log.e("开柜门成功第二次", String.valueOf(machineStatus));
-                                    myDialogUtil = MyDialogUtil.getDialog(getContext(), initLogOutDialogView(), Gravity.CENTER);
-                                    myDialogUtil.setCanceledOnTouchOutside(false);
-                                    myDialogUtil.show();
-                                } else {
-                                    Log.e("开柜门失败第二次", String.valueOf(machineStatus));
+                    int noMachineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
+                    Log.e("code1", "机器状态" + noMachineStatus);
+                    if (noMachineStatus == 2) {
+                        int code = MainApp.bvmAidlInterface.BVMCleanSysFault(1);
+                        if (code == 99) {
+                            String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
+                            int statusCode = 0;
+                            for (int i = 0; i < status.length; i++) {
+                                if (status[i].contains("0FA")) {
+                                    Log.e("错误码", status[i]);
+                                    statusCode = 1;
+                                    break;
                                 }
-                                break;
+                            }
+                            switch (statusCode) {
+                                case 0:
+                                    String hdCodeT = hdDataBeans.get(count).getHdCode();
+                                    if (!TextUtils.isEmpty(hdCodeT)) {
+                                        int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                                        int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                                        int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                                        if (two == 0) {
+                                            pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                        } else {
+                                            pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                        }
+                                    }
+                                    break;
+                                case 1:
+                                    mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                                    break;
+                            }
                         }
+                    } else {
+                        mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                        Log.e("code", "状态" + noMachineStatus);
                     }
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
+
             }
-        });
-        return verifyCodeView;
+        };
+        timer.start();
     }
 
     @Override

@@ -180,7 +180,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
 
     public View initLogOutDialogView() {
         View verifyCodeView = LayoutInflater.from(context).inflate(R.layout.go_on_chuhuo, null);
-        ImageView chuhuo = verifyCodeView.findViewById(R.id.chuhuo);
+        TextView chuhuo = verifyCodeView.findViewById(R.id.chuhuo);
         chuhuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

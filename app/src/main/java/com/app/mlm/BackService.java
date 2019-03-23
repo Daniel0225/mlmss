@@ -12,12 +12,14 @@ import com.alibaba.fastjson.JSON;
 import com.app.mlm.Meassage.entity.AndroidCommonVo;
 import com.app.mlm.activity.ChuhuoActivity;
 import com.app.mlm.application.MainApp;
+import com.app.mlm.bean.AddInfoEvent;
 import com.app.mlm.bean.AndroidHeartBeat;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
+import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.AllDataBean;
 import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.http.bean.ProductInfo;
@@ -41,6 +43,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.greenrobot.event.EventBus;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -138,6 +141,8 @@ public class BackService extends Service {
                 } else if (vo.getBusType().equals("vmSync")) {//同步机器信息接口
                     Log.d("main", "同步机器信息接口:" + text);
                     setActivation(vo.getBusType());
+                    //同步广播图片或者视频
+                    getAddInfo();
                 } else if (vo.getBusType().equals("activityStop")) {//活动结束
                     Log.d("main", "接收到限时售价活动结束指令:" + text);
                     syncProduceInfo(vo.getBusType());
@@ -448,6 +453,61 @@ public class BackService extends Service {
                         ToastUtil.showLongToast("请求服务器数据失败");
                     }
                 });
+    }
+
+    private void getAddInfo() {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
+        OkGo.<BaseResponse<List<AdBean>>>get(Constants.AD_URL)
+                .params(httpParams)
+                .tag(this)
+                .execute(new JsonCallBack<BaseResponse<List<AdBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<List<AdBean>>> response) {
+
+                        if (response.body().getCode() == 0) {
+                            List<AdBean> adBeanList = response.body().data;
+                            refreshAddInfo(adBeanList);
+                        } else {
+                            //  Toast.makeText(, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<BaseResponse<List<AdBean>>> response) {
+                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                    }
+                });
+    }
+
+    /**
+     * 刷新广告信息
+     *
+     * @param adBeanList
+     */
+    private void refreshAddInfo(List<AdBean> adBeanList) {
+        String adString = PreferencesUtil.getString(Constants.ADDATA);
+        List<AdBean> adBeans = new ArrayList<>();
+        if (!TextUtils.isEmpty(adString)) {
+            adBeans = FastJsonUtil.getObjects(adString, AdBean.class);
+        }
+
+        for (AdBean adBean : adBeanList) {
+
+            if (adBean.getFileType() == 3) {
+                for (AdBean ad : adBeans) {
+                    if (ad.getFileType() == 3) {
+                        if (adBean.getSuffix().equals(ad.getSuffix()) && adBean.getUrl().equals(ad.getUrl())) {//广告信息无变化
+
+                        } else {
+                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
+                            //广告信息有变化  发消息给首页 更新广告展示
+                            EventBus.getDefault().post(new AddInfoEvent());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     class InitSocketThread extends Thread {
