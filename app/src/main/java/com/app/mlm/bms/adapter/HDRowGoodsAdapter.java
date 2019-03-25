@@ -97,7 +97,7 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
             public void confirm(GoodsInfo goodsInfo) {
                 StringBuffer stringBuffer = new StringBuffer();
                 stringBuffer.append(rowPosition);
-                if (selectPosition < 10) {
+                if (selectPosition+1 < 10) {//下标从0开始
                     stringBuffer.append(0);
                 }
                 stringBuffer.append(selectPosition + 1);
