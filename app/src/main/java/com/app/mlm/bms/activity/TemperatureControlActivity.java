@@ -273,8 +273,9 @@ public class TemperatureControlActivity extends BaseActivity {
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
         httpParams.put("currentMode", model);
         httpParams.put("coolMode", coldModel);
-        httpParams.put("caseThermal", 30);
-        httpParams.put("outThermal", 50);
+        httpParams.put("operationId", PreferencesUtil.getInt(Constants.OPERATIONID));
+        httpParams.put("caseThermal", code[0]);
+        httpParams.put("outThermal", code[1]);
         OkGo.<BaseResponse<AllDataBean>>get(Constants.THERMAL)
                 .tag(this)
                 .params(httpParams)

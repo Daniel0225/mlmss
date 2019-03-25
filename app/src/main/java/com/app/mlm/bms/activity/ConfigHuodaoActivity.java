@@ -348,7 +348,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 }
             }
         }
-        SyncChannelListVo syncChannelListVo = new SyncChannelListVo(list, PreferencesUtil.getString(Constants.VMCODE));
+        SyncChannelListVo syncChannelListVo = new SyncChannelListVo(list, PreferencesUtil.getString(Constants.VMCODE), PreferencesUtil.getInt(Constants.OPERATIONID));
         String upJsonString = FastJsonUtil.createJsonString(syncChannelListVo);
         Log.e("Tag", upJsonString);
 

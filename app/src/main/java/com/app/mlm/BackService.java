@@ -22,6 +22,7 @@ import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.AllDataBean;
 import com.app.mlm.http.bean.HuodaoBean;
+import com.app.mlm.http.bean.MaintainBackBean;
 import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.http.bean.SocketShipmentBean;
 import com.app.mlm.utils.FastJsonUtil;
@@ -148,6 +149,8 @@ public class BackService extends Service {
                     syncProduceInfo(vo.getBusType());
                 } else if (vo.getBusType().equals("gzhJump")) {//跳转到维护页面
                     Log.d("main", "接收到跳转到维护页面指令:" + text);
+                    MaintainBackBean maintainBackBean = FastJsonUtil.getObject(text, MaintainBackBean.class);
+                    PreferencesUtil.putInt(Constants.OPERATIONID, maintainBackBean.getT().getOperationId());
                     Intent intent = new Intent(MainApp.getAppInstance().getApplicationContext(), BackgroundManangerSystemActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     MainApp.getAppInstance().getApplicationContext().startActivity(intent);
