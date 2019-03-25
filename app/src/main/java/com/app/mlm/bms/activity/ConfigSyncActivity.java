@@ -108,7 +108,6 @@ public class ConfigSyncActivity extends BaseActivity {
 
                         if (response.body().getCode() == 0) {
                             List<AdBean> adBeanList = response.body().data;
-                            PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
                             refreshAddInfo(adBeanList);
                         } else {
                             Toast.makeText(ConfigSyncActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
@@ -129,6 +128,7 @@ public class ConfigSyncActivity extends BaseActivity {
      */
     private void refreshAddInfo(List<AdBean> adBeanList) {
         String adString = PreferencesUtil.getString(Constants.ADDATA);
+        PreferencesUtil.putString(Constants.ADDATA, FastJsonUtil.createJsonString(adBeanList));
         List<AdBean> adBeans = new ArrayList<>();
         if (!TextUtils.isEmpty(adString)) {
             adBeans = FastJsonUtil.getObjects(adString, AdBean.class);

@@ -15,7 +15,7 @@ public class UploadShipmentStatusBean implements Serializable {
     private String type;
     private String num;
     private List<FailVendInfoVo> failVendInfoVoList;
-    private List<SuccessVendInfoVo> successVendInfoVos;
+    private List<SuccessVendInfoVo> successVendInfoVoList;
     private String snm;
     private Long ctime;
     private String weight;
@@ -77,12 +77,12 @@ public class UploadShipmentStatusBean implements Serializable {
         this.failVendInfoVoList = failVendInfoVoList;
     }
 
-    public List<SuccessVendInfoVo> getSuccessVendInfoVos() {
-        return successVendInfoVos;
+    public List<SuccessVendInfoVo> getSuccessVendInfoVoList() {
+        return successVendInfoVoList;
     }
 
-    public void setSuccessVendInfoVos(List<SuccessVendInfoVo> successVendInfoVos) {
-        this.successVendInfoVos = successVendInfoVos;
+    public void setSuccessVendInfoVoList(List<SuccessVendInfoVo> successVendInfoVoList) {
+        this.successVendInfoVoList = successVendInfoVoList;
     }
 
     public String getSnm() {

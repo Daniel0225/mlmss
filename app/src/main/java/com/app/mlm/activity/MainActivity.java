@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,10 +25,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mlm.BackService;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.activity.base.BaseActivity;
-import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddInfoEvent;
 import com.app.mlm.dialog.SearchDialog;
 import com.app.mlm.fragment.MainFragment;
@@ -56,7 +54,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -91,24 +88,6 @@ public class MainActivity extends BaseActivity {
     private IntentFilter intentFilter;
     private MainChangeReceiver mainChangeReceiver;
     private Timer timerC = new Timer();
-    ;
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 0) {
-                Log.e("十秒进入~", "连接状态" + MainApp.myclient.isconnect);
-                if (!MainApp.myclient.isconnect) {
-                    /**
-                     * 在这里写我们需要一直重复执行的代码
-                     * */
-                    Log.e("断开后重连", "进入");
-                    MainApp.myclient.connect();
-                } else {
-                    Log.e("已连接中~", "进入" + MainApp.myclient.isconnect);
-                }
-            }
-        }
-    };
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -126,8 +105,8 @@ public class MainActivity extends BaseActivity {
         mainChangeReceiver = new MainChangeReceiver();
         registerReceiver(mainChangeReceiver, intentFilter);
         initView();
-        //  startService();
-        // bindService();
+        Intent service = new Intent(this, BackService.class);
+        startService(service);
         //  PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
@@ -168,17 +147,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        timerC.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Log.e("每隔十秒检测一次", "进入");
-                // (1) 使用handler发送消息
-                Message message = new Message();
-                message.what = 0;
-                mHandler.sendMessage(message);
-            }
-        }, 0, 10000);//每隔一秒使用handler发送一下消息,也就是每隔一秒执行一次,一直重复执行
-
     }
 
     /**
@@ -239,24 +207,26 @@ public class MainActivity extends BaseActivity {
     private void dealUpShipmenData() {
         String upJson = new Gson().toJson(PreferencesUtil.getString(Constants.GETSHOPS));
         Log.e("---33", upJson);
-        OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
-                .tag(this)
-                .upJson(upJson)
-                .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
-                    @Override
-                    public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
-                        if (response.body().getCode() == 0) {
-                            //如果数据上传完成则清空
-                            PreferencesUtil.putString(Constants.GETSHOPS, "");
-                        } else {
+        if (!TextUtils.isEmpty(upJson)) {
+            OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
+                    .tag(this)
+                    .upJson(upJson)
+                    .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {
+                        @Override
+                        public void onSuccess(Response<BaseResponse<AllDataBean>> response) {
+                            if (response.body().getCode() == 0) {
+                                //如果数据上传完成则清空
+                                PreferencesUtil.putString(Constants.GETSHOPS, "");
+                            } else {
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Response<BaseResponse<AllDataBean>> response) {
-                        ToastUtil.showLongToast("请求服务器失败，请稍后重试");
-                    }
-                });
+                        @Override
+                        public void onError(Response<BaseResponse<AllDataBean>> response) {
+                            //    ToastUtil.showLongToast("请求服务器失败，请稍后重试");
+                        }
+                    });
+        }
     }
 
     @Override
@@ -275,10 +245,6 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Log.e("Tag", "onResume");
-   /*     if (!MainApp.myclient.isconnect) {
-            Log.e("长连接断开重连", "onResume");
-            MainApp.myclient.connect();
-        }*/
         topView.playerRestart();
     }
 
@@ -286,6 +252,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        unregisterReceiver(mainChangeReceiver);
         ButterKnife.unbind(this);
     }
 
@@ -399,6 +366,10 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, ScreenProtectActivity.class));
     }
 
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
 
     //刷新UI广播
     class MainChangeReceiver extends BroadcastReceiver {

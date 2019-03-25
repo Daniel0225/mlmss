@@ -96,8 +96,8 @@
                     android:paddingLeft="8px"
                     android:paddingRight="8px"
                     android:text="1111"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12px"
+                    android:textColor="@color/redColor"
+                    android:textSize="18px"
                     android:visibility="gone" />
             </LinearLayout>
 

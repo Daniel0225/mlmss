@@ -3,14 +3,18 @@ package com.app.mlm.fragment;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +36,7 @@ import com.app.mlm.http.bean.ShipmentBean;
 import com.app.mlm.http.bean.SocketShipmentBean;
 import com.app.mlm.http.bean.UploadShipmentStatusBean;
 import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.MyDialogUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
@@ -57,6 +62,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
 
     public final int MSG_DOWN_SUCCESS = 2;
     public final int MSG_DOWN_FINISH = 3;
+    public final int MSG_DOWN_GET_GOOD = 4;
     @Bind(R.id.progress_circle)
     ImageView progressCircle;
     @Bind(R.id.recyclerView)
@@ -74,18 +80,17 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     String json = "";
     int count = 0;
     int[] code;//温度
-    // List<SocketShipmentBean> shipmentList = new ArrayList<>();
     SocketShipmentBean socketShipmentBean = new SocketShipmentBean();
     List<HdDataBean> hdDataBeans = new ArrayList<HdDataBean>();
     //上传取货结果
     UploadShipmentStatusBean uploadShipmentStatusBean = new UploadShipmentStatusBean();
     List<UploadShipmentStatusBean.SuccessVendInfoVo> successVendInfoVos = new ArrayList<UploadShipmentStatusBean.SuccessVendInfoVo>();
     List<UploadShipmentStatusBean.FailVendInfoVo> failVendInfoVos = new ArrayList<UploadShipmentStatusBean.FailVendInfoVo>();
-
     //处理断电上传取货结果
     UploadShipmentStatusBean outageUploadShipmentStatusBean = new UploadShipmentStatusBean();
     List<UploadShipmentStatusBean.SuccessVendInfoVo> outageSuccessVendInfoVos = new ArrayList<UploadShipmentStatusBean.SuccessVendInfoVo>();
     List<UploadShipmentStatusBean.FailVendInfoVo> outageFailVendInfoVos = new ArrayList<UploadShipmentStatusBean.FailVendInfoVo>();
+    private AlertDialog myDialogUtil;
     private ChuhuoAdapter chuhuoAdapter;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -94,32 +99,192 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                     chuhuoAdapter.refreshChuhuoStatus(count);
                     Log.e("开始取第", "开始取第" + count + "个");
                     countView.setText(String.format("%d/%d", count + 1, hdDataBeans.size()));
-                    String hdCodeT = hdDataBeans.get(count).getHdCode();
-                    if (!TextUtils.isEmpty(hdCodeT)) {
-                        int one = Integer.parseInt(hdCodeT.substring(0, 1));
-                        int two = Integer.parseInt(hdCodeT.substring(1, 2));
-                        int three = Integer.parseInt(hdCodeT.substring(2, 3));
-                        if (two == 0) {
-                            pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
-                        } else {
-                            pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                int machineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
+                                Log.e("整机状态", String.valueOf(machineStatus));
+                                if (machineStatus == 2) {//可以出货
+                                    Log.e("整机状态为2", String.valueOf(machineStatus));
+                                    String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
+                                    int statusCode = 0;
+                                    for (int i = 0; i < status.length; i++) {
+                                        if (status[i].contains("0FA")) {
+                                            statusCode = 1;
+                                            break;
+                                        }
+                                    }
+                                    switch (statusCode) {
+                                        case 0:
+                                            String hdCodeT = hdDataBeans.get(count).getHdCode();
+                                            if (!TextUtils.isEmpty(hdCodeT)) {
+                                                int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                                                int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                                                int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                                                if (two == 0) {
+                                                    Log.e("整机状态2进入", String.valueOf(machineStatus));
+                                                    pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                                } else {
+                                                    Log.e("整机状态2-1进入", String.valueOf(machineStatus));
+                                                    pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                                }
+                                            }
+                                            break;
+                                        case 1:
+                                            Toast.makeText(getContext(), "您有未取走的商品", Toast.LENGTH_SHORT).show();
+                                            int salegood = MainApp.bvmAidlInterface.BVMReSaleGoods(1);
+                                            Log.e("开柜门返回值", String.valueOf(salegood));
+                                            if (salegood == 99) {
+                                                Log.e("开柜门返回值进入", String.valueOf(salegood));
+                                                myDialogUtil = MyDialogUtil.getDialog(getContext(), initLogOutDialogView(), Gravity.CENTER);
+                                                myDialogUtil.setCanceledOnTouchOutside(false);
+                                                myDialogUtil.show();
+                                            } else {
+                                                Log.e("开柜门失败返回值", String.valueOf(salegood));
+                                            }
+                                    /*else {
+                                      //  Toast.makeText(getContext(),"机器故障",Toast.LENGTH_SHORT).show();
+                                        UpAlarmReportUtils.upalarmReport(context, salegood);
+                                    }*/
+                                            break;
+                                    }
+                                } else if (machineStatus == 6) {
+                                    String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
+                                    int statusCode = 0;
+                                    for (int i = 0; i < status.length; i++) {
+                                        if (status[i].contains("0FA")) {
+                                            statusCode = 1;
+                                            break;
+                                        }
+                                    }
+                                    switch (statusCode) {
+                                        case 0:
+                                            break;
+                                        case 1:
+                                            Toast.makeText(getContext(), "您有未取走的商品", Toast.LENGTH_SHORT).show();
+                                            int salegood = MainApp.bvmAidlInterface.BVMReSaleGoods(1);
+                                            Log.e("开柜门返回值", String.valueOf(salegood));
+                                            if (salegood == 99) {
+                                                Log.e("开柜门返回值进入", String.valueOf(salegood));
+                                                myDialogUtil = MyDialogUtil.getDialog(getContext(), initLogOutDialogView(), Gravity.CENTER);
+                                                myDialogUtil.setCanceledOnTouchOutside(false);
+                                                myDialogUtil.show();
+                                            } else {
+                                                Log.e("开柜门失败返回值", String.valueOf(salegood));
+                                            }
+                                    /*else {
+                                      //  Toast.makeText(getContext(),"机器故障",Toast.LENGTH_SHORT).show();
+                                        UpAlarmReportUtils.upalarmReport(context, salegood);
+                                    }*/
+                                            break;
+                                    }
+                                } else {
+                                    mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                                    Log.e("ss", "第一次进来了");
+                                }
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
+                    }, 2000);//3秒后执行Runnable中的run方法
+
                     break;
                 case MSG_DOWN_FINISH:
                     //单个商品取货结束
-                    if(hdDataBeans.size() == 1){
+                    if (hdDataBeans.size() == 1) {
                         progressCircle.setVisibility(View.GONE);
                         chuhuoResultView.setVisibility(View.VISIBLE);
                         progressEndImage.setVisibility(View.VISIBLE);
-                        if(hdDataBeans.get(0).isSuccess()){
+                        if (hdDataBeans.get(0).isSuccess()) {
                             chuhuoResultView.setImageResource(R.drawable.select_nor);
-                        }else {
+                        } else {
                             chuhuoResultView.setImageResource(R.drawable.shibai);
                         }
-                    }else{//多商品取货结束
+                    } else {//多商品取货结束
                         chuhuoAdapter.refreshChuhuoStatus(count);
                     }
+                    break;
+                case MSG_DOWN_GET_GOOD:
+                    Handler handler_thear = new Handler();
+                    handler_thear.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                int noMachineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
+                                if (noMachineStatus == 2) {//可以出货
+                                    String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
+                                    int statusCode = 0;
+                                    for (int i = 0; i < status.length; i++) {
+                                        if (status[i].contains("0FA")) {
+                                            Log.e("错误码", status[i]);
+                                            statusCode = 1;
+                                            break;
+                                        }
+                                    }
+                                    switch (statusCode) {
+                                        case 0:
+                                            String hdCodeT = hdDataBeans.get(count).getHdCode();
+                                            if (!TextUtils.isEmpty(hdCodeT)) {
+                                                int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                                                int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                                                int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                                                if (two == 0) {
+                                                    pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                                } else {
+                                                    pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                                }
+                                            }
+                                            break;
+                                        case 1:
+                                            Toast.makeText(getContext(), "您有未取走的商品", Toast.LENGTH_SHORT).show();
+                                            int salegood = MainApp.bvmAidlInterface.BVMReSaleGoods(1);
+                                            Log.e("开柜门返回值", String.valueOf(salegood));
+                                            if (salegood == 99) {
+                                                Log.e("开柜门返回值进入", String.valueOf(salegood));
+                                                myDialogUtil = MyDialogUtil.getDialog(getContext(), initLogOutDialogView(), Gravity.CENTER);
+                                                myDialogUtil.setCanceledOnTouchOutside(false);
+                                                myDialogUtil.show();
+                                            } else {
+                                                Log.e("开柜门失败返回值", String.valueOf(salegood));
+                                            }
+                                            break;
+                                    }
+                                } else if (noMachineStatus == 6) {
+                                    String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
+                                    int statusCode = 0;
+                                    for (int i = 0; i < status.length; i++) {
+                                        if (status[i].contains("0FA")) {
+                                            statusCode = 1;
+                                            break;
+                                        }
+                                    }
+                                    switch (statusCode) {
+                                        case 0:
+                                            break;
+                                        case 1:
+                                            Toast.makeText(getContext(), "您有未取走的商品", Toast.LENGTH_SHORT).show();
+                                            int salegood = MainApp.bvmAidlInterface.BVMReSaleGoods(1);
+                                            Log.e("开柜门返回值", String.valueOf(salegood));
+                                            if (salegood == 99) {
+                                                Log.e("开柜门返回值进入", String.valueOf(salegood));
+                                                myDialogUtil = MyDialogUtil.getDialog(getContext(), initLogOutDialogView(), Gravity.CENTER);
+                                                myDialogUtil.setCanceledOnTouchOutside(false);
+                                                myDialogUtil.show();
+                                            } else {
+                                                Log.e("开柜门失败返回值", String.valueOf(salegood));
+                                            }
+                                            break;
+                                    }
+                                } else {
+                                    mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                                }
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 2000);//2秒后执行Runnable中的run方法
                     break;
             }
         }
@@ -127,9 +292,73 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         ;
     };
 
- /*   public ChuhuoFragment(String json) {
-        this.json = json;
-    }*/
+    public View initLogOutDialogView() {
+        View verifyCodeView = LayoutInflater.from(getActivity()).inflate(R.layout.go_on_chuhuo, null);
+        TextView chuhuo = verifyCodeView.findViewById(R.id.chuhuo);
+        startTime(chuhuo);
+        return verifyCodeView;
+    }
+
+    /**
+     * 开启倒计时
+     */
+    public void startTime(TextView chuhuo) {
+        /** 倒计时60秒，一次1秒 */
+        CountDownTimer timer = new CountDownTimer(25 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                chuhuo.setText(millisUntilFinished / 1000 + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                myDialogUtil.dismiss();
+                try {
+                    int noMachineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
+                    Log.e("code1", "机器状态" + noMachineStatus);
+                    if (noMachineStatus == 2) {
+                        int code = MainApp.bvmAidlInterface.BVMCleanSysFault(1);
+                        if (code == 99) {
+                            String[] status = MainApp.bvmAidlInterface.BVMGetFGFault(1);
+                            int statusCode = 0;
+                            for (int i = 0; i < status.length; i++) {
+                                if (status[i].contains("0FA")) {
+                                    Log.e("错误码", status[i]);
+                                    statusCode = 1;
+                                    break;
+                                }
+                            }
+                            switch (statusCode) {
+                                case 0:
+                                    String hdCodeT = hdDataBeans.get(count).getHdCode();
+                                    if (!TextUtils.isEmpty(hdCodeT)) {
+                                        int one = Integer.parseInt(hdCodeT.substring(0, 1));
+                                        int two = Integer.parseInt(hdCodeT.substring(1, 2));
+                                        int three = Integer.parseInt(hdCodeT.substring(2, 3));
+                                        if (two == 0) {
+                                            pick(count, hdCodeT, one, three, socketShipmentBean.getT().getSnm(), 1);
+                                        } else {
+                                            pick(count, hdCodeT, one, Integer.parseInt(String.valueOf(two) + String.valueOf(three)), socketShipmentBean.getT().getSnm(), 1);
+                                        }
+                                    }
+                                    break;
+                                case 1:
+                                    mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                                    break;
+                            }
+                        }
+                    } else {
+                        mHandler.sendEmptyMessage(MSG_DOWN_GET_GOOD);
+                        Log.e("code", "状态" + noMachineStatus);
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        timer.start();
+    }
 
     @Override
     protected int provideLayoutResId() {
@@ -488,7 +717,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         outageUploadShipmentStatusBean.setNum(socketShipmentBean.getT().getNum());
         outageUploadShipmentStatusBean.setStatus("0");
         outageUploadShipmentStatusBean.setFailVendInfoVoList(outageFailVendInfoVos);
-        outageUploadShipmentStatusBean.setSuccessVendInfoVos(outageSuccessVendInfoVos);
+        outageUploadShipmentStatusBean.setSuccessVendInfoVoList(outageSuccessVendInfoVos);
         String upJson = new Gson().toJson(uploadShipmentStatusBean);
         PreferencesUtil.putString(Constants.GETSHOPS, upJson);
     }
@@ -503,7 +732,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         uploadShipmentStatusBean.setNum(socketShipmentBean.getT().getNum());
         uploadShipmentStatusBean.setStatus("0");
         uploadShipmentStatusBean.setFailVendInfoVoList(failVendInfoVos);
-        uploadShipmentStatusBean.setSuccessVendInfoVos(successVendInfoVos);
+        uploadShipmentStatusBean.setSuccessVendInfoVoList(successVendInfoVos);
         String upJson = new Gson().toJson(uploadShipmentStatusBean);
         OkGo.<BaseResponse<AllDataBean>>post(Constants.VENDREPORT)
                 .tag(this)
@@ -525,7 +754,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         ChuhuoFailedFragment chuhuoFailedFragment = new ChuhuoFailedFragment();
                                         Bundle bundle = new Bundle();
                                         bundle.putString("count", String.valueOf(hdDataBeans.size()));
-                                        bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVos().size()));
+                                        bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVoList().size()));
                                         chuhuoFailedFragment.setArguments(bundle);
                                         mActivity.addFragment(chuhuoFailedFragment);
                                     }
@@ -553,7 +782,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                     ChuhuoFailedFragment chuhuoFailedFragment = new ChuhuoFailedFragment();
                                     Bundle bundle = new Bundle();
                                     bundle.putString("count", String.valueOf(hdDataBeans.size()));
-                                    bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVos().size()));
+                                    bundle.putString("successcount", String.valueOf(outageUploadShipmentStatusBean.getSuccessVendInfoVoList().size()));
                                     chuhuoFailedFragment.setArguments(bundle);
                                     mActivity.addFragment(chuhuoFailedFragment);
                                 }

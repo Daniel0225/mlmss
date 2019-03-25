@@ -12,13 +12,23 @@ import java.util.List;
 public class SyncChannelListVo implements Serializable {
     private List<GoodsInfo> syncChannelVoList;
     private String vmCode;
+    private int operationId;
 
     public SyncChannelListVo() {
     }
 
-    public SyncChannelListVo(List<GoodsInfo> syncChannelVoList, String vmCode) {
+    public SyncChannelListVo(List<GoodsInfo> syncChannelVoList, String vmCode, int operationId) {
         this.syncChannelVoList = syncChannelVoList;
         this.vmCode = vmCode;
+        this.operationId = operationId;
+    }
+
+    public int getOperationId() {
+        return operationId;
+    }
+
+    public void setOperationId(int operationId) {
+        this.operationId = operationId;
     }
 
     public List<GoodsInfo> getSyncChannelVoList() {

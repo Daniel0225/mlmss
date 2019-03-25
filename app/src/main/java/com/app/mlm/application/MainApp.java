@@ -111,8 +111,8 @@ public class MainApp extends Application {
         initRxHttp();
         initGreenDao();
         //  CrashHandler.getInstance().init(this);
-        myclient = new MyClient();
-        myclient.connect();
+      /*  myclient = new MyClient();
+        myclient.connect();*/
       /*  Intent service = new Intent(this, MlmServiceConfigure.class);
         startService(service);*/
         initOkGo();

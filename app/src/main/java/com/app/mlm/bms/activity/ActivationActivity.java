@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.app.mlm.Constants;
 import com.app.mlm.R;
-import com.app.mlm.application.MainApp;
 import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.bms.dialog.ActivationDialog;
 import com.app.mlm.http.BaseResponse;
@@ -129,8 +128,8 @@ public class ActivationActivity extends BaseActivity {
                             PreferencesUtil.putString("vmName", response.body().getData().getVmName());
                             PreferencesUtil.putInt(Constants.VMID, response.body().getData().getVmId());
                             Log.e("vmid", PreferencesUtil.getInt(Constants.VMID) + "");
-                            MainApp.myclient.close();
-                            MainApp.myclient.connect();
+                          /*  MainApp.myclient.close();
+                            MainApp.myclient.connect();*/
                             ActivationDialog dialog1 = new ActivationDialog(ActivationActivity.this);
                             dialog1.show();
                             Log.e("激活", String.valueOf(response));

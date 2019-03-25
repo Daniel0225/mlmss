@@ -10,7 +10,7 @@
 
     <com.app.mlm.widget.titilebar.TitleBar
         style="@style/titlebarstyle"
-        app:action="应用"
+        app:action="初始化"
         app:mTitle="货道配置" />
 
     <LinearLayout
