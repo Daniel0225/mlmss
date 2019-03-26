@@ -18,6 +18,8 @@ import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
 import com.app.mlm.utils.ToastUtil;
 
+import org.litepal.util.Const;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +54,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
     private ShopCartListAdapter adapter;
     private double totalPrice = 0;
     private int totalNum = 0;
+    private double originPrice = 0;
 
 
     public ShopCarDialog(Context context) {
@@ -85,6 +88,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
         for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
             totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getRealPrice());
+            originPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
         }
 
         tvPrice.setText("¥ " + totalPrice);
@@ -107,6 +111,7 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
                 Intent intent = new Intent(getContext(), OrderPayActivity.class);
                 intent.putExtra(Constants.TOTAL_NUM, totalNum);
                 intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(totalPrice));
+                intent.putExtra(Constants.ORIGIN_PRICE,String.valueOf(originPrice));
                 getContext().startActivity(intent);
                 break;
             case R.id.to_pick:

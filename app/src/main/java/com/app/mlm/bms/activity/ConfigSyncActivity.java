@@ -264,7 +264,7 @@ public class ConfigSyncActivity extends BaseActivity {
                 goodsInfo.setMdseName(productInfo.getMdseName());
                 goodsInfo.setMdsePrice(productInfo.getMdsePrice());
                 if(goodsInfo.getActivityPrice() != 0){
-                    goodsInfo.setRealPrice(goodsInfo.getRealPrice());
+                    goodsInfo.setRealPrice(goodsInfo.getActivityPrice());
                 }
                 goodsInfo.setMdseUrl(productInfo.getMdseUrl());
             } else {

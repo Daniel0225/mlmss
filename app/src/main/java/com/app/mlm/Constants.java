@@ -28,6 +28,7 @@ public class Constants {
     public static final String COUNTER_NAME = "counterName";
     public static final String TOTAL_NUM = "totalNum";
     public static final String TOTAL_PRICE = "totalPrice";
+    public static final String ORIGIN_PRICE = "originPrice";//原价
     public static final String SHIPMENT = "shipment";
 
     /**

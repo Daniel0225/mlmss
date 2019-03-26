@@ -58,10 +58,16 @@ public class OrderPayActivity extends AppCompatActivity {
     ImageView ivWxCode;
     @Bind(R.id.zhifubao)
     ImageView zhifubao;
+    @Bind(R.id.onSaleView)
+    View onSaleView;
+    @Bind(R.id.free_price)
+    TextView freePriceView;
+
     private TextView totalPriceView;
     private ImageView payAdImageView;
     private TextView totalNumView;
     private String totalPrice;
+    private String originPrice;
     private Integer totalNum;
     private TextView originPriceView;
     private ArrayList<GoodsInfo> goodsInfoList;
@@ -87,6 +93,7 @@ public class OrderPayActivity extends AppCompatActivity {
     public void init() {
         totalNum = getIntent().getIntExtra(Constants.TOTAL_NUM, 1);
         totalPrice = getIntent().getStringExtra(Constants.TOTAL_PRICE);
+        originPrice = getIntent().getStringExtra(Constants.ORIGIN_PRICE);
         imageView = (LinearLayout) findViewById(R.id.back);
         count_down = (TextView) findViewById(R.id.count_down);
         totalPriceView = findViewById(R.id.total_price);
@@ -97,6 +104,15 @@ public class OrderPayActivity extends AppCompatActivity {
         originPriceView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         totalPriceView.setText("¥ " + totalPrice);
         totalNumView.setText(totalNum + "件");
+
+        double roundPrice = Double.valueOf(originPrice) - Double.valueOf(totalPrice);
+        if( roundPrice > 0 ){//售价小于原价 显示优惠信息
+            onSaleView.setVisibility(View.VISIBLE);
+            originPriceView.setVisibility(View.VISIBLE);
+            originPriceView.setText("¥ " + originPrice);
+            freePriceView.setText("¥ " + roundPrice);
+
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

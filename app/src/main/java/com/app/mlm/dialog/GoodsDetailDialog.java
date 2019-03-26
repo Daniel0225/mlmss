@@ -123,6 +123,7 @@ public class GoodsDetailDialog extends Dialog {
                             list.add(mGoodsInfo);
                             intent.putExtra(Constants.TOTAL_NUM, 1);
                             intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(mGoodsInfo.getRealPrice()));
+                            intent.putExtra(Constants.ORIGIN_PRICE,mGoodsInfo.getMdsePrice());
                             intent.putExtra("goods", list);
                             getContext().startActivity(intent);
                             dismiss();
