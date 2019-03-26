@@ -31,6 +31,7 @@ import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,7 +245,8 @@ public class MainFragment extends BaseFragment {
         double totalPrice = 0;
         for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
-            totalPrice += goodsInfo.getShopCarNum() * goodsInfo.getRealPrice();
+            totalPrice = new BigDecimal(totalPrice).add(new BigDecimal(goodsInfo.getRealPrice()).multiply(new BigDecimal(goodsInfo.getShopCarNum())))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         }
 
         if (totalNum > 0) {

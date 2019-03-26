@@ -41,6 +41,7 @@ import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
 import com.app.mlm.widget.SpacesItemDecoration;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -75,6 +76,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     TextView countView;
     @Bind(R.id.progress_end_circle)
     ImageView progressEndImage;
+    @Bind(R.id.goods_pic)
+    ImageView goodsPicView;
     @Bind(R.id.chuhuo_result)
     ImageView chuhuoResultView;
     String json = "";
@@ -424,6 +427,7 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
         //如果是单个商品 那么现实单个的 并开始动画
         //  boolean isSingle = false;
         if (hdDataBeans.size() == 1) {
+            Glide.with(getContext()).load(hdDataBeans.get(0).getShopUrl()).into(goodsPicView);
             singleGoodsView.setVisibility(View.VISIBLE);
             ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressCircle, "rotation", 0f, 360f);
             objectAnimator.setDuration(4000)

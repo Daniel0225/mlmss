@@ -20,6 +20,8 @@ import com.app.mlm.utils.ToastUtil;
 
 import org.litepal.util.Const;
 
+import java.math.BigDecimal;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -87,8 +89,9 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
         totalPrice = 0;
         for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
-            totalPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getRealPrice());
-            originPrice += goodsInfo.getShopCarNum() * Double.valueOf(goodsInfo.getMdsePrice());
+            originPrice += new BigDecimal(goodsInfo.getMdsePrice()).multiply(new BigDecimal(goodsInfo.getShopCarNum())).doubleValue();
+            totalPrice = new BigDecimal(totalPrice).add(new BigDecimal(goodsInfo.getRealPrice()).multiply(new BigDecimal(goodsInfo.getShopCarNum())))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         }
 
         tvPrice.setText("¥ " + totalPrice);
