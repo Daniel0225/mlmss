@@ -24,6 +24,7 @@ import com.app.mlm.greendao.DaoSession;
 import com.app.mlm.http.HttpHelper;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ShopCarUtil;
 import com.app.mlm.utils.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -84,6 +85,11 @@ public class MainApp extends Application {
      * @param goodsInfo
      */
     public static void addShopCar(GoodsInfo goodsInfo) {
+
+        if (ShopCarUtil.getShopCarNum(shopCarList) == 10) {
+            ToastUtil.showLongCenterToast("最多可购买10件商品");
+            return;
+        }
         boolean isContain = false;
         for (GoodsInfo goods : shopCarList) {
             if (goods.getMdseId() == goodsInfo.getMdseId()) {

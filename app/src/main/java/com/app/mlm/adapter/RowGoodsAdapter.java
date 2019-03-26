@@ -155,7 +155,6 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
                                 return;
                             }
                             MainApp.addShopCar(data.get(i));
-                            ToastUtil.showLongToast("加入成功");
                             EventBus.getDefault().post(new AddShopCarEvent());//发送消息到首页 更新购物车TAB角标数据
                             break;
                         case 1:
