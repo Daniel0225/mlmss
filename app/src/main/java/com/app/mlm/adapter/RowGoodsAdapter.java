@@ -83,7 +83,6 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
 
         GoodsInfo goodsInfo = data.get(i);
         viewHolder.tvGoodsName.setText(goodsInfo.getMdseName());
-        Log.e("Tag","position " + i + "activeprice " + goodsInfo.getActivityPrice() + " realPrice " + goodsInfo.getRealPrice() +" mdPrice " + goodsInfo.getMdsePrice() );
         if(goodsInfo.getActivityPrice() == 0){
             viewHolder.tvGoodsPrice.setText("¥ " + goodsInfo.getRealPrice());//显示当前售价
             viewHolder.tvActivePrice.setText("");
@@ -114,7 +113,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
             viewHolder.tvGoodsPrice.setTextColor(Color.parseColor("#666666"));
         } else {
             viewHolder.sellOut.setVisibility(View.GONE);
-            viewHolder.tvGoodsName.setTextColor(R.color.color_ff000000);
+            viewHolder.tvGoodsName.setTextColor(Color.BLACK);
             viewHolder.ivAddCart.setBackgroundResource(R.drawable.go_nor);
             viewHolder.tvGoodsPrice.setTextColor(Color.parseColor("#ffd0021b"));
         }

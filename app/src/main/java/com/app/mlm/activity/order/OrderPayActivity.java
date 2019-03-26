@@ -38,6 +38,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,8 +106,8 @@ public class OrderPayActivity extends AppCompatActivity {
         totalPriceView.setText("¥ " + totalPrice);
         totalNumView.setText(totalNum + "件");
 
-        double roundPrice = Double.valueOf(originPrice) - Double.valueOf(totalPrice);
-        if( roundPrice > 0 ){//售价小于原价 显示优惠信息
+        BigDecimal roundPrice = (new BigDecimal(originPrice)).subtract(new BigDecimal(totalPrice));
+        if( roundPrice.doubleValue() > 0 ){//售价小于原价 显示优惠信息
             onSaleView.setVisibility(View.VISIBLE);
             originPriceView.setVisibility(View.VISIBLE);
             originPriceView.setText("¥ " + originPrice);

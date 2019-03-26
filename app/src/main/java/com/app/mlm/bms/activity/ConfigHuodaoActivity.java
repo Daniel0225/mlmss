@@ -23,6 +23,7 @@ import com.app.mlm.http.bean.SyncChannelListVo;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.Loading;
 import com.app.mlm.utils.PreferencesUtil;
+import com.app.mlm.utils.ProgressDialog;
 import com.app.mlm.utils.ToastUtil;
 import com.app.mlm.utils.UpAlarmReportUtils;
 import com.app.mlm.widget.SpacesItemDecoration;
@@ -178,8 +179,8 @@ public class ConfigHuodaoActivity extends BaseActivity {
                 .setCommitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ProgressDialog.show(ConfigHuodaoActivity.this,"正在提交货道配置信息");
                         getUpJson();
-                        finish();
                     }
                 })
                 .setCancelClickListener(new View.OnClickListener() {
@@ -377,6 +378,11 @@ public class ConfigHuodaoActivity extends BaseActivity {
                     @Override
                     public void onError(Response<BaseResponse> response) {
                         ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        ProgressDialog.cancel();
                     }
                 });
 
