@@ -439,7 +439,7 @@ public class BackService extends Service {
         httpParams.put("noticeType", busType);
         httpParams.put("noticeDescribe", noticeDescribe);
         httpParams.put("isSuccess", isSuccess);
-        OkGo.<BaseResponse<AllDataBean>>post(Constants.GET_PRODUCT_PRICE)
+        OkGo.<BaseResponse<AllDataBean>>post(Constants.CONFIRMNOTICE)
                 .tag(this)
                 .params(httpParams)
                 .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {

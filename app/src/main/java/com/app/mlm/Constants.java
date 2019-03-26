@@ -57,6 +57,7 @@ public class Constants {
     public static final String RECEVE_MSG = BASE_URL + "vendConfirmTest";//收到取货回复
     //出货后反馈给后台数据
     public static final String VENDREPORT = BASE_URL + "vendReport";
+    public static final String CONFIRMNOTICE = BASE_URL + "confirmNotice";// 消息确认
 
     //断电保存数据
     public static final String GETSHOPS = "getShops";
