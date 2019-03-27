@@ -455,7 +455,7 @@ public class BackService extends Service {
                     @Override
                     public void onError(Response<BaseResponse<AllDataBean>> response) {
                         super.onError(response);
-                        ToastUtil.showLongToast("请求服务器数据失败");
+                        //   ToastUtil.showLongToast("请求服务器数据失败");
                     }
                 });
     }

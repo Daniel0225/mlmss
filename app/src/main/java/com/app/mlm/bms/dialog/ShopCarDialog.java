@@ -2,6 +2,8 @@ package com.app.mlm.bms.dialog;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -110,12 +112,24 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
             case R.id.close:
                 break;
             case R.id.tvPay:
-                dismiss();
-                Intent intent = new Intent(getContext(), OrderPayActivity.class);
-                intent.putExtra(Constants.TOTAL_NUM, totalNum);
-                intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(totalPrice));
-                intent.putExtra(Constants.ORIGIN_PRICE,String.valueOf(originPrice));
-                getContext().startActivity(intent);
+                try {
+                    int noMachineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
+                    Log.e("code1", "机器状态" + noMachineStatus);
+                    if (noMachineStatus == 2) {
+                        dismiss();
+                        Intent intent = new Intent(getContext(), OrderPayActivity.class);
+                        intent.putExtra(Constants.TOTAL_NUM, totalNum);
+                        intent.putExtra(Constants.TOTAL_PRICE, String.valueOf(totalPrice));
+                        intent.putExtra(Constants.ORIGIN_PRICE, String.valueOf(originPrice));
+                        getContext().startActivity(intent);
+                    } else {
+                        ToastUtil.showLongCenterToast("正在售卖中,请稍后再试");
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+
+
                 break;
             case R.id.to_pick:
                 dismiss();
