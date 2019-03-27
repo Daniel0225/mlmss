@@ -21,16 +21,19 @@
 
         <TextView
             android:id="@+id/tvGoodsName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/ivGoodsImg"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="10px"
             android:layout_marginTop="45px"
-            android:layout_toRightOf="@id/ivGoodsImg"
+            android:layout_marginEnd="30px"
             android:singleLine="true"
+            android:ellipsize="end"
             android:text="青岛香酥鱼骨粒"
             android:textColor="#ff000000"
+            android:layout_toStartOf="@+id/ivJian"
+            android:layout_toEndOf="@+id/ivGoodsImg"
             android:textSize="24px"
             />
 

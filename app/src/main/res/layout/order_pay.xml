@@ -87,6 +87,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="6px"
             android:text="¥ 18.00"
+            android:textSize="28px"
             android:visibility="gone" />
 
         <View
