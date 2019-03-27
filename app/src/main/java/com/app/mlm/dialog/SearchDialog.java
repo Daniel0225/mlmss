@@ -131,7 +131,7 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivClear:
-                clearKeywords();
+                dismiss();
                 break;
             case R.id.rlTop:
                 dismiss();
