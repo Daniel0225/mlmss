@@ -86,7 +86,7 @@ public class MainApp extends Application {
     public static void addShopCar(GoodsInfo goodsInfo) {
         boolean isContain = false;
         for (GoodsInfo goods : shopCarList) {
-            if (goods.getMdseId() == goodsInfo.getMdseId()) {
+            if (goods.getMdseId() == goodsInfo.getMdseId() && goods.getClCode().equals(goodsInfo.getClCode())) {
                 if(goods.getShopCarNum() < goods.getClcCapacity()){
                     goods.setShopCarNum(goods.getShopCarNum() + 1);
                 }else{
