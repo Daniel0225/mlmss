@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="500px" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="100px"
         android:background="@color/withe"
         android:gravity="center"
@@ -27,14 +27,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="39px"
+                android:layout_marginRight="60px"
                 android:background="@drawable/back_nor"
                 android:scaleType="centerCrop" />
         </LinearLayout>
 
         <TextView
-            android:layout_width="296dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/pay_order"
             android:textColor="@color/black"
@@ -42,14 +43,14 @@
 
         <TextView
             android:id="@+id/count_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="38px"
+            android:layout_width="80px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="60s"
             android:textColor="#ff000000"
             android:textSize="32px" />
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
