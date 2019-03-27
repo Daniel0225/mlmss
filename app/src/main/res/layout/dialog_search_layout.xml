@@ -27,6 +27,7 @@
                 android:background="@null"
                 android:focusable="false"
                 android:hint="@string/hint_search"
+                android:maxLength="4"
                 android:paddingLeft="15dp"
                 android:textColor="@color/black"
                 android:textSize="30px"
@@ -39,8 +40,8 @@
             android:layout_width="40px"
             android:layout_height="40px"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="380px"
             android:layout_marginRight="30px"
+            android:layout_marginTop="380px"
             android:src="@drawable/delet_nor"/>
     </RelativeLayout>
 
