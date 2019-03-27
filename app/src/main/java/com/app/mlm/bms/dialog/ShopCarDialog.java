@@ -16,9 +16,8 @@ import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.dialog.BaseDialog;
+import com.app.mlm.utils.ShopCarUtil;
 import com.app.mlm.utils.ToastUtil;
-
-import org.litepal.util.Const;
 
 import java.math.BigDecimal;
 
@@ -89,7 +88,8 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
         totalPrice = 0;
         for (GoodsInfo goodsInfo : MainApp.shopCarList) {
             totalNum += goodsInfo.getShopCarNum();
-            originPrice += new BigDecimal(goodsInfo.getMdsePrice()).multiply(new BigDecimal(goodsInfo.getShopCarNum())).doubleValue();
+            originPrice = new BigDecimal(originPrice).add(new BigDecimal(goodsInfo.getMdsePrice()).
+                    multiply(new BigDecimal(goodsInfo.getShopCarNum()))).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             totalPrice = new BigDecimal(totalPrice).add(new BigDecimal(goodsInfo.getRealPrice()).multiply(new BigDecimal(goodsInfo.getShopCarNum())))
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         }
@@ -129,6 +129,11 @@ public class ShopCarDialog extends BaseDialog implements ShopCartListAdapter.Sho
 
     @Override
     public void addOne(int position) {
+        if (ShopCarUtil.getShopCarNum(MainApp.shopCarList) == 10) {
+            ToastUtil.showLongCenterToast("最多可购买10件商品");
+            return;
+        }
+
         int originNum = MainApp.shopCarList.get(position).getShopCarNum();
         if(originNum >=  MainApp.shopCarList.get(position).getClcCapacity()){
             ToastUtil.showLongCenterToast(String.format("该商品当前库存仅有%d个",originNum));

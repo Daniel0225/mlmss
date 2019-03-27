@@ -326,9 +326,9 @@ public class MyClient {
                 goodsInfo.setMdsePack(productInfo.getMdsePack());
                 goodsInfo.setMdseBrand(productInfo.getMdseBrand());
                 goodsInfo.setMdseName(productInfo.getMdseName());
-                goodsInfo.setMdsePrice(productInfo.getMdsePrice());
+                goodsInfo.setMdsePrice(goodsInfo.getRealPrice());
                 if(goodsInfo.getActivityPrice() != 0){
-                    goodsInfo.setRealPrice(goodsInfo.getRealPrice());
+                    goodsInfo.setRealPrice(goodsInfo.getActivityPrice());
                 }
                 goodsInfo.setMdseUrl(productInfo.getMdseUrl());
             } else {

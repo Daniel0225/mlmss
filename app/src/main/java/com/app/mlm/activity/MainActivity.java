@@ -377,6 +377,7 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             String state = intent.getAction();
             if (state.equals(Constants.PRICECHANGE)) {
+                Log.e("收到消息", "进来了");
                 mainFragment.onResume();
             }
         }

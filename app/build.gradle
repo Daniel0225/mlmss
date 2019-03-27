@@ -3,7 +3,7 @@ apply plugin: 'org.greenrobot.greendao'
 apply from: "${rootProject.rootDir}/config.gradle"
 
 android {
-    compileSdkVersion build_versions.compile_sdk
+    compileSdkVersion 28
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
         applicationId build_versions.applicationId
@@ -31,16 +31,19 @@ android {
             consumerProguardFiles 'proguard-rules.pro'
         }
     }
-
     dataBinding {
         enabled = true
     }
-
     android {
         compileOptions {
             targetCompatibility JavaVersion.VERSION_1_8
             sourceCompatibility JavaVersion.VERSION_1_8
         }
+    }
+    buildToolsVersion '28.0.2'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

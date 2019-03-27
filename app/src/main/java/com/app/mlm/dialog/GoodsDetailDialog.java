@@ -3,6 +3,7 @@ package com.app.mlm.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.RemoteException;
@@ -55,6 +56,8 @@ public class GoodsDetailDialog extends Dialog {
     TextView tvGoodsName;
     @Bind(R.id.ivClose)
     View closeView;
+    @Bind(R.id.tvActivePrice)
+    TextView tvActivePriceView;
     AlertDialog myDialogUtil;
     private Window mDialogWindow;
     private GoodsDetailDialog mInstance;
@@ -90,6 +93,14 @@ public class GoodsDetailDialog extends Dialog {
         Glide.with(getContext()).load(mGoodsInfo.getMdseUrl()).into(ivGoodsImg);
         tvGoodsName.setText(mGoodsInfo.getMdseName());
         tvGoodsPrice.setText("¥" + mGoodsInfo.getRealPrice());
+        tvActivePriceView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
+        if (mGoodsInfo.getActivityPrice() == 0) {
+            tvGoodsPrice.setText("¥ " + mGoodsInfo.getRealPrice());//显示当前售价
+            tvActivePriceView.setText("");
+        } else {
+            tvActivePriceView.setText("¥" + mGoodsInfo.getMdsePrice());//原价价的view
+            tvGoodsPrice.setText("¥ " + mGoodsInfo.getRealPrice());//当前售价的view
+        }
     }
 
     public View initLogOutDialogView() {

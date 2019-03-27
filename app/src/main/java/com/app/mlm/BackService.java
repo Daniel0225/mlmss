@@ -138,7 +138,8 @@ public class BackService extends Service {
                     Log.d("main", "接收到出货指令:" + text);
                 } else if (vo.getBusType().equals("priceChange")) {//限时售价
                     Log.d("main", "接收到限时售价指令:" + text);
-                    syncProduceInfo(vo.getBusType());
+                    syncChannel(vo.getBusType());
+                    // syncProduceInfo(vo.getBusType());
                 } else if (vo.getBusType().equals("vmSync")) {//同步机器信息接口
                     Log.d("main", "同步机器信息接口:" + text);
                     setActivation(vo.getBusType());
@@ -146,7 +147,8 @@ public class BackService extends Service {
                     getAddInfo();
                 } else if (vo.getBusType().equals("activityStop")) {//活动结束
                     Log.d("main", "接收到限时售价活动结束指令:" + text);
-                    syncProduceInfo(vo.getBusType());
+                    syncChannel(vo.getBusType());
+                    //syncProduceInfo(vo.getBusType());
                 } else if (vo.getBusType().equals("gzhJump")) {//跳转到维护页面
                     Log.d("main", "接收到跳转到维护页面指令:" + text);
                     MaintainBackBean maintainBackBean = FastJsonUtil.getObject(text, MaintainBackBean.class);
@@ -357,9 +359,9 @@ public class BackService extends Service {
                 goodsInfo.setMdsePack(productInfo.getMdsePack());
                 goodsInfo.setMdseBrand(productInfo.getMdseBrand());
                 goodsInfo.setMdseName(productInfo.getMdseName());
-                goodsInfo.setMdsePrice(productInfo.getMdsePrice());
+                goodsInfo.setMdsePrice(goodsInfo.getRealPrice());
                 if (goodsInfo.getActivityPrice() != 0) {
-                    goodsInfo.setRealPrice(goodsInfo.getRealPrice());
+                    goodsInfo.setRealPrice(goodsInfo.getActivityPrice());
                 }
                 goodsInfo.setMdseUrl(productInfo.getMdseUrl());
             } else {
@@ -439,7 +441,7 @@ public class BackService extends Service {
         httpParams.put("noticeType", busType);
         httpParams.put("noticeDescribe", noticeDescribe);
         httpParams.put("isSuccess", isSuccess);
-        OkGo.<BaseResponse<AllDataBean>>post(Constants.GET_PRODUCT_PRICE)
+        OkGo.<BaseResponse<AllDataBean>>post(Constants.CONFIRMNOTICE)
                 .tag(this)
                 .params(httpParams)
                 .execute(new JsonCallBack<BaseResponse<AllDataBean>>() {

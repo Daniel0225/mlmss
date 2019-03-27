@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -205,7 +204,6 @@ public class SearchDialog extends BaseDialog implements SearchResultAdapter.Sear
             return;
         }
         MainApp.addShopCar(data.get(position));
-        ToastUtil.showLongToast("加入成功");
         EventBus.getDefault().post(new AddShopCarEvent());//发送消息到首页 更新购物车TAB角标数据
     }
 }

@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
-import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.dialog.CouponDialog;
 import com.app.mlm.http.BaseResponse;
@@ -44,7 +43,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2018/12/30.
@@ -106,8 +104,8 @@ public class OrderPayActivity extends AppCompatActivity {
         totalPriceView.setText("¥ " + totalPrice);
         totalNumView.setText(totalNum + "件");
 
-        BigDecimal roundPrice = (new BigDecimal(originPrice)).subtract(new BigDecimal(totalPrice));
-        if( roundPrice.doubleValue() > 0 ){//售价小于原价 显示优惠信息
+        double roundPrice = new BigDecimal(originPrice).subtract(new BigDecimal(totalPrice)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        if (roundPrice > 0) {//售价小于原价 显示优惠信息
             onSaleView.setVisibility(View.VISIBLE);
             originPriceView.setVisibility(View.VISIBLE);
             originPriceView.setText("¥ " + originPrice);
