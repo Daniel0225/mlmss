@@ -79,7 +79,8 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.dividerLine.setVisibility(View.VISIBLE);
         viewHolder.endSpace.setVisibility(View.GONE);
         if(i == 0){
-            viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_lt_lb);
+            viewHolder.hasGoodsView.setBackgroundResource(R.drawable.shape_white_lt_lb);
+            viewHolder.noGoodsView.setBackgroundResource(R.drawable.shape_white_lt_lb);
         } else if (i == data.size() - 1) {
 //            viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
             viewHolder.hasGoodsView.setBackgroundResource(R.drawable.shape_white_rt_rb);
