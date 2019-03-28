@@ -68,16 +68,24 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         viewHolder.tvActivePrice = view.findViewById(R.id.tvActivePrice);
         viewHolder.tvActivePrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         viewHolder.sellOut = view.findViewById(R.id.sell_out);
+        viewHolder.dividerLine = view.findViewById(R.id.dividerLine);
+        viewHolder.endSpace = view.findViewById(R.id.endSpace);
         return viewHolder;
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull RowGoodsViewHolder viewHolder, int i) {
+        viewHolder.dividerLine.setVisibility(View.VISIBLE);
+        viewHolder.endSpace.setVisibility(View.GONE);
         if(i == 0){
             viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_lt_lb);
         } else if (i == data.size() - 1) {
-            viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
+//            viewHolder.rvRoot.setBackgroundResource(R.drawable.shape_white_rt_rb);
+            viewHolder.hasGoodsView.setBackgroundResource(R.drawable.shape_white_rt_rb);
+            viewHolder.noGoodsView.setBackgroundResource(R.drawable.shape_white_rt_rb);
+            viewHolder.dividerLine.setVisibility(View.GONE);
+            viewHolder.endSpace.setVisibility(View.VISIBLE);
         }else {
             viewHolder.rvRoot.setBackgroundResource(R.color.whiteColor);
         }
@@ -234,6 +242,8 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
         View hasGoodsView;
         View noGoodsView;
         ImageView sellOut;
+        View dividerLine;
+        View endSpace;
 
         public RowGoodsViewHolder(View itemView) {
             super(itemView);

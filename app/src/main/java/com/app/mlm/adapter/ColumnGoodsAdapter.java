@@ -50,7 +50,7 @@ public class ColumnGoodsAdapter extends RecyclerView.Adapter<ColumnGoodsAdapter.
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
         RowGoodsAdapter adapter = new RowGoodsAdapter(context, data.get(i));
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
-        rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 1));
+//        rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 1));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));
     }
 
