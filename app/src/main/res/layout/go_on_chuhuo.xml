@@ -17,6 +17,5 @@
         android:layout_marginLeft="315px"
         android:layout_marginTop="740px"
         android:gravity="center"
-        android:text="25s"
         android:textSize="48px" />
 </RelativeLayout>
