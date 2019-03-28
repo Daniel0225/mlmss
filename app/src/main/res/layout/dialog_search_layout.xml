@@ -27,6 +27,7 @@
                 android:background="@null"
                 android:focusable="false"
                 android:hint="@string/hint_search"
+                android:maxLength="4"
                 android:paddingLeft="15dp"
                 android:textColor="@color/black"
                 android:textSize="26px"

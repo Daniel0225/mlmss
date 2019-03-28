@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -49,6 +51,8 @@ import butterknife.ButterKnife;
  */
 
 public class OrderPayActivity extends AppCompatActivity {
+    public final int WX_REFRESH = 0;
+    public final int ZFB_REFRESH = 1;
     LinearLayout imageView;
     TimeCountUtilsFinish timeCount;
     TextView count_down;
@@ -61,7 +65,8 @@ public class OrderPayActivity extends AppCompatActivity {
     View onSaleView;
     @Bind(R.id.free_price)
     TextView freePriceView;
-
+    int wx_count = 1;
+    int zfb_count = 1;
     private TextView totalPriceView;
     private ImageView payAdImageView;
     private TextView totalNumView;
@@ -72,6 +77,116 @@ public class OrderPayActivity extends AppCompatActivity {
     private ArrayList<GoodsInfo> goodsInfoList;
     private IntentFilter intentFilter;
     private OrderChangeReceiver orderChangeReceiver;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case WX_REFRESH:
+                    if (getIntent().hasExtra("goods")) {
+                        goodsInfoList = (ArrayList<GoodsInfo>) getIntent().getSerializableExtra("goods");
+                    } else {
+                        goodsInfoList = new ArrayList<>();
+                        goodsInfoList.addAll(MainApp.shopCarList);
+                    }
+                    List<CreateWxOrderReqVo> list = new ArrayList<>();
+                    for (GoodsInfo goodsInfo : goodsInfoList) {
+                        for (int i = 0; i < goodsInfo.getShopCarNum(); i++) {
+                            CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE),
+                                    String.valueOf(goodsInfo.getMdseId()), goodsInfo.getClCode());
+                            Log.e("clcode", goodsInfo.getClCode());
+                            list.add(createWxOrderReqVo);
+                        }
+                    }
+
+                    HttpParams httpParams = new HttpParams();
+                    CreateWxOrderReqVoList createWxOrderReqVoList = new CreateWxOrderReqVoList();
+                    createWxOrderReqVoList.setCreateWxOrderReqVoList(list);
+                    String jsonString = FastJsonUtil.createJsonString(createWxOrderReqVoList);
+                    httpParams.put("createWxOrderReqVoList", jsonString);
+                    Log.e("Tag", "params " + jsonString);
+
+                    OkGo.<BaseResponse<WxPayBean>>post(Constants.WXPAY)
+                            .tag(this)
+                            .upJson(jsonString)
+                            .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
+                                @Override
+                                public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
+                                    if (response.body() == null) {
+                                        ToastUtil.showLongCenterToast("获取微信支付信息异常");
+                                        return;
+                                    }
+                                    if (response.body().getCode() == 0) {
+                                        Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(ivWxCode);
+                                    } else {
+                                        Toast.makeText(OrderPayActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Response<BaseResponse<WxPayBean>> response) {
+                                    wx_count++;
+                                    if (wx_count < 6) {
+                                        mHandler.sendEmptyMessage(WX_REFRESH);
+                                    } else {
+                                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                                    }
+                                }
+                            });
+                    break;
+                case ZFB_REFRESH:
+                    if (getIntent().hasExtra("goods")) {
+                        goodsInfoList = (ArrayList<GoodsInfo>) getIntent().getSerializableExtra("goods");
+                    } else {
+                        goodsInfoList = new ArrayList<>();
+                        goodsInfoList.addAll(MainApp.shopCarList);
+                    }
+                    List<CreateWxOrderReqVo> list1 = new ArrayList<>();
+                    for (GoodsInfo goodsInfo : goodsInfoList) {
+                        for (int i = 0; i < goodsInfo.getShopCarNum(); i++) {
+                            CreateWxOrderReqVo createWxOrderReqVo = new CreateWxOrderReqVo(PreferencesUtil.getString(Constants.VMCODE),
+                                    String.valueOf(goodsInfo.getMdseId()), goodsInfo.getClCode());
+                            Log.e("clcode", goodsInfo.getClCode());
+                            list1.add(createWxOrderReqVo);
+                        }
+                    }
+
+                    HttpParams httpParams1 = new HttpParams();
+                    CreateZfbOrderReqVoList createZfbOrderReqVoList = new CreateZfbOrderReqVoList();
+                    createZfbOrderReqVoList.setCreateZfbOrderReqVoList(list1);
+                    String zfb = FastJsonUtil.createJsonString(createZfbOrderReqVoList);
+                    httpParams1.put("createZfbOrderReqVoList", zfb);
+                    Log.e("Tag", "params " + zfb);
+                    OkGo.<BaseResponse<WxPayBean>>post(Constants.ALIPAY)
+                            .tag(this)
+                            .upJson(zfb)
+                            .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
+                                @Override
+                                public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
+                                    if (response == null) {
+                                        ToastUtil.showLongCenterToast("获取支付宝支付信息异常");
+                                        return;
+                                    }
+                                    if (response.body().getCode() == 0) {
+                                        Glide.with(OrderPayActivity.this).load(response.body().getData().getUrl()).into(zhifubao);
+                                    } else {
+                                        Toast.makeText(OrderPayActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Response<BaseResponse<WxPayBean>> response) {
+                                    zfb_count++;
+                                    if (zfb_count < 6) {
+                                        mHandler.sendEmptyMessage(ZFB_REFRESH);
+                                    } else {
+                                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                                    }
+
+                                }
+                            });
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -181,7 +296,7 @@ public class OrderPayActivity extends AppCompatActivity {
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
-                        if(response.body() == null){
+                        if (response.body() == null) {
                             ToastUtil.showLongCenterToast("获取微信支付信息异常");
                             return;
                         }
@@ -194,7 +309,9 @@ public class OrderPayActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Response<BaseResponse<WxPayBean>> response) {
-                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                        wx_count++;
+                        mHandler.sendEmptyMessage(WX_REFRESH);
+                        // ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
 
@@ -210,7 +327,7 @@ public class OrderPayActivity extends AppCompatActivity {
                 .execute(new JsonCallBack<BaseResponse<WxPayBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<WxPayBean>> response) {
-                        if(response == null){
+                        if (response == null) {
                             ToastUtil.showLongCenterToast("获取支付宝支付信息异常");
                             return;
                         }
@@ -223,7 +340,9 @@ public class OrderPayActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Response<BaseResponse<WxPayBean>> response) {
-                        ToastUtil.showLongToast("请求服务器失败,请稍后重试");
+                        zfb_count++;
+                        mHandler.sendEmptyMessage(ZFB_REFRESH);
+                        //   ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });
     }

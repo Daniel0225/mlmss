@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -164,6 +165,7 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
                             if (salegood == 99) {
                                 Log.e("开柜门返回值进入", String.valueOf(salegood));
                                 myDialogUtil = MyDialogUtil.getDialog(context, initLogOutDialogView(), Gravity.CENTER);
+                                myDialogUtil.setCanceledOnTouchOutside(false);
                                 myDialogUtil.show();
                             } else {
                                 Log.e("开柜门失败返回值", String.valueOf(salegood));
@@ -180,13 +182,40 @@ public class RowGoodsAdapter extends RecyclerView.Adapter<RowGoodsAdapter.RowGoo
     public View initLogOutDialogView() {
         View verifyCodeView = LayoutInflater.from(context).inflate(R.layout.go_on_chuhuo, null);
         TextView chuhuo = verifyCodeView.findViewById(R.id.chuhuo);
-        chuhuo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        startTime(chuhuo);
         return verifyCodeView;
+    }
+
+    /**
+     * 开启倒计时
+     */
+    public void startTime(TextView chuhuo) {
+        /** 倒计时60秒，一次1秒 */
+        CountDownTimer timer = new CountDownTimer(25 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                chuhuo.setText(millisUntilFinished / 1000 + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                myDialogUtil.dismiss();
+                try {
+                    int noMachineStatus = MainApp.bvmAidlInterface.BVMGetRunningState(1);
+                    Log.e("code1", "机器状态" + noMachineStatus);
+                    if (noMachineStatus == 2) {
+                        int code = MainApp.bvmAidlInterface.BVMCleanSysFault(1);
+                        Log.e("code", String.valueOf(code));
+                    } else {
+                        Log.e("code", "状态" + noMachineStatus);
+                    }
+
+
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     @Override
     public int getItemCount() {

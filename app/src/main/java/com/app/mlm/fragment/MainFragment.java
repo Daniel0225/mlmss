@@ -1,6 +1,5 @@
 package com.app.mlm.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,19 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allen.library.RxHttpUtils;
-import com.allen.library.base.BaseObserver;
 import com.app.mlm.R;
 import com.app.mlm.adapter.ColumnGoodsAdapter;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bean.GoodsInfo;
-import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
-import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.ShopCarDialog;
-import com.app.mlm.http.ApiService;
-import com.app.mlm.http.bean.BaseBean;
 import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;
 import com.app.mlm.utils.PreferencesUtil;
@@ -41,8 +34,6 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,30 +110,7 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        RxHttpUtils.createApi(ApiService.class)
-                .getHomeGoodsList("0000003")
-                .subscribeOn(Schedulers.io())
-                .subscribe(new BaseObserver<BaseBean>(getActivity()) {
-                    @Override
-                    public void doOnSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void doOnError(String errorMsg) {
-
-                    }
-
-                    @Override
-                    public void doOnNext(BaseBean baseBean) {
-                        List<GoodsInfo> data = (List<GoodsInfo>) baseBean.getData();
-                    }
-
-                    @Override
-                    public void doOnCompleted() {
-
-                    }
-                });
     }
 
     @Override
