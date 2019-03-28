@@ -17,8 +17,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31px"
-        android:visibility="invisible"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="invisible">
 
         <ImageView
             android:layout_width="41px"
@@ -31,9 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/close"
-        android:background="#F2F4FD"
         android:layout_marginLeft="38px"
         android:layout_marginRight="38px"
+        android:background="#F2F4FD"
         app:cardCornerRadius="20px"
         app:cardElevation="0dp">
 
@@ -82,17 +82,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="￥128.8"
                             android:layout_centerVertical="true"
+                            android:text="￥128.8"
                             android:textColor="@color/redColor"
                             android:textSize="34px" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_toLeftOf="@id/tvPrice"
                             android:text="总计："
-                            android:layout_centerVertical="true"
                             android:textColor="@color/text_dark"
                             android:textSize="34px"
                             android:textStyle="bold" />
@@ -104,8 +104,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_below="@id/countLabel"
+                        android:layout_centerVertical="true"
                         android:text="4件商品"
                         android:textColor="@color/black"
                         android:textSize="24px" />
@@ -139,7 +139,7 @@
 
         <LinearLayout
             android:id="@+id/empty_contain"
-            android:layout_width="1000px"
+            android:layout_width="match_parent"
             android:layout_height="911px"
             android:background="@drawable/shape_dialog_layout"
             android:gravity="center_horizontal"

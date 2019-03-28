@@ -13,8 +13,8 @@
             android:id="@+id/ivGoodsImg"
             android:layout_width="350px"
             android:layout_height="350px"
-            android:layout_marginTop="60px"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="60px"
             android:src="@drawable/chanpin" />
 
         <TextView
@@ -32,12 +32,11 @@
             android:id="@+id/tvActivePrice"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ivGoodsImg"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="17px"
-            android:layout_toRightOf="@+id/tvGoodsPrice"
+            android:layout_alignBaseline="@+id/tvGoodsPrice"
+            android:layout_alignBottom="@+id/tvGoodsPrice"
+            android:layout_toEndOf="@+id/tvGoodsPrice"
             android:singleLine="true"
-            android:text=""
+            android:text="123"
             android:textColor="#B2B2B2"
             android:textSize="20px"
             android:visibility="visible" />
@@ -48,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvGoodsPrice"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10px"
             android:layout_marginTop="26px"
             android:text="青岛香酥鱼骨粒"
             android:textColor="#ff000000"
@@ -94,6 +94,7 @@
         android:layout_width="61px"
         android:layout_height="62px"
         android:layout_gravity="center_horizontal"
+        android:layout_marginRight="5px"
         android:layout_marginTop="18px"
         android:src="@drawable/dialog_close_nor" />
 

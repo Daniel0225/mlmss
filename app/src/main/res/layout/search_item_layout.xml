@@ -3,7 +3,7 @@
     android:id="@+id/rvRoot"
     android:layout_width="243px"
     android:layout_height="233px"
-    android:background="@color/whiteColor"
+    android:background="@drawable/search_shape_item_layout"
     android:foreground="?attr/selectableItemBackground">
 
     <ImageView
@@ -22,9 +22,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="4px"
         android:layout_marginStart="4px"
+        android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"
-        android:ellipsize="end"
         android:text="青岛香酥鱼骨粒"
         android:textColor="#ff000000"
         android:textSize="18px" />
