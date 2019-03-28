@@ -80,6 +80,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
     ImageView goodsPicView;
     @Bind(R.id.chuhuo_result)
     ImageView chuhuoResultView;
+    @Bind(R.id.ivCode)
+    ImageView ivGifView;
     String json = "";
     int count = 0;
     int[] code;//温度
@@ -378,6 +380,8 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
             // rebackShipment();
             dealData();
         }
+
+        Glide.with(this).load(R.drawable.maomao).into(ivGifView);
     }
 
     @Override

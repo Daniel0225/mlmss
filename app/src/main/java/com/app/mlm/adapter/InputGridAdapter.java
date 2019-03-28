@@ -65,7 +65,7 @@ public class InputGridAdapter extends BaseAdapter {
         }
         holder.tvButton.setText(Constants.BUTTONS[position]);
         if(!isDartTheme){
-//            holder.tvButton.setBackgroundResource(R.drawable.shape_number_button_light);
+            holder.tvButton.setBackgroundResource(R.drawable.shape_number_button_light);
             holder.tvButton.setTextColor(context.getResources().getColor(R.color.text_dark));
         }
         return convertView;

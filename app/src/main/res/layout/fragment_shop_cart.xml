@@ -17,6 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31px"
+        android:visibility="invisible"
         android:gravity="center">
 
         <ImageView
@@ -30,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/close"
+        android:background="#F2F4FD"
         android:layout_marginLeft="38px"
         android:layout_marginRight="38px"
         app:cardCornerRadius="20px"
@@ -39,7 +41,7 @@
             android:id="@+id/no_empty_contain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mainBackground"
+            android:background="@drawable/shape_shop_car_bg"
             android:orientation="vertical"
             android:paddingTop="15dp"
             android:visibility="visible">
@@ -70,37 +72,45 @@
                     android:layout_weight="3"
                     android:paddingRight="23px">
 
-                    <TextView
-                        android:id="@+id/tvPrice"
+                    <RelativeLayout
+                        android:id="@+id/countLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="15px"
-                        android:paddingTop="3dp"
-                        android:text="￥128.8"
-                        android:textColor="@color/redColor"
-                        android:textSize="34px" />
+                        android:layout_marginTop="22px">
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="￥128.8"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/redColor"
+                            android:textSize="34px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@id/tvPrice"
+                            android:text="总计："
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/text_dark"
+                            android:textSize="34px"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/tvCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/tvPrice"
+                        android:layout_centerVertical="true"
+                        android:layout_below="@id/countLabel"
                         android:text="4件商品"
                         android:textColor="@color/black"
                         android:textSize="24px" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/tvPrice"
-                        android:layout_marginTop="15px"
-                        android:layout_toLeftOf="@id/tvPrice"
-                        android:text="总计："
-                        android:textColor="@color/text_dark"
-                        android:textSize="34px"
-                        android:textStyle="bold" />
+
                 </RelativeLayout>
 
                 <TextView
@@ -163,7 +173,7 @@
                 android:id="@+id/to_pick"
                 android:layout_width="match_parent"
                 android:layout_height="110px"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/shape_to_choose"
                 android:gravity="center"
                 android:text="去挑选"
                 android:textColor="@color/whiteColor"

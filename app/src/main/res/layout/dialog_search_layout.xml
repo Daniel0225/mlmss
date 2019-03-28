@@ -29,7 +29,7 @@
                 android:hint="@string/hint_search"
                 android:paddingLeft="15dp"
                 android:textColor="@color/black"
-                android:textSize="30px"
+                android:textSize="26px"
                 />
 
         </RelativeLayout>
@@ -40,7 +40,7 @@
             android:layout_height="40px"
             android:layout_alignParentRight="true"
             android:layout_marginTop="380px"
-            android:layout_marginRight="30px"
+            android:layout_marginRight="40px"
             android:src="@drawable/delet_nor"/>
     </RelativeLayout>
 

@@ -118,6 +118,7 @@
             android:horizontalSpacing="1dp"
             android:listSelector="@color/transparent"
             android:numColumns="3"
+            android:visibility="visible"
             android:paddingBottom="21px"
             android:paddingEnd="231px"
             android:paddingStart="237px"

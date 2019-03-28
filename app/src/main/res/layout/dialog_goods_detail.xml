@@ -13,6 +13,7 @@
             android:id="@+id/ivGoodsImg"
             android:layout_width="350px"
             android:layout_height="350px"
+            android:layout_marginTop="60px"
             android:layout_centerHorizontal="true"
             android:src="@drawable/chanpin" />
 
@@ -25,7 +26,7 @@
             android:layout_marginTop="11px"
             android:text="¥12.8"
             android:textColor="#D03B02"
-            android:textSize="22px" />
+            android:textSize="40px" />
 
         <TextView
             android:id="@+id/tvActivePrice"
@@ -38,7 +39,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="#B2B2B2"
-            android:textSize="14px"
+            android:textSize="20px"
             android:visibility="visible" />
 
         <TextView

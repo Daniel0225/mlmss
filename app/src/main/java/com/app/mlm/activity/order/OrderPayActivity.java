@@ -100,7 +100,7 @@ public class OrderPayActivity extends AppCompatActivity {
         originPriceView = findViewById(R.id.origin_price);
         payAdImageView = findViewById(R.id.pay_ad_iv);
 
-        originPriceView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+        originPriceView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG); //中划线
         totalPriceView.setText("¥ " + totalPrice);
         totalNumView.setText(totalNum + "件");
 

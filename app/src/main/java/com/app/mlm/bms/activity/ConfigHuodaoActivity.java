@@ -161,6 +161,11 @@ public class ConfigHuodaoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 initBox();
+                //模拟验证货到初始化代码  可删除
+                        /*int[] strings = {3, 3, 3, 3, 3, 3};
+                        PreferencesUtil.putString("layer", Arrays.toString(strings));
+                        syncData();
+                        adapter.notifyDataSetChanged();*/
             }
         }).setCancelClickListener(new View.OnClickListener() {
             @Override
@@ -234,6 +239,11 @@ public class ConfigHuodaoActivity extends BaseActivity {
                                     loading.dismiss();
                                 }
                                 //  ProgressDialog.cancel();
+                                for (int i = 0; i < count.length;i++){//读取出来的货道层列数每个减一
+                                    int origin = count[i];
+                                    if(origin > 0)
+                                        count[i] = origin - 1;
+                                }
                                 PreferencesUtil.putString("layer", Arrays.toString(count));
                                 Log.e("初始化返回值1111--", Arrays.toString(count));
                                 Log.e("初始化返回值2222--", PreferencesUtil.getString("layer"));

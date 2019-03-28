@@ -57,11 +57,10 @@
 
             <ImageView
                 android:id="@+id/ivCode"
-                android:layout_width="300px"
+                android:layout_width="350px"
                 android:layout_height="300px"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="289px"
-                android:src="@drawable/qr_code"
                 />
 
             <TextView

@@ -46,8 +46,8 @@
                 />
 
             <ImageView
-                android:layout_width="30px"
-                android:layout_height="30px"
+                android:layout_width="40px"
+                android:layout_height="40px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="47px"
