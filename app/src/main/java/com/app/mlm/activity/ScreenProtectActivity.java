@@ -43,6 +43,8 @@ public class ScreenProtectActivity extends AppCompatActivity {
     ImageView codeView;
     @Bind(R.id.banner)
     ImageView bannerView;
+    @Bind(R.id.ad_type2)
+    ImageView adType2;
     private List<AdBean> adBeanList;
 
     @Override
@@ -65,7 +67,7 @@ public class ScreenProtectActivity extends AppCompatActivity {
                         topView.setData(CoustomTopView.TYPE_JPG, adBean.getUrl());
                     }
                 } else if (adBean.getFileType() == 2) {
-                    Glide.with(this).load(adBean.getUrl()).into(codeView);
+                    Glide.with(this).load(adBean.getUrl()).into(adType2);
                 }
             }
         }
