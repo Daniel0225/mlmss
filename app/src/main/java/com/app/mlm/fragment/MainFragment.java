@@ -1,5 +1,6 @@
 package com.app.mlm.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,8 @@ import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.AddShopCarEvent;
 import com.app.mlm.bean.ChuhuoSuccessBean;
 import com.app.mlm.bean.GoodsInfo;
+import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
+import com.app.mlm.bms.dialog.CommonDialog;
 import com.app.mlm.bms.dialog.ShopCarDialog;
 import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.utils.FastJsonUtil;

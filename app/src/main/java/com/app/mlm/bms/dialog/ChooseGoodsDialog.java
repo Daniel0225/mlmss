@@ -86,6 +86,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
     private ChooseGoodsAdapter.CustomClickListener listener = new ChooseGoodsAdapter.CustomClickListener() {
         @Override
         public void onClick(int position) {
+            KeyBoardUtils.closeKeybord(searchEdit,getContext());
             selectProductListener.select(data.get(position));
             dismiss();
         }
@@ -174,6 +175,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
             typeView.setVisibility(View.VISIBLE);
             KeyBoardUtils.closeKeybord(searchEdit,getContext());
         } else {
+            selectView.setVisibility(View.GONE);
             searchView.setVisibility(View.VISIBLE);
             searchView.requestFocus();
             KeyBoardUtils.openKeybord(searchEdit,getContext());
@@ -183,6 +185,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
 
     @Override
     public void onLeftClicked() {
+        KeyBoardUtils.closeKeybord(searchEdit,getContext());
         dismiss();
     }
 
@@ -223,6 +226,7 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
                 break;
 
             case R.id.cancel_search:
+                KeyBoardUtils.closeKeybord(searchEdit,getContext());
                 typeView.setVisibility(View.VISIBLE);
                 searchView.setVisibility(View.GONE);
                 data.clear();
