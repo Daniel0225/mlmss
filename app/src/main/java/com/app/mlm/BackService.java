@@ -16,11 +16,11 @@ import com.app.mlm.bean.AddInfoEvent;
 import com.app.mlm.bean.AndroidHeartBeat;
 import com.app.mlm.bean.GoodsInfo;
 import com.app.mlm.bms.activity.BackgroundManangerSystemActivity;
-import com.app.mlm.bms.bean.ActivationBean;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
 import com.app.mlm.http.bean.AdBean;
 import com.app.mlm.http.bean.AllDataBean;
+import com.app.mlm.http.bean.CounterBean;
 import com.app.mlm.http.bean.HuodaoBean;
 import com.app.mlm.http.bean.MaintainBackBean;
 import com.app.mlm.http.bean.ProductInfo;
@@ -235,28 +235,27 @@ public class BackService extends Service {
     private void setActivation(String busType) {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
-        OkGo.<BaseResponse<ActivationBean>>get(Constants.SYNCVM)
+
+        OkGo.<BaseResponse<CounterBean>>get(Constants.SYNC_COUNTER)
                 .tag(this)
                 .params(httpParams)
-                .execute(new JsonCallBack<BaseResponse<ActivationBean>>() {
+                .execute(new JsonCallBack<BaseResponse<CounterBean>>() {
                     @Override
-                    public void onSuccess(Response<BaseResponse<ActivationBean>> response) {
+                    public void onSuccess(Response<BaseResponse<CounterBean>> response) {
                         if (response.body().getCode() == 0) {
                             PreferencesUtil.putString(Constants.VMCODE, response.body().getData().getInnerCode());
                             PreferencesUtil.putInt("status", response.body().getData().getStatus());
-                            PreferencesUtil.putString("vmName", response.body().getData().getVmName());
+                            PreferencesUtil.putString(Constants.COUNTER_NAME, response.body().getData().getVmName());
                             PreferencesUtil.putInt(Constants.VMID, response.body().getData().getVmId());
                             Log.e("vmid", PreferencesUtil.getInt(Constants.VMID) + "" + PreferencesUtil.getString(Constants.VMCODE));
                             reply(busType, "成功", 1);
                         } else {
-                            // Toast.makeText(MainApp.getAppInstance().getApplicationContext(), response.body().getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onError(Response<BaseResponse<ActivationBean>> response) {
+                    public void onError(Response<BaseResponse<CounterBean>> response) {
                         reply(busType, "失败", 2);
-                        // ToastUtil.showLongToast(response.body().getMsg());
                     }
                 });
     }

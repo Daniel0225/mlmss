@@ -348,7 +348,12 @@ public class ConfigSyncActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<BaseResponse<CounterBean>> response) {
                         if(response.body().getCode() == 0){
+                            PreferencesUtil.putString(Constants.VMCODE, response.body().getData().getInnerCode());
+                            PreferencesUtil.putInt("status", response.body().getData().getStatus());
                             PreferencesUtil.putString(Constants.COUNTER_NAME,response.body().getData().getVmName());
+                            PreferencesUtil.putInt(Constants.VMID, response.body().getData().getVmId());
+                            DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
+                            dialog1.show();
                         }else{
 
                         }

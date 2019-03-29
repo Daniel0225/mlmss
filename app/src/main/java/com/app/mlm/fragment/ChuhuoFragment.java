@@ -46,7 +46,9 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -640,6 +642,10 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         UploadShipmentStatusBean.SuccessVendInfoVo successVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
                                         successVendInfoVo.setHdId(hdCode);
                                         successVendInfoVo.setNum(1);
+                                        Date date = new Date(System.currentTimeMillis());
+                                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        String time = formatter.format(date);
+                                        successVendInfoVo.setVendOutTime(time);
                                         successVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
                                         successVendInfoVos.add(successVendInfoVo);
 
@@ -647,6 +653,10 @@ public class ChuhuoFragment extends ChuhuoBaseFragment {
                                         UploadShipmentStatusBean.SuccessVendInfoVo cSuccessVendInfoVo = new UploadShipmentStatusBean.SuccessVendInfoVo();
                                         cSuccessVendInfoVo.setHdId(hdCode);
                                         cSuccessVendInfoVo.setNum(1);
+                                        Date date1 = new Date(System.currentTimeMillis());
+                                        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        String time1 = formatter1.format(date1);
+                                        successVendInfoVo.setVendOutTime(time1);
                                         cSuccessVendInfoVo.setItemNumber(Integer.parseInt(hdDataBeans.get(position).getOrderProject()));
                                         outageSuccessVendInfoVos.add(cSuccessVendInfoVo);
                                         saveData();

@@ -151,6 +151,15 @@ public class UploadShipmentStatusBean implements Serializable {
         private String hdId;//货道号
         private int num;//数量都传1
         private int itemNumber;//订单项目号
+        private String vendOutTime;//出货时间
+
+        public String getVendOutTime() {
+            return vendOutTime;
+        }
+
+        public void setVendOutTime(String vendOutTime) {
+            this.vendOutTime = vendOutTime;
+        }
 
         public String getHdId() {
             return hdId;
