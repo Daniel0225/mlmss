@@ -379,6 +379,7 @@ public class ConfigHuodaoActivity extends BaseActivity {
                         if (response.body().getCode() == 0) {
                             HuodaoBean huodaoBean = new HuodaoBean(allDataList);
                             PreferencesUtil.putString("huodao", FastJsonUtil.createJsonString(huodaoBean));
+                            setResult(RESULT_OK);
                             finish();
                         } else {
                             Toast.makeText(ConfigHuodaoActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
