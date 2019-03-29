@@ -44,7 +44,7 @@ public class Constants {
     public static final String SYN_CHANNEL = BASE_URL + "syncChannel";//货道信息同步接口
     public static final String WXPAY = "http://47.106.216.231:8083/api/wxpay";//支付http://47.106.216.231:8083/api/wxpay
     public static final String ALIPAY = "http://47.106.216.231:8082/api/alipay";//支付 http://47.106.216.231:8082/api/alipay支付宝
-    public static final String SYNC_COUNTER = BASE_URL + "syncCounter";//货柜信息接口
+    public static final String SYNC_COUNTER = BASE_URL + "vm/syncVm";//货柜信息接口
     public static final String SYN_TO_CHANNEL = BASE_URL + "syncToChannel";//货道信息同步到上位机
     public static final String THERMAL = BASE_URL + "syncThermal";//温度接口
     public static final String ALARM_REPORT = BASE_URL + "alarmReport";//故障接口

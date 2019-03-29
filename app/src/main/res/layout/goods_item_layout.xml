@@ -120,12 +120,13 @@
             android:layout_centerInParent="true"
             android:src="@drawable/empty" />
     </RelativeLayout>
+
     <View
         android:id="@+id/dividerLine"
         android:layout_width="1px"
         android:layout_height="180px"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginStart="225px"
         android:background="@color/mainBackground"/>
 
     <View
@@ -133,7 +134,7 @@
         android:layout_width="10px"
         android:layout_height="200px"
         android:layout_centerVertical="true"
-        android:layout_marginStart="225px"
+        android:layout_marginStart="227px"
         android:visibility="visible"
         android:background="@color/mainBackground"/>
 </RelativeLayout>

@@ -7,22 +7,31 @@ import java.io.Serializable;
  */
 
 public class CounterBean implements Serializable {
-    private String counterNumber;
-    private String counterName;
+    private int vmId;
+    private String vmName;
+    private String innerCode;
 
-    public String getCounterNumber() {
-        return counterNumber;
+    public int getVmId() {
+        return vmId;
     }
 
-    public void setCounterNumber(String counterNumber) {
-        this.counterNumber = counterNumber;
+    public void setVmId(int vmId) {
+        this.vmId = vmId;
     }
 
-    public String getCounterName() {
-        return counterName;
+    public String getVmName() {
+        return vmName;
     }
 
-    public void setCounterName(String counterName) {
-        this.counterName = counterName;
+    public void setVmName(String vmName) {
+        this.vmName = vmName;
+    }
+
+    public String getInnerCode() {
+        return innerCode;
+    }
+
+    public void setInnerCode(String innerCode) {
+        this.innerCode = innerCode;
     }
 }

@@ -341,28 +341,21 @@ public class ConfigSyncActivity extends BaseActivity {
         HttpParams httpParams = new HttpParams();
         httpParams.put("vmCode", PreferencesUtil.getString(Constants.VMCODE));
 
-        OkGo.<BaseResponse<List<CounterBean>>>get(Constants.SYNC_COUNTER)
+        OkGo.<BaseResponse<CounterBean>>get(Constants.SYNC_COUNTER)
                 .tag(this)
                 .params(httpParams)
-                .execute(new JsonCallBack<BaseResponse<List<CounterBean>>>() {
+                .execute(new JsonCallBack<BaseResponse<CounterBean>>() {
                     @Override
-                    public void onSuccess(Response<BaseResponse<List<CounterBean>>> response) {
-                        if (response.body().getCode() == 0) {
-                            if (response.body().getData().size() > 0) {
-                                CounterBean counterBean = response.body().getData().get(0);
-                                PreferencesUtil.putString(Constants.COUNTER_NUM, counterBean.getCounterNumber());
-                                PreferencesUtil.putString(Constants.COUNTER_NAME, counterBean.getCounterName());
-                                DoneDialog dialog1 = new DoneDialog(ConfigSyncActivity.this);
-                                dialog1.show();
-                            } else {
-                                Toast.makeText(ConfigSyncActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                    public void onSuccess(Response<BaseResponse<CounterBean>> response) {
+                        if(response.body().getCode() == 0){
+                            PreferencesUtil.putString(Constants.COUNTER_NAME,response.body().getData().getVmName());
+                        }else{
 
+                        }
                     }
 
                     @Override
-                    public void onError(Response<BaseResponse<List<CounterBean>>> response) {
+                    public void onError(Response<BaseResponse<CounterBean>> response) {
                         ToastUtil.showLongToast("请求服务器失败,请稍后重试");
                     }
                 });

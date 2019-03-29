@@ -26,6 +26,7 @@ import com.app.mlm.http.bean.AllTypeInfoResponse;
 import com.app.mlm.http.bean.GoodsTypeSelectBean;
 import com.app.mlm.http.bean.ProductInfo;
 import com.app.mlm.utils.FastJsonUtil;
+import com.app.mlm.utils.KeyBoardUtils;
 import com.app.mlm.utils.PreferencesUtil;
 import com.app.mlm.widget.SpacesItemDecoration;
 import com.app.mlm.widget.titilebar.ITitleBar;
@@ -171,8 +172,11 @@ public class ChooseGoodsDialog extends BaseDialog implements ITitleBar, View.OnC
         if (searchView.getVisibility() == View.VISIBLE) {
             searchView.setVisibility(View.GONE);
             typeView.setVisibility(View.VISIBLE);
+            KeyBoardUtils.closeKeybord(searchEdit,getContext());
         } else {
             searchView.setVisibility(View.VISIBLE);
+            searchView.requestFocus();
+            KeyBoardUtils.openKeybord(searchEdit,getContext());
             typeView.setVisibility(View.GONE);
         }
     }

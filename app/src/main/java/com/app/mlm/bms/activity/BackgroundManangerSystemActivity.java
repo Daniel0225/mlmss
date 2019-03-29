@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
@@ -59,10 +60,15 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (!TextUtils.isEmpty(PreferencesUtil.getString("vmName"))) {
-            location.setText(PreferencesUtil.getString("vmName"));
-        }
         MainApp.shopCarList.clear();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!TextUtils.isEmpty(PreferencesUtil.getString(Constants.COUNTER_NAME))) {
+            location.setText(PreferencesUtil.getString(Constants.COUNTER_NAME));
+        }
     }
 
     @OnClick({R.id.chuhuoceshi, R.id.zhifupeizhi, R.id.huodaopeizhi, R.id.tongbupeizhi, R.id.wendukongzhi, R.id.banbenxinxi, R.id.fanhui, R.id.state})
