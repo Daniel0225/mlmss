@@ -25,6 +25,8 @@ public class StartupActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
+        PreferencesUtil.putString(Constants.VMCODE, "0000051");//先存入机器码  正式的时候要去掉
+        PreferencesUtil.putInt(Constants.VMID, 1);
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override

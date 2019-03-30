@@ -374,7 +374,7 @@ public class BackService extends Service {
             for (int j = 0; j < itemList.size(); j++) {
                 StringBuffer stringBuffer = new StringBuffer();
                 stringBuffer.append((newHuoDaoList.size() - i));
-                if (j < 10) {
+                if (j + 1 < 10) {
                     stringBuffer.append(0);
                 }
                 stringBuffer.append(j + 1);

@@ -153,14 +153,14 @@ public class MainFragment extends BaseFragment {
                 break;
             case R.id.huodong:
                 Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
-//                CommonDialog commonDialog = new CommonDialog(getActivity(), "系统维护", "请确认是否维护售货机", "确定", "取消");
-//                commonDialog.setCommitClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        startActivity(new Intent(getActivity(), BackgroundManangerSystemActivity.class));
-//                    }
-//                });
-//                commonDialog.show();
+                CommonDialog commonDialog = new CommonDialog(getActivity(), "系统维护", "请确认是否维护售货机", "确定", "取消");
+                commonDialog.setCommitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), BackgroundManangerSystemActivity.class));
+                    }
+                });
+                commonDialog.show();
                 break;
         }
     }

@@ -34,11 +34,13 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
     private int selectPosition;//当前操作的位置
     private List<GoodsInfo> data = new ArrayList<>();
     private int rowPosition = 0;//货道行
+    private List<List<GoodsInfo>> originData;
 
-    public HDRowGoodsAdapter(Context context, List<GoodsInfo> data, int rowPosition) {
+    public HDRowGoodsAdapter(Context context, List<GoodsInfo> data, int rowPosition, List<List<GoodsInfo>> originData) {
         this.context = context;
         this.data = data;
         this.rowPosition = rowPosition;
+        this.originData = originData;
     }
     @NonNull
     @Override
@@ -102,6 +104,15 @@ public class HDRowGoodsAdapter extends RecyclerView.Adapter<HDRowGoodsAdapter.Ro
                 }
                 stringBuffer.append(selectPosition + 1);
                 goodsInfo.setClCode(stringBuffer.toString());
+
+                for (List<GoodsInfo> goodsList : originData) {
+                    for (GoodsInfo originGoodsInfo : goodsList) {
+                        if (originGoodsInfo.getMdseId() == goodsInfo.getMdseId() && originGoodsInfo.getActivityPrice() != 0) {
+                            goodsInfo.setActivityPrice(originGoodsInfo.getActivityPrice());
+                            goodsInfo.setMdsePrice(originGoodsInfo.getMdsePrice());
+                        }
+                    }
+                }
                 data.set(selectPosition, goodsInfo);
                 notifyDataSetChanged();
             }
