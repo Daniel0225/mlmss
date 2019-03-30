@@ -17,7 +17,6 @@ import com.app.mlm.Constants;
 import com.app.mlm.R;
 import com.app.mlm.application.MainApp;
 import com.app.mlm.bean.GoodsInfo;
-import com.app.mlm.bms.dialog.DoneDialog;
 import com.app.mlm.bms.dialog.VersionInfoDialog;
 import com.app.mlm.http.BaseResponse;
 import com.app.mlm.http.JsonCallBack;
@@ -217,7 +216,7 @@ public class BackgroundManangerSystemActivity extends BaseActivity {
                 String clCode = stringBuffer.toString();
                 for (int h = 0; h < list.size(); h++) {
                     GoodsInfo goods = list.get(h);
-                    if (goods.getClCode().equals(clCode)) {
+                    if (!TextUtils.isEmpty(goods.getClCode()) && goods.getClCode().equals(clCode)) {
                         itemList.set(j, goods);
                     }
                 }

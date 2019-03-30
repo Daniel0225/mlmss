@@ -57,7 +57,7 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rowGoodsViewHolder.recyclerView.setLayoutManager(ms);
         int position = data.size() - i;//注意机器货道最下一层是1
-        HDRowGoodsAdapter adapter = new HDRowGoodsAdapter(context, data.get(i), position);
+        HDRowGoodsAdapter adapter = new HDRowGoodsAdapter(context, data.get(i), position, data);
         rowGoodsViewHolder.recyclerView.setAdapter(adapter);
         rowGoodsViewHolder.recyclerView.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 1));
         rowGoodsViewHolder.tvColumn.setText(String.valueOf(i + 1));
@@ -88,6 +88,15 @@ public class HDColumnGoodsAdapter extends RecyclerView.Adapter<HDColumnGoodsAdap
 
     @Override
     public void sorted(List<GoodsInfo> newData) {
+        for (int i = 0; i < newData.size(); i++) {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(data.size() - sortPosition);
+            if (i + 1 < 10) {//下标从0开始
+                stringBuffer.append(0);
+            }
+            stringBuffer.append(i + 1);
+            newData.get(i).setClCode(stringBuffer.toString());
+        }
         data.set(sortPosition, newData);
         notifyDataSetChanged();
     }
