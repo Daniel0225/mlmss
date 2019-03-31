@@ -229,10 +229,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
+  /*  @Override
     public long millisInFuture() {
         return 1000 * 30;
-    }
+    }*/
 
     @Override
     protected void onPause() {
