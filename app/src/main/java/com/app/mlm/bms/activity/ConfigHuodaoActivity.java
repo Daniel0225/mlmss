@@ -356,7 +356,6 @@ public class ConfigHuodaoActivity extends BaseActivity {
             for (int j = 0; j < allDataList.get(i).size(); j++) {
                 if (!allDataList.get(i).get(j).getMdseUrl().equals("empty")) {
                     GoodsInfo goodsInfo = allDataList.get(i).get(j);
-                    goodsInfo.setRealPrice(goodsInfo.getMdsePrice());
                     list.add(goodsInfo);
                 }
             }
